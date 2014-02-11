@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -29,7 +29,7 @@ from coins    import ChipCoin, ChipSugar, ChipAsproHalfLeft, ChipAsproHalfRight
 from asprog   import GameAspirin
 from blinker  import Blinker
 from zapvalid import ZapValidatorBase
-from tutorial import (TutorialScheduler, 
+from tutorial import (TutorialScheduler,
                       STEP_COND_NEVER, STEP_COND_STIM, STEP_COND_SELECT_TILES,
                       STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
                       COLOR_TUTORIAL)
@@ -39,114 +39,114 @@ NO_SOUND = 0
 
 LIST_TUT_STEP_DESCRIP = (
     (
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Salut. T'es encore là ?",
          "C'est bien, t'es un bon",
-         "petit soldat.",), 
+         "petit soldat.",),
         (),
         False
     ),(
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Les 2 machins blancs ",
          "au milieu de l'écran,",
          "ce sont des demis-cachets",
          "d'aspirine.",
-         "Faut les coller ensemble."), 
+         "Faut les coller ensemble."),
         (),
         False
     ),(
-        STEP_COND_SELECT_TILES, 
+        STEP_COND_SELECT_TILES,
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         NO_SOUND,
         ("Tu vas commencer par me",
-         "péter tout ça."), 
+         "péter tout ça."),
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         False
     ),(
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Ouaf ouaf, Meeeuuhh",
          "gruuiik grruuuiiiikk !",
          "Pardon. On en étais où ?",
          "Ah oui. Cliquez sur",
-         "Suivant, comme d'hab'."), 
+         "Suivant, comme d'hab'."),
         (),
         False
-    ),(    
-        STEP_COND_SELECT_TILES, 
-        ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),  
+    ),(
+        STEP_COND_SELECT_TILES,
+        ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         NO_SOUND,
         ("Et maintenant, pète-moi",
          "ça, histoire de vider la",
          "colonne. Et tu regarderas",
          "bien ce que ça fait,",
-         "jeune boulawan."), 
-        ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),  
+         "jeune boulawan."),
+        ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         False
     ),(
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Et hop. Ca s'est déplacé",
-         "vers la gauche.", 
+         "vers la gauche.",
          "C'est-y pas top foufoutre",
-         "au carré, ça ? Hmmm ?"), 
+         "au carré, ça ? Hmmm ?"),
         (),
         False
     ),(
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Sauf que maintenant,",
          "les aspirines ne sont",
-         "plus en face."), 
+         "plus en face."),
         (),
         False
     ),(
-        STEP_COND_SELECT_TILES, 
+        STEP_COND_SELECT_TILES,
         ((4, 7), (4, 8)),
         NO_SOUND,
-        (("Dégomme-moi ce bazar.", )), 
+        (("Dégomme-moi ce bazar.", )),
         ((4, 7), (4, 8)),
         False
     ),(
-        STEP_COND_INTERACTIVE_TOUCH_SUCCESSED, 
-        (), 
+        STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
+        (),
         NO_SOUND,
         ("Bien, petit stagiaire.",
          "Maintenant, tu vas ",
          "cliquer sur l'un des ",
-         "demi-cachets."), 
+         "demi-cachets."),
         (),
         False
     ),(
-        STEP_COND_INTERACTIVE_TOUCH_SUCCESSED, 
-        (), 
+        STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
+        (),
         NO_SOUND,
         ("Hop, ils se réunissent.",
          "Et pour finir, cliques sur",
-         "le cachet entier."), 
+         "le cachet entier."),
         (),
         False
     ),(
-        STEP_COND_STIM, 
-        (), 
+        STEP_COND_STIM,
+        (),
         NO_SOUND,
         ("Bon ben voilà, c'était super.",
          "Est-ce que c'était assez",
-         "pour vous ?"), 
+         "pour vous ?"),
         (),
         False
     ),(
-        STEP_COND_NEVER, 
-        (), 
+        STEP_COND_NEVER,
+        (),
         NO_SOUND,
-        (), 
+        (),
         (),
         True
     ),
@@ -175,10 +175,10 @@ LIST_TILE_TO_HARDDEFINE = (
     ((5, 0), ("C", 1)),
     ((5, 1), ("C", 2)),
     ((5, 2), ("C", 0)),
-    ((5, 3), ("C", 2)),        
+    ((5, 3), ("C", 2)),
     ((5, 9), ("C", 10)),
     ((6, 9), ("C", 2)),
-    ((7, 9), ("S", 0)),    
+    ((7, 9), ("S", 0)),
     # Pour la 3ème
     ((4, 6), ("C", 10)),
     ((4, 7), ("C", 5)),
@@ -188,15 +188,15 @@ class GameAspirinTuto(GameAspirin):
     """
     classe qui gère tout le jeu. ou pas
     """
-    
+
     def __init__(self, surfaceDest, gravityDir=DOWN):
         """
         constructeur. (thx captain obvious)
-    
+
         entrée :
             surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
         """
-        tutorialScheduler = TutorialScheduler(LIST_TUT_STEP_DESCRIP)        
+        tutorialScheduler = TutorialScheduler(LIST_TUT_STEP_DESCRIP)
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
         GameAspirin.__init__(self, surfaceDest, gravityDir, tutorialScheduler)
         self.blinker = Blinker(self.arena)
@@ -205,7 +205,7 @@ class GameAspirinTuto(GameAspirin):
         self.showObjectivesAtStart = False
         self.listZapConstraint = LIST_ZAP_CONSTRAINT
         self.nbZapMade = 0
-    
+
     def populateArena(self):
         """ overrides """
         # on définit des tiles. C'est mignon et gentil.
@@ -236,9 +236,8 @@ class GameAspirinTuto(GameAspirin):
         else:
             GameAspirin.respawnZapValidator(self)
         self.nbZapMade += 1
-    
+
     def zapWin(self):
         """ overrides """
         if self.nbZapMade > len(self.listZapConstraint):
             self.console.addListTextAndDisplay(("bravooo !!", ))
-        

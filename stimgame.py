@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -50,17 +50,17 @@ class StimuliStockerForGame():
         self.widthArena, self.heightArena = self.sizeArena
         self.sizePixelTile = sizePixelTile
         self.widthPixelTile, self.heightPixelTile = self.sizePixelTile
-        
+
         sizePixelArena = (self.widthArena * self.widthPixelTile,
                           self.heightArena * self.heightPixelTile)
-        
+
         self.rectPixelArena = pyRectTuple(self.posPixelArena.topleft,
                                           sizePixelArena)
-        
+
         self.posArenaPrevious = None
         self.resetStimuli()
 
-        
+
     def resetStimuli(self):
         self.listPosArenaToActivate = []
         self.posArenaToInteractTouch = None
@@ -75,7 +75,7 @@ class StimuliStockerForGame():
         self.stimTutoNext = False
         self.stimReblink = False
 
-        
+
     def determinePosArenaMouse(self):
         """
         zob
@@ -94,117 +94,116 @@ class StimuliStockerForGame():
         Entrées : posPixel. Rect. Position en pixel, à l'écran, de n'importe quel point de la Tile
         Sorties : Soit un Rect : Position de la tile correspondante dans l'arène.
                   Soit None : la position en pixel ne correspond à aucune Tile.
-        Donc y'a une verif dans cette fonction. OKay ?        
-        
+        Donc y'a une verif dans cette fonction. OKay ?
+
         A mettre dans la View, ou dans le controleur qui va taper dedans ??
-        je sais pas si elle a quelque chose à foutre là cette fonction        
+        je sais pas si elle a quelque chose à foutre là cette fonction
         """
         #TRODO : c'est tout pouillave car on fait les calculs avant la verif.
         # Faut inverser. (Et donc connaître le coin bas droite de l'Arena.
         #A faire quand on séparera en MVC comme il faut.
         if self.rectPixelArena.contains(posPixel):
-        
+
             posX = (posPixel.x - self.rectPixelArena.x) / self.widthPixelTile
             posY = (posPixel.y - self.rectPixelArena.y) / self.heightPixelTile
-            posArena = pyRect(posX, posY)                          
+            posArena = pyRect(posX, posY)
             return posArena
 
         else:
-            
-            return None        
-        
-    
+
+            return None
+
+
     def activateTileWithMouse(self, mustInteractTouch):
         """
         zob
         """
         #TRODO : peut être ça, ça passe en param. Et pas chopé ici alarach.
         self.determinePosArenaMouse()
-        
+
         if self.posArenaMouse is None:
             #pas de mise en stand by quand on quitte l'écran. C'est chiant.
             #self.selectorPlayerOne.takeStimuliStandBy()
             self.posArenaPrevious = None
-            return 
-        
+            return
+
         if mustInteractTouch:
             self.posArenaToInteractTouch = self.posArenaMouse
-        
+
         if self.posArenaPrevious is None:
             self.listPosArenaToActivate.append(self.posArenaMouse)
             self.posArenaPrevious = self.posArenaMouse
-            
+
         elif self.posArenaPrevious != self.posArenaMouse:
-        
+
             param = (self.posArenaPrevious, self.posArenaMouse)
             pathSelection = findPathSimple(*param)
-                                               
+
             for posSelected in pathSelection:
                 self.listPosArenaToActivate.append(posSelected)
-                
+
             self.posArenaPrevious = self.posArenaMouse
-            
+
         # si le previous est égal au current, on ne fait rien ??
-        
-        return 
-        
-        
+
+        return
+
+
     def takeEventsFromMouseAndKeyboard(self):
-        
+
         mustActivate = False
         mustInteractTouch = False
-        
+
         for event in pygame.event.get():
             #on quitte la partie si le joueur fait un événement de quittage (alt-F4, ...)
             #et il faudra carrément quitter le programme.
             if event.type == pygl.QUIT:
                 self.stimuliQuitGame = True
-    
+
             #Les events MOUSEBUTTONXX correspondent à n'importe quel bouton.
             #A chaque fois, on vérifie que c'est du bouton gauche dont il s'agit
-                
+
             elif event.type == pygl.MOUSEBUTTONUP:
                 if not pygame.mouse.get_pressed()[0]:
                     self.mustStandBy = True
                     self.posArenaPrevious = None
-                    
+
             elif event.type == pygl.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[0]:
                     mustActivate = True
                     mustInteractTouch = True
-                
+
             elif event.type == pygl.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:
                     mustActivate = True
-            
+
             elif event.type == pygl.KEYDOWN:
-            
+
                 if event.key == pygl.K_s:
                     self.stimuliTryZap = True
-                    
+
                 elif event.key == pygl.K_d:
                     self.stimuliEmptySelection = True
-                                  
-                # Supprimé, car c'est de la triche. 
+
+                # Supprimé, car c'est de la triche.
                 # (C'était pour tester sans que je me fasse chier)
                 #elif event.key == pygl.K_p:
                 #    self.stimuliChangeZapConstraint = True
-                    
+
                 elif event.key == pygl.K_UP:
                     self.stimuliConsoleScrollUp = True
-                    
+
                 elif event.key == pygl.K_DOWN:
                     self.stimuliConsoleScrollDown = True
-                    
+
                 elif event.key == pygl.K_f:
                     self.stimTutoNext = True
 
                 elif event.key == pygl.K_g:
-                    self.stimReblink = True                    
+                    self.stimReblink = True
 
                 elif event.key == pygl.K_l:
-                    self.stimuliQuitGame = True                    
-                    
+                    self.stimuliQuitGame = True
+
         if mustActivate:
             self.activateTileWithMouse(mustInteractTouch)
-    

@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -56,7 +56,7 @@ class ManualInGame():
     def refresh(self):
         """ zob """
         # Je convertis le tuple en une liste, parce que je vais faire des pop dessus.
-        # Donc faut que je puisse le modifier. 
+        # Donc faut que je puisse le modifier.
         manualTexts = list(language.MANUAL_TEXTS[language.languageCurrent])
         self.imgManual.fill((0, 0, 0))
         pygame.draw.rect(self.imgManual, COLOR_DEFAULT, pyRect(0, 0, 340, 127), 2)
@@ -69,7 +69,7 @@ class ManualInGame():
         self.imgManual.blit(imgText, pyRect(10, 25))
         textToWrite = manualTexts.pop(0)
         imgText = self.fontManual.render(textToWrite, 0, colorToWrite)
-        self.imgManual.blit(imgText, pyRect(10, 45))        
+        self.imgManual.blit(imgText, pyRect(10, 45))
         if self.tutorialScheduler is not None:
             textToWrite = manualTexts.pop(0)
             imgText = self.fontManual.render(textToWrite, 0, colorToWrite)
@@ -77,7 +77,7 @@ class ManualInGame():
             textToWrite = manualTexts.pop(0)
             imgText = self.fontManual.render(textToWrite, 0, colorToWrite)
             self.imgManual.blit(imgText, pyRect(10, 100))
-                
-        
+
+
     def display(self):
         self.surfaceDest.blit(self.imgManual, self.rectManual)

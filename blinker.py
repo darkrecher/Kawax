@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -26,8 +26,8 @@ import pygame
 # en nombre de cycles
 BLINK_PERIOD = 10
 BLINK_DURATION = BLINK_PERIOD * 15
-        
-        
+
+
 class Blinker():
     """
     classe pour faire clignoter des tiles. Pour le tutorial.
@@ -43,8 +43,8 @@ class Blinker():
         self.blinkValue = False
         self.listTileBlinking = []
         self.isBlinking = False
-        
-        
+
+
     def startBlink(self, listPosToBlink):
         """
         listPosToBlink : liste de pyRect.
@@ -62,17 +62,17 @@ class Blinker():
             tile = self.arena.getTile(posArenaToBlink)
             self.listTileBlinking.append(tile)
             tile.tutoHighLight = self.blinkValue
-            
+
         self.isBlinking = True
-        
-        
+
+
     def stopBlink(self):
         for tile in self.listTileBlinking:
             tile.tutoHighLight = False
         self.listTileBlinking = []
         self.isBlinking = False
-        
-        
+
+
     def advanceTimerAndHandle(self):
         """
         zob

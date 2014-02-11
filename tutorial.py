@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -69,7 +69,7 @@ class TutorialScheduler():
     def __init__(self, listTutStepsDescrip):
         """
         constructeur. (thx captain obvious)
-    
+
         entrée :
             surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
         """
@@ -80,7 +80,7 @@ class TutorialScheduler():
              listCoordBlink, tellObjective) = tutStepDescrip
             listPosCond = [ pyRectTuple(coord) for coord in listCoordCond ]
             listPosBlink = [ pyRectTuple(coord) for coord in listCoordBlink ]
-            
+
             if isinstance(blobTextDescrip, dict):
                 textDescrip = blobTextDescrip[language.languageCurrent]
             else:
@@ -97,21 +97,21 @@ class TutorialScheduler():
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         self.justAdvanced = False # osef ??
         self.totallyFailed = False
-    
+
     def getCurrentText(self):
         """
         """
         return self.tutStepCurrent.listTextDescrip
-        
+
     def getCurrentBlink(self):
         """
         """
         return self.tutStepCurrent.listPosBlink
-    
+
     def getCurrentTellObjective(self):
         return self.tutStepCurrent.tellObjective
-        
-    
+
+
     def takeStimTutoNext(self):
         """
         """
@@ -122,11 +122,11 @@ class TutorialScheduler():
         self.indexStep += 1
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         return True
-        
+
     def takeStimInteractiveTouch(self):
         """
         """
-        # pas de condition ni rien. Faut que ça tombe juste.        
+        # pas de condition ni rien. Faut que ça tombe juste.
         if self.totallyFailed:
             return False
         if self.tutStepCurrent.conditionType != STEP_COND_INTERACTIVE_TOUCH_SUCCESSED:
@@ -135,7 +135,7 @@ class TutorialScheduler():
         self.indexStep += 1
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         return True
-        
+
     def takeStimTileSelected(self, selPath, selSuppl):
         """
         c'est des listes de pyRect à comparer à une liste de pyRect
@@ -152,27 +152,27 @@ class TutorialScheduler():
         while len(selAll):
             posSelected = selAll.pop(0)
             #comparaison de rect. Ca marche ?
-            if posSelected not in listPosCond: 
+            if posSelected not in listPosCond:
                 self.totallyFail()
                 return False
         #youpi ! La sélection est bonne.
         self.indexStep += 1
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         return True
-            
+
     def mustLockGameStimuli(self):
         """
         """
         # On aura peut être besoin de faire plus subtil que ça. Mais pour l'instant non.
         return (self.tutStepCurrent.conditionType == STEP_COND_STIM)
-    
+
     def totallyFail(self):
         self.totallyFailed = True;
-    
+
     def getFailText(self):
         return ("Vous n'avez pas sélectionné les bonnes cases.",
                 "Débrouillez-vous tout seul maintenant !")
-    
+
     # faut une classe externe, ou un overridage des classes actuelles ?
     # externe je dirais.
     # avec toutes les étapes. Et ici, dans le Game (voir GameBasic), on appelle des
@@ -182,9 +182,9 @@ class TutorialScheduler():
     # Y'a que 3 façons d'avancer : start, le stimTutoNext, et choisir les bonnes chips
     # Et si on choisit pas les bonnes chips, ça fail direct. On peut plus du tout avancer.
     # Un avançage provoque une écriture de texte dans la console, et du blink. C tout.
-    
+
     # on met dans des propriétés "publiques" le texte et les blinks en cours.
-    # La classe met à jour ses propriétés lorqu'elle doit avancer. (donc quand on 
-    # lui propose un avancement et qu'elle accepte). 
-            
+    # La classe met à jour ses propriétés lorqu'elle doit avancer. (donc quand on
+    # lui propose un avancement et qu'elle accepte).
+
 

@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -79,7 +79,7 @@ LIST_INTRO_TEXT_ENGLISH = (
     "5 : aspirin - tutorial",
     "6 : aspirin - game",
     "",
-    "E : english.   F : français",    
+    "E : english.   F : français",
 )
 
 DICT_GAME_CLASS_FROM_KEY = {
@@ -113,7 +113,7 @@ def displayMainMenu(screen):
             xposIntroText += 40
             yposIntroText += 30
     pygame.display.flip()
-    
+
 
 def askGameModeToUser(screen):
     displayMainMenu(screen)
@@ -137,7 +137,7 @@ def askGameModeToUser(screen):
                     # à la bourrin. C'est dégueux, mais je sais pas comment faire mieux.
                     language.languageCurrent = language.LANGUAGE_FRENCH
                     print "frrrrench"
-                    displayMainMenu(screen)                    
+                    displayMainMenu(screen)
     screen.fill((0, 0, 0))
     return classGame
 
@@ -152,7 +152,7 @@ if __name__ == "__main__":
 
     classGame = askGameModeToUser(screen)
     print classGame
-    
+
     #création de la putain de classe qui contient tout le putain de code, et les
     #putains d'initialisations.
     #theFuckingGame = GameBasic(screen)

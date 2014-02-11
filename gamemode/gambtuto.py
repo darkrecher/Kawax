@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -168,7 +168,7 @@ LIST_TUT_STEP_DESCRIP = (
                 "(orange).",
             )
         },
-        
+
         (),
         False
     ),(
@@ -190,7 +190,7 @@ LIST_TUT_STEP_DESCRIP = (
                 "the coins, with the mouse",
                 "button pressed",
             )
-        },        
+        },
         (),
         False
     ),(

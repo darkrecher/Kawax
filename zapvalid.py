@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Blarg version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -24,7 +24,7 @@ date de la dernière relecture-commentage : None
 import pygame
 
 from common import (pyRect, )
-                   
+
 from coins  import CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR, CHIP_CLOPE
 
 
@@ -42,22 +42,22 @@ class ZapValidator():
             surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
         """
         self.arena = arena
-    
-    
+
+
     def getListStrDescription(self):
         """
         zob
         """
         return ("contrainte qui fonctionne jamay", )
 
-        
+
     def validateZap(self, selPath, selSuppl, selAdj):
         """
         zob
         """
         return False
 
-        
+
 class ZapValidatorBase(ZapValidator):
     """
     classe qui détermine si on a le droit de zapper une sélection ou pas.
@@ -75,34 +75,33 @@ class ZapValidatorBase(ZapValidator):
         self.sugarReq = sugarReq
         self.brouzoufTotal = 0
         self.sugarTotal = 0
-        
+
 
     def getListStrDescription(self):
         """
         zob
         """
-        return ("objectif :", "brouzouf : %s" % self.brouzoufReq, 
+        return ("objectif :", "brouzouf : %s" % self.brouzoufReq,
                 "sucre : %s" % self.sugarReq)
-        
-    
+
+
     def getListStrLastTry(self):
-        return ("selection de :", "brouzouf : %s" % self.brouzoufTotal, 
+        return ("selection de :", "brouzouf : %s" % self.brouzoufTotal,
                 "sucre : %s" % self.sugarTotal)
-    
-    
+
+
     def validateZap(self, selPath, selSuppl, selAdj):
         """
         zob
         """
         self.brouzoufTotal = 0
         self.sugarTotal = 0
-        
+
         for posPath in selPath + selSuppl:
             chip = self.arena.getTile(posPath).chip
             self.brouzoufTotal += chip.getBrouzouf()
             self.sugarTotal += chip.getSugar()
-        
-        return (self.brouzoufTotal == self.brouzoufReq 
+
+        return (self.brouzoufTotal == self.brouzoufReq
                 and self.sugarTotal == self.sugarReq)
-        
-    
+

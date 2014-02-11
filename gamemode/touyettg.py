@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -20,20 +20,20 @@ Kawax version 1.0
 
 date de la dernière relecture-commentage : None
 
-vocab et nommage des variables : 
+vocab et nommage des variables :
 
     pos : pygame.Rect, avec les valeurs width et height à 0.
           position d'un truc. (coordonnées)
     posArena : position d'une case dans l'aire de jeu
     posPixel : position d'un pixel à l'écran ou dans une Surface
     Quand y'a pos tout seul, c'est par défaut posArena, en général.
-    
+
     path : liste/tuple de posArena (à priori adjacente) formant un chemin.
-    
+
     coP : coordonnée primaire. int
     coS : coordonnée secondaire. int
     Y'a l'une des coordonnées qu'est x, l'autre y. Ca dépend du contexte.
-    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou 
+    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou
     une autre, la coordonnée primaire, c'est celle de la boucle principale,
     et la coordonnée secondaire, c'est celle de la boucle d'en dessous.
 """
@@ -76,30 +76,30 @@ class GameTouillette(GameBasic):
         self.initCommonStuff(surfaceDest, gravityDir, tutorialScheduler)
         self.nbTouilletteToRemove = 2
         self.mustDisplayRemoving = False
-        
-        self.arena = ArenaTouillette(surfaceDest, self.posPixelArena, 
+
+        self.arena = ArenaTouillette(surfaceDest, self.posPixelArena,
                                      ARENA_SIZE, 2, LIST_CHIP_GENERATION)
-        
+
         self.selectorPlayerOne = Selector(self.arena, 0)
-                
+
         self.populateArena()
         self.arena.addBigObject(Touillette, pyRectTuple(xyFirstTouillette))
         self.arena.draw()
         pygame.display.flip()
 
-            
+
     def periodicAction(self):
         """ à overrider """
 
         if self.mustDisplayRemoving:
             print "blorp"
-        
+
             nbTouRemoved = self.arena.nbTouilletteRemoved
             nbTouToRem = self.nbTouilletteToRemove
             self.mustDisplayRemoving = False
-            
+
             if nbTouRemoved == nbTouToRem:
-                listBla = ("BRAVO ! ", "Vous avez gagné!", 
+                listBla = ("BRAVO ! ", "Vous avez gagné!",
                            "Vous pouvez", "continuer de",
                            "jouer si vous", "trouvez ça cool")
                 self.console.addListTextAndDisplay(listBla)
@@ -107,10 +107,10 @@ class GameTouillette(GameBasic):
                 strBla = "%d/%d" % (nbTouRemoved, nbTouToRem)
                 listStrBla = ("Touillettes :", strBla)
                 self.console.addListTextAndDisplay(listStrBla)
-            
-        
+
+
     def handleGravity(self):
-        # Les actions de contrôle et d'actions sont pas dans l'ordre. 
+        # Les actions de contrôle et d'actions sont pas dans l'ordre.
         # Ca fait nimp.
         print "handleGravity"
         if self.arena.removeBottomTouillette():
@@ -119,9 +119,8 @@ class GameTouillette(GameBasic):
         else:
             touilletteRemoved = False
         self.applyGravity()
-        if self.determineGravity() or touilletteRemoved or self.arena.hasTouilletteInBottom(): 
+        if self.determineGravity() or touilletteRemoved or self.arena.hasTouilletteInBottom():
             self.gravityCounter = DELAY_GRAVITY
         else:
             self.selectorPlayerOne.setStimuliLock(False)
-    
-    
+

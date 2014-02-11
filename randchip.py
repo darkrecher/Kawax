@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -25,13 +25,13 @@ import pygame
 import random
 
 from common   import randWithListCoef
-                  
+
 from coins    import (Chip, ChipSugar, ChipCoin, ChipClope, ChipNothing,
-                      ChipBigObject, 
+                      ChipBigObject,
                       ChipAsproFull, ChipAsproHalfLeft, ChipAsproHalfRight,
-                      CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR, CHIP_CLOPE, 
+                      CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR, CHIP_CLOPE,
                       CHIP_BIG_OBJECT,
-                      CHIP_ASPRO_FULL, CHIP_ASPRO_HALF_LEFT, 
+                      CHIP_ASPRO_FULL, CHIP_ASPRO_HALF_LEFT,
                       CHIP_ASPRO_HALF_RIGHT)
 
 
@@ -65,26 +65,25 @@ class RandomChipGenerator():
         self.listGenCoef = [ elem[1] for elem in self.listRandDistribution ]
         self.listGenCoef = tuple(self.listGenCoef)
         self.listGenInfo = tuple(self.listGenInfo)
-    
-        
+
+
     def _chooseGenInfo(self):
         """ zob """
         indexGenInfoChosen = randWithListCoef(self.listGenCoef)
         genInfo = self.listGenInfo[indexGenInfoChosen]
         return genInfo
-    
-    
+
+
     def chipFromGenInfo(self, genInfo):
         """ zob """
         chipType = genInfo[0]
         chipGenParam = genInfo[1:]
         chipClass = DICT_CHIP_CREATION_INFO_FROM_CHIP_TYPE[chipType][0]
         return chipClass(*chipGenParam)
-    
-    
+
+
     def chooseChip(self):
         """ zob """
         genInfo = self._chooseGenInfo()
         return self.chipFromGenInfo(genInfo)
-        
-        
+

@@ -33,8 +33,14 @@ Sinon, vous pouvez aussi attendre un peu, je vais créer un exécutable stand-al
 
 J'y travaille aussi.
 
-# Credits #
+# Crédits #
 
-blabla
+Créé par Réchèr.
+
+Le code et cette doc sont sous la double licence : Art Libre ou Creative Commons CC-BY (au choix).
+
+Repository : https://github.com/darkrecher/Kawax
+
+Mon blog : http://recher.wordpress.com
 
 

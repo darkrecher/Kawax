@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Blarg version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -39,7 +39,7 @@ MANUAL_TEXTS = {
         "   S : validate      D : cancel selection",
         "   L : quit",
         "tutorial :",
-        "   F : next message / reblink tiles",    
+        "   F : next message / reblink tiles",
     ),
 }
 
@@ -47,7 +47,7 @@ MANUAL_TEXTS = {
 def changeLanguage(languageNew):
     #language.languageCurrent = languageNew
     languageCurrent = languageNew
-    
-    
+
+
 
 

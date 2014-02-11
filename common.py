@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Blarg version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -77,15 +77,15 @@ def pyRect(top=0, left=0, width=0, height=0):
     """
     return pygame.Rect(top, left, width, height)
 
-    
+
 def pyRectTuple(tuplePos=(0, 0), tupleSize=(0, 0)):
     """
     permet de générer un pygame.Rect à partir de tuples,
     sans forcément donner la hauteur et la largeur.
     """
     return pygame.Rect(tuplePos, tupleSize)
-    
-    
+
+
 def securedPrint(stringToWrite):
     """
     fonction pour balancer sur la sortie standard une string unicode, avec des accents et tout.
@@ -108,7 +108,7 @@ def securedPrint(stringToWrite):
         unicodeString = unicode(stringToWrite)
         print unicodeString.encode("ascii", "replace")
 
-        
+
 def loadImg(filename, colorkey=-1, doConversion=True):
     """
     fonction piquée au tutorial chimp de pygame. Permet de charger une image.
@@ -129,7 +129,7 @@ def loadImg(filename, colorkey=-1, doConversion=True):
                        graphique actuel. (Normalement, faut le faire tout le temps, pour
                        optimiser). Sauf que si le mode graphique actuel n'a pas encore été
                        déterminé, eh ben on peut pô faire de convert. Donc faudra mettre False.
-                                 
+
     plat-dessert :
         la Surface contenant l'image chargée
     """
@@ -177,20 +177,20 @@ DICT_DEPL_FROM_DIR = {
 
 def rectDeplFromDirDist(dir, dist=1):
     """ ddd """
-    rectDepl = DICT_DEPL_FROM_DIR[dir]    
+    rectDepl = DICT_DEPL_FROM_DIR[dir]
     if dist == 1:
         return pygame.Rect(rectDepl)
     else:
         return pyRect(rectDepl.x * dist, rectDepl.y * dist)
-    
+
 
 def pathLine(posStart, posEnd, indexCoordPrim, coordSecAtStart):
     """
     zob
     """
-    
+
     if indexCoordPrim == 0:
-    
+
         coordPrimStart = posStart.x
         coordPrimEnd = posEnd.x
         if coordSecAtStart == True:
@@ -199,7 +199,7 @@ def pathLine(posStart, posEnd, indexCoordPrim, coordSecAtStart):
             coordSec = posEnd.y
 
     else:
-    
+
         coordPrimStart = posStart.y
         coordPrimEnd = posEnd.y
         if coordSecAtStart == True:
@@ -207,14 +207,14 @@ def pathLine(posStart, posEnd, indexCoordPrim, coordSecAtStart):
         else:
             coordSec = posEnd.x
 
-    
+
     if coordPrimStart < coordPrimEnd:
         listCoordPrim = range(coordPrimStart, coordPrimEnd+1)
     elif coordPrimStart > coordPrimEnd:
         listCoordPrim = range(coordPrimStart, coordPrimEnd-1, -1)
     else:
         listCoordPrim = [coordPrimStart, ]
-        
+
     if indexCoordPrim == 0:
         return [ pyRect(coordPrim, coordSec) for coordPrim in listCoordPrim ]
     else:
@@ -222,29 +222,29 @@ def pathLine(posStart, posEnd, indexCoordPrim, coordSecAtStart):
 
 
 # TRIP: aucun remord, aucun regret, aucune responsabilité. Mes souvenirs ne sont que des fantômes.
-def findPathSimple(posStart, posEnd, orderXY=True, 
+def findPathSimple(posStart, posEnd, orderXY=True,
                    includeStart=False, includeEnd=True):
     """
     balance une liste de coordonnées permettant d'aller de start à end.
     y'a les positions start et end incluses dans la liste, ou pas...
     """
-            
+
     if orderXY:
         pathSimple = pathLine(posStart, posEnd, 0, True)
         pathSimple += pathLine(posStart, posEnd, 1, False)[1:]
     else:
         pathSimple = pathLine(posStart, posEnd, 1, True)
         pathSimple += pathLine(posStart, posEnd, 0, False)[1:]
-    
+
     if not includeStart:
         pathSimple.pop(0)
-    
+
     if len(pathSimple)>0 and not includeEnd:
         pathSimple.pop()
-    
+
     return pathSimple
 
-    
+
 def isAdjacent(pos1, pos2):
     """
     zob
@@ -255,10 +255,10 @@ def isAdjacent(pos1, pos2):
 
     if (pos1.y == pos2.y) and abs(pos2.x - pos1.x) == 1:
         return True
-        
+
     return False
-    
-    
+
+
 def adjacenceType(pos1, pos2):
     """ zob """
 
@@ -282,20 +282,20 @@ def indexInList(pos1, listPos):
     for indexPos, pos2 in enumerate(listPos):
         if pos1 == pos2:
             return indexPos
-            
+
     return -1
-    
+
 
 def isAdjacentList(pos1, listPos):
     """
     zob
     ne controle pas si pos1 est dans listPos. Faut l'avoir fait avant.
     """
-    
+
     for pos2 in listPos:
         if isAdjacent(pos1, pos2):
             return True
-    
+
     return False
 
 def randWithListCoef(listCoef):
@@ -335,7 +335,7 @@ def randWithListCoef(listCoef):
 
 
 def severalRandWithListCoef(listCoef, nbrOfChoice):
-    """ 
+    """
     génère X nombre au hasard, tous différent, entre 0 et N,
     avec des coefficient de proba différent pour chaque nombre.
     X = nbrOfChoice
@@ -348,87 +348,87 @@ def severalRandWithListCoef(listCoef, nbrOfChoice):
         choice = randWithListCoef(currentListCoef)
         listChoice.append(choice)
         currentListCoef[choice] = 0
-        
+
     return tuple(listChoice)
-        
-    
-#------------------------------------------------------------------- 
-    
+
+
+#-------------------------------------------------------------------
+
 if __name__ == "__main__":
     #test unitaire pour pathLine et findPathSimple
     #bordel de merde, faut commenter la ligne avec crappyFont pour lancer ces tests.
     #Je dois vraiment arranger ce truc.
     securedPrint("test unitaire. Hell yeah !")
-    
+
     #toutes les coords différentes. X Y. start < end
-    
+
     assert findPathSimple(pyRect(1, 20), pyRect(3, 25)) == [
-        pyRect(2, 20, 0, 0), pyRect(3, 20, 0, 0), 
-        pyRect(3, 21, 0, 0), pyRect(3, 22, 0, 0), pyRect(3, 23, 0, 0), 
+        pyRect(2, 20, 0, 0), pyRect(3, 20, 0, 0),
+        pyRect(3, 21, 0, 0), pyRect(3, 22, 0, 0), pyRect(3, 23, 0, 0),
         pyRect(3, 24, 0, 0), pyRect(3, 25, 0, 0)
     ]
 
     assert findPathSimple(pyRect(1, 20), pyRect(3, 25),
                           includeStart=True, includeEnd=True) == [
         pyRect(1, 20, 0, 0),
-        pyRect(2, 20, 0, 0), pyRect(3, 20, 0, 0), 
-        pyRect(3, 21, 0, 0), pyRect(3, 22, 0, 0), pyRect(3, 23, 0, 0), 
+        pyRect(2, 20, 0, 0), pyRect(3, 20, 0, 0),
+        pyRect(3, 21, 0, 0), pyRect(3, 22, 0, 0), pyRect(3, 23, 0, 0),
         pyRect(3, 24, 0, 0), pyRect(3, 25, 0, 0)
     ]
 
-    #toutes les coords différentes. X Y. start > end    
+    #toutes les coords différentes. X Y. start > end
 
     assert findPathSimple(pyRect(3, 25), pyRect(1, 23)) == [
-        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0), 
+        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0),
         pyRect(1, 24, 0, 0), pyRect(1, 23, 0, 0),
     ]
-    
+
     assert findPathSimple(pyRect(3, 25), pyRect(1, 23),
-                          includeStart=False, includeEnd=False) == [    
-        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0), 
+                          includeStart=False, includeEnd=False) == [
+        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0),
         pyRect(1, 24, 0, 0),
     ]
 
     assert findPathSimple(pyRect(3, 25), pyRect(1, 23),
-                          includeStart=True, includeEnd=False) == [        
-        pyRect(3, 25, 0, 0), 
-        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0), 
-        pyRect(1, 24, 0, 0), 
+                          includeStart=True, includeEnd=False) == [
+        pyRect(3, 25, 0, 0),
+        pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0),
+        pyRect(1, 24, 0, 0),
     ]
-    
+
     #toutes les coords différentes. Y X. start < end
 
     assert findPathSimple(pyRect(1, 20), pyRect(3, 25),
                           False, True, True) == [
-        pyRect(1, 20, 0, 0), pyRect(1, 21, 0, 0), pyRect(1, 22, 0, 0), 
-        pyRect(1, 23, 0, 0), pyRect(1, 24, 0, 0), 
-        pyRect(1, 25, 0, 0), 
-        pyRect(2, 25, 0, 0), pyRect(3, 25, 0, 0), 
+        pyRect(1, 20, 0, 0), pyRect(1, 21, 0, 0), pyRect(1, 22, 0, 0),
+        pyRect(1, 23, 0, 0), pyRect(1, 24, 0, 0),
+        pyRect(1, 25, 0, 0),
+        pyRect(2, 25, 0, 0), pyRect(3, 25, 0, 0),
     ]
-    
+
     #toutes les coords différentes. Y X. start > end
 
     assert findPathSimple(pyRect(3, 25), pyRect(1, 20),
                           False, True, True) == [
-        pyRect(3, 25, 0, 0), pyRect(3, 24, 0, 0), pyRect(3, 23, 0, 0), 
-        pyRect(3, 22, 0, 0), pyRect(3, 21, 0, 0), pyRect(3, 20, 0, 0), 
-        pyRect(2, 20, 0, 0), pyRect(1, 20, 0, 0) 
+        pyRect(3, 25, 0, 0), pyRect(3, 24, 0, 0), pyRect(3, 23, 0, 0),
+        pyRect(3, 22, 0, 0), pyRect(3, 21, 0, 0), pyRect(3, 20, 0, 0),
+        pyRect(2, 20, 0, 0), pyRect(1, 20, 0, 0)
     ]
-    
+
     #X pareil. (un seul test, osef)
     assert findPathSimple(pyRect(200, -4), pyRect(200, 1),
                           False, True, True) == [
-        pyRect(200, -4, 0, 0), pyRect(200, -3, 0, 0), pyRect(200, -2, 0, 0), 
-        pyRect(200, -1, 0, 0), pyRect(200,  0, 0, 0), pyRect(200,  1, 0, 0), 
+        pyRect(200, -4, 0, 0), pyRect(200, -3, 0, 0), pyRect(200, -2, 0, 0),
+        pyRect(200, -1, 0, 0), pyRect(200,  0, 0, 0), pyRect(200,  1, 0, 0),
     ]
-    
+
     #Y pareil. (un seul test, osef)
     assert findPathSimple(pyRect(2, 1337), pyRect(-2, 1337),
                           False, True, True) == [
-        pyRect( 2, 1337, 0, 0), pyRect( 1, 1337, 0, 0), pyRect( 0, 1337, 0, 0), 
-        pyRect(-1, 1337, 0, 0), pyRect(-2, 1337, 0, 0), 
+        pyRect( 2, 1337, 0, 0), pyRect( 1, 1337, 0, 0), pyRect( 0, 1337, 0, 0),
+        pyRect(-1, 1337, 0, 0), pyRect(-2, 1337, 0, 0),
     ]
-        
+
     #X et Y pareil. Là faut tout tester, car cas limite.
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), False, False, False
                          ) == []
@@ -437,24 +437,23 @@ if __name__ == "__main__":
                          ) == []
 
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), False, True,  False
-                         ) == []                         
-                         
+                         ) == []
+
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), False, True,  True
                          ) == [ pyRect(1, 2), ]
 
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), True,  False, False
-                         ) == []                      
-                                                      
+                         ) == []
+
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), True,  False, True
-                         ) == []                      
-                                                      
+                         ) == []
+
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), True,  True,  False
-                         ) == []                       
-                                                      
+                         ) == []
+
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), True,  True,  True
                          ) == [ pyRect(1, 2), ]
-    
+
     #bon ça y est, fini de jouer ?
     securedPrint("fin test unitaire. Paradise no !")
-    
-    
+

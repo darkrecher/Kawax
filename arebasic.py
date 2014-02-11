@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -28,7 +28,7 @@ from common   import (pyRect, pyRectTuple, adjacenceType,
                       SELTYPE_NONE, SELTYPE_SUPPL, SELTYPE_PATH,
                       ZAP_PATH, ZAP_SUPPL, ZAP_ADJACENT, ZAP_INTERACTIVE,
                       UP, DOWN, LEFT, RIGHT)
-                  
+
 from tile     import Tile
 
 from coins    import (Chip, ChipNothing,
@@ -36,7 +36,7 @@ from coins    import (Chip, ChipNothing,
 
 from crawler  import ArenaCrawler
 
-from gravmov  import (GravityMovements, 
+from gravmov  import (GravityMovements,
                       IN_GRAVITY_NOT, IN_GRAVITY_PARTLY, IN_GRAVITY_YES)
 
 from randchip import RandomChipGenerator
@@ -64,8 +64,8 @@ DEFAULT_LIST_CHIP_GENERATION = (
 
 class ArenaBasic():
     """
-    classe qui gère une arène du jeu avec les Tile, les Chips, 
-    
+    classe qui gère une arène du jeu avec les Tile, les Chips,
+
     type MVC : Modèle
     TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est Modèle + Vue,
     et c'est pas bien
@@ -87,9 +87,9 @@ class ArenaBasic():
             nbrPlayer : nombre de joueur qui peuvent sélectionner les tiles.
                         (pas trop géré pour l'instant)
         """
-        self.initCommonStuff(surfaceDest, posPixelTopLeft, 
+        self.initCommonStuff(surfaceDest, posPixelTopLeft,
                              arenaSize, nbrPlayer)
-        
+
         #rien à foutre là ce truc
         #self.crawlerGravityDefault = ArenaCrawler(self.arenaSize)
         #self.crawlerGravityDefault.config(RIGHT, UP)
@@ -109,19 +109,19 @@ class ArenaBasic():
         self.posPixelTopLeft = posPixelTopLeft
         self.arenaSize = arenaSize
         self.nbrPlayer = nbrPlayer
-        
+
         # TRODO : on n'a peut être pas besoin de ça. (width et height)
         self.width = self.arenaSize[0]
         self.height = self.arenaSize[1]
         self.rectArenaSize = pyRectTuple((0, 0), self.arenaSize)
         # TRODO : ne sert que pour des arena héritée. Du coup, à réfléchir.
         self.listBigObj = []
-        
-        
+
+
     def start(self):
         pass
-        
-        
+
+
     def posPixelFromPosArena(self, posArena):
         """
         conversion position d'une Tile dans l'Arène -> position en pixel à l'écran,
@@ -129,73 +129,73 @@ class ArenaBasic():
         Sorties : Rect. Position en pixel, à l'écran, du coin sup gauche de la Tile.
         La fonction ne vérifie pas si la position en param existe vraiment dans l'arène.
         Elle convertit et puis c'est tout.
-        
+
         TRODO : A mettre dans la View ?? Oui jconfirme
         """
         return pyRect(posArena.x*ARENA_TILE_WIDTH + self.posPixelTopLeft.x,
                       posArena.y*ARENA_TILE_HEIGHT + self.posPixelTopLeft.y)
-        
-    
+
+
     def createChipAtStart(self):
         """
         crée une Chip au hasard, selon des coefs prédéterminés (à l'arrache)
         Sorties : objet héritée d'une classe Chip.
         """
         return self.randomChipGenInit.chooseChip()
-    
-    
+
+
     def createMatrixTile(self):
         """
         crée l'arène, avec la matrix des Tile. Et place une Chip dans chaque Tile.
         Les Chip sont déterminées au hasard.
         """
-        
+
         self.matrixTile = []
-        
+
         #youpi. Bon, vaut mieux une boucle que des list comprehension imbriquées, à mon avis.
         for y in xrange(self.height):
-        
+
             lineTile = []
-        
+
             for x in xrange(self.width):
-            
+
                 posArenaTile = pyRect(x, y)
                 posPixelTile = self.posPixelFromPosArena(posArenaTile)
-                
+
                 newChip = self.createChipAtStart()
-                
-                param = (self.surfaceDest, posArenaTile, posPixelTile, 
+
+                param = (self.surfaceDest, posArenaTile, posPixelTile,
                          newChip, self.nbrPlayer)
-                
+
                 newTile = Tile(*param)
-                
+
                 lineTile.append(newTile)
-                
+
             self.matrixTile.append(lineTile)
-            
+
 
     def regenerateChipAfterOneGravity(self):
         return self.randomChipGenAfterGrav.chooseChip()
-    
-    
+
+
     def regenerateAllChipsAfterOneGravity(self, crawlerRegen=None):
         """ zob """
 
         if crawlerRegen is None:
             return
-            
+
         crawlerRegen.start()
-        
+
         while crawlerRegen.coP == crawlerRegen.primStart:
             tile = self.getTile(crawlerRegen.posCur)
             if tile.chip.chipType == CHIP_NOTHING:
                 tile.chip = self.regenerateChipAfterOneGravity()
             crawlerRegen.crawl()
-        
-        
+
+
     #TRODO : une fonction générique qui s'appelle tout à la fin d'une gravité.
-     
-     
+
+
     def draw(self):
         """
         zob à virer
@@ -203,23 +203,23 @@ class ArenaBasic():
         for lineTile in self.matrixTile:
             for tile in lineTile:
                 tile.draw()
-        
-            
+
+
     def getTile(self, posArena):
         """
         zob
         """
         return self.matrixTile[posArena.y][posArena.x]
-        
-        
+
+
     def getTileCoordXY(self, coordX, coordY):
         """
         zob
         """
         #oui, c'est inversé, c'est normal !
         return self.matrixTile[coordY][coordX]
-        
-        
+
+
     def selectionChange(self, posArena, idPlayer, selectionType):
         """
         zob
@@ -227,17 +227,17 @@ class ArenaBasic():
         """
         tile = self.getTile(posArena)
         tile.selectionChange(idPlayer, selectionType)
-        
-    
+
+
     def zapOnePos(self, posArena, zapType, zapForce):
         """ zob """
         tile = self.getTile(posArena)
         newChip = tile.zap(zapType, zapForce)
-        
+
         if newChip is not None:
             tile.chip = newChip
-    
-    
+
+
     def zapSelection(self, selPath, selSuppl):
         """
         zob
@@ -245,38 +245,38 @@ class ArenaBasic():
         """
         for posPath in selPath:
             self.zapOnePos(posPath, ZAP_PATH, 1)
-            
+
         for posSuppl in selSuppl:
             self.zapOnePos(posSuppl, ZAP_SUPPL, 1)
-                
-    
+
+
     def determineGravity(self, crawlerGravity=None, gravityMovements=None):
         """
         zob
         """
-        
+
         if crawlerGravity is None or gravityMovements is None:
             return None
-        
+
         crawlerGravity.start()
         continueCrawl = True
-        
+
         while continueCrawl:
-        
+
             #print "start loop at : ", crawlerGravity.posCur
-            
+
             if crawlerGravity.crawledOnPrimCoord:
                 currentState = SKIP_NOT_FALLING_TILE
-            
+
             #print "currentState start", currentState
-            
+
             chip = self.getTile(crawlerGravity.posCur).chip
             isChipTypeNothing = chip.getChipType() == CHIP_NOTHING
-                
+
             if currentState == SKIP_NOT_FALLING_TILE:
                 if isChipTypeNothing:
                     currentState = ADVANCE_NOTHING_TILE
-            
+
             elif currentState == ADVANCE_NOTHING_TILE:
                 if not isChipTypeNothing:
                     if chip.isAcceptGravityMove():
@@ -285,7 +285,7 @@ class ArenaBasic():
                         coSLastNothing = crawlerGravity.prevSec
                     else:
                         currentState = SKIP_NOT_FALLING_TILE
-                    
+
             else: #ADVANCE_CONSEQUENT_TILE
                 if isChipTypeNothing or not chip.isAcceptGravityMove():
                     #TRODO : prim and sec coordz
@@ -297,14 +297,14 @@ class ArenaBasic():
                     param = (coPCur, coSLastNothing, coSLastConsequent)
                     gravityMovements.addSegmentMove(*param)
                     #print "added inside loop: ", param
-                    
-                    if isChipTypeNothing:                    
+
+                    if isChipTypeNothing:
                         currentState = ADVANCE_NOTHING_TILE
                     else:
                         currentState = SKIP_NOT_FALLING_TILE
-        
+
             continueCrawl = crawlerGravity.crawl()
-            
+
             if (crawlerGravity.crawledOnPrimCoord
                 and currentState == ADVANCE_CONSEQUENT_TILE):
 
@@ -313,17 +313,17 @@ class ArenaBasic():
                 param = (coPCur, coSLastNothing, coSLastConsequent)
                 gravityMovements.addSegmentMove(*param)
                 #print "added at end loop: ", param
-                
+
             #print "currentState end", currentState
 
         #print self.gravityMovements.dicMovement
-        
+
         #while 1:
         #    pass
-                
-        
-                
-            #quand on a vu une chipnothing : 
+
+
+
+            #quand on a vu une chipnothing :
             #on remonte de cette chip nothing, vers le haut. on signale à toute les tiles en passant
             #qu'elles subissent une gravité vers le bas. Elles répondent qu'elles acceptent ou pas.
             #On retient les tiles soumises à grav.
@@ -331,32 +331,32 @@ class ArenaBasic():
             #Si y'a plusieurs vides dans une même colonne, on retient plusieurs colonnes.
             #Car c'est deux tombages différent, pour deux raisons différentes.
             #Donc on retient : X, Y1, Y2
-            
+
             #TRIP: "Je ne sais pas ce qui me retient de ..." "Hi hi hi. Moi je sais." "Connard".
-            
+
             #Ensuite, on prend chaque big object. On vérifie que toutes leurs tiles sont dans
             #l'une des colonne à grav. Si non, on coupe toutes les colonnes à grave comportant
             #des tiles du bigObjet. (On coupe de la tile jusqu'en haut de la colonne à grav.
-            
+
             #Tant qu'on enlève des trucs de cette manière, on continue.
-            
+
             #A la fin, on fait tomber les tiles, et les big objects qu'on sait qu'ils tombent.
-            
+
             #on ne fera plus ça du coup. (les chipNothing du haut tomberont aussi.
             #C'est pas optimisé mais c'est plus sûr.) Ah bah non. C'est bon.
-        
+
         #bon reprenons. boucle sur une liste des bigobject in gravity.
         #on verif si ils sont in_gravity. Si not, osef, on le vire de la liste.
         #si partly, on cancel les tiles. on le vire de la liste. on retient qu'on a cancelé
         #si yes, on le laisse dans la liste.
         #et on recommence jusqu'à ce que plus rien de cancelé.
         #et faut stocker une liste de bigobj soumis à la gravité.
-        
-        return gravityMovements
-        
 
-    def determineGravityFullSegment(self, 
-                                    crawlerGravity=None, 
+        return gravityMovements
+
+
+    def determineGravityFullSegment(self,
+                                    crawlerGravity=None,
                                     gravityMovements=None):
         """
         zob
@@ -365,7 +365,7 @@ class ArenaBasic():
         """
         if crawlerGravity is None or gravityMovements is None:
             return None
-        
+
         primCoordEmptySegment = None
         crawlerGravity.start()
         continueCrawl = True
@@ -380,10 +380,10 @@ class ArenaBasic():
                     print "segment vide à :", crawlerGravity.prevPrim
                     primCoordEmptySegment = crawlerGravity.prevPrim
                     continueCrawl = False
-        
+
         if primCoordEmptySegment is None:
             return gravityMovements
-            
+
         #weird
         secCoordGravStart = primCoordEmptySegment
         secCoordGravEnd = crawlerGravity.primEnd
@@ -396,45 +396,44 @@ class ArenaBasic():
             crawlerGravity.crawl()
             if crawlerGravity.crawledOnPrimCoord:
                 continueCrawl = False
-        
+
         print "gravityMovements.dicMovement : ", gravityMovements.dicMovement
         return gravityMovements
-    
-    def applyGravity(self, crawlerGravity=None, 
+
+    def applyGravity(self, crawlerGravity=None,
                      gravityMovements=None, crawlerRegen=None):
         """
         zob
-        """        
+        """
         if crawlerGravity is None or gravityMovements is None:
             return
-            
+
         for coP, listSegment in gravityMovements.dicMovement.items():
-            
+
             crawlerGravity.setPrimCoord(coP)
-            
+
             for coSStart, coSEnd in listSegment:
-            
+
                 crawlerGravity.setSecCoord(coSStart)
                 crawlerGravity.crawl()
-                
+
                 #ça tombe pil poil, mais c'est un peu expérimental, quand même.
-                while not (crawlerGravity.crawledOnPrimCoord 
+                while not (crawlerGravity.crawledOnPrimCoord
                            or crawlerGravity.coS == coSEnd):
-                   
+
                     chipSource = self.getTile(crawlerGravity.posCur).chip
                     tileDest = self.getTile(crawlerGravity.posPrev)
                     tileDest.chip = chipSource
                     crawlerGravity.crawl()
-                    
+
                 self.getTile(crawlerGravity.posPrev).chip = ChipNothing()
-                
+
         gravityMovements.cancelAllMoves()
         # TRODO : ça n'a rien à foutre là ça.
         self.regenerateAllChipsAfterOneGravity(crawlerRegen)
-    
-    
+
+
     def stimuliInteractiveTouch(self, posArena):
         """ zob """
         return False
-        
-    
+

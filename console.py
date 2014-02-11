@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -40,11 +40,11 @@ class Console():
 
     """
     classe que c'est une console pour afficher du texte.
-    
+
     type MVC : modèle et vue en même temps. Mais on a le droit, c'est un petit truc de debug
     """
 
-    def __init__(self, surfaceDest, rectConsole, fontConsole=fontConsole, 
+    def __init__(self, surfaceDest, rectConsole, fontConsole=fontConsole,
                  verticalSpace=20, nbCharMax=-1, memory=50):
         """
         constructeur. (thx captain obvious)
@@ -65,8 +65,8 @@ class Console():
         self.imgConsole = pygame.Surface(self.rectConsole.size).convert()
         self.cursorText = 0
         self.nbMaxLine = self.rectConsole.height / self.verticalSpace
-        
-        
+
+
     def addText(self, strText, colorText=COLOR_DEFAULT):
         """ zob """
         if self.nbCharMax != -1:
@@ -74,23 +74,23 @@ class Console():
                 coloredText = (tuple(colorText), strText[:self.nbCharMax])
                 self.listColoredText.append(coloredText)
                 strText = strText[self.nbCharMax:]
-                
+
         self.listColoredText.append((tuple(colorText), strText))
-        
+
         #on chope les "self.memory" derniers éléments.
         if len(self.listColoredText) > self.memory:
             self.listColoredText = self.listColoredText[-self.memory:]
-        
+
         if len(self.listColoredText) > self.nbMaxLine:
             self.cursorText = len(self.listColoredText) - self.nbMaxLine
-        
-    
+
+
     def refresh(self):
         """ zob """
         self.imgConsole.fill((0, 0, 0))
         posText = pyRect()
-        
-        indexTextEnd = min(len(self.listColoredText), 
+
+        indexTextEnd = min(len(self.listColoredText),
                            self.nbMaxLine+self.cursorText)
 
         for coloredText in self.listColoredText[self.cursorText:indexTextEnd]:
@@ -100,35 +100,35 @@ class Console():
             self.imgConsole.blit(imgText, posText)
             posText.move_ip(self.verticalSpaceMove)
 
-            
+
     def display(self):
         self.surfaceDest.blit(self.imgConsole, self.rectConsole)
-        
-        
+
+
     def moveCursorText(self, dist):
-    
+
         self.cursorText += dist
         nbTextLines = len(self.listColoredText)
         if nbTextLines > self.nbMaxLine:
             limitUp = nbTextLines - self.nbMaxLine
         else:
             limitUp = nbTextLines - 1
-            
+
         if self.cursorText < 0:
             self.cursorText = 0
         if self.cursorText > limitUp:
             self.cursorText = limitUp
-        
-        
-    def addListTextAndDisplay(self, listStr, 
+
+
+    def addListTextAndDisplay(self, listStr,
                               colorText=COLOR_DEFAULT, addSeparator=True):
-        if addSeparator: 
+        if addSeparator:
             #default color obligatoire
             self.addText("------")
         for strDescrip in listStr:
             self.addText(strDescrip, colorText)
         self.refresh()
         self.display()
-        
+
     #alias :
     #self.log = self.addListTextAndDisplay

@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Kawax version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -47,16 +47,15 @@ class GameZapCounter(GameBasic):
         self.nbZapToDo = nbZapToDo
         self.nbZapDone = 0
 
-        
+
     def zapWin(self):
         """ à overrider """
         self.nbZapDone += 1
         if self.nbZapDone == self.nbZapToDo:
-            listBla = ("BRAVO ! ", "Vous avez gagné!", 
+            listBla = ("BRAVO ! ", "Vous avez gagné!",
                        "Vous pouvez", "continuer de",
                        "jouer si vous", "trouvez ça cool")
             self.console.addListTextAndDisplay(listBla, COLOR_WIN)
         else:
             strBla = "%d/%d" % (self.nbZapDone, self.nbZapToDo)
             self.console.addListTextAndDisplay(("yeah !!", strBla, ))
-            

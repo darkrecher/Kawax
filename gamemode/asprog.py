@@ -1,7 +1,7 @@
 #/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Blarg version 1.0
+Kawax version 0.1
 
     La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
     Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
@@ -20,20 +20,20 @@ Blarg version 1.0
 
 date de la dernière relecture-commentage : None
 
-vocab et nommage des variables : 
+vocab et nommage des variables :
 
     pos : pygame.Rect, avec les valeurs width et height à 0.
           position d'un truc. (coordonnées)
     posArena : position d'une case dans l'aire de jeu
     posPixel : position d'un pixel à l'écran ou dans une Surface
     Quand y'a pos tout seul, c'est par défaut posArena, en général.
-    
+
     path : liste/tuple de posArena (à priori adjacente) formant un chemin.
-    
+
     coP : coordonnée primaire. int
     coS : coordonnée secondaire. int
     Y'a l'une des coordonnées qu'est x, l'autre y. Ca dépend du contexte.
-    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou 
+    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou
     une autre, la coordonnée primaire, c'est celle de la boucle principale,
     et la coordonnée secondaire, c'est celle de la boucle d'en dessous.
 
@@ -83,10 +83,10 @@ class GameAspirin(GameBasic):
             surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
         """
         self.initCommonStuff(surfaceDest, gravityDir, tutorialScheduler)
-        
+
         self.arena = ArenaAspirin(surfaceDest, self.posPixelArena, ARENA_SIZE, 2)
         self.selectorPlayerOne = Selector(self.arena, 0)
-        
+
         (gravPrimDir, gravSecDir, primCoordIsX, gravIncsCoord,
          regenPrimDir, regenSecDir) = DICT_GRAVITY_CONFIG[LEFT]
         self.crawlerGravRift = ArenaCrawler(ARENA_SIZE)
@@ -96,19 +96,19 @@ class GameAspirin(GameBasic):
         param = (LEFT, False, False)
         self.gravityMovementsRift = GravityMovements(*param)
         self.crawlerRegenRift = ArenaCrawler(ARENA_SIZE)
-        self.crawlerRegenRift.config(LEFT, UP)        
+        self.crawlerRegenRift.config(LEFT, UP)
         self.nbrGravityRift = 0
         self.crawlerGravRiftApply = ArenaCrawler(ARENA_SIZE)
         self.crawlerGravRiftApply.config(UP, RIGHT)
         self.nbAspirinTaken = 0
-        
+
         self.blinker = Blinker(self.arena)
-        
+
         self.populateArena()
         self.arena.draw()
         pygame.display.flip()
-        
-        
+
+
     def populateArena(self):
         """ overriden """
         for (coordX, coordY) in LIST_COORD_ASPRO_HALF_LEFT:
@@ -117,16 +117,16 @@ class GameAspirin(GameBasic):
         for (coordX, coordY) in LIST_COORD_ASPRO_HALF_RIGHT:
             tileToHardDefine = self.arena.getTile(pyRect(coordX, coordY))
             tileToHardDefine.chip = ChipAsproHalfRight()
-        
-    
+
+
     def tryToZap(self):
         """ zob """
         # TRODO : copier-coller depuis le basic, un peu quand même.
         selPath = self.selectorPlayerOne.selPath
         selSuppl = self.selectorPlayerOne.selSuppl
-        
+
         if self.zapValidatorBase.validateZap(selPath, selSuppl, []):
-        
+
             self.console.addListTextAndDisplay(("yeah !!", ))
 
             # gestion du tutorial, si y'en a un.
@@ -140,7 +140,7 @@ class GameAspirin(GameBasic):
 
             #TRODO : devrait pas y avoir un zapWin ici ?
             self.respawnZapValidator()
-            
+
             self.arena.zapSelection(selPath, selSuppl)
             self.selectorPlayerOne.cancelAllSelection()
             self.selectorPlayerOne.setStimuliLock(True)
@@ -154,42 +154,42 @@ class GameAspirin(GameBasic):
                 self.console.addListTextAndDisplay(("** RIFT **", ))
                 self.determineGravityRift()
                 self.gravityCounter = DELAY_GRAVITY
-            
-            if ((self.tutorialScheduler is None) or 
+
+            if ((self.tutorialScheduler is None) or
                (self.tutorialScheduler.getCurrentTellObjective())):
                 zapValidatorDescrip = self.zapValidatorBase.getListStrDescription()
                 self.console.addListTextAndDisplay(zapValidatorDescrip)
-            
+
         else:
             lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
             self.console.addListTextAndDisplay(lastTryDescrip + ("FAIL",))
 
-            
+
     def zapWin(self):
         """ à overrider """
         self.console.addListTextAndDisplay(("yeah !!", ))
-        
+
     def periodicAction(self):
         """ à overrider """
         pass
 
-        
+
     def applyGravityRift(self):
         """ zonc """
         param = (self.crawlerGravRift, self.gravityMovementsRift, self.crawlerRegenRift)
         self.arena.applyGravity(*param)
-    
-    
+
+
     def determineGravityRift(self):
-        """ zob 
+        """ zob
         """
         param = (self.crawlerGravRift, self.gravityMovementsRift)
         self.gravityMovementsRift = self.arena.determineGravity(*param)
-        
-        return (self.gravityMovementsRift is not None 
-                and self.gravityMovementsRift.dicMovement != {})    
-        
-        
+
+        return (self.gravityMovementsRift is not None
+                and self.gravityMovementsRift.dicMovement != {})
+
+
     def applyGravity(self):
         """ zonc """
         #TRODO : une fonction/propriété, au lieu de ce len de merte.
@@ -199,42 +199,42 @@ class GameAspirin(GameBasic):
         elif len(self.gravityMovementsRift.dicMovement) > 0:
             param = (self.crawlerGravRiftApply, self.gravityMovementsRift, self.crawlerRegenRift)
             self.arena.applyGravity(*param)
-    
+
     def determineGravity(self):
         param = (self.crawlerGrav, self.gravityMovements)
         self.gravityMovements = self.arena.determineGravity(*param)
-        
+
         #pas besoin de controler None ?
-        gravNormalToDo = (self.gravityMovements is not None 
+        gravNormalToDo = (self.gravityMovements is not None
                           and len(self.gravityMovements.dicMovement) > 0)
 
-        
+
         if gravNormalToDo:
             self.gravityCounter = DELAY_GRAVITY
             return True
-            
+
         param = (self.crawlerGravRift, self.gravityMovementsRift)
         self.gravityMovementsRift = self.arena.determineGravityFullSegment(*param)
-        
-        gravColumnToDo = (self.gravityMovementsRift is not None 
+
+        gravColumnToDo = (self.gravityMovementsRift is not None
                           and len(self.gravityMovementsRift.dicMovement) > 0)
 
         if gravColumnToDo:
             self.gravityCounter = DELAY_GRAVITY
             return True
-            
+
         return False
-        
-    
+
+
     def handleGravity(self):
-        """ zob 
+        """ zob
         True : il reste encore de la gravité à faire
         False : y'en a plus.
         osef ???
         """
         #mal foutu ??
         print "handleGravity"
-        
+
         #if self.nbrGravityRift:
         #    self.applyGravityRift()
         #    self.nbrGravityRift -= 1
@@ -242,25 +242,25 @@ class GameAspirin(GameBasic):
         #        moreGravToDo = self.determineGravityRift()
         #    else:
         #        moreGravToDo = self.determineGravity()
-        
+
         self.applyGravity()
         self.arena.removeHalfAsproBottom()
-        
+
         #copier-coller vilain
         if not self.determineGravity():
             #arrache un peu no ?
             if ((self.tutorialScheduler is not None)
                and (not self.tutorialScheduler.mustLockGameStimuli())):
                 self.selectorPlayerOne.setStimuliLock(False)
-        
-        
+
+
     def gameStimuliInteractiveTouch(self):
         """ overriden """
         #self.blinker.startBlink((pyRect(2, 2), pyRect(3, 2), pyRect(4, 2)))
         if self.arena.getAndResetTakenAsproFull():
             self.nbAspirinTaken += 1
             if self.nbAspirinTaken == NB_ASPIRIN_TO_TAKE:
-                listBla = ("BRAVO ! ", "Vous avez gagné!", 
+                listBla = ("BRAVO ! ", "Vous avez gagné!",
                            "Vous pouvez", "continuer de",
                            "jouer si vous", "trouvez ça cool")
                 self.console.addListTextAndDisplay(listBla, COLOR_WIN)
