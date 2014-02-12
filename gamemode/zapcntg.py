@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import random
@@ -33,15 +33,15 @@ COLOR_WIN = (0, 255, 255)
 
 class GameZapCounter(GameBasic):
     """
-    classe qui gère tout le jeu. Non. haha !
+    classe qui gÃ¨re tout le jeu. Non. haha !
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN, nbZapToDo=4):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         GameBasic.__init__(self, surfaceDest, gravityDir)
         self.nbZapToDo = nbZapToDo
@@ -49,12 +49,12 @@ class GameZapCounter(GameBasic):
 
 
     def zapWin(self):
-        """ à overrider """
+        """ Ã  overrider """
         self.nbZapDone += 1
         if self.nbZapDone == self.nbZapToDo:
-            listBla = ("BRAVO ! ", "Vous avez gagné!",
+            listBla = ("BRAVO ! ", "Vous avez gagnÃ©!",
                        "Vous pouvez", "continuer de",
-                       "jouer si vous", "trouvez ça cool")
+                       "jouer si vous", "trouvez Ã§a cool")
             self.console.addListTextAndDisplay(listBla, COLOR_WIN)
         else:
             strBla = "%d/%d" % (self.nbZapDone, self.nbZapToDo)

@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -51,7 +51,7 @@ class Selector():
         self.idPlayer = idPlayer
         self.stimuliLocked = False
 
-        #C'est la somme des cases selPath et selSuppl qui fait toute la sélection.
+        #C'est la somme des cases selPath et selSuppl qui fait toute la sÃ©lection.
         #ces deux trucs sont des listes de rect. (listes de pos)
         self.selPath = []
         self.selSuppl = []
@@ -158,27 +158,27 @@ class Selector():
         #on fait le premier. On le vire de listPosToBeRemoved. On le met dans une liste interm
 
         #on prend le premier de la liste interm, on fait les adjacents :
-        #On les met dans la liste intermédiaire aufuramesure,
-        #à condition que : ils soient sélectionnés, ils soient pas déjà dans la liste interm,
-        #et pas dans la liste des "totalement terminés", et ils doivent être dans la liste des
+        #On les met dans la liste intermÃ©diaire aufuramesure,
+        #Ã  condition que : ils soient sÃ©lectionnÃ©s, ils soient pas dÃ©jÃ  dans la liste interm,
+        #et pas dans la liste des "totalement terminÃ©s", et ils doivent Ãªtre dans la liste des
         #ToBeRemoved (et on les y vire).
 
         #quand c'est fait, on vire le premier de la liste interm, et on le met dans les
-        #"totalement terminés"
+        #"totalement terminÃ©s"
 
-        #etc jusqu'à ce que plus rien dans liste interm.
+        #etc jusqu'Ã  ce que plus rien dans liste interm.
 
         listPosToTreat = list(self.selPath)
         listPosTreated = []
         listPosToBeRemoved = list(self.selSuppl)
 
         #choper les suppl adjacents au tile courant (qui est suppl ou path, osef)
-        #les adjacents sont à traiter. on les enlève direct de listToRemove. On sait qu'ils sont
-        #connectés.
+        #les adjacents sont Ã  traiter. on les enlÃ¨ve direct de listToRemove. On sait qu'ils sont
+        #connectÃ©s.
         #plus loin dans la boucle, on traitera ces adjacents. On chopera leurs adjacents, qui
-        #sont peut être encore dans listToRemove.
+        #sont peut Ãªtre encore dans listToRemove.
 
-        #j'espère que ça marche. D'après mes tests, oui. Mais on sait jamais.
+        #j'espÃ¨re que Ã§a marche. D'aprÃ¨s mes tests, oui. Mais on sait jamais.
         while len(listPosToTreat) > 0:
 
             posCurrent = listPosToTreat.pop(0)
@@ -188,7 +188,7 @@ class Selector():
             for coordAdjacent in listCoordAdjacent:
                 posAdjacent = posCurrent.move(coordAdjacent)
 
-                #TRODO : s'assurer que les suivants ne sont pas évalué si y'a un False
+                #TRODO : s'assurer que les suivants ne sont pas Ã©valuÃ© si y'a un False
                 mustBeTreated = all((posAdjacent not in listPosToTreat,
                                      posAdjacent not in listPosTreated,
                                      posAdjacent in listPosToBeRemoved,
@@ -220,8 +220,8 @@ class Selector():
 
         tile = self.arena.getTile(posArena)
 
-        #ah faut faire ça autrement peut être ?
-        #y'a des chip ou des tiles qui répondent à des interactives clics.
+        #ah faut faire Ã§a autrement peut Ãªtre ?
+        #y'a des chip ou des tiles qui rÃ©pondent Ã  des interactives clics.
         if not tile.isSelectable():
             return
 
@@ -255,9 +255,9 @@ class Selector():
                 self.selPath.append(posArena)
                 self.selectionChange(posArena, SELTYPE_PATH)
                 self.selMode = SELMODE_PATH
-                #WIP : là on répond qu'on est revenu à zero. Et donc ça peut
-                #faire un interactive clic. (qui peut éventuellement
-                #annuler la sélection qu'on vient de faire, si c'est un clic
+                #WIP : lÃ  on rÃ©pond qu'on est revenu Ã  zero. Et donc Ã§a peut
+                #faire un interactive clic. (qui peut Ã©ventuellement
+                #annuler la sÃ©lection qu'on vient de faire, si c'est un clic
                 #qui fait ceci ou cela. oui mais non.
 
         elif self.selMode == SELMODE_PATH:
@@ -280,20 +280,20 @@ class Selector():
 
         #StandBY :
 
-            #si y'a rien dans le Path, (et donc à priori rien dans le suppl non plus)
+            #si y'a rien dans le Path, (et donc Ã  priori rien dans le suppl non plus)
             #on ajoute au selPath. Et on devient SELMODE_PATH
 
             #sinon, on essaye le tryToActivatePath.
             #Ca va ajouter ou couper du Path. On devient SELMODE_PATH
 
-            #Sinon, on regarde si on a pris une tile déjà sélectionné dans Suppl.
-            #On la déselectionne. Ca peut provoquer une separation.
+            #Sinon, on regarde si on a pris une tile dÃ©jÃ  sÃ©lectionnÃ© dans Suppl.
+            #On la dÃ©selectionne. Ca peut provoquer une separation.
             #On devient SELMODE_SUPPL_REMOVE
 
             #Sinon, on regarde si on a pris une tile adjacente au Path, ou au Suppl.
-            #On la sélectionne. On devient SELMODE_SUPPL_ADD
+            #On la sÃ©lectionne. On devient SELMODE_SUPPL_ADD
 
-            #Sinon, on fout tout à la poubelle, on ajoute au SELPATH, et on devient SELMODE_PATH.
+            #Sinon, on fout tout Ã  la poubelle, on ajoute au SELPATH, et on devient SELMODE_PATH.
 
         #SELMODE_PATH
 
@@ -301,18 +301,18 @@ class Selector():
 
         #SELMODE_SUPPL_REMOVE
 
-            #on déselectionne si il fait partie du Suppl.
+            #on dÃ©selectionne si il fait partie du Suppl.
             #Ca peut provoquer une separation.
             #Sinon on ne fait rien.
 
         #SELMODE_SUPPL_ADD
 
-            #on sélectionne si pas déjà sélectionné, et adjacente à du Path ou du Suppl.
+            #on sÃ©lectionne si pas dÃ©jÃ  sÃ©lectionnÃ©, et adjacente Ã  du Path ou du Suppl.
             #Sinon rien.
 
         #SELMODE_FORBIDDEN je sais pas encore. On verra plus tard.
-        #(en fait ce sera PATH_FORBIDDEN. L'interdiction en mode Suppl n'a pas de conséquence.)
-        #quoi que si. Peut être.
+        #(en fait ce sera PATH_FORBIDDEN. L'interdiction en mode Suppl n'a pas de consÃ©quence.)
+        #quoi que si. Peut Ãªtre.
 
 
     def takeStimuliStandBy(self):

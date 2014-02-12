@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -42,7 +42,7 @@ from gravmov  import (GravityMovements,
 from randchip import RandomChipGenerator
 
 
-# TRODO : on devrait plus avoir besoin de ça ici. Car l'arena s'en branle de comment elle
+# TRODO : on devrait plus avoir besoin de Ã§a ici. Car l'arena s'en branle de comment elle
 # s'affiche.
 ARENA_TILE_WIDTH  = 32
 ARENA_TILE_HEIGHT = 32
@@ -64,10 +64,10 @@ DEFAULT_LIST_CHIP_GENERATION = (
 
 class ArenaBasic():
     """
-    classe qui gère une arène du jeu avec les Tile, les Chips,
+    classe qui gÃ¨re une arÃ¨ne du jeu avec les Tile, les Chips,
 
-    type MVC : Modèle
-    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est Modèle + Vue,
+    type MVC : ModÃ¨le
+    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est ModÃ¨le + Vue,
     et c'est pas bien
     """
 
@@ -78,22 +78,22 @@ class ArenaBasic():
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
                           TRODO : a virer, of course
-            posPixelTopLeft : Rect. Position, en pixel, du coin sup gauche de l'arena à l'écran.
+            posPixelTopLeft : Rect. Position, en pixel, du coin sup gauche de l'arena Ã  l'Ã©cran.
             arenaSize : tuple de 2 elem (c'est pas un Rect). (longueur, largeur),
                         en nombre de tile. TRODO : faut un Rect. Plus pratique.
-            nbrPlayer : nombre de joueur qui peuvent sélectionner les tiles.
-                        (pas trop géré pour l'instant)
+            nbrPlayer : nombre de joueur qui peuvent sÃ©lectionner les tiles.
+                        (pas trop gÃ©rÃ© pour l'instant)
         """
         self.initCommonStuff(surfaceDest, posPixelTopLeft,
                              arenaSize, nbrPlayer)
 
-        #rien à foutre là ce truc
+        #rien Ã  foutre lÃ  ce truc
         #self.crawlerGravityDefault = ArenaCrawler(self.arenaSize)
         #self.crawlerGravityDefault.config(RIGHT, UP)
-        # TRODO : config de gravité à mettre dans un dict
+        # TRODO : config de gravitÃ© Ã  mettre dans un dict
         #self.gravityDir = DOWN
         #self.gravityMovements = GravityMovements()
         self.randomChipGenInit = RandomChipGenerator(listGenInit)
@@ -110,11 +110,11 @@ class ArenaBasic():
         self.arenaSize = arenaSize
         self.nbrPlayer = nbrPlayer
 
-        # TRODO : on n'a peut être pas besoin de ça. (width et height)
+        # TRODO : on n'a peut Ãªtre pas besoin de Ã§a. (width et height)
         self.width = self.arenaSize[0]
         self.height = self.arenaSize[1]
         self.rectArenaSize = pyRectTuple((0, 0), self.arenaSize)
-        # TRODO : ne sert que pour des arena héritée. Du coup, à réfléchir.
+        # TRODO : ne sert que pour des arena hÃ©ritÃ©e. Du coup, Ã  rÃ©flÃ©chir.
         self.listBigObj = []
 
 
@@ -124,10 +124,10 @@ class ArenaBasic():
 
     def posPixelFromPosArena(self, posArena):
         """
-        conversion position d'une Tile dans l'Arène -> position en pixel à l'écran,
-        Entrées : posArena. Rect. Position de la tile dans l'arène.
-        Sorties : Rect. Position en pixel, à l'écran, du coin sup gauche de la Tile.
-        La fonction ne vérifie pas si la position en param existe vraiment dans l'arène.
+        conversion position d'une Tile dans l'ArÃ¨ne -> position en pixel Ã  l'Ã©cran,
+        EntrÃ©es : posArena. Rect. Position de la tile dans l'arÃ¨ne.
+        Sorties : Rect. Position en pixel, Ã  l'Ã©cran, du coin sup gauche de la Tile.
+        La fonction ne vÃ©rifie pas si la position en param existe vraiment dans l'arÃ¨ne.
         Elle convertit et puis c'est tout.
 
         TRODO : A mettre dans la View ?? Oui jconfirme
@@ -138,21 +138,21 @@ class ArenaBasic():
 
     def createChipAtStart(self):
         """
-        crée une Chip au hasard, selon des coefs prédéterminés (à l'arrache)
-        Sorties : objet héritée d'une classe Chip.
+        crÃ©e une Chip au hasard, selon des coefs prÃ©dÃ©terminÃ©s (Ã  l'arrache)
+        Sorties : objet hÃ©ritÃ©e d'une classe Chip.
         """
         return self.randomChipGenInit.chooseChip()
 
 
     def createMatrixTile(self):
         """
-        crée l'arène, avec la matrix des Tile. Et place une Chip dans chaque Tile.
-        Les Chip sont déterminées au hasard.
+        crÃ©e l'arÃ¨ne, avec la matrix des Tile. Et place une Chip dans chaque Tile.
+        Les Chip sont dÃ©terminÃ©es au hasard.
         """
 
         self.matrixTile = []
 
-        #youpi. Bon, vaut mieux une boucle que des list comprehension imbriquées, à mon avis.
+        #youpi. Bon, vaut mieux une boucle que des list comprehension imbriquÃ©es, Ã  mon avis.
         for y in xrange(self.height):
 
             lineTile = []
@@ -193,12 +193,12 @@ class ArenaBasic():
             crawlerRegen.crawl()
 
 
-    #TRODO : une fonction générique qui s'appelle tout à la fin d'une gravité.
+    #TRODO : une fonction gÃ©nÃ©rique qui s'appelle tout Ã  la fin d'une gravitÃ©.
 
 
     def draw(self):
         """
-        zob à virer
+        zob Ã  virer
         """
         for lineTile in self.matrixTile:
             for tile in lineTile:
@@ -216,7 +216,7 @@ class ArenaBasic():
         """
         zob
         """
-        #oui, c'est inversé, c'est normal !
+        #oui, c'est inversÃ©, c'est normal !
         return self.matrixTile[coordY][coordX]
 
 
@@ -291,7 +291,7 @@ class ArenaBasic():
                     #TRODO : prim and sec coordz
                     #On chope pas le prev, mais le current.
                     #Car quand on indique un segment de move, le dernier
-                    #élément n'est pas dans le move. "rangestyle"
+                    #Ã©lÃ©ment n'est pas dans le move. "rangestyle"
                     coSLastConsequent = crawlerGravity.coordSec
                     coPCur = crawlerGravity.coordPrim
                     param = (coPCur, coSLastNothing, coSLastConsequent)
@@ -324,33 +324,33 @@ class ArenaBasic():
 
 
             #quand on a vu une chipnothing :
-            #on remonte de cette chip nothing, vers le haut. on signale à toute les tiles en passant
-            #qu'elles subissent une gravité vers le bas. Elles répondent qu'elles acceptent ou pas.
-            #On retient les tiles soumises à grav.
-            #C'est un peu plus compliqué que ça. Il faut retenir des colonnes à grav, de Y1 à Y2.
-            #Si y'a plusieurs vides dans une même colonne, on retient plusieurs colonnes.
-            #Car c'est deux tombages différent, pour deux raisons différentes.
+            #on remonte de cette chip nothing, vers le haut. on signale Ã  toute les tiles en passant
+            #qu'elles subissent une gravitÃ© vers le bas. Elles rÃ©pondent qu'elles acceptent ou pas.
+            #On retient les tiles soumises Ã  grav.
+            #C'est un peu plus compliquÃ© que Ã§a. Il faut retenir des colonnes Ã  grav, de Y1 Ã  Y2.
+            #Si y'a plusieurs vides dans une mÃªme colonne, on retient plusieurs colonnes.
+            #Car c'est deux tombages diffÃ©rent, pour deux raisons diffÃ©rentes.
             #Donc on retient : X, Y1, Y2
 
             #TRIP: "Je ne sais pas ce qui me retient de ..." "Hi hi hi. Moi je sais." "Connard".
 
-            #Ensuite, on prend chaque big object. On vérifie que toutes leurs tiles sont dans
-            #l'une des colonne à grav. Si non, on coupe toutes les colonnes à grave comportant
-            #des tiles du bigObjet. (On coupe de la tile jusqu'en haut de la colonne à grav.
+            #Ensuite, on prend chaque big object. On vÃ©rifie que toutes leurs tiles sont dans
+            #l'une des colonne Ã  grav. Si non, on coupe toutes les colonnes Ã  grave comportant
+            #des tiles du bigObjet. (On coupe de la tile jusqu'en haut de la colonne Ã  grav.
 
-            #Tant qu'on enlève des trucs de cette manière, on continue.
+            #Tant qu'on enlÃ¨ve des trucs de cette maniÃ¨re, on continue.
 
             #A la fin, on fait tomber les tiles, et les big objects qu'on sait qu'ils tombent.
 
-            #on ne fera plus ça du coup. (les chipNothing du haut tomberont aussi.
-            #C'est pas optimisé mais c'est plus sûr.) Ah bah non. C'est bon.
+            #on ne fera plus Ã§a du coup. (les chipNothing du haut tomberont aussi.
+            #C'est pas optimisÃ© mais c'est plus sÃ»r.) Ah bah non. C'est bon.
 
         #bon reprenons. boucle sur une liste des bigobject in gravity.
         #on verif si ils sont in_gravity. Si not, osef, on le vire de la liste.
-        #si partly, on cancel les tiles. on le vire de la liste. on retient qu'on a cancelé
+        #si partly, on cancel les tiles. on le vire de la liste. on retient qu'on a cancelÃ©
         #si yes, on le laisse dans la liste.
-        #et on recommence jusqu'à ce que plus rien de cancelé.
-        #et faut stocker une liste de bigobj soumis à la gravité.
+        #et on recommence jusqu'Ã  ce que plus rien de cancelÃ©.
+        #et faut stocker une liste de bigobj soumis Ã  la gravitÃ©.
 
         return gravityMovements
 
@@ -360,8 +360,8 @@ class ArenaBasic():
                                     gravityMovements=None):
         """
         zob
-        testé que avec des full segment de colonne. Parce que le reste,
-        je suis sûr de rien.
+        testÃ© que avec des full segment de colonne. Parce que le reste,
+        je suis sÃ»r de rien.
         """
         if crawlerGravity is None or gravityMovements is None:
             return None
@@ -377,7 +377,7 @@ class ArenaBasic():
             else:
                 crawlerGravity.crawl()
                 if crawlerGravity.crawledOnPrimCoord:
-                    print "segment vide à :", crawlerGravity.prevPrim
+                    print "segment vide Ã  :", crawlerGravity.prevPrim
                     primCoordEmptySegment = crawlerGravity.prevPrim
                     continueCrawl = False
 
@@ -417,7 +417,7 @@ class ArenaBasic():
                 crawlerGravity.setSecCoord(coSStart)
                 crawlerGravity.crawl()
 
-                #ça tombe pil poil, mais c'est un peu expérimental, quand même.
+                #Ã§a tombe pil poil, mais c'est un peu expÃ©rimental, quand mÃªme.
                 while not (crawlerGravity.crawledOnPrimCoord
                            or crawlerGravity.coS == coSEnd):
 
@@ -429,7 +429,7 @@ class ArenaBasic():
                 self.getTile(crawlerGravity.posPrev).chip = ChipNothing()
 
         gravityMovements.cancelAllMoves()
-        # TRODO : ça n'a rien à foutre là ça.
+        # TRODO : Ã§a n'a rien Ã  foutre lÃ  Ã§a.
         self.regenerateAllChipsAfterOneGravity(crawlerRegen)
 
 

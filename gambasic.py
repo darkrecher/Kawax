@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,34 +10,34 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 
 vocab et nommage des variables :
 
-    pos : pygame.Rect, avec les valeurs width et height à 0.
-          position d'un truc. (coordonnées)
+    pos : pygame.Rect, avec les valeurs width et height Ã  0.
+          position d'un truc. (coordonnÃ©es)
     posArena : position d'une case dans l'aire de jeu
-    posPixel : position d'un pixel à l'écran ou dans une Surface
-    Quand y'a pos tout seul, c'est par défaut posArena, en général.
+    posPixel : position d'un pixel Ã  l'Ã©cran ou dans une Surface
+    Quand y'a pos tout seul, c'est par dÃ©faut posArena, en gÃ©nÃ©ral.
 
-    path : liste/tuple de posArena (à priori adjacente) formant un chemin.
+    path : liste/tuple de posArena (Ã  priori adjacente) formant un chemin.
 
-    coP : coordonnée primaire. int
-    coS : coordonnée secondaire. int
-    Y'a l'une des coordonnées qu'est x, l'autre y. Ca dépend du contexte.
-    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou
-    une autre, la coordonnée primaire, c'est celle de la boucle principale,
-    et la coordonnée secondaire, c'est celle de la boucle d'en dessous.
+    coP : coordonnÃ©e primaire. int
+    coS : coordonnÃ©e secondaire. int
+    Y'a l'une des coordonnÃ©es qu'est x, l'autre y. Ca dÃ©pend du contexte.
+    En gÃ©nÃ©ral, quand on veut parcourir toute les cases d'une arena, pour une raison ou
+    une autre, la coordonnÃ©e primaire, c'est celle de la boucle principale,
+    et la coordonnÃ©e secondaire, c'est celle de la boucle d'en dessous.
 
-je rentre pas dans les détails, parce que ce serait trop long et pas intéressant pour vous :
+je rentre pas dans les dÃ©tails, parce que ce serait trop long et pas intÃ©ressant pour vous :
 Mais j'ai vraiment une vie de merde. Toute ma vie, en entier, c'est de la merde.
 """
 
@@ -61,18 +61,18 @@ from gravmov  import GravityMovements
 from tutorial import (STEP_COND_NEVER, STEP_COND_STIM, STEP_COND_SELECT_TILES,
                       COLOR_TUTORIAL)
 
-# clé : direction de la gravité
-# valeur : tuple de 6 éléments.
-#           - direction primaire du crawler permettant de déterminer quels
-#             chip sont soumises à la gravité.
-#           - direction secondaire du crawler. Ca doit être la direction inverse de la gravité.
-#           - Boolean indiquant si la coordonnée primaire de la gravité est la coord X, ou pas.
-#             Coord prim de gravité = coord qui n'est pas modifiée quand on applique la gravité.
-#             Par ex : si ça tombe vers le bas, la coord prim c'est X.
+# clÃ© : direction de la gravitÃ©
+# valeur : tuple de 6 Ã©lÃ©ments.
+#           - direction primaire du crawler permettant de dÃ©terminer quels
+#             chip sont soumises Ã  la gravitÃ©.
+#           - direction secondaire du crawler. Ca doit Ãªtre la direction inverse de la gravitÃ©.
+#           - Boolean indiquant si la coordonnÃ©e primaire de la gravitÃ© est la coord X, ou pas.
+#             Coord prim de gravitÃ© = coord qui n'est pas modifiÃ©e quand on applique la gravitÃ©.
+#             Par ex : si Ã§a tombe vers le bas, la coord prim c'est X.
 #           - Boolean indiquant le sens de variation de la coord secondaire quand on applique
-#             la gravité. True : la coord secondaire augmente. False : elle diminue.
+#             la gravitÃ©. True : la coord secondaire augmente. False : elle diminue.
 #           - direction primaire du crawler permettant de remplir les cases vides
-#             au fur et à mesure que la gravité s'applique.
+#             au fur et Ã  mesure que la gravitÃ© s'applique.
 #           - direction secondaire du crawler.
 DICT_GRAVITY_CONFIG = {
     UP    : (LEFT, DOWN, True, False, UP, RIGHT),
@@ -85,15 +85,15 @@ COLOR_ZAP_OBJECTIVE = (255, 50, 50)
 
 class GameBasic():
     """
-    classe qui gère tout le jeu.
+    classe qui gÃ¨re tout le jeu.
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN, tutorialScheduler=None):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         self.initCommonStuff(surfaceDest, gravityDir, tutorialScheduler)
 
@@ -107,14 +107,14 @@ class GameBasic():
 
 
     def populateArena(self):
-        """ à overrider. On initialise l'arena avec les chips que l'on veut, si on veut. """
+        """ Ã  overrider. On initialise l'arena avec les chips que l'on veut, si on veut. """
         pass
 
 
     def execStimTutoNext(self):
         print "next tutorializazione"
-        # TRODO : un tutorial qui ne fait rien ? Ce qui permettrait d'éviter
-        # ces tests de is None à chaque fois ?
+        # TRODO : un tutorial qui ne fait rien ? Ce qui permettrait d'Ã©viter
+        # ces tests de is None Ã  chaque fois ?
         if self.tutorialScheduler is None:
             return
         if self.tutorialScheduler.takeStimTutoNext():
@@ -124,9 +124,9 @@ class GameBasic():
                 param = (zapValidatorDescrip, COLOR_ZAP_OBJECTIVE)
                 self.console.addListTextAndDisplay(*param)
         else:
-            # re-blink, si le tuto n'avance pas, et que y'a des trucs à blinker.
-            # comme ça le joueur revoit les blinks si il a pas eu le temps de les voir.
-            # ATTENTION : code ajouté à l'arrache suite à reprise du projet à l'arrache.
+            # re-blink, si le tuto n'avance pas, et que y'a des trucs Ã  blinker.
+            # comme Ã§a le joueur revoit les blinks si il a pas eu le temps de les voir.
+            # ATTENTION : code ajoutÃ© Ã  l'arrache suite Ã  reprise du projet Ã  l'arrache.
             listPosBlink = self.tutorialScheduler.getCurrentBlink()
             if len(listPosBlink) and self.blinker is not None:
                 self.blinker.startBlink(listPosBlink)
@@ -134,9 +134,9 @@ class GameBasic():
 
     def initCommonStuff(self, surfaceDest, gravityDir, tutorialScheduler=None):
         """ zob
-        TRODO : c'est un peu le bordel d'avoir foutu ça là.
+        TRODO : c'est un peu le bordel d'avoir foutu Ã§a lÃ .
         Du coup, quand on regarde dans l'init, on se rend pas compte que y'a
-        toutes ces variables membres. donc, c'est mal de faire ça.
+        toutes ces variables membres. donc, c'est mal de faire Ã§a.
         """
         self.surfaceDest = surfaceDest
         self.blinker = None
@@ -157,8 +157,8 @@ class GameBasic():
         param = (self.posPixelArena, ARENA_SIZE, TILE_PIXEL_SIZE)
         self.stimuliStocker = StimuliStockerForGame(*param)
 
-        #Ca c'est le putain d'objet qui permet de maîtriser le temps !!!
-        #Talaaaa, je suis le maître du temps. et des frames par secondes aussi.
+        #Ca c'est le putain d'objet qui permet de maÃ®triser le temps !!!
+        #Talaaaa, je suis le maÃ®tre du temps. et des frames par secondes aussi.
         self.clock = pygame.time.Clock()
 
         self.showObjectivesAtStart = True
@@ -180,7 +180,7 @@ class GameBasic():
 
 
     def respawnZapValidator(self):
-        """ redéfinit self.zapValidatorBase (qui n'est pas bien nommé, au passage) """
+        """ redÃ©finit self.zapValidatorBase (qui n'est pas bien nommÃ©, au passage) """
         param = (self.arena, random.randrange(7, 23), random.randrange(3))
         self.zapValidatorBase = ZapValidatorBase(*param)
 
@@ -219,11 +219,11 @@ class GameBasic():
 
 
     def zapWin(self):
-        """ à overrider """
+        """ Ã  overrider """
         self.console.addListTextAndDisplay(("yeah !!", ))
 
     def periodicAction(self):
-        """ à overrider """
+        """ Ã  overrider """
         pass
 
 
@@ -233,7 +233,7 @@ class GameBasic():
         self.arena.applyGravity(*param)
 
 
-    #TRODO : y'a 2 fonctions différentes. determineGravity handleGravity.
+    #TRODO : y'a 2 fonctions diffÃ©rentes. determineGravity handleGravity.
     # On y pige rien. Ca va pas du tout.
     def determineGravity(self):
         """ zob
@@ -257,7 +257,7 @@ class GameBasic():
 
 
     def gameStimuliInteractiveTouch(self):
-        """ à overrider """
+        """ Ã  overrider """
         pass
 
 
@@ -280,7 +280,7 @@ class GameBasic():
             print "locked !!!"
             self.selectorPlayerOne.setStimuliLock(True)
         else:
-            # Euh... Faut délocker ou rien faire ? Bonne question.
+            # Euh... Faut dÃ©locker ou rien faire ? Bonne question.
             self.selectorPlayerOne.setStimuliLock(False)
 
     def playOneGame(self):
@@ -297,9 +297,9 @@ class GameBasic():
             zapValidatorDescrip = self.zapValidatorBase.getListStrDescription()
             self.console.addListTextAndDisplay(zapValidatorDescrip, COLOR_ZAP_OBJECTIVE)
 
-        while True: #ça, c'est la classe, déjà pour commencer.
+        while True: #Ã§a, c'est la classe, dÃ©jÃ  pour commencer.
 
-            #Le jeu va s'auto-ralentir pour atteindre le nombre de FPS spécifié
+            #Le jeu va s'auto-ralentir pour atteindre le nombre de FPS spÃ©cifiÃ©
             self.clock.tick(FRAME_PER_SECOND)
 
             self.stimuliStocker.resetStimuli()
@@ -318,8 +318,8 @@ class GameBasic():
                 self.selectorPlayerOne.takeStimuliActivateTile(posSelected)
 
             if self.stimuliStocker.stimuliTryZap:
-                # TRODO condition foutue à l'arrache.
-                # Faut rendre le stimuliStocker configurable. On y locke/délocke des trucs
+                # TRODO condition foutue Ã  l'arrache.
+                # Faut rendre le stimuliStocker configurable. On y locke/dÃ©locke des trucs
                 if (self.tutorialScheduler is None
                    or not self.tutorialScheduler.mustLockGameStimuli()):
                     self.tryToZap()
@@ -366,8 +366,8 @@ class GameBasic():
 
             posInteract = self.stimuliStocker.posArenaToInteractTouch
             if posInteract is not None:
-                # ça faut le foutre dans la fonction qu'on override.
-                # C'est peut être mieux non ?
+                # Ã§a faut le foutre dans la fonction qu'on override.
+                # C'est peut Ãªtre mieux non ?
                 if self.arena.stimuliInteractiveTouch(posInteract):
                     self.selectorPlayerOne.cancelAllSelection()
                     self.selectorPlayerOne.setStimuliLock(True)
@@ -376,7 +376,7 @@ class GameBasic():
                     if (self.tutorialScheduler is not None and
                         self.tutorialScheduler.takeStimInteractiveTouch()):
                         self.showCurrentTutoStep()
-                # c'est de cette fonction là que je parle.
+                # c'est de cette fonction lÃ  que je parle.
                 self.gameStimuliInteractiveTouch()
 
             #TRODO : faudra une 'tite classe pour les compteurs.
@@ -391,7 +391,7 @@ class GameBasic():
             if self.blinker is not None:
                 self.blinker.advanceTimerAndHandle()
 
-            #TRODO : optimiser ça. Pas de refresh géant à chaque frame.
+            #TRODO : optimiser Ã§a. Pas de refresh gÃ©ant Ã  chaque frame.
             self.arena.draw()
             pygame.display.flip()
 

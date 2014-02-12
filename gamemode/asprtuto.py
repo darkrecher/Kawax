@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 RÈchËr
+    Copyright 2010 R√©ch√®r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - PaternitÈ - Partage des Conditions Initiales ‡ l'Identique 2.0 France
+    Creative Commons - Paternit√© - Partage des Conditions Initiales √† l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la derniËre relecture-commentage : None
+date de la derni√®re relecture-commentage : None
 """
 
 from common   import (pyRect, pyRectTuple,
@@ -42,7 +42,7 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Salut. T'es encore l‡ ?",
+        ("Salut. T'es encore l√† ?",
          "C'est bien, t'es un bon",
          "petit soldat.",),
         (),
@@ -52,7 +52,7 @@ LIST_TUT_STEP_DESCRIP = (
         (),
         NO_SOUND,
         ("Les 2 machins blancs ",
-         "au milieu de l'Ècran,",
+         "au milieu de l'√©cran,",
          "ce sont des demis-cachets",
          "d'aspirine.",
          "Faut les coller ensemble."),
@@ -63,7 +63,7 @@ LIST_TUT_STEP_DESCRIP = (
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         NO_SOUND,
         ("Tu vas commencer par me",
-         "pÈter tout Áa."),
+         "p√©ter tout √ßa."),
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         False
     ),(
@@ -72,7 +72,7 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         ("Ouaf ouaf, Meeeuuhh",
          "gruuiik grruuuiiiikk !",
-         "Pardon. On en Ètais o˘ ?",
+         "Pardon. On en √©tais o√π ?",
          "Ah oui. Cliquez sur",
          "Suivant, comme d'hab'."),
         (),
@@ -81,10 +81,10 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_SELECT_TILES,
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         NO_SOUND,
-        ("Et maintenant, pËte-moi",
-         "Áa, histoire de vider la",
+        ("Et maintenant, p√®te-moi",
+         "√ßa, histoire de vider la",
          "colonne. Et tu regarderas",
-         "bien ce que Áa fait,",
+         "bien ce que √ßa fait,",
          "jeune boulawan."),
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         False
@@ -92,10 +92,10 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Et hop. Ca s'est dÈplacÈ",
+        ("Et hop. Ca s'est d√©plac√©",
          "vers la gauche.",
          "C'est-y pas top foufoutre",
-         "au carrÈ, Áa ? Hmmm ?"),
+         "au carr√©, √ßa ? Hmmm ?"),
         (),
         False
     ),(
@@ -111,7 +111,7 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_SELECT_TILES,
         ((4, 7), (4, 8)),
         NO_SOUND,
-        (("DÈgomme-moi ce bazar.", )),
+        (("D√©gomme-moi ce bazar.", )),
         ((4, 7), (4, 8)),
         False
     ),(
@@ -128,7 +128,7 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
         NO_SOUND,
-        ("Hop, ils se rÈunissent.",
+        ("Hop, ils se r√©unissent.",
          "Et pour finir, cliques sur",
          "le cachet entier."),
         (),
@@ -137,8 +137,8 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bon ben voil‡, c'Ètait super.",
-         "Est-ce que c'Ètait assez",
+        ("Bon ben voil√†, c'√©tait super.",
+         "Est-ce que c'√©tait assez",
          "pour vous ?"),
         (),
         False
@@ -158,11 +158,11 @@ LIST_ZAP_CONSTRAINT = (
     (15, 0),
 )
 
-# premier elem : coordonnÈes
+# premier elem : coordonn√©es
 # 2eme elem. "C" ou "S" pour dire si c'est un coin ou un sugar.
 #            Et ensuite la valeur en brouzouf du coin, si c'est un coin.
 LIST_TILE_TO_HARDDEFINE = (
-    # Pour la premiËre sÈlection
+    # Pour la premi√®re s√©lection
     ((4, 8), ("C", 5)),
     ((5, 4), ("C", 2)),
     ((5, 5), ("C", 1)),
@@ -171,7 +171,7 @@ LIST_TILE_TO_HARDDEFINE = (
     ((5, 8), ("C", 1)),
     ((6, 5), ("S", 0)),
     ((6, 6), ("C", 2)),
-    # Pour la 2Ëme
+    # Pour la 2√®me
     ((5, 0), ("C", 1)),
     ((5, 1), ("C", 2)),
     ((5, 2), ("C", 0)),
@@ -179,22 +179,22 @@ LIST_TILE_TO_HARDDEFINE = (
     ((5, 9), ("C", 10)),
     ((6, 9), ("C", 2)),
     ((7, 9), ("S", 0)),
-    # Pour la 3Ëme
+    # Pour la 3√®me
     ((4, 6), ("C", 10)),
     ((4, 7), ("C", 5)),
 )
 
 class GameAspirinTuto(GameAspirin):
     """
-    classe qui gËre tout le jeu. ou pas
+    classe qui g√®re tout le jeu. ou pas
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN):
         """
         constructeur. (thx captain obvious)
 
-        entrÈe :
-            surfaceDest : Surface principale de l'Ècran, sur laquelle s'affiche le jeu.
+        entr√©e :
+            surfaceDest : Surface principale de l'√©cran, sur laquelle s'affiche le jeu.
         """
         tutorialScheduler = TutorialScheduler(LIST_TUT_STEP_DESCRIP)
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
@@ -208,7 +208,7 @@ class GameAspirinTuto(GameAspirin):
 
     def populateArena(self):
         """ overrides """
-        # on dÈfinit des tiles. C'est mignon et gentil.
+        # on d√©finit des tiles. C'est mignon et gentil.
         for hardData in self.listTileToHardDefine:
             coord = hardData[0]
             typeTile = hardData[1][0]
@@ -227,7 +227,7 @@ class GameAspirinTuto(GameAspirin):
 
     def respawnZapValidator(self):
         """ overrides
-        redÈfinit self.zapValidatorBase (qui n'est pas bien nommÈ, au passage) """
+        red√©finit self.zapValidatorBase (qui n'est pas bien nomm√©, au passage) """
         if self.nbZapMade < len(self.listZapConstraint):
             tupleZapInfo = self.listZapConstraint[self.nbZapMade]
             brouzouf, sugar = tupleZapInfo

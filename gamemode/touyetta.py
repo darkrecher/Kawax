@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import random
@@ -31,7 +31,7 @@ from gravmov  import (GravityMovements,
 from coins    import (ChipBigObject,
                       CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR)
 
-#TRODO peut être à virer
+#TRODO peut Ãªtre Ã  virer
 from arebasic import ArenaBasic
 
 from arebigob import ArenaBigObject
@@ -55,11 +55,11 @@ PROBA_ADD_ALREADY_PRESENT = -10
 
 class ArenaTouillette(ArenaBigObject):
     """
-    classe qui gère une arène du jeu avec les Tile, les Chips,
-    Mais on peut ajouter des big object. Et la gravité les gère correctement.
+    classe qui gÃ¨re une arÃ¨ne du jeu avec les Tile, les Chips,
+    Mais on peut ajouter des big object. Et la gravitÃ© les gÃ¨re correctement.
 
-    type MVC : Modèle
-    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est Modèle + Vue,
+    type MVC : ModÃ¨le
+    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est ModÃ¨le + Vue,
     et c'est pas bien
     """
 
@@ -99,12 +99,12 @@ class ArenaTouillette(ArenaBigObject):
 
     def regenerateTouillette(self, listPosPotential):
         """ zob """
-        # faut déterminer la proba d'apparition d'une (ou plusieurs ?)
+        # faut dÃ©terminer la proba d'apparition d'une (ou plusieurs ?)
         # touillettes.  Ouais nan. Une seule. Ha !
-        # proba basse si touillette déjà en jeu
+        # proba basse si touillette dÃ©jÃ  en jeu
         # proba haute si plusieurs emplacements possible de touillette
         # 0.45 de base. on monte de 0.05 pour chaque emplacement
-        # on baisse de 0.1 pour chaque touillette présente
+        # on baisse de 0.1 pour chaque touillette prÃ©sente
 
         if listPosPotential == []:
             return

@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,32 +10,32 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 
 vocab et nommage des variables :
 
-    pos : pygame.Rect, avec les valeurs width et height à 0.
-          position d'un truc. (coordonnées)
+    pos : pygame.Rect, avec les valeurs width et height Ã  0.
+          position d'un truc. (coordonnÃ©es)
     posArena : position d'une case dans l'aire de jeu
-    posPixel : position d'un pixel à l'écran ou dans une Surface
-    Quand y'a pos tout seul, c'est par défaut posArena, en général.
+    posPixel : position d'un pixel Ã  l'Ã©cran ou dans une Surface
+    Quand y'a pos tout seul, c'est par dÃ©faut posArena, en gÃ©nÃ©ral.
 
-    path : liste/tuple de posArena (à priori adjacente) formant un chemin.
+    path : liste/tuple de posArena (Ã  priori adjacente) formant un chemin.
 
-    coP : coordonnée primaire. int
-    coS : coordonnée secondaire. int
-    Y'a l'une des coordonnées qu'est x, l'autre y. Ca dépend du contexte.
-    En général, quand on veut parcourir toute les cases d'une arena, pour une raison ou
-    une autre, la coordonnée primaire, c'est celle de la boucle principale,
-    et la coordonnée secondaire, c'est celle de la boucle d'en dessous.
+    coP : coordonnÃ©e primaire. int
+    coS : coordonnÃ©e secondaire. int
+    Y'a l'une des coordonnÃ©es qu'est x, l'autre y. Ca dÃ©pend du contexte.
+    En gÃ©nÃ©ral, quand on veut parcourir toute les cases d'une arena, pour une raison ou
+    une autre, la coordonnÃ©e primaire, c'est celle de la boucle principale,
+    et la coordonnÃ©e secondaire, c'est celle de la boucle d'en dessous.
 """
 
 import random
@@ -62,7 +62,7 @@ from bigobj   import Touillette
 
 class GameTouillette(GameBasic):
     """
-    classe qui gère tout le jeu.
+    classe qui gÃ¨re tout le jeu.
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN, tutorialScheduler=None,
@@ -70,8 +70,8 @@ class GameTouillette(GameBasic):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         self.initCommonStuff(surfaceDest, gravityDir, tutorialScheduler)
         self.nbTouilletteToRemove = 2
@@ -89,7 +89,7 @@ class GameTouillette(GameBasic):
 
 
     def periodicAction(self):
-        """ à overrider """
+        """ Ã  overrider """
 
         if self.mustDisplayRemoving:
             print "blorp"
@@ -99,9 +99,9 @@ class GameTouillette(GameBasic):
             self.mustDisplayRemoving = False
 
             if nbTouRemoved == nbTouToRem:
-                listBla = ("BRAVO ! ", "Vous avez gagné!",
+                listBla = ("BRAVO ! ", "Vous avez gagnÃ©!",
                            "Vous pouvez", "continuer de",
-                           "jouer si vous", "trouvez ça cool")
+                           "jouer si vous", "trouvez Ã§a cool")
                 self.console.addListTextAndDisplay(listBla)
             else:
                 strBla = "%d/%d" % (nbTouRemoved, nbTouToRem)
@@ -110,7 +110,7 @@ class GameTouillette(GameBasic):
 
 
     def handleGravity(self):
-        # Les actions de contrôle et d'actions sont pas dans l'ordre.
+        # Les actions de contrÃ´le et d'actions sont pas dans l'ordre.
         # Ca fait nimp.
         print "handleGravity"
         if self.arena.removeBottomTouillette():

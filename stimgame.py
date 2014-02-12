@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 RÈchËr
+    Copyright 2010 R√©ch√®r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - PaternitÈ - Partage des Conditions Initiales ‡ l'Identique 2.0 France
+    Creative Commons - Paternit√© - Partage des Conditions Initiales √† l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la derniËre relecture-commentage : None
+date de la derni√®re relecture-commentage : None
 """
 
 # TRODO : a ranger
@@ -35,7 +35,7 @@ from common   import (ARENA_SIZE, securedPrint, pyRect, pyRectTuple,
 
 class StimuliStockerForGame():
     """
-    classe qui chope les stimulis pour que la classe Game les rÈcupËre
+    classe qui chope les stimulis pour que la classe Game les r√©cup√®re
     type MVC : Vue. (Mais c'est une vue "input", pas une vue "output")
     """
 
@@ -43,7 +43,7 @@ class StimuliStockerForGame():
         """
         constructeur. (thx captain obvious)
 
-        entrÈe :
+        entr√©e :
         """
         self.posPixelArena = posPixelArena
         self.sizeArena = sizeArena
@@ -79,9 +79,9 @@ class StimuliStockerForGame():
     def determinePosArenaMouse(self):
         """
         zob
-        phrase ‡ la con : il faudrait enrichir le document XXXX. "Enrichir" c'est nul comme mot.
-        Et aussi : la valeur ajoutÈe du truc, elle est faible.
-        trip : On a ÈvitÈ le massacre avec le ridal.
+        phrase √† la con : il faudrait enrichir le document XXXX. "Enrichir" c'est nul comme mot.
+        Et aussi : la valeur ajout√©e du truc, elle est faible.
+        trip : On a √©vit√© le massacre avec le ridal.
         """
         tupleXYposPixelMouse = pygame.mouse.get_pos()
         posPixelMouse = pyRectTuple(tupleXYposPixelMouse)
@@ -90,18 +90,18 @@ class StimuliStockerForGame():
 
     def posArenaFromPosPixel(self, posPixel):
         """
-        conversion position en pixel ‡ l'Ècran -> position d'une Tile dans l'ArËne
-        EntrÈes : posPixel. Rect. Position en pixel, ‡ l'Ècran, de n'importe quel point de la Tile
-        Sorties : Soit un Rect : Position de la tile correspondante dans l'arËne.
-                  Soit None : la position en pixel ne correspond ‡ aucune Tile.
+        conversion position en pixel √† l'√©cran -> position d'une Tile dans l'Ar√®ne
+        Entr√©es : posPixel. Rect. Position en pixel, √† l'√©cran, de n'importe quel point de la Tile
+        Sorties : Soit un Rect : Position de la tile correspondante dans l'ar√®ne.
+                  Soit None : la position en pixel ne correspond √† aucune Tile.
         Donc y'a une verif dans cette fonction. OKay ?
 
         A mettre dans la View, ou dans le controleur qui va taper dedans ??
-        je sais pas si elle a quelque chose ‡ foutre l‡ cette fonction
+        je sais pas si elle a quelque chose √† foutre l√† cette fonction
         """
         #TRODO : c'est tout pouillave car on fait les calculs avant la verif.
-        # Faut inverser. (Et donc connaÓtre le coin bas droite de l'Arena.
-        #A faire quand on sÈparera en MVC comme il faut.
+        # Faut inverser. (Et donc conna√Ætre le coin bas droite de l'Arena.
+        #A faire quand on s√©parera en MVC comme il faut.
         if self.rectPixelArena.contains(posPixel):
 
             posX = (posPixel.x - self.rectPixelArena.x) / self.widthPixelTile
@@ -118,11 +118,11 @@ class StimuliStockerForGame():
         """
         zob
         """
-        #TRODO : peut Ítre Áa, Áa passe en param. Et pas chopÈ ici alarach.
+        #TRODO : peut √™tre √ßa, √ßa passe en param. Et pas chop√© ici alarach.
         self.determinePosArenaMouse()
 
         if self.posArenaMouse is None:
-            #pas de mise en stand by quand on quitte l'Ècran. C'est chiant.
+            #pas de mise en stand by quand on quitte l'√©cran. C'est chiant.
             #self.selectorPlayerOne.takeStimuliStandBy()
             self.posArenaPrevious = None
             return
@@ -144,7 +144,7 @@ class StimuliStockerForGame():
 
             self.posArenaPrevious = self.posArenaMouse
 
-        # si le previous est Ègal au current, on ne fait rien ??
+        # si le previous est √©gal au current, on ne fait rien ??
 
         return
 
@@ -155,13 +155,13 @@ class StimuliStockerForGame():
         mustInteractTouch = False
 
         for event in pygame.event.get():
-            #on quitte la partie si le joueur fait un ÈvÈnement de quittage (alt-F4, ...)
-            #et il faudra carrÈment quitter le programme.
+            #on quitte la partie si le joueur fait un √©v√©nement de quittage (alt-F4, ...)
+            #et il faudra carr√©ment quitter le programme.
             if event.type == pygl.QUIT:
                 self.stimuliQuitGame = True
 
-            #Les events MOUSEBUTTONXX correspondent ‡ n'importe quel bouton.
-            #A chaque fois, on vÈrifie que c'est du bouton gauche dont il s'agit
+            #Les events MOUSEBUTTONXX correspondent √† n'importe quel bouton.
+            #A chaque fois, on v√©rifie que c'est du bouton gauche dont il s'agit
 
             elif event.type == pygl.MOUSEBUTTONUP:
                 if not pygame.mouse.get_pressed()[0]:
@@ -185,8 +185,8 @@ class StimuliStockerForGame():
                 elif event.key == pygl.K_d:
                     self.stimuliEmptySelection = True
 
-                # SupprimÈ, car c'est de la triche.
-                # (C'Ètait pour tester sans que je me fasse chier)
+                # Supprim√©, car c'est de la triche.
+                # (C'√©tait pour tester sans que je me fasse chier)
                 #elif event.key == pygl.K_p:
                 #    self.stimuliChangeZapConstraint = True
 

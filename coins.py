@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,19 +10,19 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 
-A priori, le coin est une définition "de haut niveau". Les tiles font référence à un coin.
+A priori, le coin est une dÃ©finition "de haut niveau". Les tiles font rÃ©fÃ©rence Ã  un coin.
 Elles n'ont pas une copie d'un coin.
-Donc y'a une seule instance de coin pour la pièce de 1, une seule pour la pièce de 2, etc...
+Donc y'a une seule instance de coin pour la piÃ¨ce de 1, une seule pour la piÃ¨ce de 2, etc...
 
 Ou pas. Je sais pas encore.
 
@@ -32,7 +32,7 @@ import pygame
 
 from common import crappyFont, pyRect
 
-#Virer ça, et utiliser des isinstance ? Non. Parce que impossible à exporter.
+#Virer Ã§a, et utiliser des isinstance ? Non. Parce que impossible Ã  exporter.
 (CHIP_NOTHING,
  CHIP_COIN,
  CHIP_SUGAR,
@@ -55,8 +55,8 @@ class Chip():
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            Faut connaître le nombre de joueur, pour définir le dico de qui a sélectionné
+        entrÃ©e :
+            Faut connaÃ®tre le nombre de joueur, pour dÃ©finir le dico de qui a sÃ©lectionnÃ©
             nan.
         """
         self.chipType = chipType
@@ -109,7 +109,7 @@ class Chip():
         """
         #on peut dire None si le zap ne doit pas changer la chip.
         #ou si on a juste fait des changements internes.
-        #TRODO : bizarre comme façon de faire, non ?
+        #TRODO : bizarre comme faÃ§on de faire, non ?
         return ChipNothing()
 
 
@@ -127,13 +127,13 @@ class ChipCoin(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_COIN, brouzouf=brouzouf)
         #self.brouzouf = brouzouf
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
@@ -158,16 +158,16 @@ class ChipSugar(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_SUGAR, sugar=1)
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        #et Ã§a s'appelle toujours coinImage alors que Ã§a devrait pÃ´. osef
         param = (self.coinImage, self.color, pyRect(4, 3, 24, 24), 1)
         pygame.draw.rect(*param)
 
@@ -191,16 +191,16 @@ class ChipClope(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_CLOPE, selectable=False)
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        #et Ã§a s'appelle toujours coinImage alors que Ã§a devrait pÃ´. osef
         param = (self.coinImage, self.color, pyRect(2, 5, 28, 20), 1)
         pygame.draw.rect(*param)
 
@@ -227,13 +227,13 @@ class ChipNothing(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            Faut connaître le nombre de joueur, pour définir le dico de qui a sélectionné
+        entrÃ©e :
+            Faut connaÃ®tre le nombre de joueur, pour dÃ©finir le dico de qui a sÃ©lectionnÃ©
             nan.
         """
         Chip.__init__(self, selectable=False)
 
-        #osef aussi. En plus si y'a de la transparence ça marche plus cette affaire.
+        #osef aussi. En plus si y'a de la transparence Ã§a marche plus cette affaire.
         self.coinImage = pygame.Surface((32, 32)).convert()
 
 
@@ -256,11 +256,11 @@ class ChipBigObject(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
         Chip.__init__(self, chipType=CHIP_BIG_OBJECT, selectable=False)
         self.bigObjectFather = bigObjectFather
-        #osef aussi. En plus si y'a de la transparence ça marche plus cette affaire.
+        #osef aussi. En plus si y'a de la transparence Ã§a marche plus cette affaire.
         self.coinImage = pygame.Surface((32, 32)).convert()
 
 
@@ -287,16 +287,16 @@ class ChipAsproFull(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_FULL, selectable=False)
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        #et Ã§a s'appelle toujours coinImage alors que Ã§a devrait pÃ´. osef
         param = (self.coinImage, self.color, (16, 16), 12, 1)
         pygame.draw.circle(*param)
 
@@ -318,16 +318,16 @@ class ChipAsproHalfLeft(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_HALF_LEFT, selectable=False)
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        #et Ã§a s'appelle toujours coinImage alors que Ã§a devrait pÃ´. osef
         param = (self.coinImage, self.color, pyRect(4, 4, 24, 24), math.pi/2, 3*math.pi/2, 1)
         pygame.draw.arc(*param)
 
@@ -348,16 +348,16 @@ class ChipAsproHalfRight(Chip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
+        entrÃ©e :
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_HALF_RIGHT, selectable=False)
 
-        #tout à l'arrache. Osef.
+        #tout Ã  l'arrache. Osef.
         self.color = (240, 240, 240)
         self.coinImage = pygame.Surface((32, 32)).convert()
 
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        #et Ã§a s'appelle toujours coinImage alors que Ã§a devrait pÃ´. osef
         param = (self.coinImage, self.color, pyRect(4, 4, 24, 24), 3*math.pi/2, 5*math.pi/2, 1)
         pygame.draw.arc(*param)
 

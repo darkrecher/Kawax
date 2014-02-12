@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import os
@@ -27,7 +27,7 @@ import pygame
 import pygame.locals
 pygl = pygame.locals
 
-#ça me fait chier de foutre ça ici. Mais bon. Pas trop le choix.
+#Ã§a me fait chier de foutre Ã§a ici. Mais bon. Pas trop le choix.
 #C'est le premier module qui s'importe, et il a besoin de truc dedans. (Genre crappyFont)
 pygame.init()
 
@@ -40,7 +40,7 @@ TILE_PIXEL_SIZE = (TILE_PIXEL_WIDTH, TILE_PIXEL_HEIGHT)
 
 FRAME_PER_SECOND = 60
 
-#nom du répertoire avec les images dedans
+#nom du rÃ©pertoire avec les images dedans
 IMG_DIRECTORY_NAME = "img"
 FONT_DIRECTORY_NAME = "fontzy"
 
@@ -70,18 +70,18 @@ DELAY_GRAVITY = 18
 
 def pyRect(top=0, left=0, width=0, height=0):
     """
-    permet de générer un pygame.Rect, sans forcément donner la hauteur et la largeur.
+    permet de gÃ©nÃ©rer un pygame.Rect, sans forcÃ©ment donner la hauteur et la largeur.
 
-    pourquoi ils ont pas mis eux-même des valeurs par défaut bordel !!
-    (ou alors c'est moi qui suis à la masse et j'ai loupé une astuce.)
+    pourquoi ils ont pas mis eux-mÃªme des valeurs par dÃ©faut bordel !!
+    (ou alors c'est moi qui suis Ã  la masse et j'ai loupÃ© une astuce.)
     """
     return pygame.Rect(top, left, width, height)
 
 
 def pyRectTuple(tuplePos=(0, 0), tupleSize=(0, 0)):
     """
-    permet de générer un pygame.Rect à partir de tuples,
-    sans forcément donner la hauteur et la largeur.
+    permet de gÃ©nÃ©rer un pygame.Rect Ã  partir de tuples,
+    sans forcÃ©ment donner la hauteur et la largeur.
     """
     return pygame.Rect(tuplePos, tupleSize)
 
@@ -90,12 +90,12 @@ def securedPrint(stringToWrite):
     """
     fonction pour balancer sur la sortie standard une string unicode, avec des accents et tout.
     C'est pas garanti que les accents sortent correctement.
-    Mais c'est garanti que ça fasse jamais planter le programme.
+    Mais c'est garanti que Ã§a fasse jamais planter le programme.
 
-    entrée :
-        unicodeString : string (unicode ou pas) contenant le message à afficher.
+    entrÃ©e :
+        unicodeString : string (unicode ou pas) contenant le message Ã  afficher.
 
-    chui obligé de faire comme ça parce que le terminal du Mac est tellement merdique
+    chui obligÃ© de faire comme Ã§a parce que le terminal du Mac est tellement merdique
     qu'il peut pas afficher des accents aigus unicode.
     Il peut en afficher que si ils viennent de l'encodage 'mac-roman'. Quelle daubasse !!!
     """
@@ -104,63 +104,63 @@ def securedPrint(stringToWrite):
         print stringToWrite
     except:
         #fail ecrivage du unicode. Donc on convertit en ascii.
-        #Ca fait des caractères pourri, mais l'ascii, ça marche partout.
+        #Ca fait des caractÃ¨res pourri, mais l'ascii, Ã§a marche partout.
         unicodeString = unicode(stringToWrite)
         print unicodeString.encode("ascii", "replace")
 
 
 def loadImg(filename, colorkey=-1, doConversion=True):
     """
-    fonction piquée au tutorial chimp de pygame. Permet de charger une image.
-    Si l'image ne peut pas être chargée, envoie une message sur stdout et balance une exception
+    fonction piquÃ©e au tutorial chimp de pygame. Permet de charger une image.
+    Si l'image ne peut pas Ãªtre chargÃ©e, envoie une message sur stdout et balance une exception
 
-    entrées :
-        filename : string indiquant le nom du fichier image à charger.
-                   les images doivent toutes être dans le sous-répertoire
-                   défini par IMG_DIRECTORY_NAME
+    entrÃ©es :
+        filename : string indiquant le nom du fichier image Ã  charger.
+                   les images doivent toutes Ãªtre dans le sous-rÃ©pertoire
+                   dÃ©fini par IMG_DIRECTORY_NAME
 
-        colorkey : définition de la key transparency de l'image
+        colorkey : dÃ©finition de la key transparency de l'image
                    None :        pas de transparence
                    une couleur : la transparence est sur cette couleur
                    -1 :          on prend la couleur du pixel
-                                 en haut à gauche de l'écran
+                                 en haut Ã  gauche de l'Ã©cran
 
         doConversion : boolean. Indique si on doit faire la conversion de l'image dans le mode
                        graphique actuel. (Normalement, faut le faire tout le temps, pour
-                       optimiser). Sauf que si le mode graphique actuel n'a pas encore été
-                       déterminé, eh ben on peut pô faire de convert. Donc faudra mettre False.
+                       optimiser). Sauf que si le mode graphique actuel n'a pas encore Ã©tÃ©
+                       dÃ©terminÃ©, eh ben on peut pÃ´ faire de convert. Donc faudra mettre False.
 
     plat-dessert :
-        la Surface contenant l'image chargée
+        la Surface contenant l'image chargÃ©e
     """
 
     pathname = os.path.join(IMG_DIRECTORY_NAME, filename)
 
-    #tentative de chargement de l'image. On sort comme un voleur si ça fail
+    #tentative de chargement de l'image. On sort comme un voleur si Ã§a fail
     try:
         image = pygame.image.load(pathname)
     except pygame.error, message:
         securedPrint(u"Fail. Impossible de charger l'image : " + pathname)
-        #On peut mettre "raise" sans rien après. Ca recrache la dernière exception en cours.
+        #On peut mettre "raise" sans rien aprÃ¨s. Ca recrache la derniÃ¨re exception en cours.
         raise
 
-    #conversion dans le mode graphique actuel. On le fait qu'une fois au début
-    #et après c'est plus rapide pour les blits. Enfin... normalement, parce que sur Mac...
-    #Si on switche plein-ecran/windowed, je sais pas ce que ça donne.
-    #Si ça se trouve faudrait refaire le convert sur toutes les images.
-    #Bon, ça marce quand même. C'est pas un drame si c'est pas hyper optimisé.
+    #conversion dans le mode graphique actuel. On le fait qu'une fois au dÃ©but
+    #et aprÃ¨s c'est plus rapide pour les blits. Enfin... normalement, parce que sur Mac...
+    #Si on switche plein-ecran/windowed, je sais pas ce que Ã§a donne.
+    #Si Ã§a se trouve faudrait refaire le convert sur toutes les images.
+    #Bon, Ã§a marce quand mÃªme. C'est pas un drame si c'est pas hyper optimisÃ©.
     if doConversion:
         image = image.convert()
 
-    #ajout de la transparence en fonction du paramètre colorkey
+    #ajout de la transparence en fonction du paramÃ¨tre colorkey
     if colorkey is not None:
 
         if colorkey == -1:
             #la couleur de transparence est celle du 1er pixel
-            #en haut à gauche de l'image
+            #en haut Ã  gauche de l'image
             colorkey = image.get_at((0,0))
 
-        #je sais pas ce que c'est que ce RLEACCEL, mais ça doit être cool.
+        #je sais pas ce que c'est que ce RLEACCEL, mais Ã§a doit Ãªtre cool.
         image.set_colorkey(colorkey, pygl.RLEACCEL)
 
     #on balance l'image
@@ -221,11 +221,11 @@ def pathLine(posStart, posEnd, indexCoordPrim, coordSecAtStart):
         return [ pyRect(coordSec, coordPrim) for coordPrim in listCoordPrim ]
 
 
-# TRIP: aucun remord, aucun regret, aucune responsabilité. Mes souvenirs ne sont que des fantômes.
+# TRIP: aucun remord, aucun regret, aucune responsabilitÃ©. Mes souvenirs ne sont que des fantÃ´mes.
 def findPathSimple(posStart, posEnd, orderXY=True,
                    includeStart=False, includeEnd=True):
     """
-    balance une liste de coordonnées permettant d'aller de start à end.
+    balance une liste de coordonnÃ©es permettant d'aller de start Ã  end.
     y'a les positions start et end incluses dans la liste, ou pas...
     """
 
@@ -248,7 +248,7 @@ def findPathSimple(posStart, posEnd, orderXY=True,
 def isAdjacent(pos1, pos2):
     """
     zob
-    Renvoie False si pos1=pos2, car c'est pas de l'adjacence, ça.
+    Renvoie False si pos1=pos2, car c'est pas de l'adjacence, Ã§a.
     """
     if (pos1.x == pos2.x) and abs(pos2.y - pos1.y) == 1:
         return True
@@ -276,8 +276,8 @@ def adjacenceType(pos1, pos2):
 def indexInList(pos1, listPos):
     """
     zob
-    Je crois que y'a une fonction indexof, dans un python plus récent.
-    Mais je peux pas trop utiliser un python plus récent, sinon j'arrive pas à le py2exe.
+    Je crois que y'a une fonction indexof, dans un python plus rÃ©cent.
+    Mais je peux pas trop utiliser un python plus rÃ©cent, sinon j'arrive pas Ã  le py2exe.
     """
     for indexPos, pos2 in enumerate(listPos):
         if pos1 == pos2:
@@ -300,47 +300,47 @@ def isAdjacentList(pos1, listPos):
 
 def randWithListCoef(listCoef):
     """
-    génère un nombre au hasard, entre 0 et N,
-    avec des coefficient de proba différent pour chaque nombre
+    gÃ©nÃ¨re un nombre au hasard, entre 0 et N,
+    avec des coefficient de proba diffÃ©rent pour chaque nombre
 
-    entrée :
+    entrÃ©e :
         listCoef : liste de int (positif ou nul), indiquant les coefs pour chaque valeur
                    possible. On peut avoir des coef de 0. Dans ce cas, ce nombre ne sera
                    jamais choisi.
                    La somme des coefs peut valoir n'importe quoi, on fait avec.
 
     plat-dessert
-        int. nombre aléatoire générée, compris entre 0 et len(listCoef)-1
+        int. nombre alÃ©atoire gÃ©nÃ©rÃ©e, compris entre 0 et len(listCoef)-1
     """
 
-    #détermination de la plage de random ( = somme de tous les coefs,
-    #et génération d'un nombre au hasard, dans cette plage.
+    #dÃ©termination de la plage de random ( = somme de tous les coefs,
+    #et gÃ©nÃ©ration d'un nombre au hasard, dans cette plage.
     randMax = sum(listCoef)
     choiceValue = random.randrange(randMax)
 
     choiceIndex = 0
 
-    #il faut trouver à quelle choix correspond le nombre qu'on a généré au hasard.
+    #il faut trouver Ã  quelle choix correspond le nombre qu'on a gÃ©nÃ©rÃ© au hasard.
     #on avance dans la liste des coefs. A chaque fois, on retire le coef du choix
-    #en cours. Quand on arrive à un choix, alors que le nombre est descendu en dessous
+    #en cours. Quand on arrive Ã  un choix, alors que le nombre est descendu en dessous
     #de son coef, alors c'est ce choix qui est le bon.
-    #Et ça marche, bon c'est tout simple. Pas besoin de plus d'explication, bordel.
+    #Et Ã§a marche, bon c'est tout simple. Pas besoin de plus d'explication, bordel.
     while choiceValue >= listCoef[choiceIndex]:
 
         choiceValue -= listCoef[choiceIndex]
         choiceIndex += 1
 
-    #voili voilà, on a trouvé le choix qu'a été fait.
+    #voili voilÃ , on a trouvÃ© le choix qu'a Ã©tÃ© fait.
     return choiceIndex
 
 
 def severalRandWithListCoef(listCoef, nbrOfChoice):
     """
-    génère X nombre au hasard, tous différent, entre 0 et N,
-    avec des coefficient de proba différent pour chaque nombre.
+    gÃ©nÃ¨re X nombre au hasard, tous diffÃ©rent, entre 0 et N,
+    avec des coefficient de proba diffÃ©rent pour chaque nombre.
     X = nbrOfChoice
-    faut que nbrOfChoice <= len(listCoef), sinon ça plante.
-    La fonction ne le vérifie pas
+    faut que nbrOfChoice <= len(listCoef), sinon Ã§a plante.
+    La fonction ne le vÃ©rifie pas
     """
     listChoice = []
     currentListCoef = list(listCoef)
@@ -360,7 +360,7 @@ if __name__ == "__main__":
     #Je dois vraiment arranger ce truc.
     securedPrint("test unitaire. Hell yeah !")
 
-    #toutes les coords différentes. X Y. start < end
+    #toutes les coords diffÃ©rentes. X Y. start < end
 
     assert findPathSimple(pyRect(1, 20), pyRect(3, 25)) == [
         pyRect(2, 20, 0, 0), pyRect(3, 20, 0, 0),
@@ -376,7 +376,7 @@ if __name__ == "__main__":
         pyRect(3, 24, 0, 0), pyRect(3, 25, 0, 0)
     ]
 
-    #toutes les coords différentes. X Y. start > end
+    #toutes les coords diffÃ©rentes. X Y. start > end
 
     assert findPathSimple(pyRect(3, 25), pyRect(1, 23)) == [
         pyRect(2, 25, 0, 0), pyRect(1, 25, 0, 0),
@@ -396,7 +396,7 @@ if __name__ == "__main__":
         pyRect(1, 24, 0, 0),
     ]
 
-    #toutes les coords différentes. Y X. start < end
+    #toutes les coords diffÃ©rentes. Y X. start < end
 
     assert findPathSimple(pyRect(1, 20), pyRect(3, 25),
                           False, True, True) == [
@@ -406,7 +406,7 @@ if __name__ == "__main__":
         pyRect(2, 25, 0, 0), pyRect(3, 25, 0, 0),
     ]
 
-    #toutes les coords différentes. Y X. start > end
+    #toutes les coords diffÃ©rentes. Y X. start > end
 
     assert findPathSimple(pyRect(3, 25), pyRect(1, 20),
                           False, True, True) == [
@@ -429,7 +429,7 @@ if __name__ == "__main__":
         pyRect(-1, 1337, 0, 0), pyRect(-2, 1337, 0, 0),
     ]
 
-    #X et Y pareil. Là faut tout tester, car cas limite.
+    #X et Y pareil. LÃ  faut tout tester, car cas limite.
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), False, False, False
                          ) == []
 
@@ -454,6 +454,6 @@ if __name__ == "__main__":
     assert findPathSimple(pyRect(1, 2), pyRect(1, 2), True,  True,  True
                          ) == [ pyRect(1, 2), ]
 
-    #bon ça y est, fini de jouer ?
+    #bon Ã§a y est, fini de jouer ?
     securedPrint("fin test unitaire. Paradise no !")
 

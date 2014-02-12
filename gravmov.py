@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -39,16 +39,16 @@ class GravityMovements():
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         self.direction = direction
         self.primCoordIsX = primCoordIsX
         self.gravIncsCoord = gravIncsCoord
-        #clé : coord primaire. valeur : liste de tuple de 2 elem :
-        #(coord secondaire de début du mouvement, coord secondaire de fin)
+        #clÃ© : coord primaire. valeur : liste de tuple de 2 elem :
+        #(coord secondaire de dÃ©but du mouvement, coord secondaire de fin)
         #y'en a une qu'est plus petite que l'autre. Mais on sait pas laquelle.
-        #Ca dépend de gravIncsCoord
+        #Ca dÃ©pend de gravIncsCoord
         self.dicMovement = {}
 
 
@@ -60,10 +60,10 @@ class GravityMovements():
 
     def addSegmentMove(self, primCoord, secCoordStart, secCoordEnd):
         """zob we stay...
-        pas de verif de doublon ou de chevauchement. Y'a qu'à juste faire gaffe.
-        secCoordEnd n'est pas incluse dans l'appliccation de la gravité. "rangestyle"
-        secCoordStart est inclus. Et c'est la chip Nothing sur laquelle va s'écraser l'autre.
-        Donc y'a toujours au moins 2 éléments. Et secCoordEnd-secCoordStart >= 2 (osef)
+        pas de verif de doublon ou de chevauchement. Y'a qu'Ã  juste faire gaffe.
+        secCoordEnd n'est pas incluse dans l'appliccation de la gravitÃ©. "rangestyle"
+        secCoordStart est inclus. Et c'est la chip Nothing sur laquelle va s'Ã©craser l'autre.
+        Donc y'a toujours au moins 2 Ã©lÃ©ments. Et secCoordEnd-secCoordStart >= 2 (osef)
         """
         self.primCoord = primCoord
         self.secCoordStart = secCoordStart

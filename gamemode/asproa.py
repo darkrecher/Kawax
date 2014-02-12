@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -48,7 +48,7 @@ from randchip import RandomChipGenerator
 from arebasic import ArenaBasic
 
 
-# TRODO : on devrait plus avoir besoin de ça ici. Car l'arena s'en branle de comment elle
+# TRODO : on devrait plus avoir besoin de Ã§a ici. Car l'arena s'en branle de comment elle
 # s'affiche.
 ARENA_TILE_WIDTH  = 32
 ARENA_TILE_HEIGHT = 32
@@ -70,10 +70,10 @@ DEFAULT_LIST_CHIP_GENERATION = (
 
 class ArenaAspirin(ArenaBasic):
     """
-    classe qui gère une arène du jeu avec les Tile, les Chips,
+    classe qui gÃ¨re une arÃ¨ne du jeu avec les Tile, les Chips,
 
-    type MVC : Modèle
-    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est Modèle + Vue,
+    type MVC : ModÃ¨le
+    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est ModÃ¨le + Vue,
     et c'est pas bien
     """
 
@@ -83,22 +83,22 @@ class ArenaAspirin(ArenaBasic):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
                           TRODO : a virer, of course
-            posPixelTopLeft : Rect. Position, en pixel, du coin sup gauche de l'arena à l'écran.
+            posPixelTopLeft : Rect. Position, en pixel, du coin sup gauche de l'arena Ã  l'Ã©cran.
             arenaSize : tuple de 2 elem (c'est pas un Rect). (longueur, largeur),
                         en nombre de tile. TRODO : faut un Rect. Plus pratique.
-            nbrPlayer : nombre de joueur qui peuvent sélectionner les tiles.
-                        (pas trop géré pour l'instant)
+            nbrPlayer : nombre de joueur qui peuvent sÃ©lectionner les tiles.
+                        (pas trop gÃ©rÃ© pour l'instant)
         """
         self.initCommonStuff(surfaceDest, posPixelTopLeft,
                              arenaSize, nbrPlayer)
 
-        #rien à foutre là ce truc
+        #rien Ã  foutre lÃ  ce truc
         #self.crawlerGravityDefault = ArenaCrawler(self.arenaSize)
         #self.crawlerGravityDefault.config(RIGHT, UP)
-        # TRODO : config de gravité à mettre dans un dict
+        # TRODO : config de gravitÃ© Ã  mettre dans un dict
         #self.gravityDir = DOWN
         #self.gravityMovements = GravityMovements()
         self.randomChipGenInit = RandomChipGenerator(listGenInit)
@@ -107,7 +107,7 @@ class ArenaAspirin(ArenaBasic):
         self.randomChipGenAfterGrav = RandomChipGenerator(listGenAfterGravity)
         self.createMatrixTile()
         self.start()
-        # TRODO : on pourrait déplacer ces limites durant la partie.
+        # TRODO : on pourrait dÃ©placer ces limites durant la partie.
         self.xLimitAsproLeft = self.width/2
         self.xLimitAsproRight = self.width/2 + 1
         self.hasTakenAsproFull = False
@@ -125,24 +125,24 @@ class ArenaAspirin(ArenaBasic):
 
 
     # Pour ajouter des nouveaux aspirines :
-    # gauche à gauche et droite à droite, comme ça, pas de risque de daubage.
-    #  ou alors on décale la limite petit à petit. Ca ce sera pour le vrai mode.
-    # proba = + 0.6 ou - 0.2 si déséquilibre
+    # gauche Ã  gauche et droite Ã  droite, comme Ã§a, pas de risque de daubage.
+    #  ou alors on dÃ©cale la limite petit Ã  petit. Ca ce sera pour le vrai mode.
+    # proba = + 0.6 ou - 0.2 si dÃ©sÃ©quilibre
     # 0.5 de base. -0.2 pour chaque couple d'aspro en jeu. -O.3 pour un plein.
-    # on teste pour left et right. Les 2 peuvent apparaître d'un coup. ou pas.
+    # on teste pour left et right. Les 2 peuvent apparaÃ®tre d'un coup. ou pas.
 
     # bon c'est donc de la merde. Autre chose :
-    # les aspro gauches sont là dès le départ. les droits arrivent.
+    # les aspro gauches sont lÃ  dÃ¨s le dÃ©part. les droits arrivent.
     # les positions potentielle, c'est du haut jusqu'au l'aspro gauche le plus
-    # à droite. on fabrique un aspro droit si y'en a pas.
-    # du coup, on crée les aspro un par un. Y'a pas le choix. Pas de pseudo-réaction
-    # en chaîne. (Pas grave, on le fera pour autre chose).
+    # Ã  droite. on fabrique un aspro droit si y'en a pas.
+    # du coup, on crÃ©e les aspro un par un. Y'a pas le choix. Pas de pseudo-rÃ©action
+    # en chaÃ®ne. (Pas grave, on le fera pour autre chose).
 
     def _getPosPotentialAspro(self, crawlerRegen):
         """
         Sortie :
-            tuple de 2 listes de coord X, indiquant où on pourrait poser une
-            moitié gauche ou droite d'aspro.
+            tuple de 2 listes de coord X, indiquant oÃ¹ on pourrait poser une
+            moitiÃ© gauche ou droite d'aspro.
         """
         listPosPotentialAsproLeft = []
         listPosPotentialAsproRight = []
@@ -219,7 +219,7 @@ class ArenaAspirin(ArenaBasic):
             print "proba fail"
             return
         coordXAspro = random.choice(listPosPotentialAspro)
-        # pas très classe la coord Y = 0 en dur.
+        # pas trÃ¨s classe la coord Y = 0 en dur.
         tile = self.getTileCoordXY(coordXAspro, 0)
         tile.chip = classChipAsproHalf()
         print "regened aspro ", classChipAsproHalf, " on : ", coordXAspro
@@ -229,9 +229,9 @@ class ArenaAspirin(ArenaBasic):
         """
         a
         """
-        # calcul des probas avant le calcul des pos potentiels, car les probas peuvent être nulles
-        # (voire négatives), alors que y'a très souvent au moins une position potentielle.
-        # Pour l'instant, c'est même plus que "très souvent", c'est "toujours".
+        # calcul des probas avant le calcul des pos potentiels, car les probas peuvent Ãªtre nulles
+        # (voire nÃ©gatives), alors que y'a trÃ¨s souvent au moins une position potentielle.
+        # Pour l'instant, c'est mÃªme plus que "trÃ¨s souvent", c'est "toujours".
         listNbAspro = self._countNbAspro()
         print "listNbAspro :", listNbAspro
         tupleProbaAspro = self._calculateProbaAspro(listNbAspro)
@@ -251,7 +251,7 @@ class ArenaAspirin(ArenaBasic):
 
     def regenerateAllChipsAfterOneGravity(self, crawlerRegen=None):
         """
-        warninge : le crawler ne doit pas être None. Même si c'est la val par défaut.
+        warninge : le crawler ne doit pas Ãªtre None. MÃªme si c'est la val par dÃ©faut.
         zob """
         #self._regenerateAspro(crawlerRegen)
         ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
@@ -354,8 +354,8 @@ class ArenaAspirin(ArenaBasic):
     def regenerateAllChipsAfterOneGravity(self, crawlerRegen):
         """
         zob
-        j'override, car va falloir ajouter des trucs là dedans.
-        (Même si c'est dégueu.)
+        j'override, car va falloir ajouter des trucs lÃ  dedans.
+        (MÃªme si c'est dÃ©gueu.)
         """
         ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
 
@@ -367,8 +367,8 @@ class ArenaAspirin(ArenaBasic):
         crawlerBottom = ArenaCrawler(self.arenaSize)
         crawlerBottom.config(UP, RIGHT)
         crawlerBottom.start()
-        #le crawler doit avoir un boolean à la con indiquant si on a changé
-        #la prim coord ou pas (est-on encore dans la première ligne/col ou pas)
+        #le crawler doit avoir un boolean Ã  la con indiquant si on a changÃ©
+        #la prim coord ou pas (est-on encore dans la premiÃ¨re ligne/col ou pas)
 
         while crawlerBottom.coP == crawlerBottom.primStart:
             print crawlerBottom.posCur

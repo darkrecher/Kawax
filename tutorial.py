@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 from common   import (pyRect, pyRectTuple)
@@ -36,7 +36,7 @@ COLOR_TUTORIAL = (40, 255, 40)
 class TutorialStep():
     """
     juste un step. WIP : ajouter un ensemble de bidule en param supp.
-    les bidules incluant : TELL_OBJECTIVE. Et peut-être d'autres trucs après.
+    les bidules incluant : TELL_OBJECTIVE. Et peut-Ãªtre d'autres trucs aprÃ¨s.
     nan juste un boolean. Faites pas chier avec un rassemblage.
     """
     def __init__(self, conditionType, listPosCond, soundId,
@@ -50,31 +50,31 @@ class TutorialStep():
         self.listTextDescrip = listTextDescrip
         self.listPosBlink = listPosBlink
         self.tellObjective = tellObjective
-        # et c'est tout à priori. La classe va stocker que ça.
+        # et c'est tout Ã  priori. La classe va stocker que Ã§a.
 
 
 class TutorialScheduler():
     """
-    classe qui gère un tutorial. Y'a des steps. Dans un step, on décrit :
+    classe qui gÃ¨re un tutorial. Y'a des steps. Dans un step, on dÃ©crit :
      - type de condition pour avancer au prochain step (stim, select) y'a pas de start.
        pas besoin.
-     - liste des cases à sélectionner pour l'avançage (ou rien)
-     - le texte à blablater pour le step actuel (ou rien)
-     - le blink à blinker pour le step actuel (ou rien)
-     - est-ce qu'il faut écrire l'objectif dans la console, ou pas.
-    On fout tout ça dans un tuple, et basta.
-    Si on veut que ça fasse rien au début, on met no text, no blink, et la condition qu'on veut.
+     - liste des cases Ã  sÃ©lectionner pour l'avanÃ§age (ou rien)
+     - le texte Ã  blablater pour le step actuel (ou rien)
+     - le blink Ã  blinker pour le step actuel (ou rien)
+     - est-ce qu'il faut Ã©crire l'objectif dans la console, ou pas.
+    On fout tout Ã§a dans un tuple, et basta.
+    Si on veut que Ã§a fasse rien au dÃ©but, on met no text, no blink, et la condition qu'on veut.
     """
 
     def __init__(self, listTutStepsDescrip):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         self.listTutSteps = []
-        #conversion coord->rect, et création de la liste des steps.
+        #conversion coord->rect, et crÃ©ation de la liste des steps.
         for tutStepDescrip in listTutStepsDescrip:
             (conditionType, listCoordCond, soundId, blobTextDescrip,
              listCoordBlink, tellObjective) = tutStepDescrip
@@ -126,7 +126,7 @@ class TutorialScheduler():
     def takeStimInteractiveTouch(self):
         """
         """
-        # pas de condition ni rien. Faut que ça tombe juste.
+        # pas de condition ni rien. Faut que Ã§a tombe juste.
         if self.totallyFailed:
             return False
         if self.tutStepCurrent.conditionType != STEP_COND_INTERACTIVE_TOUCH_SUCCESSED:
@@ -138,7 +138,7 @@ class TutorialScheduler():
 
     def takeStimTileSelected(self, selPath, selSuppl):
         """
-        c'est des listes de pyRect à comparer à une liste de pyRect
+        c'est des listes de pyRect Ã  comparer Ã  une liste de pyRect
         """
         if self.totallyFailed:
             return False
@@ -155,7 +155,7 @@ class TutorialScheduler():
             if posSelected not in listPosCond:
                 self.totallyFail()
                 return False
-        #youpi ! La sélection est bonne.
+        #youpi ! La sÃ©lection est bonne.
         self.indexStep += 1
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         return True
@@ -163,28 +163,28 @@ class TutorialScheduler():
     def mustLockGameStimuli(self):
         """
         """
-        # On aura peut être besoin de faire plus subtil que ça. Mais pour l'instant non.
+        # On aura peut Ãªtre besoin de faire plus subtil que Ã§a. Mais pour l'instant non.
         return (self.tutStepCurrent.conditionType == STEP_COND_STIM)
 
     def totallyFail(self):
         self.totallyFailed = True;
 
     def getFailText(self):
-        return ("Vous n'avez pas sélectionné les bonnes cases.",
-                "Débrouillez-vous tout seul maintenant !")
+        return ("Vous n'avez pas sÃ©lectionnÃ© les bonnes cases.",
+                "DÃ©brouillez-vous tout seul maintenant !")
 
     # faut une classe externe, ou un overridage des classes actuelles ?
     # externe je dirais.
-    # avec toutes les étapes. Et ici, dans le Game (voir GameBasic), on appelle des
-    # fonctions de cette classe externe, ici ou là, comme il faut. Et ça fait avancer,
-    # ou pas. C'est Game qui gère tout. Mais il demande à la classe Tutorial comment
-    # ça se passe pour lui. Si Tutorial demande de locker. Game va locker.
-    # Y'a que 3 façons d'avancer : start, le stimTutoNext, et choisir les bonnes chips
-    # Et si on choisit pas les bonnes chips, ça fail direct. On peut plus du tout avancer.
-    # Un avançage provoque une écriture de texte dans la console, et du blink. C tout.
+    # avec toutes les Ã©tapes. Et ici, dans le Game (voir GameBasic), on appelle des
+    # fonctions de cette classe externe, ici ou lÃ , comme il faut. Et Ã§a fait avancer,
+    # ou pas. C'est Game qui gÃ¨re tout. Mais il demande Ã  la classe Tutorial comment
+    # Ã§a se passe pour lui. Si Tutorial demande de locker. Game va locker.
+    # Y'a que 3 faÃ§ons d'avancer : start, le stimTutoNext, et choisir les bonnes chips
+    # Et si on choisit pas les bonnes chips, Ã§a fail direct. On peut plus du tout avancer.
+    # Un avanÃ§age provoque une Ã©criture de texte dans la console, et du blink. C tout.
 
-    # on met dans des propriétés "publiques" le texte et les blinks en cours.
-    # La classe met à jour ses propriétés lorqu'elle doit avancer. (donc quand on
+    # on met dans des propriÃ©tÃ©s "publiques" le texte et les blinks en cours.
+    # La classe met Ã  jour ses propriÃ©tÃ©s lorqu'elle doit avancer. (donc quand on
     # lui propose un avancement et qu'elle accepte).
 
 

@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 RÈchËr
+    Copyright 2010 R√©ch√®r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - PaternitÈ - Partage des Conditions Initiales ‡ l'Identique 2.0 France
+    Creative Commons - Paternit√© - Partage des Conditions Initiales √† l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la derniËre relecture-commentage : None
+date de la derni√®re relecture-commentage : None
 """
 
 LANGUAGE_FRENCH = 0
@@ -29,7 +29,7 @@ languageCurrent = LANGUAGE_FRENCH
 MANUAL_TEXTS = {
     LANGUAGE_FRENCH : (
         "jeu :",
-        "   S : valider      D : annuler sÈlection",
+        "   S : valider      D : annuler s√©lection",
         "   L : quitter",
         "tutoriel :",
         "   F : message suivant / refaire clignoter",
@@ -43,7 +43,7 @@ MANUAL_TEXTS = {
     ),
 }
 
-# TODO : Áa marche pas ce truc l‡. Comment on Ècrit dans une variable globale ?
+# TODO : √ßa marche pas ce truc l√†. Comment on √©crit dans une variable globale ?
 def changeLanguage(languageNew):
     #language.languageCurrent = languageNew
     languageCurrent = languageNew

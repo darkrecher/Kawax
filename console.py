@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,19 +10,19 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 
-A priori, le coin est une définition "de haut niveau". Les tiles font référence à un coin.
+A priori, le coin est une dÃ©finition "de haut niveau". Les tiles font rÃ©fÃ©rence Ã  un coin.
 Elles n'ont pas une copie d'un coin.
-Donc y'a une seule instance de coin pour la pièce de 1, une seule pour la pièce de 2, etc...
+Donc y'a une seule instance de coin pour la piÃ¨ce de 1, une seule pour la piÃ¨ce de 2, etc...
 
 Ou pas. Je sais pas encore.
 
@@ -41,7 +41,7 @@ class Console():
     """
     classe que c'est une console pour afficher du texte.
 
-    type MVC : modèle et vue en même temps. Mais on a le droit, c'est un petit truc de debug
+    type MVC : modÃ¨le et vue en mÃªme temps. Mais on a le droit, c'est un petit truc de debug
     """
 
     def __init__(self, surfaceDest, rectConsole, fontConsole=fontConsole,
@@ -49,8 +49,8 @@ class Console():
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            Faut connaître le nombre de joueur, pour définir le dico de qui a sélectionné
+        entrÃ©e :
+            Faut connaÃ®tre le nombre de joueur, pour dÃ©finir le dico de qui a sÃ©lectionnÃ©
             nan.
         """
         self.surfaceDest = surfaceDest
@@ -77,7 +77,7 @@ class Console():
 
         self.listColoredText.append((tuple(colorText), strText))
 
-        #on chope les "self.memory" derniers éléments.
+        #on chope les "self.memory" derniers Ã©lÃ©ments.
         if len(self.listColoredText) > self.memory:
             self.listColoredText = self.listColoredText[-self.memory:]
 

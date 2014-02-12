@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -29,16 +29,16 @@ class ArenaCrawler():
     """
     classe qui parcourt une matrice en 2D, dans tous les sens qu'on veut. Yeah
 
-    trip/ Je voulais contrebalancer le truc. Je sais pas si c'était une bonne idée.
-    C'est bizarre cette histoire de poisson quand même. Toujours un problème d'équité.
+    trip/ Je voulais contrebalancer le truc. Je sais pas si c'Ã©tait une bonne idÃ©e.
+    C'est bizarre cette histoire de poisson quand mÃªme. Toujours un problÃ¨me d'Ã©quitÃ©.
     """
 
     def __init__(self, arenaSize):
         """
         constructeur. (thx captain obvious)
-        L'aïle
+        L'aÃ¯le
 
-        entrée :
+        entrÃ©e :
 
         """
         self.arenaSize = arenaSize #tuple de 2 val. Not a rect
@@ -64,7 +64,7 @@ class ArenaCrawler():
 
         self._fillDictCrawlConfiguration(False, LIST_DIR_ID_PRIM_Y)
         self._fillDictCrawlConfiguration(True, LIST_DIR_ID_PRIM_X)
-        # TRODO : init les trucs à None.
+        # TRODO : init les trucs Ã  None.
         self.hasMoreToCrawl = None
 
 
@@ -81,9 +81,9 @@ class ArenaCrawler():
     def config(self, primDir=LEFT, secDir=DOWN):
         """
         zob
-        ça devrait pas être RIGHT la primDir par défaut
+        Ã§a devrait pas Ãªtre RIGHT la primDir par dÃ©faut
         """
-        #Si la clé est pas bonne, ça pète. C'est ce qu'on veut.
+        #Si la clÃ© est pas bonne, Ã§a pÃ¨te. C'est ce qu'on veut.
         crawlConfig = self.DICT_CRAWL_CONFIGURATION[(primDir, secDir)]
 
         (self.isPrimX, self.primStart, self.primEnd, self.primMove,
@@ -187,8 +187,8 @@ class ArenaCrawler():
 #-------------------------------------------------------------------
 
 if __name__ == "__main__":
-    # TRODO : faut inverser tout ces tests. Le crawl est à la fin.
-    # Bien joué !!!
+    # TRODO : faut inverser tout ces tests. Le crawl est Ã  la fin.
+    # Bien jouÃ© !!!
     aC = ArenaCrawler((3, 7))
     aC.config(RIGHT, UP)
     aC.start()

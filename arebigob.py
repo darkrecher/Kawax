@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 RÈchËr
+    Copyright 2010 R√©ch√®r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - PaternitÈ - Partage des Conditions Initiales ‡ l'Identique 2.0 France
+    Creative Commons - Paternit√© - Partage des Conditions Initiales √† l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la derniËre relecture-commentage : None
+date de la derni√®re relecture-commentage : None
 """
 
 
@@ -34,25 +34,25 @@ from arebasic import ArenaBasic
 
 class ArenaBigObject(ArenaBasic):
     """
-    classe qui gËre une arËne du jeu avec les Tile, les Chips,
-    Mais on peut ajouter des big object. Et la gravitÈ les gËre correctement.
+    classe qui g√®re une ar√®ne du jeu avec les Tile, les Chips,
+    Mais on peut ajouter des big object. Et la gravit√© les g√®re correctement.
 
-    type MVC : ModËle
-    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est ModËle + Vue,
+    type MVC : Mod√®le
+    TRODO : virer les fonctions d'affichage. Parce que pour l'instant c'est Mod√®le + Vue,
     et c'est pas bien
     """
 
     def addBigObject(self, classBigObject, posTopLeft):
         """
-        crÈe et ajoute un gros objet dans l'ArËne.
-        (Ca Ècrase les Chip sur lesquelles il se pose)
+        cr√©e et ajoute un gros objet dans l'Ar√®ne.
+        (Ca √©crase les Chip sur lesquelles il se pose)
 
-        entrÈes : classBigObject. Classe hÈritÈe de BigObject. Type du gos objet.
-                  posTopLeft. Rect. Position, dans l'arËne, du coin sup gauche de l'objet.
+        entr√©es : classBigObject. Classe h√©rit√©e de BigObject. Type du gos objet.
+                  posTopLeft. Rect. Position, dans l'ar√®ne, du coin sup gauche de l'objet.
         """
         bigObject = classBigObject(posTopLeft)
-        #Ecrasement des Chip. On doit mettre, dans l'arËne, des Chip de type BigObject
-        #Sur toutes les Tiles occupÈe par le BigObject.
+        #Ecrasement des Chip. On doit mettre, dans l'ar√®ne, des Chip de type BigObject
+        #Sur toutes les Tiles occup√©e par le BigObject.
         for posTileBigObj in bigObject.listPosArena:
             self.getTile(posTileBigObj).chip = ChipBigObject(bigObject)
 
@@ -61,7 +61,7 @@ class ArenaBigObject(ArenaBasic):
 
     def draw(self):
         """
-        zob ‡ virer
+        zob √† virer
         """
         for lineTile in self.matrixTile:
             for tile in lineTile:
@@ -125,11 +125,11 @@ class ArenaBigObject(ArenaBasic):
         if gravityMovements is None:
             return
 
-        # un peu bizarre, parce qu'on bouge les gros objets alors qu'on a dÈj‡ "acquittÈ"
-        # les mouvements de gravitÈ, en appelant la super-fonction ArenaBasic.applyGravity.
-        # (Y'a eu le cancelAllMoves, la rÈgÈnarion des chip).
-        # Ca fait un peu "oups, je bouge mes gros objets ‡ l'arrache, aprËs tout le reste".
-        # Mais Áa tient le coup, donc on laisse comme Áa.
+        # un peu bizarre, parce qu'on bouge les gros objets alors qu'on a d√©j√† "acquitt√©"
+        # les mouvements de gravit√©, en appelant la super-fonction ArenaBasic.applyGravity.
+        # (Y'a eu le cancelAllMoves, la r√©g√©narion des chip).
+        # Ca fait un peu "oups, je bouge mes gros objets √† l'arrache, apr√®s tout le reste".
+        # Mais √ßa tient le coup, donc on laisse comme √ßa.
         gravityDir = gravityMovements.direction
         for bigObj in self.listBigObjInGravity:
             bigObj.moveDirDist(gravityDir)

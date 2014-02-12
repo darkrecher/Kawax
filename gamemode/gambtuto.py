@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 from common   import (pyRect, pyRectTuple,
@@ -44,14 +44,14 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Bienvenue dans le premier",
-                "tutoriel de Kawax.",
-                "Appuyez sur la touche 'F'",
+                u"Bienvenue dans le premier",
+                u"tutoriel de Kawax.",
+                u"Appuyez sur la touche 'F'",
             ),
             LANGUAGE_ENGLISH : (
-                "Welcome to the first",
-                "kawax tutorial.",
-                "Press the 'F' key",
+                u"Welcome to the first",
+                u"kawax tutorial.",
+                u"Press the 'F' key",
             )
         },
         (),
@@ -62,29 +62,29 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
 #        {
 #            LANGUAGE_FRENCH : (
-#                "",
+#                u"",
 #            ),
 #            LANGUAGE_ENGLISH : (
-#                "",
+#                u"",
 #            )
 #        },
         {
             LANGUAGE_FRENCH : (
-                "Vous êtes un stagiaire",
-                "dans une quelconque",
-                "grande entreprise.",
-                "Votre chef vous a confié",
-                "son stock de centimes de",
-                "brouzoufs, vous devez",
-                "lui ramener du café."
+                u"Vous Ãªtes un stagiaire",
+                u"dans une quelconque",
+                u"grandeÂ entreprise.",
+                u"Votre chef vous a confiÃ©",
+                u"son stock de centimes de",
+                u"brouzoufs, vous devez",
+                u"lui ramener du cafÃ©."
             ),
             LANGUAGE_ENGLISH : (
-                "You are a random trainee",
-                "in a random big company.",
-                "Your boss gave you his",
-                "own buck-cent stock.",
-                "You must bring him some",
-                "coffee back.",
+                u"You are a random trainee",
+                u"in a random big company.",
+                u"Your boss gave you his",
+                u"own buck-cent stock.",
+                u"You must bring him some",
+                u"coffee back.",
             )
         },
         (),
@@ -95,19 +95,19 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Le premier café coûte",
-                "13 centimes.",
-                "Vous devez sélectionner",
-                "un groupe de pièces",
-                "correspondant à cette",
-                "somme.",
+                u"Le premier cafÃ© coÃ»te",
+                u"13 centimes.",
+                u"Vous devez sÃ©lectionner",
+                u"un groupe de piÃ¨ces",
+                u"correspondant Ã  cette",
+                u"somme.",
             ),
             LANGUAGE_ENGLISH : (
-                "The first coffee costs",
-                "13 buck-cents. You must",
-                "select a group of coins",
-                "corresponding to",
-                "that price.",
+                u"The first coffee costs",
+                u"13 buck-cents. You must",
+                u"select a group of coins",
+                u"corresponding to",
+                u"that price.",
             )
         },
         (),
@@ -118,15 +118,15 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Cliquez sur toutes les",
-                "cases clignotantes,",
-                "puis appuyez sur",
-                "la touche 'S'."
+                u"Cliquez sur toutes les",
+                u"cases clignotantes,",
+                u"puis appuyez sur",
+                u"la touche 'S'."
             ),
             LANGUAGE_ENGLISH : (
-                "Click all the blinking",
-                "tiles, then press",
-                "the 'S' key.",
+                u"Click all the blinking",
+                u"tiles, then press",
+                u"the 'S' key.",
             )
         },
         ((2, 3), (3, 3), (3, 4), (3, 5)),
@@ -137,12 +137,12 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Bravo, vous avez fait",
-                "votre premier café."
+                u"Bravo, vous avez fait",
+                u"votre premier cafÃ©."
             ),
             LANGUAGE_ENGLISH : (
-                "Congratulation, you",
-                "made your first coffee.",
+                u"Congratulation, you",
+                u"made your first coffee.",
             )
         },
         (),
@@ -153,19 +153,19 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Il existe 2 façons de",
-                "sélectionner les pièces.",
-                "Le chemin principal",
-                "(en rouge), et les",
-                "pièces additionnelles.",
-                "(en orange)"
+                u"Il existe 2 faÃ§ons de",
+                u"sÃ©lectionner les piÃ¨ces.",
+                u"Le chemin principal",
+                u"(en rouge), et les",
+                u"piÃ¨ces additionnelles.",
+                u"(en orange)"
             ),
             LANGUAGE_ENGLISH : (
-                "Coins can be selected",
-                "by two different ways.",
-                "The main path (red),",
-                "and the additionnal path",
-                "(orange).",
+                u"Coins can be selected",
+                u"by two different ways.",
+                u"The main path (red),",
+                u"and the additionnal path",
+                u"(orange).",
             )
         },
 
@@ -177,18 +177,18 @@ LIST_TUT_STEP_DESCRIP = (
         NO_SOUND,
         {
             LANGUAGE_FRENCH : (
-                "Le chemin principal",
-                "est créé en premier.",
-                "Il se trace en",
-                "passant sur les pièces,",
-                "avec le bouton",
-                "de la souris appuyé."
+                u"Le chemin principal",
+                u"est crÃ©Ã© en premier.",
+                u"Il se trace en",
+                u"passant sur les piÃ¨ces,",
+                u"avec le bouton",
+                u"de la souris appuyÃ©."
             ),
             LANGUAGE_ENGLISH : (
-                "The main path is created",
-                "first, by hovering over",
-                "the coins, with the mouse",
-                "button pressed",
+                u"The main path is created",
+                u"first, by hovering over",
+                u"the coins, with the mouse",
+                u"button pressed",
             )
         },
         (),
@@ -197,79 +197,79 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Les pièces additionnelles",
-         "s'ajoutent en cliquant",
-         "sur une pièce adjacente",
-         "au chemin principal."),
+        (u"Les piÃ¨ces additionnelles",
+         u"s'ajoutent en cliquant",
+         u"sur une piÃ¨ce adjacente",
+         u"au chemin principal."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (7, 6)),
         NO_SOUND,
-        ("Essayez de prendre",
-         "toutes ces pièces."),
+        (u"Essayez de prendre",
+         u"toutes ces piÃ¨ces."),
         ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (7, 6)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Félicitations,",
-         "vous êtes un bon",
-         "petit stagiaire."),
+        (u"FÃ©licitations,",
+         u"vous Ãªtes un bon",
+         u"petit stagiaire."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Certains cafés ",
-         "nécessitent d'ajouter",
-         "du sucre. Vous devrez",
-         "sélectionner le nombre",
-         "de morceaux requis, ",
-         "en plus des pièces."),
+        (u"Certains cafÃ©s ",
+         u"nÃ©cessitent d'ajouter",
+         u"du sucre. Vous devrez",
+         u"sÃ©lectionner le nombre",
+         u"de morceaux requis, ",
+         u"en plus des piÃ¨ces."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((7, 7), (8, 7), (9, 7), (8, 8), (7, 9), (8, 9), (9, 9)),
         NO_SOUND,
-        ("Le prochain café coûte",
-         "9 centimes de brouzoufs",
-         "et 2 sucres. Sélectionnez",
-         "les cases indiquées."),
+        (u"Le prochain cafÃ© coÃ»te",
+         u"9 centimes de brouzoufs",
+         u"et 2 sucres. SÃ©lectionnez",
+         u"les cases indiquÃ©es."),
         ((7, 7), (8, 7), (9, 7), (8, 8), (7, 9), (8, 9), (9, 9)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bravo, vous avez ",
-         "successifié à votre",
-         "examen d'embauche.",
-         "Chaque fois que vous",
-         "réussirez un café,",
-         "l'objectif suivant",
-         "vous sera spécifié,",
-         "en terme de brouzoufs",
-         "et de nombre de sucres."),
+        (u"Bravo, vous avez ",
+         u"successifiÃ© Ã  votre",
+         u"examen d'embauche.",
+         u"Chaque fois que vous",
+         u"rÃ©ussirez un cafÃ©,",
+         u"l'objectif suivant",
+         u"vous sera spÃ©cifiÃ©,",
+         u"en terme de brouzoufs",
+         u"et de nombre de sucres."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Vous pouvez continuer",
-         "à vous entraîner dans",
-         "ce tutoriel.",
-         "Lorsque vous vous",
-         "sentirez suffisament",
-         "monté en compétence,",
-         "appuyez sur le bouton",
-         "'Terminer' pour initier",
-         "le premier niveau."),
+        (u"Vous pouvez continuer",
+         u"Ã  vous entraÃ®ner dans",
+         u"ce tutoriel.",
+         u"Lorsque vous vous",
+         u"sentirez suffisament",
+         u"montÃ© en compÃ©tence,",
+         u"appuyez sur le bouton",
+         u"'Terminer' pour initier",
+         u"le premier niveau."),
         (),
         False
     ),(
@@ -288,16 +288,16 @@ LIST_ZAP_CONSTRAINT = (
     ( 9, 2),
 )
 
-# premier elem : coordonnées
+# premier elem : coordonnÃ©es
 # 2eme elem. "C" ou "S" pour dire si c'est un coin ou un sugar.
 #            Et ensuite la valeur en brouzouf du coin, si c'est un coin.
 LIST_TILE_TO_HARDDEFINE = (
-    # Pour la première sélection
+    # Pour la premiÃ¨re sÃ©lection
     ((2, 3), ("C", 5)),
     ((3, 3), ("C", 5)),
     ((3, 4), ("C", 2)),
     ((3, 5), ("C", 1)),
-    # Pour la 2ème
+    # Pour la 2Ã¨me
     ((4, 5), ("C", 2)),
     ((5, 5), ("C", 1)),
     ((6, 5), ("C", 5)),
@@ -305,7 +305,7 @@ LIST_TILE_TO_HARDDEFINE = (
     ((8, 5), ("C", 2)),
     ((9, 5), ("C", 5)),
     ((7, 6), ("C", 2)),
-    # Pour la 3ème
+    # Pour la 3Ã¨me
     ((7, 7), ("C", 2)),
     ((8, 7), ("C", 2)),
     ((9, 7), ("S", 1)),
@@ -317,15 +317,15 @@ LIST_TILE_TO_HARDDEFINE = (
 
 class GameBasicTuto(GameBasic):
     """
-    classe qui gère tout le jeu. ou pas
+    classe qui gÃ¨re tout le jeu. ou pas
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         tutorialScheduler = TutorialScheduler(LIST_TUT_STEP_DESCRIP)
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
@@ -339,7 +339,7 @@ class GameBasicTuto(GameBasic):
 
     def populateArena(self):
         """ overrides """
-        # on définit des tiles. C'est mignon et gentil.
+        # on dÃ©finit des tiles. C'est mignon et gentil.
         for hardData in self.listTileToHardDefine:
             coord = hardData[0]
             typeTile = hardData[1][0]
@@ -352,7 +352,7 @@ class GameBasicTuto(GameBasic):
 
     def respawnZapValidator(self):
         """ overrides
-        redéfinit self.zapValidatorBase (qui n'est pas bien nommé, au passage) """
+        redÃ©finit self.zapValidatorBase (qui n'est pas bien nommÃ©, au passage) """
         if self.nbZapMade < len(self.listZapConstraint):
             tupleZapInfo = self.listZapConstraint[self.nbZapMade]
             brouzouf, sugar = tupleZapInfo

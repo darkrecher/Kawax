@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -41,7 +41,7 @@ class Tile():
         self.chip = chip
         self.tutoHighLight = False
 
-        #poucrave. Mais c'est pas grave. Les clés vont peut-être changer.
+        #poucrave. Mais c'est pas grave. Les clÃ©s vont peut-Ãªtre changer.
         self.dicPlayerSel = {}
 
         for i in range(nbrPlayer):
@@ -52,16 +52,16 @@ class Tile():
         """
         zob
         """
-        #ici le dessin de la tile.dans une img de réserve, ou pas.
+        #ici le dessin de la tile.dans une img de rÃ©serve, ou pas.
         imgChipToDraw = self.chip.getImgToDraw()
 
         if imgChipToDraw is not None:
             self.surfaceDest.blit(imgChipToDraw, self.posPixel)
 
-        #à l'arrache
+        #Ã  l'arrache
         if self.dicPlayerSel[0] <> SELTYPE_NONE or self.tutoHighLight:
 
-            #TRODO : dico selon la couleur du joueur. et arrêter les conneries avec le highlight
+            #TRODO : dico selon la couleur du joueur. et arrÃªter les conneries avec le highlight
             if self.tutoHighLight:
                 colorSelection = (0, 255, 255)
             elif self.dicPlayerSel[0] == SELTYPE_PATH:
@@ -74,7 +74,7 @@ class Tile():
             param = (self.surfaceDest, colorSelection, rectSelection, 1)
             pygame.draw.rect(*param)
 
-            #mega larrache (carré de clignotement plus épais que les autres.
+            #mega larrache (carrÃ© de clignotement plus Ã©pais que les autres.
             if self.tutoHighLight:
                 rectSelection.move_ip((1, 1))
                 param = (self.surfaceDest, colorSelection, rectSelection, 1)
@@ -92,7 +92,7 @@ class Tile():
 
     def selectionChange(self, idPlayer, selectionType):
         """
-        exécutée par le code extérieur
+        exÃ©cutÃ©e par le code extÃ©rieur
         """
         self.dicPlayerSel[idPlayer] = selectionType
 

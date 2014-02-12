@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 import pygame
@@ -31,15 +31,15 @@ from coins  import CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR, CHIP_CLOPE
 
 class ZapValidator():
     """
-    classe qui détermine si on a le droit de zapper une sélection ou pas.
+    classe qui dÃ©termine si on a le droit de zapper une sÃ©lection ou pas.
     """
 
     def __init__(self, arena):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         self.arena = arena
 
@@ -60,15 +60,15 @@ class ZapValidator():
 
 class ZapValidatorBase(ZapValidator):
     """
-    classe qui détermine si on a le droit de zapper une sélection ou pas.
+    classe qui dÃ©termine si on a le droit de zapper une sÃ©lection ou pas.
     """
 
     def __init__(self, arena, brouzoufReq, sugarReq):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         ZapValidator.__init__(self, arena)
         self.brouzoufReq = brouzoufReq

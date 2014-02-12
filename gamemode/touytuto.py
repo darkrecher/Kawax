@@ -1,5 +1,5 @@
 #/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 """
 Kawax version 0.1
 
@@ -10,15 +10,15 @@ Kawax version 0.1
     Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
     au choix, sous la licence Art Libre ou la licence CC-BY-SA
 
-    Copyright 2010 Réchèr
+    Copyright 2010 RÃ©chÃ¨r
     Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
     termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
     Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
 
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
+    Creative Commons - PaternitÃ© - Partage des Conditions Initiales Ã  l'Identique 2.0 France
     http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
 
-date de la dernière relecture-commentage : None
+date de la derniÃ¨re relecture-commentage : None
 """
 
 from common   import (pyRect, pyRectTuple,
@@ -47,7 +47,7 @@ LIST_TUT_STEP_DESCRIP = (
          "tutoriel de Kawax. ",
          "Dans ce mode, vous",
          "devez faire tomber des",
-         "touillettes à café",
+         "touillettes Ã  cafÃ©",
          "en bas de l'aire de jeu."),
         (),
         False
@@ -66,8 +66,8 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_SELECT_TILES,
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
         NO_SOUND,
-        ("Les cases, là, ",
-         "vous les sélectionnez."),
+        ("Les cases, lÃ , ",
+         "vous les sÃ©lectionnez."),
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
         False
     ),(
@@ -101,10 +101,10 @@ LIST_TUT_STEP_DESCRIP = (
         (),
         NO_SOUND,
         ("Lorsque vous supprimez ",
-         "des gros tas de pièces,",
+         "des gros tas de piÃ¨ces,",
          "d'autre touillettes",
-         "peuvent réapparaitre",
-         "en haut de l'écran."),
+         "peuvent rÃ©apparaitre",
+         "en haut de l'Ã©cran."),
         (),
         False
     ),(
@@ -112,7 +112,7 @@ LIST_TUT_STEP_DESCRIP = (
         (),
         NO_SOUND,
         ("Bon, faut que j'y aille,",
-         "J'ai une réunion avec ",
+         "J'ai une rÃ©union avec ",
          "d'autres morceaux de ",
          "mon cerveau.",
          "Eclate-toi bien,"
@@ -134,11 +134,11 @@ LIST_ZAP_CONSTRAINT = (
     (12, 1),
 )
 
-# premier elem : coordonnées
+# premier elem : coordonnÃ©es
 # 2eme elem. "C" ou "S" pour dire si c'est un coin ou un sugar.
 #            Et ensuite la valeur en brouzouf du coin, si c'est un coin.
 LIST_TILE_TO_HARDDEFINE = (
-    # Pour la première sélection
+    # Pour la premiÃ¨re sÃ©lection
     ((5, 7), ("C",10)),
     ((6, 7), ("C", 2)),
     ((7, 7), ("C", 0)),
@@ -146,7 +146,7 @@ LIST_TILE_TO_HARDDEFINE = (
     ((9, 7), ("C", 1)),
     ((5, 8), ("C", 2)),
     ((6, 8), ("S", 1)),
-    # pour la deuxième
+    # pour la deuxiÃ¨me
     ((7, 8), ("C", 2)),
     ((8, 8), ("C", 0)),
     ((9, 8), ("C", 5)),
@@ -159,15 +159,15 @@ LIST_TILE_TO_HARDDEFINE = (
 
 class GameTouyetteTuto(GameTouillette):
     """
-    classe qui gère tout le jeu. ou pas
+    classe qui gÃ¨re tout le jeu. ou pas
     """
 
     def __init__(self, surfaceDest, gravityDir=DOWN, xyFirstTouillette=(5, 6)):
         """
         constructeur. (thx captain obvious)
 
-        entrée :
-            surfaceDest : Surface principale de l'écran, sur laquelle s'affiche le jeu.
+        entrÃ©e :
+            surfaceDest : Surface principale de l'Ã©cran, sur laquelle s'affiche le jeu.
         """
         tutorialScheduler = TutorialScheduler(LIST_TUT_STEP_DESCRIP)
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
@@ -179,13 +179,13 @@ class GameTouyetteTuto(GameTouillette):
         self.showObjectivesAtStart = False
         self.listZapConstraint = LIST_ZAP_CONSTRAINT
         self.nbZapMade = 0
-        # truc spécifique au GameTouillette, que je sais même plus à quoi ça sert
-        # bien joué le code dégueulasse.
+        # truc spÃ©cifique au GameTouillette, que je sais mÃªme plus Ã  quoi Ã§a sert
+        # bien jouÃ© le code dÃ©gueulasse.
         self.mustDisplayRemoving = False
 
     def populateArena(self):
         """ overrides """
-        # on définit des tiles. C'est mignon et gentil.
+        # on dÃ©finit des tiles. C'est mignon et gentil.
         for hardData in self.listTileToHardDefine:
             coord = hardData[0]
             typeTile = hardData[1][0]
@@ -198,7 +198,7 @@ class GameTouyetteTuto(GameTouillette):
 
     def respawnZapValidator(self):
         """ overrides
-        redéfinit self.zapValidatorBase (qui n'est pas bien nommé, au passage) """
+        redÃ©finit self.zapValidatorBase (qui n'est pas bien nommÃ©, au passage) """
         if self.nbZapMade < len(self.listZapConstraint):
             tupleZapInfo = self.listZapConstraint[self.nbZapMade]
             brouzouf, sugar = tupleZapInfo
