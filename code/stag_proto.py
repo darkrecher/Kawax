@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+Kawax. prototype. version 0.0001
+Créé par Réchèr
+Repo : https://github.com/darkrecher/Kawax
+"""
 import random
 
 #LIST_COIN_VALUES = (0, 1, 2, 5, 10, 20)

@@ -2,23 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Kawax version 0.1
-
-    La page du jeu sur indieDB : http://www.indiedb.com/games/kawax
-    Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
-    Mon twitter : http://twitter.com/_Recher_
-
-    Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
-    au choix, sous la licence Art Libre ou la licence CC-BY-SA
-
-    Copyright 2010 Réchèr
-    Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
-    termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
-    Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
-
-    Creative Commons - Paternité - Partage des Conditions Initiales à l'Identique 2.0 France
-    http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
-
-date de la dernière relecture-commentage : None
+Créé par Réchèr
+Repo : https://github.com/darkrecher/Kawax
 """
 
 import os
