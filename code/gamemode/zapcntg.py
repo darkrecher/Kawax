@@ -25,7 +25,7 @@ import random
 import pygame
 
 from common   import (securedPrint, pyRect,
-                      UP, DOWN, LEFT, RIGHT)
+                           UP, DOWN, LEFT, RIGHT)
 
 from gambasic import GameBasic
 

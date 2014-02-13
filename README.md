@@ -20,7 +20,7 @@ Installer le langage de programmation python, version 2.6 ou supérieure. (Pas d
 Installer la librairie pygame version 1.9.1, correspondant à la version de python que vous avez installé. (http://www.pygame.org/download.shtml)
 
 Télécharger ce repository sur votre disque et exécuter la commande :
-C:\python27\python main.py
+C:\python27\python code\main.py
 (remplacer C:\python27 par votre chemin d'installation de python).
 
 Sinon, vous pouvez aussi attendre un peu, je vais créer un exécutable stand-alone pour Windows et Mac OSX, et je mettrais ça sur indieDB.
