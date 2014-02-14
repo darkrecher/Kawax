@@ -25,6 +25,7 @@ vocab et nommage des variables :
 
 TRIP : je rentre pas dans les détails, parce que ce serait trop long et pas intéressant pour vous :
 Mais j'ai vraiment une vie de merde. Toute ma vie, en entier, c'est de la merde.
+TRIP : non c'est bon, ça va un peu mieux.
 """
 
 import random
@@ -77,6 +78,12 @@ DICT_GAME_CLASS_FROM_KEY = {
     pygl.K_6 : GameAspirin,
     # TRIP : ha ha ha, you failed at teaching video game to your son. Blast !
     # TODO : ajouter des touches du pavé numérique.
+    pygl.K_KP1 : GameBasicTuto,
+    pygl.K_KP2 : GameZapCounter,
+    pygl.K_KP3 : GameTouyetteTuto,
+    pygl.K_KP4 : GameTouillette,
+    pygl.K_KP5 : GameAspirinTuto,
+    pygl.K_KP6 : GameAspirin,
 }
 
 

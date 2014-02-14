@@ -331,7 +331,13 @@ class GameBasic():
                 self.execStimTutoNext()
 
             if self.stimuliStocker.stimReblink:
-                listPosBlink = self.tutorialScheduler.getCurrentBlink()
+                # TODO : il aurait vraiment fallu un tutorialScheduler par
+                # défaut, bidon, qui ne fait rien. Là on s'en sort pas à le
+                # tester à chaque fois si il existe.
+                if self.tutorialScheduler is not None:
+                    listPosBlink = self.tutorialScheduler.getCurrentBlink()
+                else:
+                    listPosBlink = []
                 if len(listPosBlink) and self.blinker is not None:
                     self.blinker.startBlink(listPosBlink)
 
