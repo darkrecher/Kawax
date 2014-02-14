@@ -26,8 +26,8 @@ from common import (crappyFont, pyRect, pyRectTuple,
 class BigObject():
     """
     classe que c'est un truc.
+    TRIP:
     "soirée mennthé yo", comme dirait les espagnols dans les chansons.
-
     strip/ pas d'aveniiiiiiiiir !!!! J'ai pas d'aveniiiiiiiiir !!!!
     """
 

@@ -102,7 +102,7 @@ class Console():
                               colorText=COLOR_DEFAULT, addSeparator=True):
         if addSeparator:
             #default color obligatoire
-            self.addText("------")
+            self.addText(u"------")
         for strDescrip in listStr:
             self.addText(strDescrip, colorText)
         self.refresh()

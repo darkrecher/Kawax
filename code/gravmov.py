@@ -46,7 +46,7 @@ class GravityMovements():
     def addSegmentMove(self, primCoord, secCoordStart, secCoordEnd):
         """zob we stay...
         pas de verif de doublon ou de chevauchement. Y'a qu'à juste faire gaffe.
-        secCoordEnd n'est pas incluse dans l'appliccation de la gravité. "rangestyle"
+        secCoordEnd n'est pas incluse dans l'application de la gravité. "rangestyle"
         secCoordStart est inclus. Et c'est la chip Nothing sur laquelle va s'écraser l'autre.
         Donc y'a toujours au moins 2 éléments. Et secCoordEnd-secCoordStart >= 2 (osef)
         """
@@ -176,6 +176,8 @@ if __name__ == "__main__":
 
     from common   import pyRect
 
+    # Je devrais utiliser securedPrint, mais bon, c'est les tests unitaires,
+    # osef. De plus, je ne print que des caractères ascii, alors tout va bien.
     print " ------- DIR = DOWN --------- "
     gv = GravityMovements()
     gv.addSegmentMove(3, 15, 10)

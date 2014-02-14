@@ -186,6 +186,8 @@ if __name__ == "__main__":
         listSecMove = [ (X, Y) for Y in verifY ]
         verifXY += listSecMove
 
+    # Je devrais utiliser securedPrint, mais bon, c'est les tests unitaires,
+    # osef. De plus, je ne print que des caractères ascii, alors tout va bien.
     print verifXY
     listRectCur = [ pyRectTuple(tupleXY) for tupleXY in verifXY ]
     listRectPrev = [None, ] + listRectCur[:-1]

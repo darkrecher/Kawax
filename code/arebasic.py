@@ -9,7 +9,7 @@ Repo : https://github.com/darkrecher/Kawax
 import pygame
 import random
 
-from common   import (pyRect, pyRectTuple, adjacenceType,
+from common   import (securedPrint, pyRect, pyRectTuple, adjacenceType,
                       SELTYPE_NONE, SELTYPE_SUPPL, SELTYPE_PATH,
                       ZAP_PATH, ZAP_SUPPL, ZAP_ADJACENT, ZAP_INTERACTIVE,
                       UP, DOWN, LEFT, RIGHT)
@@ -362,7 +362,7 @@ class ArenaBasic():
             else:
                 crawlerGravity.crawl()
                 if crawlerGravity.crawledOnPrimCoord:
-                    print "segment vide à :", crawlerGravity.prevPrim
+                    securedPrint(u"segment vide à:" + crawlerGravity.prevPrim)
                     primCoordEmptySegment = crawlerGravity.prevPrim
                     continueCrawl = False
 
@@ -382,7 +382,7 @@ class ArenaBasic():
             if crawlerGravity.crawledOnPrimCoord:
                 continueCrawl = False
 
-        print "gravityMovements.dicMovement : ", gravityMovements.dicMovement
+        #print "gravityMovements.dicMovement : ", gravityMovements.dicMovement
         return gravityMovements
 
     def applyGravity(self, crawlerGravity=None,

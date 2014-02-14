@@ -277,7 +277,7 @@ class Arena():
         for pos in selPath:
             nbSelTilePerLine[pos.y] += 1
 
-        print "min(nbSelTilePerLine)", min(nbSelTilePerLine)
+        #print "min(nbSelTilePerLine)", min(nbSelTilePerLine)
         return min(nbSelTilePerLine)
 
 
@@ -461,7 +461,6 @@ class Arena():
         """ zob """
         tileOnPos = self.getTile(posArena)
         if isinstance(tileOnPos.chip, ChipAsproHalfLeft):
-            print "thats' hwat !"
 
             posArenaAdjRight = posArena.move((+1, 0))
             if posArenaAdjRight.x >= self.width:
@@ -470,10 +469,9 @@ class Arena():
             chipOnPosAdjRight = self.getTile(posArenaAdjRight).chip
 
             if not isinstance(chipOnPosAdjRight, ChipAsproHalfRight):
-                print "fail aspro right"
                 return False
 
-            print "aspro ok"
+            #print "aspro ok"
             self.zapOnePos(posArenaAdjRight, ZAP_INTERACTIVE, 1)
             tileOnPos.chip = ChipAsproFull()
 
@@ -488,10 +486,9 @@ class Arena():
             chipOnPosAdjLeft = self.getTile(posArenaAdjLeft).chip
 
             if not isinstance(chipOnPosAdjLeft, ChipAsproHalfLeft):
-                print "fail aspro left"
                 return False
 
-            print "aspro ok"
+            #print "aspro ok"
             self.zapOnePos(posArenaAdjLeft, ZAP_INTERACTIVE, 1)
             tileOnPos.chip = ChipAsproFull()
 
@@ -514,10 +511,7 @@ class Arena():
 
     def stimuliInteractiveTouch(self, posArena):
         """ zob """
-        print "interactive touch on : ", posArena
-        #chipInteract = self.getTile(posArena).chip
-        #if isinstance(chipInteract, ChipAsproHalfLeft):
-        #    print "thats' hwat !"
+        #print "interactive touch on : ", posArena
         if self.mergeAsproHalf(posArena):
             return True
         elif self.takeAsproFull(posArena):

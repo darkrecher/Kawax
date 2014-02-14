@@ -26,11 +26,12 @@ TILE_PIXEL_SIZE = (TILE_PIXEL_WIDTH, TILE_PIXEL_HEIGHT)
 FRAME_PER_SECOND = 60
 
 #nom du répertoire avec les images dedans
-IMG_DIRECTORY_NAME = "img"
-FONT_DIRECTORY_NAME = "fontzy"
+IMG_DIRECTORY_NAME = u"img"
+FONT_DIRECTORY_NAME = u"fontzy"
 
 crappyFont = pygame.font.Font(None, 30)
-strPathFontConsole = os.sep.join((FONT_DIRECTORY_NAME, "tempesta.ttf"))
+# TODO : encoder dans l'encodage du File System.
+strPathFontConsole = os.sep.join((FONT_DIRECTORY_NAME, u"tempesta.ttf"))
 fontConsole = pygame.font.Font(strPathFontConsole, 12)
 
 (SELTYPE_NONE,
@@ -125,7 +126,8 @@ def loadImg(filename, colorkey=-1, doConversion=True):
     try:
         image = pygame.image.load(pathname)
     except pygame.error, message:
-        securedPrint(u"Fail. Impossible de charger l'image : " + pathname)
+        msg = u"Fail. Impossible de charger l'image : %s" % unicode(pathname)
+        securedPrint(msg)
         #On peut mettre "raise" sans rien après. Ca recrache la dernière exception en cours.
         raise
 
@@ -339,11 +341,12 @@ def severalRandWithListCoef(listCoef, nbrOfChoice):
 
 #-------------------------------------------------------------------
 
+# Question existentielle. Faut tester "__main__" ou u"__main__" ??
 if __name__ == "__main__":
     #test unitaire pour pathLine et findPathSimple
     #bordel de merde, faut commenter la ligne avec crappyFont pour lancer ces tests.
     #Je dois vraiment arranger ce truc.
-    securedPrint("test unitaire. Hell yeah !")
+    securedPrint(u"test unitaire. Hell yeah !")
 
     #toutes les coords différentes. X Y. start < end
 
@@ -440,5 +443,5 @@ if __name__ == "__main__":
                          ) == [ pyRect(1, 2), ]
 
     #bon ça y est, fini de jouer ?
-    securedPrint("fin test unitaire. Paradise no !")
+    securedPrint(u"fin test unitaire. Paradise no !")
 

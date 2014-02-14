@@ -97,7 +97,7 @@ class GameBasic():
 
 
     def execStimTutoNext(self):
-        print "next tutorializazione"
+        securedPrint(u"next tutorialization")
         # TRODO : un tutorial qui ne fait rien ? Ce qui permettrait d'éviter
         # ces tests de is None à chaque fois ?
         if self.tutorialScheduler is None:
@@ -127,7 +127,7 @@ class GameBasic():
         self.blinker = None
         self.tutorialScheduler = tutorialScheduler
         self.console = Console(self.surfaceDest, pyRect(400, 10, 235, 460), nbCharMax=25)
-        self.console.addText("bonjour !!")
+        self.console.addText(u"bonjour !!")
         self.console.refresh()
         self.console.display()
         self.manual = ManualInGame(
@@ -161,7 +161,7 @@ class GameBasic():
             self.gravityMovements = GravityMovements(*param)
             self.crawlerRegen = ArenaCrawler(ARENA_SIZE)
             self.crawlerRegen.config(regenPrimDir, regenSecDir)
-            print "self.crawlerRegen.secMove :", self.crawlerRegen.secMove
+            #print "self.crawlerRegen.secMove :", self.crawlerRegen.secMove
 
 
     def respawnZapValidator(self):
@@ -200,12 +200,12 @@ class GameBasic():
 
         else:
             lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
-            self.console.addListTextAndDisplay(lastTryDescrip + ("FAIL",))
+            self.console.addListTextAndDisplay(lastTryDescrip + (u"FAIL",))
 
 
     def zapWin(self):
         """ à overrider """
-        self.console.addListTextAndDisplay(("yeah !!", ))
+        self.console.addListTextAndDisplay((u"yeah !!", ))
 
     def periodicAction(self):
         """ à overrider """
@@ -262,7 +262,7 @@ class GameBasic():
             self.blinker.startBlink(listPosBlink)
         #lock
         if self.tutorialScheduler.mustLockGameStimuli():
-            print "locked !!!"
+            securedPrint("locked !!!")
             self.selectorPlayerOne.setStimuliLock(True)
         else:
             # Euh... Faut délocker ou rien faire ? Bonne question.

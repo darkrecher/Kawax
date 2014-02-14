@@ -156,7 +156,7 @@ class ChipSugar(Chip):
         param = (self.coinImage, self.color, pyRect(4, 3, 24, 24), 1)
         pygame.draw.rect(*param)
 
-        textSugar = crappyFont.render("S", 0, self.color)
+        textSugar = crappyFont.render(u"S", 0, self.color)
         posPixelSugar = textSugar.get_rect(center=(16, 16))
         self.coinImage.blit(textSugar, posPixelSugar)
 
@@ -189,7 +189,7 @@ class ChipClope(Chip):
         param = (self.coinImage, self.color, pyRect(2, 5, 28, 20), 1)
         pygame.draw.rect(*param)
 
-        textSugar = crappyFont.render("M", 0, self.color)
+        textSugar = crappyFont.render(u"M", 0, self.color)
         posPixelSugar = textSugar.get_rect(center=(16, 16))
         self.coinImage.blit(textSugar, posPixelSugar)
 
