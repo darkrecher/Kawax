@@ -28,80 +28,80 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bienvenue dans le second",
-         "tutoriel de Kawax. ",
-         "Dans ce mode, vous",
-         "devez faire tomber des",
-         "touillettes à café",
-         "en bas de l'aire de jeu."),
+        (u"Bienvenue dans le second",
+         u"tutoriel de Kawax. ",
+         u"Dans ce mode, vous",
+         u"devez faire tomber des",
+         u"touillettes à café",
+         u"en bas de l'aire de jeu."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bon, j'en ai marre",
-         "de prendre une voix sexy.",
-         "Alors vous allez faire",
-         "ce que je dis,",
-         "sans pinailler. Ok ?"),
+        (u"Bon, j'en ai marre",
+         u"de prendre une voix sexy.",
+         u"Alors vous allez faire",
+         u"ce que je dis,",
+         u"sans pinailler. Ok ?"),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
         NO_SOUND,
-        ("Les cases, là, ",
-         "vous les sélectionnez."),
+        (u"Les cases, là, ",
+         u"vous les sélectionnez."),
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Wouhouuuu !",
-         "Regardez la touillette,",
-         "elle est descendue."),
+        (u"Wouhouuuu !",
+         u"Regardez la touillette,",
+         u"elle est descendue."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((7, 8), (8, 8), (9, 8), (5, 9), (6, 9), (7, 9), (8, 9), (9, 9)),
         NO_SOUND,
-        ("Encore un petit effort,",
-         "feignasse de stagiaire."),
+        (u"Encore un petit effort,",
+         u"feignasse de stagiaire."),
         ((7, 8), (8, 8), (9, 8), (5, 9), (6, 9), (7, 9), (8, 9), (9, 9)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Et crac ! La touillette ",
-         "a disparue.",
-         "C'est top foufoutre. "),
+        (u"Et crac ! La touillette ",
+         u"a disparue.",
+         u"C'est top foufoutre. "),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Lorsque vous supprimez ",
-         "des gros tas de pièces,",
-         "d'autre touillettes",
-         "peuvent réapparaitre",
-         "en haut de l'écran."),
+        (u"Lorsque vous supprimez ",
+         u"des gros tas de pièces,",
+         u"d'autre touillettes",
+         u"peuvent réapparaitre",
+         u"en haut de l'écran."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bon, faut que j'y aille,",
-         "J'ai une réunion avec ",
-         "d'autres morceaux de ",
-         "mon cerveau.",
-         "Eclate-toi bien,"
-         "jeune boulawan !"),
+        (u"Bon, faut que j'y aille,",
+         u"J'ai une réunion avec ",
+         u"d'autres morceaux de ",
+         u"mon cerveau.",
+         u"Eclate-toi bien,"
+         u"jeune boulawan !"),
         (),
         False
     ),(
@@ -196,7 +196,7 @@ class GameTouyetteTuto(GameTouillette):
     def zapWin(self):
         """ overrides """
         if self.nbZapMade > len(self.listZapConstraint):
-            self.console.addListTextAndDisplay(("bravooo !!", ))
+            self.console.addListTextAndDisplay((u"bravooo !!", ))
 
     def periodicAction(self):
         """ overrides """

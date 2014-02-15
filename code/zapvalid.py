@@ -33,7 +33,7 @@ class ZapValidator():
         """
         zob
         """
-        return ("contrainte qui fonctionne jamay", )
+        return (u"contrainte qui fonctionne jamay", )
 
 
     def validateZap(self, selPath, selSuppl, selAdj):
@@ -66,13 +66,15 @@ class ZapValidatorBase(ZapValidator):
         """
         zob
         """
-        return ("objectif :", "brouzouf : %s" % self.brouzoufReq,
-                "sucre : %s" % self.sugarReq)
+        return (u"objectif :",
+                u"brouzouf : %s" % self.brouzoufReq,
+                u"sucre : %s" % self.sugarReq)
 
 
     def getListStrLastTry(self):
-        return ("selection de :", "brouzouf : %s" % self.brouzoufTotal,
-                "sucre : %s" % self.sugarTotal)
+        return (u"selection de :",
+                u"brouzouf : %s" % self.brouzoufTotal,
+                u"sucre : %s" % self.sugarTotal)
 
 
     def validateZap(self, selPath, selSuppl, selAdj):

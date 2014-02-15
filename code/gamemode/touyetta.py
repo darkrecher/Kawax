@@ -8,7 +8,7 @@ Repo : https://github.com/darkrecher/Kawax
 
 import random
 
-from common   import pyRect, ZAP_INTERACTIVE
+from common   import securedPrint, pyRect, ZAP_INTERACTIVE
 
 from gravmov  import (GravityMovements,
                       IN_GRAVITY_NOT, IN_GRAVITY_PARTLY, IN_GRAVITY_YES)
@@ -57,13 +57,15 @@ class ArenaTouillette(ArenaBigObject):
         """
         zob
         """
-        print "removeBottomTouillette"
+        securedPrint(u"removeBottomTouillette")
         listBigObjectToRemove = []
 
         for bigObject in self.listBigObj:
-            print bigObject.posTopLeft.y, " comp ", self.height-1
+            securedPrint(u"%s comp %s" % (
+                         unicode(bigObject.posTopLeft.y),
+                         unicode(self.height-1)))
             if bigObject.posTopLeft.y == self.height-1:
-                print "faut enlever une touillette"
+                securedPrint(u"faut enlever une touillette")
                 self.nbTouilletteRemoved += 1
                 listBigObjectToRemove.append(bigObject)
                 for posArena in bigObject.listPosArena:
@@ -101,11 +103,13 @@ class ArenaTouillette(ArenaBigObject):
                                PROBA_ADD_POS_POTENTIAL * nbPosPotential,
                                PROBA_ADD_ALREADY_PRESENT * nbTouPresent))
 
-        print listPosPotential, "proba :", probaTouillette
+        securedPrint(u"%s proba : %s" % (
+                     unicode(listPosPotential),
+                     unicode(probaTouillette)))
 
         if random.randrange(100) < probaTouillette:
             posTouillette = random.choice(listPosPotential)
-            print "creation a : ", posTouillette
+            securedPrint(u"creation a : %s" % posTouillette)
             self.addBigObject(Touillette, posTouillette)
 
 

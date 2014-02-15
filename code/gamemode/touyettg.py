@@ -77,27 +77,30 @@ class GameTouillette(GameBasic):
         """ à overrider """
 
         if self.mustDisplayRemoving:
-            print "blorp"
+            securedPrint(u"blorp")
 
             nbTouRemoved = self.arena.nbTouilletteRemoved
             nbTouToRem = self.nbTouilletteToRemove
             self.mustDisplayRemoving = False
 
             if nbTouRemoved == nbTouToRem:
-                listBla = ("BRAVO ! ", "Vous avez gagné!",
-                           "Vous pouvez", "continuer de",
-                           "jouer si vous", "trouvez ça cool")
+                listBla = (u"BRAVO ! ",
+                           u"Vous avez gagné!",
+                           u"Vous pouvez",
+                           u"continuer de",
+                           u"jouer si vous",
+                           u"trouvez ça cool")
                 self.console.addListTextAndDisplay(listBla)
             else:
-                strBla = "%d/%d" % (nbTouRemoved, nbTouToRem)
-                listStrBla = ("Touillettes :", strBla)
+                strBla = u"%d/%d" % (nbTouRemoved, nbTouToRem)
+                listStrBla = (u"Touillettes :", strBla)
                 self.console.addListTextAndDisplay(listStrBla)
 
 
     def handleGravity(self):
         # Les actions de contrôle et d'actions sont pas dans l'ordre.
         # Ca fait nimp.
-        print "handleGravity"
+        securedPrint(u"handleGravity")
         if self.arena.removeBottomTouillette():
             touilletteRemoved = True
             self.mustDisplayRemoving = True

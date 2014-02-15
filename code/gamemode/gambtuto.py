@@ -350,4 +350,4 @@ class GameBasicTuto(GameBasic):
     def zapWin(self):
         """ overrides """
         if self.nbZapMade > len(self.listZapConstraint):
-            self.console.addListTextAndDisplay(("bravooo !!", ))
+            self.console.addListTextAndDisplay((u"bravooo !!", ))

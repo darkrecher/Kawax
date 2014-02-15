@@ -37,10 +37,13 @@ class GameZapCounter(GameBasic):
         """ à overrider """
         self.nbZapDone += 1
         if self.nbZapDone == self.nbZapToDo:
-            listBla = ("BRAVO ! ", "Vous avez gagné!",
-                       "Vous pouvez", "continuer de",
-                       "jouer si vous", "trouvez ça cool")
+            listBla = (u"BRAVO ! ",
+                       u"Vous avez gagné!",
+                       u"Vous pouvez",
+                       u"continuer de",
+                       u"jouer si vous",
+                       u"trouvez ça cool")
             self.console.addListTextAndDisplay(listBla, COLOR_WIN)
         else:
-            strBla = "%d/%d" % (self.nbZapDone, self.nbZapToDo)
-            self.console.addListTextAndDisplay(("yeah !!", strBla, ))
+            strBla = u"%d/%d" % (self.nbZapDone, self.nbZapToDo)
+            self.console.addListTextAndDisplay((u"yeah !!", strBla, ))

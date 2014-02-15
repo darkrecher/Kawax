@@ -46,27 +46,27 @@ from gamemode.asprtuto import GameAspirinTuto
 from common import fontConsole, pyRect
 
 LIST_INTRO_TEXT_FRENCH = (
-    "Appuyez sur la touche correspondant au mode de jeu souhaité.",
-    "1 : mode normal - tutoriel",
-    "2 : mode normal - jeu",
-    "3 : mode touillette - tutoriel",
-    "4 : mode touillette - jeu",
-    "5 : mode aspirine - tutoriel",
-    "6 : mode aspirine - jeu",
-    "",
-    "E : english.   F : français",
+    u"Appuyez sur la touche correspondant au mode de jeu souhaité.",
+    u"1 : mode normal - tutoriel",
+    u"2 : mode normal - jeu",
+    u"3 : mode touillette - tutoriel",
+    u"4 : mode touillette - jeu",
+    u"5 : mode aspirine - tutoriel",
+    u"6 : mode aspirine - jeu",
+    u"",
+    u"E : english.   F : français",
 )
 
 LIST_INTRO_TEXT_ENGLISH = (
-    "Press the key corresponding to the chosen game mode.",
-    "1 : normal mode - tutorial",
-    "2 : normal mode - game",
-    "3 : coffee spoon - tutorial",
-    "4 : coffee spoon - game",
-    "5 : aspirin - tutorial",
-    "6 : aspirin - game",
-    "",
-    "E : english.   F : français",
+    u"Press the key corresponding to the chosen game mode.",
+    u"1 : normal mode - tutorial",
+    u"2 : normal mode - game",
+    u"3 : coffee spoon - tutorial",
+    u"4 : coffee spoon - game",
+    u"5 : aspirin - tutorial",
+    u"6 : aspirin - game",
+    u"",
+    u"E : english.   F : français",
 )
 
 DICT_GAME_CLASS_FROM_KEY = {
@@ -123,13 +123,11 @@ def askGameModeToUser(screen):
                     # enregistrement du language actuel dans une variable globale,
                     # à la bourrin. C'est dégueux, mais je sais pas comment faire mieux.
                     language.languageCurrent = language.LANGUAGE_ENGLISH
-                    print "english"
                     displayMainMenu(screen)
                 if event.key == pygl.K_f:
                     # enregistrement du language actuel dans une variable globale,
                     # à la bourrin. C'est dégueux, mais je sais pas comment faire mieux.
                     language.languageCurrent = language.LANGUAGE_FRENCH
-                    print "frrrrench"
                     displayMainMenu(screen)
     screen.fill((0, 0, 0))
     return classGame
@@ -144,7 +142,6 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((640, 480), 0)  #SCREEN_RECT.size, displayOption)
 
     classGame = askGameModeToUser(screen)
-    print classGame
 
     #création de la putain de classe qui contient tout le putain de code, et les
     #putains d'initialisations.

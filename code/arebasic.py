@@ -362,7 +362,8 @@ class ArenaBasic():
             else:
                 crawlerGravity.crawl()
                 if crawlerGravity.crawledOnPrimCoord:
-                    securedPrint(u"segment vide à:" + crawlerGravity.prevPrim)
+                    securedPrint(u"segment vide à:%s" %
+                                 crawlerGravity.prevPrim)
                     primCoordEmptySegment = crawlerGravity.prevPrim
                     continueCrawl = False
 

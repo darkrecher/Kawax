@@ -13,18 +13,18 @@ languageCurrent = LANGUAGE_FRENCH
 
 MANUAL_TEXTS = {
     LANGUAGE_FRENCH : (
-        "jeu :",
-        "   S : valider      D : annuler sélection",
-        "   L : quitter",
-        "tutoriel :",
-        "   F : message suivant / refaire clignoter",
+        u"jeu :",
+        u"   S : valider      D : annuler sélection",
+        u"   L : quitter",
+        u"tutoriel :",
+        u"   F : message suivant / refaire clignoter",
     ),
     LANGUAGE_ENGLISH : (
-        "game :",
-        "   S : validate      D : cancel selection",
-        "   L : quit",
-        "tutorial :",
-        "   F : next message / reblink tiles",
+        u"game :",
+        u"   S : validate      D : cancel selection",
+        u"   L : quit",
+        u"tutorial :",
+        u"   F : next message / reblink tiles",
     ),
 }
 

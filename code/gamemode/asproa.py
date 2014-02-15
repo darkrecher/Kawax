@@ -10,7 +10,7 @@ import pygame
 import random
 randRange = random.randrange
 
-from common   import (pyRect, pyRectTuple, adjacenceType,
+from common   import (securedPrint, pyRect, pyRectTuple, adjacenceType,
                       SELTYPE_NONE, SELTYPE_SUPPL, SELTYPE_PATH,
                       ZAP_PATH, ZAP_SUPPL, ZAP_ADJACENT, ZAP_INTERACTIVE,
                       UP, DOWN, LEFT, RIGHT)
@@ -96,7 +96,7 @@ class ArenaAspirin(ArenaBasic):
         self.xLimitAsproLeft = self.width/2
         self.xLimitAsproRight = self.width/2 + 1
         self.hasTakenAsproFull = False
-        print "aspirin !!!"
+        securedPrint(u"aspirin !!!")
 
 
     #def start(self):
@@ -201,13 +201,15 @@ class ArenaAspirin(ArenaBasic):
         if not len(listPosPotentialAspro):
             return
         if randRange(100) >= probaAspro:
-            print "proba fail"
+            securedPrint(u"proba fail")
             return
         coordXAspro = random.choice(listPosPotentialAspro)
         # pas très classe la coord Y = 0 en dur.
         tile = self.getTileCoordXY(coordXAspro, 0)
         tile.chip = classChipAsproHalf()
-        print "regened aspro ", classChipAsproHalf, " on : ", coordXAspro
+        securedPrint(u"regened aspro %s on %s" % (
+                     unicode(classChipAsproHalf),
+                     unicode(coordXAspro)))
 
 
     def _regenerateAspro(self, crawlerRegen):
@@ -218,9 +220,9 @@ class ArenaAspirin(ArenaBasic):
         # (voire négatives), alors que y'a très souvent au moins une position potentielle.
         # Pour l'instant, c'est même plus que "très souvent", c'est "toujours".
         listNbAspro = self._countNbAspro()
-        print "listNbAspro :", listNbAspro
+        securedPrint(u"listNbAspro :%s" % listNbAspro)
         tupleProbaAspro = self._calculateProbaAspro(listNbAspro)
-        print "tupleProbaAspro : ", tupleProbaAspro
+        securedPrint(u"tupleProbaAspro : %s" % tupleProbaAspro)
         (probaAsproLeft, probaAsproRight) = tupleProbaAspro
         if probaAsproLeft <= 0 and probaAsproRight <= 0:
             return
@@ -246,7 +248,6 @@ class ArenaAspirin(ArenaBasic):
         """ zob """
         tileOnPos = self.getTile(posArena)
         if isinstance(tileOnPos.chip, ChipAsproHalfLeft):
-            print "thats' hwat !"
 
             posArenaAdjRight = posArena.move((+1, 0))
             if posArenaAdjRight.x >= self.width:
@@ -255,10 +256,10 @@ class ArenaAspirin(ArenaBasic):
             chipOnPosAdjRight = self.getTile(posArenaAdjRight).chip
 
             if not isinstance(chipOnPosAdjRight, ChipAsproHalfRight):
-                print "fail aspro right"
+                securedPrint(u"fail aspro right")
                 return False
 
-            print "aspro ok"
+            securedPrint(u"aspro ok")
             self.zapOnePos(posArenaAdjRight, ZAP_INTERACTIVE, 1)
             tileOnPos.chip = ChipAsproFull()
 
@@ -273,10 +274,10 @@ class ArenaAspirin(ArenaBasic):
             chipOnPosAdjLeft = self.getTile(posArenaAdjLeft).chip
 
             if not isinstance(chipOnPosAdjLeft, ChipAsproHalfLeft):
-                print "fail aspro left"
+                securedPrint(u"fail aspro left")
                 return False
 
-            print "aspro ok"
+            securedPrint(u"aspro ok")
             self.zapOnePos(posArenaAdjLeft, ZAP_INTERACTIVE, 1)
             tileOnPos.chip = ChipAsproFull()
 
@@ -308,10 +309,7 @@ class ArenaAspirin(ArenaBasic):
 
     def stimuliInteractiveTouch(self, posArena):
         """ zob """
-        print "interactive touch on : ", posArena
-        #chipInteract = self.getTile(posArena).chip
-        #if isinstance(chipInteract, ChipAsproHalfLeft):
-        #    print "thats' hwat !"
+        securedPrint(u"interactive touch on : %s" % posArena)
         if self.mergeAsproHalf(posArena):
             return True
         elif self.takeAsproFull(posArena):
@@ -332,7 +330,7 @@ class ArenaAspirin(ArenaBasic):
         for pos in selPath:
             nbSelTilePerLine[pos.y] += 1
 
-        print "min(nbSelTilePerLine)", min(nbSelTilePerLine)
+        #print "min(nbSelTilePerLine)", min(nbSelTilePerLine)
         return min(nbSelTilePerLine)
 
 
@@ -356,7 +354,7 @@ class ArenaAspirin(ArenaBasic):
         #la prim coord ou pas (est-on encore dans la première ligne/col ou pas)
 
         while crawlerBottom.coP == crawlerBottom.primStart:
-            print crawlerBottom.posCur
+            securedPrint(unicode(crawlerBottom.posCur))
             tile = self.getTile(crawlerBottom.posCur)
             chipType = tile.chip.chipType
             if chipType in ( CHIP_ASPRO_HALF_LEFT, CHIP_ASPRO_HALF_RIGHT):

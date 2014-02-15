@@ -27,104 +27,104 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Salut. T'es encore là ?",
-         "C'est bien, t'es un bon",
-         "petit soldat.",),
+        (u"Salut. T'es encore là ?",
+         u"C'est bien, t'es un bon",
+         u"petit soldat.",),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Les 2 machins blancs ",
-         "au milieu de l'écran,",
-         "ce sont des demis-cachets",
-         "d'aspirine.",
-         "Faut les coller ensemble."),
+        (u"Les 2 machins blancs ",
+         u"au milieu de l'écran,",
+         u"ce sont des demis-cachets",
+         u"d'aspirine.",
+         u"Faut les coller ensemble."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         NO_SOUND,
-        ("Tu vas commencer par me",
-         "péter tout ça."),
+        (u"Tu vas commencer par me",
+         u"péter tout ça."),
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Ouaf ouaf, Meeeuuhh",
-         "gruuiik grruuuiiiikk !",
-         "Pardon. On en étais où ?",
-         "Ah oui. Cliquez sur",
-         "Suivant, comme d'hab'."),
+        (u"Ouaf ouaf, Meeeuuhh",
+         u"gruuiik grruuuiiiikk !",
+         u"Pardon. On en étais où ?",
+         u"Ah oui. Cliquez sur",
+         u"Suivant, comme d'hab'."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         NO_SOUND,
-        ("Et maintenant, pète-moi",
-         "ça, histoire de vider la",
-         "colonne. Et tu regarderas",
-         "bien ce que ça fait,",
-         "jeune boulawan."),
+        (u"Et maintenant, pète-moi",
+         u"ça, histoire de vider la",
+         u"colonne. Et tu regarderas",
+         u"bien ce que ça fait,",
+         u"jeune boulawan."),
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Et hop. Ca s'est déplacé",
-         "vers la gauche.",
-         "C'est-y pas top foufoutre",
-         "au carré, ça ? Hmmm ?"),
+        (u"Et hop. Ca s'est déplacé",
+         u"vers la gauche.",
+         u"C'est-y pas top foufoutre",
+         u"au carré, ça ? Hmmm ?"),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Sauf que maintenant,",
-         "les aspirines ne sont",
-         "plus en face."),
+        (u"Sauf que maintenant,",
+         u"les aspirines ne sont",
+         u"plus en face."),
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 7), (4, 8)),
         NO_SOUND,
-        (("Dégomme-moi ce bazar.", )),
+        ((u"Dégomme-moi ce bazar.", )),
         ((4, 7), (4, 8)),
         False
     ),(
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
         NO_SOUND,
-        ("Bien, petit stagiaire.",
-         "Maintenant, tu vas ",
-         "cliquer sur l'un des ",
-         "demi-cachets."),
+        (u"Bien, petit stagiaire.",
+         u"Maintenant, tu vas ",
+         u"cliquer sur l'un des ",
+         u"demi-cachets."),
         (),
         False
     ),(
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
         NO_SOUND,
-        ("Hop, ils se réunissent.",
-         "Et pour finir, cliques sur",
-         "le cachet entier."),
+        (u"Hop, ils se réunissent.",
+         u"Et pour finir, cliques sur",
+         u"le cachet entier."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        ("Bon ben voilà, c'était super.",
-         "Est-ce que c'était assez",
-         "pour vous ?"),
+        (u"Bon ben voilà, c'était super.",
+         u"Est-ce que c'était assez",
+         u"pour vous ?"),
         (),
         False
     ),(
@@ -225,4 +225,4 @@ class GameAspirinTuto(GameAspirin):
     def zapWin(self):
         """ overrides """
         if self.nbZapMade > len(self.listZapConstraint):
-            self.console.addListTextAndDisplay(("bravooo !!", ))
+            self.console.addListTextAndDisplay((u"bravooo !!", ))

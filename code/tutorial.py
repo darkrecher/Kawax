@@ -6,7 +6,7 @@ Créé par Réchèr
 Repo : https://github.com/darkrecher/Kawax
 """
 
-from common   import (pyRect, pyRectTuple)
+from common   import (securedPrint, pyRect, pyRectTuple)
 import language
 
 COLOR_TUTORIAL = (40, 255, 40)
@@ -116,7 +116,7 @@ class TutorialScheduler():
             return False
         if self.tutStepCurrent.conditionType != STEP_COND_INTERACTIVE_TOUCH_SUCCESSED:
             return False
-        print "success stim interactive sur le tuto"
+        securedPrint(u"success stim interactive sur le tuto")
         self.indexStep += 1
         self.tutStepCurrent = self.listTutSteps[self.indexStep]
         return True
@@ -155,8 +155,8 @@ class TutorialScheduler():
         self.totallyFailed = True;
 
     def getFailText(self):
-        return ("Vous n'avez pas sélectionné les bonnes cases.",
-                "Débrouillez-vous tout seul maintenant !")
+        return (u"Vous n'avez pas sélectionné les bonnes cases.",
+                u"Débrouillez-vous tout seul maintenant !")
 
     # faut une classe externe, ou un overridage des classes actuelles ?
     # externe je dirais.

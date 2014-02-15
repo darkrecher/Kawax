@@ -253,7 +253,7 @@ class GameBasic():
             return
         listTextDescrip = self.tutorialScheduler.getCurrentText()
         if len(listTextDescrip):
-            print listTextDescrip
+            securedPrint(unicode(listTextDescrip))
             param = (listTextDescrip, COLOR_TUTORIAL)
             self.console.addListTextAndDisplay(*param)
         #blink
@@ -299,7 +299,7 @@ class GameBasic():
                 self.selectorPlayerOne.takeStimuliStandBy()
 
             for posSelected in self.stimuliStocker.listPosArenaToActivate:
-                print posSelected
+                securedPrint(unicode(posSelected))
                 self.selectorPlayerOne.takeStimuliActivateTile(posSelected)
 
             if self.stimuliStocker.stimuliTryZap:
