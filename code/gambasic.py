@@ -146,6 +146,7 @@ class GameBasic():
         #Talaaaa, je suis le maître du temps. et des frames par secondes aussi.
         self.clock = pygame.time.Clock()
 
+        # À priori, ça sert à rien ce truc.
         self.showObjectivesAtStart = True
 
         if gravityDir is None:
