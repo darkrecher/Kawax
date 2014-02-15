@@ -6,7 +6,10 @@ Créé par Réchèr
 Repo : https://github.com/darkrecher/Kawax
 """
 
-from common   import (securedPrint, pyRect, pyRectTuple)
+import os
+import pygame
+from common   import (securedPrint, pyRect, pyRectTuple,
+                      SOUND_DIRECTORY_NAME, NO_SOUND)
 import language
 
 COLOR_TUTORIAL = (40, 255, 40)
@@ -24,14 +27,13 @@ class TutorialStep():
     les bidules incluant : TELL_OBJECTIVE. Et peut-être d'autres trucs après.
     nan juste un boolean. Faites pas chier avec un rassemblage.
     """
-    def __init__(self, conditionType, listPosCond, soundId,
+    def __init__(self, conditionType, listPosCond, sound,
                  listTextDescrip, listPosBlink, tellObjective):
         """
         """
         self.conditionType = conditionType
         self.listPosCond = listPosCond
-        #osef du soundId pour l'instant.
-        self.soundId = soundId
+        self.sound = sound
         self.listTextDescrip = listTextDescrip
         self.listPosBlink = listPosBlink
         self.tellObjective = tellObjective
@@ -61,19 +63,32 @@ class TutorialScheduler():
         self.listTutSteps = []
         #conversion coord->rect, et création de la liste des steps.
         for tutStepDescrip in listTutStepsDescrip:
+
             (conditionType, listCoordCond, soundId, blobTextDescrip,
              listCoordBlink, tellObjective) = tutStepDescrip
             listPosCond = [ pyRectTuple(coord) for coord in listCoordCond ]
             listPosBlink = [ pyRectTuple(coord) for coord in listCoordBlink ]
 
+            sound = None
+            if soundId != NO_SOUND:
+                try:
+                    # TODO : encoder le chemin dans l'encodage du file system.
+                    # TODO : en dur pour l'instant
+                    soundFileName = soundId + u".ogg"
+                    listDirFile = (SOUND_DIRECTORY_NAME, soundFileName)
+                    sound = pygame.mixer.Sound(os.sep.join(listDirFile))
+                except:
+                    sound = None
+
             if isinstance(blobTextDescrip, dict):
                 textDescrip = blobTextDescrip[language.languageCurrent]
             else:
                 textDescrip = blobTextDescrip
-            param = (conditionType, listPosCond, soundId, textDescrip,
+            param = (conditionType, listPosCond, sound, textDescrip,
                      listPosBlink, tellObjective)
             tutStep = TutorialStep(*param)
             self.listTutSteps.append(tutStep)
+
         #self.listTutSteps = [ TutorialStep(*tutStepDescrip)
         #                      for tutStepDescrip
         #                      in listTutStepsDescrip ]
@@ -96,6 +111,8 @@ class TutorialScheduler():
     def getCurrentTellObjective(self):
         return self.tutStepCurrent.tellObjective
 
+    def getCurrentSound(self):
+        return self.tutStepCurrent.sound
 
     def takeStimTutoNext(self):
         """

@@ -25,9 +25,12 @@ TILE_PIXEL_SIZE = (TILE_PIXEL_WIDTH, TILE_PIXEL_HEIGHT)
 
 FRAME_PER_SECOND = 60
 
-#nom du répertoire avec les images dedans
+NO_SOUND = u""
+
+# Nom des répertoires avec les trucs dedans (image, font, sons)
 IMG_DIRECTORY_NAME = u"img"
 FONT_DIRECTORY_NAME = u"fontzy"
+SOUND_DIRECTORY_NAME = u"sound"
 
 crappyFont = pygame.font.Font(None, 30)
 # TODO : encoder dans l'encodage du File System.

@@ -7,7 +7,7 @@ Repo : https://github.com/darkrecher/Kawax
 """
 
 from common   import (pyRect, pyRectTuple,
-                      UP, DOWN, LEFT, RIGHT)
+                      UP, DOWN, LEFT, RIGHT, NO_SOUND)
 
 from console  import Console
 from coins    import ChipCoin, ChipSugar, ChipAsproHalfLeft, ChipAsproHalfRight
@@ -18,9 +18,6 @@ from tutorial import (TutorialScheduler,
                       STEP_COND_NEVER, STEP_COND_STIM, STEP_COND_SELECT_TILES,
                       STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
                       COLOR_TUTORIAL)
-
-#a l'arrache
-NO_SOUND = 0
 
 LIST_TUT_STEP_DESCRIP = (
     (

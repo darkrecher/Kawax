@@ -7,7 +7,7 @@ Repo : https://github.com/darkrecher/Kawax
 """
 
 from common   import (pyRect, pyRectTuple,
-                      UP, DOWN, LEFT, RIGHT)
+                      UP, DOWN, LEFT, RIGHT, NO_SOUND)
 from language import LANGUAGE_FRENCH, LANGUAGE_ENGLISH
 
 from console  import Console
@@ -19,14 +19,11 @@ from tutorial import (TutorialScheduler,
                       STEP_COND_NEVER, STEP_COND_STIM, STEP_COND_SELECT_TILES,
                       COLOR_TUTORIAL)
 
-#a l'arrache
-NO_SOUND = 0
-
 LIST_TUT_STEP_DESCRIP = (
     (
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_01",
         {
             LANGUAGE_FRENCH : (
                 u"Bienvenue dans le premier",
@@ -44,7 +41,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_01", # TODO : juste pour vérifier que le son précédent se stoppe.
 #        {
 #            LANGUAGE_FRENCH : (
 #                u"",

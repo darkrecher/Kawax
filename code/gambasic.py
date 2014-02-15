@@ -256,6 +256,11 @@ class GameBasic():
             securedPrint(unicode(listTextDescrip))
             param = (listTextDescrip, COLOR_TUTORIAL)
             self.console.addListTextAndDisplay(*param)
+        # sound
+        soundTuto = self.tutorialScheduler.getCurrentSound()
+        if soundTuto is not None:
+            pygame.mixer.stop()
+            soundTuto.play()
         #blink
         listPosBlink = self.tutorialScheduler.getCurrentBlink()
         if len(listPosBlink) and self.blinker is not None:
