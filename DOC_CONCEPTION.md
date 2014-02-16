@@ -12,6 +12,8 @@ Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, é
 
 ## Déroulement des actions lors d'une partie type ##
 
+### Initialisation générale, choix du mode de jeu ###
+
 Début du code de `main.py`
 
 Import de `common.py`
@@ -34,9 +36,27 @@ Instanciaton de la classe GameXXX correspondant au mode de jeu choisi.
 
 Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game".
 
-TODO : blabla instanciation
+### Initialisation des trucs dans GameXXX ###
 
-Exécution de la fonction GameXXX.playOneGame(), qui démarre et déroule le jeu.
+fonction `GameBasic.__init__` :
+
+ - TODO : blablater des trucs à ce sujet.
+
+Retour à `main.py`
+
+Exécution de la fonction `GameXXX.playOneGame()`.
+
+Cette fonction commence par faire quelquers bidouilleries d'init :
+
+ - Initialisation du ZapValidator, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir
+
+ - Affichage de la première étape du tutoriel (si y'a un tutoriel)
+
+ - ou sinon, affichage de l'objectif à atteindre, selon le ZapValidator (en terme de brouzouf et de nombre de sucres). (désolé pour le "en terme de", ici , il me semble réellement approprié).
+
+Puis, la fonction `GameXXX.playOneGame()` démarre et déroule le jeu.
+
+### Game Loop ###
 
 On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
 
