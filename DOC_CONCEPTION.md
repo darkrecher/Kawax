@@ -38,9 +38,23 @@ Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBa
 
 ### Initialisation des trucs dans GameXXX ###
 
-fonction `GameBasic.__init__` :
+fonction `GameXXX.__init__` :
 
- - TODO : blablater des trucs à ce sujet.
+On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
+
+ - Récupération de la surface (objet pygame représentant une zone de dessin) dans laquelle doit se dessiner le jeu. C'est à dire la fenêtre à l'écran de l'ordinateur.
+
+ - Création d'un objet `console` : affichage de texte sur le côté droit de l'écran.
+
+ - Création d'un objet `manual` : affichage des touches de jeu, en bas à gauche de l'écran.
+
+ - Création d'un objet `stimuliStocker` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
+
+ - Créaton d'un objet `clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS
+
+ - Configuration de la gravité (dans quelle direction les objets du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets `crawler`. Voir plus loin.
+
+
 
 Retour à `main.py`
 
@@ -58,6 +72,6 @@ Puis, la fonction `GameXXX.playOneGame()` démarre et déroule le jeu.
 
 ### Game Loop ###
 
-On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
+## Vrac à détailler ##
 
-
+Le code d'init des fonctions GameXXX est pourri. Y'en a dans __init__, dans initCommonStuff, et dans les __init__ des classes héritées. On pige rien.
