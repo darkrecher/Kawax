@@ -42,35 +42,71 @@ fonction `GameXXX.__init__` :
 
 On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
 
+Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par la fonction interne `initCommonStuff`
+
  - Récupération de la surface (objet pygame représentant une zone de dessin) dans laquelle doit se dessiner le jeu. C'est à dire la fenêtre à l'écran de l'ordinateur.
 
- - Création d'un objet `console` : affichage de texte sur le côté droit de l'écran.
+ - Création d'un objet `Console` : affichage de texte sur le côté droit de l'écran.
 
- - Création d'un objet `manual` : affichage des touches de jeu, en bas à gauche de l'écran.
+ - Premier dessin de la console à l'écran.
 
- - Création d'un objet `stimuliStocker` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
+ - Création d'un objet `ManualnGame` : affichage des touches de jeu, en bas à gauche de l'écran.
 
- - Créaton d'un objet `clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS
+ - Premier (et unique) dessin du manuel à l'écran.
 
- - Configuration de la gravité (dans quelle direction les objets du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets `crawler`. Voir plus loin.
+ - Création d'un objet `StimuliStockerForGame` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
 
+ - Créaton d'un objet `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS
 
+ - Configuration de la gravité (dans quelle direction les objets du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
+
+ - Création d'un objet `ArenaXXX` : à partir de la classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu.
+
+ - Création d'un objet Selector : TODO : je sais plus exactement à quoi sert ce truc.
+
+ - Ajout des éléments dans l'arène, au hasard (pièces, sucres, aspirine, touillettes, ...).
+
+ - Premier dessin de l'arène.
+
+ - Premier rafraîchissement de l'écran (bien que ça n'ait pas grand-chose à foutre dans l'init, puisque ça sera fait en boucle après).
 
 Retour à `main.py`
 
 Exécution de la fonction `GameXXX.playOneGame()`.
 
-Cette fonction commence par faire quelquers bidouilleries d'init :
+Cette fonction commence par faire quelques bidouilleries d'init :
 
- - Initialisation du ZapValidator, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir
+ - Création d'un objet `ZapValidatorBase`, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir.
 
- - Affichage de la première étape du tutoriel (si y'a un tutoriel)
+ - Affichage de la première étape du tutoriel, si il y a un tutoriel,
 
  - ou sinon, affichage de l'objectif à atteindre, selon le ZapValidator (en terme de brouzouf et de nombre de sucres). (désolé pour le "en terme de", ici , il me semble réellement approprié).
 
-Puis, la fonction `GameXXX.playOneGame()` démarre et déroule le jeu.
+Puis, la fonction `GameXXX.playOneGame()` entre dans la game loop (boucle principale qui fait fonctionner le jeu).
 
 ### Game Loop ###
+
+### Sélection des tiles ###
+
+### "Zap" d'un ensemble d'éléments ###
+
+### Gravité et regénération ###
+
+### Stimuli lock/delock ###
+
+### Interactive Touch ###
+
+## Actions effectuées lors des mode de jeu spécifique ##
+
+### Gestion des "gros objets" ###
+
+### periodicAction (dans le mode touillette) ###
+
+### Gravity Rift (dans le mode aspro)
+
+### Interactive Touch sur les aspirines ###
+
+### Tutoriel ###
 
 ## Vrac à détailler ##
 
