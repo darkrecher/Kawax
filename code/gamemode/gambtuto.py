@@ -41,7 +41,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        u"tuto_01_01", # TODO : juste pour vérifier que le son précédent se stoppe.
+        u"tuto_01_02",
 #        {
 #            LANGUAGE_FRENCH : (
 #                u"",
@@ -74,7 +74,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_03",
         {
             LANGUAGE_FRENCH : (
                 u"Le premier café coûte",
@@ -97,7 +97,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((2, 3), (3, 3), (3, 4), (3, 5)),
-        NO_SOUND,
+        u"tuto_01_04",
         {
             LANGUAGE_FRENCH : (
                 u"Cliquez sur toutes les",
@@ -116,7 +116,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_05",
         {
             LANGUAGE_FRENCH : (
                 u"Bravo, vous avez fait",
