@@ -76,6 +76,9 @@ class GameTouillette(GameBasic):
     def periodicAction(self):
         """ à overrider """
 
+        # À priori, ce genre de truc n'a rien à foutre dans une "periodicAction".
+        # On n'a besoin de le tester uniquement quand une touillette
+        # est arrivée en bas de l'écran.
         if self.mustDisplayRemoving:
             securedPrint(u"blorp")
 

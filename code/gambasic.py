@@ -347,19 +347,15 @@ class GameBasic():
                 if len(listPosBlink) and self.blinker is not None:
                     self.blinker.startBlink(listPosBlink)
 
-#                #si stand by : stand by
-#
-#                #si activate. on chope la coord.
-#
-#                #    si coord none. : stan by. Et previous = None
-#
-#                #    sinon :
-#
-#                #        si previous = None. On active et c'est tout.
-#
-#                #        sinon : on active tout le chemin entre previous et actuel
-#
-#                #        previous = actuel
+                 # Je ne sais plus pourquoi je raconte ça ici, ni ce que ça veut dire.
+                 #
+                 #si stand by : stand by
+                 #si activate. on chope la coord.
+                 #    si coord none. : stan by. Et previous = None
+                 #    sinon :
+                 #        si previous = None. On active et c'est tout.
+                 #        sinon : on active tout le chemin entre previous et actuel
+                 #        previous = actuel
 
             posInteract = self.stimuliStocker.posArenaToInteractTouch
             if posInteract is not None:

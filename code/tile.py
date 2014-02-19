@@ -44,7 +44,7 @@ class Tile():
             self.surfaceDest.blit(imgChipToDraw, self.posPixel)
 
         #à l'arrache
-        if self.dicPlayerSel[0] <> SELTYPE_NONE or self.tutoHighLight:
+        if self.dicPlayerSel[0] != SELTYPE_NONE or self.tutoHighLight:
 
             #TRODO : dico selon la couleur du joueur. et arrêter les conneries avec le highlight
             if self.tutoHighLight:
