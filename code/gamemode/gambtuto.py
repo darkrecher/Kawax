@@ -28,12 +28,13 @@ LIST_TUT_STEP_DESCRIP = (
             LANGUAGE_FRENCH : (
                 u"Bienvenue dans le premier",
                 u"tutoriel de Kawax.",
-                u"Appuyez sur la touche 'F'",
+                u"Appuyez sur",
+                u"la touche 'F'.",
             ),
             LANGUAGE_ENGLISH : (
                 u"Welcome to the first",
                 u"kawax tutorial.",
-                u"Press the 'F' key",
+                u"Press the 'F' key.",
             )
         },
         (),
@@ -42,14 +43,6 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         u"tuto_01_02",
-#        {
-#            LANGUAGE_FRENCH : (
-#                u"",
-#            ),
-#            LANGUAGE_ENGLISH : (
-#                u"",
-#            )
-#        },
         {
             LANGUAGE_FRENCH : (
                 u"Vous êtes un stagiaire",
@@ -123,7 +116,7 @@ LIST_TUT_STEP_DESCRIP = (
                 u"votre premier café."
             ),
             LANGUAGE_ENGLISH : (
-                u"Congratulation, you",
+                u"Congratulations, you",
                 u"made your first coffee.",
             )
         },
@@ -169,8 +162,8 @@ LIST_TUT_STEP_DESCRIP = (
             LANGUAGE_ENGLISH : (
                 u"The main path is created",
                 u"first, by hovering over",
-                u"the coins, with the mouse",
-                u"button pressed",
+                u"the coins, while the",
+                u"mouse button is pressed.",
             )
         },
         (),
@@ -179,79 +172,155 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        (u"Les pièces additionnelles",
-         u"s'ajoutent en cliquant",
-         u"sur une pièce adjacente",
-         u"au chemin principal."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Les pièces additionnelles",
+                u"s'ajoutent en cliquant",
+                u"sur une pièce adjacente",
+                u"au chemin principal.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"The additionnal coins",
+                u"are added by clicking",
+                u"a coin adjacent to the",
+                u"main path.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (7, 6)),
         NO_SOUND,
-        (u"Essayez de prendre",
-         u"toutes ces pièces."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Essayez de prendre",
+                u"toutes ces pièces.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"Try to take all",
+                u"these coins.",
+            )
+        },
         ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (7, 6)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        (u"Félicitations,",
-         u"vous êtes un bon",
-         u"petit stagiaire."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Félicitations,",
+                u"vous êtes un bon",
+                u"petit stagiaire.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"Congratulations,",
+                u"you are a good",
+                u"little trainee.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        (u"Certains cafés ",
-         u"nécessitent d'ajouter",
-         u"du sucre. Vous devrez",
-         u"sélectionner le nombre",
-         u"de morceaux requis, ",
-         u"en plus des pièces."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Certains cafés ",
+                u"nécessitent d'ajouter",
+                u"du sucre. Vous devrez",
+                u"sélectionner le nombre",
+                u"de morceaux requis, ",
+                u"en plus des pièces.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"Some coffees need",
+                u"also some sugar.",
+                u"You must select the",
+                u"appropriate number of",
+                u"sugar lumps, besides.",
+                u"the coins.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((7, 7), (8, 7), (9, 7), (8, 8), (7, 9), (8, 9), (9, 9)),
         NO_SOUND,
-        (u"Le prochain café coûte",
-         u"9 centimes de brouzoufs",
-         u"et 2 sucres. Sélectionnez",
-         u"les cases indiquées."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Le prochain café coûte",
+                u"9 centimes de brouzoufs",
+                u"et 2 sucres. Sélectionnez",
+                u"les cases indiquées.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"The next coffee costs",
+                u"9 buck-cents, and 2",
+                u"sugars. Select the",
+                u"highlighted tiles.",
+            )
+        },
         ((7, 7), (8, 7), (9, 7), (8, 8), (7, 9), (8, 9), (9, 9)),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        (u"Bravo, vous avez ",
-         u"successifié à votre",
-         u"examen d'embauche.",
-         u"Chaque fois que vous",
-         u"réussirez un café,",
-         u"l'objectif suivant",
-         u"vous sera spécifié,",
-         u"en terme de brouzoufs",
-         u"et de nombre de sucres."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Bravo, vous avez ",
+                u"successifié à votre",
+                u"examen d'embauche.",
+                u"Chaque fois que vous",
+                u"réussirez un café,",
+                u"l'objectif suivant",
+                u"vous sera spécifié,",
+                u"en terme de brouzoufs",
+                u"et de nombre de sucres.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"Awesome ! You succeeded",
+                u"at your trainee entry",
+                u"test. Each time you make",
+                u"a coffee, you will be",
+                u"specified the next",
+                u"objective, in terms of",
+                u"buck-cents and sugar",
+                u"lumps.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         NO_SOUND,
-        (u"Vous pouvez continuer",
-         u"à vous entraîner dans",
-         u"ce tutoriel.",
-         u"Lorsque vous vous",
-         u"sentirez suffisament",
-         u"monté en compétence,",
-         u"appuyez sur le bouton",
-         u"'Terminer' pour initier",
-         u"le premier niveau."),
+        {
+            LANGUAGE_FRENCH : (
+                u"Vous pouvez continuer",
+                u"à vous entraîner dans",
+                u"ce tutoriel.",
+                u"Lorsque vous vous",
+                u"sentirez suffisament",
+                u"monté en compétence,",
+                u"quittez le jeu, puis",
+                u"redémarrez-le dans",
+                u"le mode suivant.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"You can continue to",
+                u"train with that tutorial.",
+                u"When you feel",
+                u"sufficiently competent,",
+                u"quit the game,",
+                u"and restart it in ",
+                u"the next mode.",
+            )
+        },
         (),
         False
     ),(
