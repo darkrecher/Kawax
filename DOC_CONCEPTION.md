@@ -60,9 +60,9 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Configuration de la gravité (dans quelle direction les objets du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
 
- - Création d'un objet `ArenaXXX` : à partir de la classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu.
+ - Création d'un objet `ArenaXXX` : à partir de la classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ...
 
- - Création d'un objet Selector : TODO : je sais plus exactement à quoi sert ce truc.
+ - Création d'un objet Selector : gère les différents mode de sélection de tile, (chemin principal, tuiles additionnelles, ...).
 
  - Ajout des éléments dans l'arène, au hasard (pièces, sucres, aspirine, touillettes, ...).
 
@@ -86,6 +86,24 @@ Puis, la fonction `GameXXX.playOneGame()` entre dans la game loop (boucle princi
 
 ### Game Loop ###
 
+Le déroulement global de la game loop est le suivant :
+
+ - Auto-ralentissage de la game loop pour qu'elle ne s'exécute au maximum que 60 frames par secondes.
+
+ - Récupération des appuis de touches, mouvements de souris, appui/relâchage de bouton de souris par le `stimuliStocker` (instance de `StimuliStockerForGame`). Conversion de ces événements en "stimulis". ("Un stimuli", "des stimulis", et que les latinistes distingués ne viennent pas me faire chier).
+
+ - Récupération de ces stimulis par la game loop, action sur divers membres de la classe `GameXXX` selon ces stimulis (cette étape sera détaillée plus loin).
+
+ - Application de la gravité (certains éléments de l'aire de jeu descendront d'une case), et regénération de tiles (ajout de nouvelles pièces/sucres/autres dans les espaces laissés vides par la gravité). Cette action n'est exécutée qui s'il y a de la gravité à appliquer. De plus, elle n'est exécutée que toutes les 18 frames, afin de laisser le temps au joueur de voir ce qu'il se passe.
+
+ - Exécution de la fonction `periodicAction`. Elle ne fait rien dans le mode GameBasic. Les autres modes de jeu peuvent y rajouter des choses.
+
+ - Mises à jour du clignotement des tiles, si il y en a à faire clignoter. Cela n'arrive que durant les tutoriels, ce sera expliqué plus loin.
+
+ - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je l'ai pas fait.
+
+ - Rafraîchissement complet de l'écran. (bourrin aussi).
+
 ### Sélection des tiles ###
 
 ### "Zap" d'un ensemble d'éléments ###
@@ -102,7 +120,7 @@ Puis, la fonction `GameXXX.playOneGame()` entre dans la game loop (boucle princi
 
 ### periodicAction (dans le mode touillette) ###
 
-### Gravity Rift (dans le mode aspro)
+### Gravity Rift (dans le mode aspro) ###
 
 ### Interactive Touch sur les aspirines ###
 
