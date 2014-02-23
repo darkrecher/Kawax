@@ -45,6 +45,7 @@ from gravmov  import GravityMovements
 
 from tutorial import (STEP_COND_NEVER, STEP_COND_STIM, STEP_COND_SELECT_TILES,
                       COLOR_TUTORIAL)
+import language
 
 # clé : direction de la gravité
 # valeur : tuple de 6 éléments.
@@ -127,7 +128,7 @@ class GameBasic():
         self.blinker = None
         self.tutorialScheduler = tutorialScheduler
         self.console = Console(self.surfaceDest, pyRect(400, 10, 235, 460), nbCharMax=25)
-        self.console.addText(u"bonjour !!")
+        self.console.addText(language.TEXT_HELLO[language.languageCurrent])
         self.console.refresh()
         self.console.display()
         self.manual = ManualInGame(
@@ -201,12 +202,14 @@ class GameBasic():
 
         else:
             lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
-            self.console.addListTextAndDisplay(lastTryDescrip + (u"FAIL",))
+            textFail = language.TEXT_FAIL[language.languageCurrent]
+            self.console.addListTextAndDisplay(lastTryDescrip + (textFail, ))
 
 
     def zapWin(self):
         """ à overrider """
-        self.console.addListTextAndDisplay((u"yeah !!", ))
+        textYeah = language.TEXT_YEAH[language.languageCurrent]
+        self.console.addListTextAndDisplay((textYeah, ))
 
     def periodicAction(self):
         """ à overrider """

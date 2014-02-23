@@ -28,6 +28,22 @@ MANUAL_TEXTS = {
     ),
 }
 
+TEXT_HELLO = {
+    LANGUAGE_FRENCH : u"bonjour !!",
+    LANGUAGE_ENGLISH : u"hello !!",
+}
+
+TEXT_FAIL = {
+    LANGUAGE_FRENCH : u"FAIL.",
+    LANGUAGE_ENGLISH : u"FAIL.",
+}
+
+TEXT_YEAH = {
+    LANGUAGE_FRENCH : u"yeah !!",
+    LANGUAGE_ENGLISH : u"yeah !!",
+}
+
+
 # TODO : ça marche pas ce truc là. Comment on écrit dans une variable globale ?
 def changeLanguage(languageNew):
     #language.languageCurrent = languageNew

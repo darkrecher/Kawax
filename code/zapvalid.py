@@ -9,9 +9,8 @@ Repo : https://github.com/darkrecher/Kawax
 import pygame
 
 from common import (pyRect, )
-
 from coins  import CHIP_NOTHING, CHIP_COIN, CHIP_SUGAR, CHIP_CLOPE
-
+import language
 
 
 class ZapValidator():
@@ -66,15 +65,25 @@ class ZapValidatorBase(ZapValidator):
         """
         zob
         """
-        return (u"objectif :",
-                u"brouzouf : %s" % self.brouzoufReq,
-                u"sucre : %s" % self.sugarReq)
+        if language.languageCurrent == language.LANGUAGE_ENGLISH:
+            return (u"objective :",
+                    u"buck-cent : %s" % self.brouzoufReq,
+                    u"sugar : %s" % self.sugarReq)
+        else:
+            return (u"objectif :",
+                    u"brouzouf : %s" % self.brouzoufReq,
+                    u"sucre : %s" % self.sugarReq)
 
 
     def getListStrLastTry(self):
-        return (u"selection de :",
-                u"brouzouf : %s" % self.brouzoufTotal,
-                u"sucre : %s" % self.sugarTotal)
+        if language.languageCurrent == language.LANGUAGE_ENGLISH:
+            return (u"selection :",
+                    u"buck-cent : %s" % self.brouzoufTotal,
+                    u"sugar : %s" % self.sugarTotal)
+        else:
+            return (u"selection de :",
+                    u"brouzouf : %s" % self.brouzoufTotal,
+                    u"sucre : %s" % self.sugarTotal)
 
 
     def validateZap(self, selPath, selSuppl, selAdj):
