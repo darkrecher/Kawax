@@ -24,7 +24,7 @@ LIST_TUT_STEP_DESCRIP = (
     (
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_01",
         (u"Bienvenue dans le second",
          u"tutoriel de Kawax. ",
          u"Dans ce mode, vous",
@@ -36,7 +36,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_02",
         (u"Bon, j'en ai marre",
          u"de prendre une voix sexy.",
          u"Alors vous allez faire",
@@ -47,7 +47,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
-        NO_SOUND,
+        u"tuto_02_03",
         (u"Les cases, là, ",
          u"vous les sélectionnez."),
         ((5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (5, 8), (6, 8)),
@@ -55,7 +55,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_04",
         (u"Wouhouuuu !",
          u"Regardez la touillette,",
          u"elle est descendue."),
@@ -64,7 +64,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((7, 8), (8, 8), (9, 8), (5, 9), (6, 9), (7, 9), (8, 9), (9, 9)),
-        NO_SOUND,
+        u"tuto_02_05",
         (u"Encore un petit effort,",
          u"feignasse de stagiaire."),
         ((7, 8), (8, 8), (9, 8), (5, 9), (6, 9), (7, 9), (8, 9), (9, 9)),
@@ -72,7 +72,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_06",
         (u"Et crac ! La touillette ",
          u"a disparue.",
          u"C'est top foufoutre. "),
@@ -81,7 +81,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_07",
         (u"Lorsque vous supprimez ",
          u"des gros tas de pièces,",
          u"d'autre touillettes",
@@ -92,7 +92,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_02_08",
         (u"Bon, faut que j'y aille,",
          u"J'ai une réunion avec ",
          u"d'autres morceaux de ",
