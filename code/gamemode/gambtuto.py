@@ -46,11 +46,11 @@ LIST_TUT_STEP_DESCRIP = (
         {
             LANGUAGE_FRENCH : (
                 u"Vous êtes un stagiaire",
-                u"dans une quelconque",
+                u"d'une quelconque",
                 u"grande entreprise.",
                 u"Votre chef vous a confié",
                 u"son stock de centimes de",
-                u"brouzoufs, vous devez",
+                u"brouzoufs, et vous devez",
                 u"lui ramener du café."
             ),
             LANGUAGE_ENGLISH : (
@@ -125,7 +125,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_06",
         {
             LANGUAGE_FRENCH : (
                 u"Il existe 2 façons de",
@@ -149,7 +149,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_07",
         {
             LANGUAGE_FRENCH : (
                 u"Le chemin principal",
@@ -171,7 +171,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_08",
         {
             LANGUAGE_FRENCH : (
                 u"Les pièces additionnelles",
@@ -191,7 +191,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (7, 6)),
-        NO_SOUND,
+        u"tuto_01_09",
         {
             LANGUAGE_FRENCH : (
                 u"Essayez de prendre",
@@ -207,7 +207,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_10",
         {
             LANGUAGE_FRENCH : (
                 u"Félicitations,",
@@ -225,7 +225,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_11",
         {
             LANGUAGE_FRENCH : (
                 u"Certains cafés ",
@@ -249,7 +249,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((7, 7), (8, 7), (9, 7), (8, 8), (7, 9), (8, 9), (9, 9)),
-        NO_SOUND,
+        u"tuto_01_12",
         {
             LANGUAGE_FRENCH : (
                 u"Le prochain café coûte",
@@ -269,7 +269,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_13",
         {
             LANGUAGE_FRENCH : (
                 u"Bravo, vous avez ",
@@ -298,7 +298,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        u"tuto_01_14",
         {
             LANGUAGE_FRENCH : (
                 u"Vous pouvez continuer",
@@ -307,9 +307,8 @@ LIST_TUT_STEP_DESCRIP = (
                 u"Lorsque vous vous",
                 u"sentirez suffisament",
                 u"monté en compétence,",
-                u"quittez le jeu, puis",
-                u"redémarrez-le dans",
-                u"le mode suivant.",
+                u"essayez les autres",
+                u"modes de jeu.",
             ),
             LANGUAGE_ENGLISH : (
                 u"You can continue to",
