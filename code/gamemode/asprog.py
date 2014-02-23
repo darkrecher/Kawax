@@ -233,10 +233,12 @@ class GameAspirin(GameBasic):
 
         #copier-coller vilain
         if not self.determineGravity():
-            #arrache un peu no ?
-            if ((self.tutorialScheduler is not None)
-               and (not self.tutorialScheduler.mustLockGameStimuli())):
+            #arrache un peu no ? Réponse : oui, double-arrache, et même : double-arrache copié deux fois.
+            if self.tutorialScheduler is None:
                 self.selectorPlayerOne.setStimuliLock(False)
+            else:
+                if not self.tutorialScheduler.mustLockGameStimuli():
+                    self.selectorPlayerOne.setStimuliLock(False)
 
 
     def gameStimuliInteractiveTouch(self):

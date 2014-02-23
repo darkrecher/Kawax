@@ -239,10 +239,12 @@ class GameBasic():
         if self.determineGravity():
             self.gravityCounter = DELAY_GRAVITY
         else:
-            #arrache un peu no ?
-            if ((self.tutorialScheduler is not None)
-               and (not self.tutorialScheduler.mustLockGameStimuli())):
+            #arrache un peu no ? Réponse : oui. double-arrache.
+            if self.tutorialScheduler is None:
                 self.selectorPlayerOne.setStimuliLock(False)
+            else:
+                if not self.tutorialScheduler.mustLockGameStimuli():
+                    self.selectorPlayerOne.setStimuliLock(False)
 
 
     def gameStimuliInteractiveTouch(self):
