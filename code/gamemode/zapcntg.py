@@ -6,13 +6,12 @@ Créé par Réchèr
 Repo : https://github.com/darkrecher/Kawax
 """
 
-import random
 import pygame
 
 from common   import (securedPrint, pyRect,
                            UP, DOWN, LEFT, RIGHT)
-
 from gambasic import GameBasic
+import language
 
 COLOR_WIN = (0, 255, 255)
 
@@ -37,13 +36,9 @@ class GameZapCounter(GameBasic):
         """ à overrider """
         self.nbZapDone += 1
         if self.nbZapDone == self.nbZapToDo:
-            listBla = (u"BRAVO ! ",
-                       u"Vous avez gagné!",
-                       u"Vous pouvez",
-                       u"continuer de",
-                       u"jouer si vous",
-                       u"trouvez ça cool")
-            self.console.addListTextAndDisplay(listBla, COLOR_WIN)
+            listTextWin = language.LIST_TEXTS_WIN[language.languageCurrent]
+            self.console.addListTextAndDisplay(listTextWin, COLOR_WIN)
         else:
+            textYeah = language.TEXT_YEAH[language.languageCurrent]
             strBla = u"%d/%d" % (self.nbZapDone, self.nbZapToDo)
-            self.console.addListTextAndDisplay((u"yeah !!", strBla, ))
+            self.console.addListTextAndDisplay((textYeah, strBla, ))

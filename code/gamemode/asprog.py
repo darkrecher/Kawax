@@ -112,7 +112,8 @@ class GameAspirin(GameBasic):
 
         if self.zapValidatorBase.validateZap(selPath, selSuppl, []):
 
-            self.console.addListTextAndDisplay((u"yeah !!", ))
+            textYeah = language.TEXT_YEAH[language.languageCurrent]
+            self.console.addListTextAndDisplay((textYeah, ))
 
             # gestion du tutorial, si y'en a un.
             if self.tutorialScheduler is not None:
@@ -136,7 +137,8 @@ class GameAspirin(GameBasic):
                 else:
                     self.selectorPlayerOne.setStimuliLock(False)
             else:
-                self.console.addListTextAndDisplay((u"** RIFT **", ))
+                textYeah = language.TEXT_RIFT[language.languageCurrent]
+                self.console.addListTextAndDisplay((textYeah, ))
                 self.determineGravityRift()
                 self.gravityCounter = DELAY_GRAVITY
 
@@ -147,12 +149,14 @@ class GameAspirin(GameBasic):
 
         else:
             lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
-            self.console.addListTextAndDisplay(lastTryDescrip + (u"FAIL",))
+            textFail = language.TEXT_FAIL[language.languageCurrent]
+            self.console.addListTextAndDisplay(lastTryDescrip + (textFail, ))
 
 
     def zapWin(self):
         """ à overrider """
-        self.console.addListTextAndDisplay((u"yeah !!", ))
+        textYeah = language.TEXT_YEAH[language.languageCurrent]
+        self.console.addListTextAndDisplay((textYeah, ))
 
     def periodicAction(self):
         """ à overrider """
@@ -247,14 +251,11 @@ class GameAspirin(GameBasic):
         if self.arena.getAndResetTakenAsproFull():
             self.nbAspirinTaken += 1
             if self.nbAspirinTaken == NB_ASPIRIN_TO_TAKE:
-                listBla = (u"BRAVO ! ",
-                           u"Vous avez gagné!",
-                           u"Vous pouvez",
-                           u"continuer de",
-                           u"jouer si vous",
-                           u"trouvez ça cool")
-                self.console.addListTextAndDisplay(listBla, COLOR_WIN)
+                listTextWin = language.LIST_TEXTS_WIN[language.languageCurrent]
+                self.console.addListTextAndDisplay(listTextWin, COLOR_WIN)
             else:
+                textYeah = language.TEXT_YEAH[language.languageCurrent]
                 strBla = u"%d/%d" % (self.nbAspirinTaken, NB_ASPIRIN_TO_TAKE)
-                self.console.addListTextAndDisplay((u"yeah !!", strBla, ))
+                self.console.addListTextAndDisplay((textYeah, strBla))
+
 

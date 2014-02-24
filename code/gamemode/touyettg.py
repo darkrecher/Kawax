@@ -43,7 +43,7 @@ from stimgame import StimuliStockerForGame
 from crawler  import ArenaCrawler
 from gravmov  import GravityMovements
 from bigobj   import Touillette
-
+import language
 
 class GameTouillette(GameBasic):
     """
@@ -75,7 +75,6 @@ class GameTouillette(GameBasic):
 
     def periodicAction(self):
         """ à overrider """
-
         # À priori, ce genre de truc n'a rien à foutre dans une "periodicAction".
         # On n'a besoin de le tester uniquement quand une touillette
         # est arrivée en bas de l'écran.
@@ -87,22 +86,20 @@ class GameTouillette(GameBasic):
             self.mustDisplayRemoving = False
 
             if nbTouRemoved == nbTouToRem:
-                listBla = (u"BRAVO ! ",
-                           u"Vous avez gagné!",
-                           u"Vous pouvez",
-                           u"continuer de",
-                           u"jouer si vous",
-                           u"trouvez ça cool")
-                self.console.addListTextAndDisplay(listBla)
+                listTextWin = language.LIST_TEXTS_WIN[language.languageCurrent]
+                self.console.addListTextAndDisplay(listTextWin, COLOR_WIN)
             else:
                 strBla = u"%d/%d" % (nbTouRemoved, nbTouToRem)
-                listStrBla = (u"Touillettes :", strBla)
-                self.console.addListTextAndDisplay(listStrBla)
+                textTouy = language.TEXT_TOUY[language.languageCurrent]
+                self.console.addListTextAndDisplay((textTouy, strBla))
 
 
     def handleGravity(self):
         # Les actions de contrôle et d'actions sont pas dans l'ordre.
         # Ca fait nimp.
+        # TODO : des fois ça fait un bug, y'a plus de gravité à appliquer, et
+        # pourtant, le lock des stimulis ne s'enlève pas. J'arrive pas à le
+        # reproduire à 100%, donc pour l'instant, c'est osef.
         securedPrint(u"handleGravity")
         if self.arena.removeBottomTouillette():
             touilletteRemoved = True
@@ -111,6 +108,7 @@ class GameTouillette(GameBasic):
             touilletteRemoved = False
         self.applyGravity()
         if self.determineGravity() or touilletteRemoved or self.arena.hasTouilletteInBottom():
+            securedPrint(u"there is still gravity.")
             self.gravityCounter = DELAY_GRAVITY
         else:
             self.selectorPlayerOne.setStimuliLock(False)

@@ -218,8 +218,3 @@ class GameAspirinTuto(GameAspirin):
         else:
             GameAspirin.respawnZapValidator(self)
         self.nbZapMade += 1
-
-    def zapWin(self):
-        """ overrides """
-        if self.nbZapMade > len(self.listZapConstraint):
-            self.console.addListTextAndDisplay((u"bravooo !!", ))

@@ -43,6 +43,34 @@ TEXT_YEAH = {
     LANGUAGE_ENGLISH : u"yeah !!",
 }
 
+TEXT_RIFT = {
+    LANGUAGE_FRENCH : u"** RIFT **",
+    LANGUAGE_ENGLISH : u"** RIFT **",
+}
+
+TEXT_TOUY = {
+    LANGUAGE_FRENCH : u"Touillettes :",
+    LANGUAGE_ENGLISH : u"Spoons :",
+}
+
+LIST_TEXTS_WIN = {
+    LANGUAGE_FRENCH : (
+        u"BRAVO ! ",
+        u"C'est gââgné!",
+        u"Vous pouvez",
+        u"continuer de",
+        u"jouer si vous",
+        u"trouvez ça cool",    ),
+    LANGUAGE_ENGLISH : (
+        u"CONGRATS ! ",
+        u"Youuu win!",
+        u"You can continue",
+        u"to play if you",
+        # Ça veut rien dire, mais qu'est ce que je suis drôle !
+        u"like the coolness",
+        u"of the game.",
+    ),
+}
 
 # TODO : ça marche pas ce truc là. Comment on écrit dans une variable globale ?
 def changeLanguage(languageNew):
