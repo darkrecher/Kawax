@@ -97,11 +97,6 @@ class GameTouillette(GameBasic):
 
 
     def handleGravity(self):
-        # Les actions de contrôle et d'actions sont pas dans l'ordre.
-        # Ca fait nimp.
-        # TODO : des fois ça fait un bug, y'a plus de gravité à appliquer, et
-        # pourtant, le lock des stimulis ne s'enlève pas. J'arrive pas à le
-        # reproduire à 100%, donc pour l'instant, c'est osef.
         securedPrint(u"handleGravity")
         if self.arena.removeBottomTouillette():
             touilletteRemoved = True

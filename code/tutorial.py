@@ -73,7 +73,6 @@ class TutorialScheduler():
             if soundId != NO_SOUND:
                 try:
                     # TODO : encoder le chemin dans l'encodage du file system.
-                    # TODO : en dur pour l'instant
                     soundFileName = soundId + u".ogg"
                     listDirFile = (SOUND_DIRECTORY_NAME, soundFileName)
                     sound = pygame.mixer.Sound(os.sep.join(listDirFile))

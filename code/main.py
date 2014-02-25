@@ -77,7 +77,6 @@ DICT_GAME_CLASS_FROM_KEY = {
     pygl.K_5 : GameAspirinTuto,
     pygl.K_6 : GameAspirin,
     # TRIP : ha ha ha, you failed at teaching video game to your son. Blast !
-    # TODO : ajouter des touches du pavé numérique.
     pygl.K_KP1 : GameBasicTuto,
     pygl.K_KP2 : GameZapCounter,
     pygl.K_KP3 : GameTouyetteTuto,
