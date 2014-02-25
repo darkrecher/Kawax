@@ -45,6 +45,8 @@ from gravmov  import GravityMovements
 from bigobj   import Touillette
 import language
 
+COLOR_WIN = (0, 255, 255)
+
 class GameTouillette(GameBasic):
     """
     classe qui gère tout le jeu.
@@ -107,9 +109,10 @@ class GameTouillette(GameBasic):
         else:
             touilletteRemoved = False
         self.applyGravity()
-        if self.determineGravity() or touilletteRemoved or self.arena.hasTouilletteInBottom():
+        if self.needStabilization() or touilletteRemoved or self.arena.hasTouilletteInBottom():
             securedPrint(u"there is still gravity.")
             self.gravityCounter = DELAY_GRAVITY
         else:
+            securedPrint(u"lock set to false.")
             self.selectorPlayerOne.setStimuliLock(False)
 

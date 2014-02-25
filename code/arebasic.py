@@ -177,6 +177,19 @@ class ArenaBasic():
                 tile.chip = self.regenerateChipAfterOneGravity()
             crawlerRegen.crawl()
 
+    def hasChipToRegenerate(self, crawlerRegen=None):
+        if crawlerRegen is None:
+            return
+
+        crawlerRegen.start()
+
+        while crawlerRegen.coP == crawlerRegen.primStart:
+            tile = self.getTile(crawlerRegen.posCur)
+            if tile.chip.chipType == CHIP_NOTHING:
+                return True
+            crawlerRegen.crawl()
+
+        return False
 
     #TRODO : une fonction générique qui s'appelle tout à la fin d'une gravité.
 
@@ -416,7 +429,7 @@ class ArenaBasic():
 
         gravityMovements.cancelAllMoves()
         # TRODO : ça n'a rien à foutre là ça.
-        self.regenerateAllChipsAfterOneGravity(crawlerRegen)
+        #self.regenerateAllChipsAfterOneGravity(crawlerRegen)
 
 
     def stimuliInteractiveTouch(self, posArena):

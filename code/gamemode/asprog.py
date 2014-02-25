@@ -47,6 +47,7 @@ from gambasic import GameBasic, DICT_GRAVITY_CONFIG
 from coins import ChipAsproHalfLeft, ChipAsproHalfRight
 from asproa import ArenaAspirin
 from blinker  import Blinker
+import language
 
 NB_ASPIRIN_TO_TAKE = 3
 COLOR_WIN = (0, 255, 255)
@@ -132,7 +133,7 @@ class GameAspirin(GameBasic):
             self.selectorPlayerOne.setStimuliLock(True)
 
             if self.nbrGravityRift == 0:
-                if self.determineGravity():
+                if self.needStabilization():
                     self.gravityCounter = DELAY_GRAVITY
                 else:
                     self.selectorPlayerOne.setStimuliLock(False)
@@ -167,6 +168,7 @@ class GameAspirin(GameBasic):
         """ zonc """
         param = (self.crawlerGravRift, self.gravityMovementsRift, self.crawlerRegenRift)
         self.arena.applyGravity(*param)
+        self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegenRift)
 
 
     def determineGravityRift(self):
@@ -186,10 +188,12 @@ class GameAspirin(GameBasic):
             param = (self.crawlerGrav, self.gravityMovements, None)
             self.arena.applyGravity(*param)
         elif len(self.gravityMovementsRift.dicMovement) > 0:
+            # TODO : pourquoi c'est pas factorisé avec applyGravityRift, ce truc ?
             param = (self.crawlerGravRiftApply, self.gravityMovementsRift, self.crawlerRegenRift)
             self.arena.applyGravity(*param)
+            self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegenRift)
 
-    def determineGravity(self):
+    def _determineAnyGravity(self):
         param = (self.crawlerGrav, self.gravityMovements)
         self.gravityMovements = self.arena.determineGravity(*param)
 
@@ -214,6 +218,17 @@ class GameAspirin(GameBasic):
 
         return False
 
+    def needStabilization(self):
+        """ overriden
+        """
+        self._determineAnyGravity();
+        if (self.gravityMovements is not None
+            and len(self.gravityMovements.dicMovement) > 0
+        ):
+            return True
+        if self.arena.hasChipToRegenerate(self.crawlerRegenRift):
+            return True
+        return False
 
     def handleGravity(self):
         """ zob
@@ -223,20 +238,11 @@ class GameAspirin(GameBasic):
         """
         #mal foutu ??
         securedPrint(u"handleGravity")
-
-        #if self.nbrGravityRift:
-        #    self.applyGravityRift()
-        #    self.nbrGravityRift -= 1
-        #    if self.nbrGravityRift:
-        #        moreGravToDo = self.determineGravityRift()
-        #    else:
-        #        moreGravToDo = self.determineGravity()
-
         self.applyGravity()
         self.arena.removeHalfAsproBottom()
 
         #copier-coller vilain
-        if not self.determineGravity():
+        if not self.needStabilization():
             #arrache un peu no ? Réponse : oui, double-arrache, et même : double-arrache copié deux fois.
             if self.tutorialScheduler is None:
                 self.selectorPlayerOne.setStimuliLock(False)

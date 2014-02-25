@@ -9,7 +9,7 @@ Repo : https://github.com/darkrecher/Kawax
 import pygame
 import random
 
-from common import   (pyRect, isAdjacent, indexInList, isAdjacentList,
+from common import   (securedPrint, pyRect, isAdjacent, indexInList, isAdjacentList,
                       SELTYPE_PATH, SELTYPE_SUPPL, SELTYPE_NONE)
 
 from arebasic import ArenaBasic
@@ -200,8 +200,10 @@ class Selector():
         zob
         """
 
+        securedPrint("takeStimuliActivateTile deb")
         if self.stimuliLocked:
             return
+        securedPrint("takeStimuliActivateTile not locked")
 
         tile = self.arena.getTile(posArena)
 

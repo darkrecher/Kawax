@@ -190,10 +190,10 @@ class GameBasic():
 
             self.arena.zapSelection(selPath, selSuppl)
             self.selectorPlayerOne.cancelAllSelection()
-            self.selectorPlayerOne.setStimuliLock(True)
 
-            if self.determineGravity():
+            if self.needStabilization():
                 self.gravityCounter = DELAY_GRAVITY
+                self.selectorPlayerOne.setStimuliLock(True)
 
             if ((self.tutorialScheduler is None) or
                (self.tutorialScheduler.getCurrentTellObjective())):
@@ -220,31 +220,32 @@ class GameBasic():
         """ zonc """
         param = (self.crawlerGrav, self.gravityMovements, self.crawlerRegen)
         self.arena.applyGravity(*param)
+        self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegen)
 
-
-    #TRODO : y'a 2 fonctions différentes. determineGravity handleGravity.
-    # On y pige rien. Ca va pas du tout.
-    def determineGravity(self):
+    def needStabilization(self):
         """ zob
         """
         param = (self.crawlerGrav, self.gravityMovements)
         self.gravityMovements = self.arena.determineGravity(*param)
-
-        return (self.gravityMovements is not None
-                and len(self.gravityMovements.dicMovement) > 0)
+        if (self.gravityMovements is not None
+            and len(self.gravityMovements.dicMovement) > 0
+        ):
+            return True
+        if self.arena.hasChipToRegenerate(self.crawlerRegen):
+            return True
+        return False
 
 
     def handleGravity(self):
         self.applyGravity()
-        if self.determineGravity():
+        if self.needStabilization():
             self.gravityCounter = DELAY_GRAVITY
         else:
             #arrache un peu no ? Réponse : oui. double-arrache.
-            if self.tutorialScheduler is None:
+            if (self.tutorialScheduler is None
+                or not self.tutorialScheduler.mustLockGameStimuli()
+            ):
                 self.selectorPlayerOne.setStimuliLock(False)
-            else:
-                if not self.tutorialScheduler.mustLockGameStimuli():
-                    self.selectorPlayerOne.setStimuliLock(False)
 
 
     def gameStimuliInteractiveTouch(self):
@@ -369,7 +370,7 @@ class GameBasic():
                 if self.arena.stimuliInteractiveTouch(posInteract):
                     self.selectorPlayerOne.cancelAllSelection()
                     self.selectorPlayerOne.setStimuliLock(True)
-                    if self.determineGravity():
+                    if self.needStabilization():
                         self.gravityCounter = DELAY_GRAVITY
                     if (self.tutorialScheduler is not None and
                         self.tutorialScheduler.takeStimInteractiveTouch()):

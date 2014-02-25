@@ -236,6 +236,7 @@ class ArenaAspirin(ArenaBasic):
         self._regenerateAsproHalf(*param)
 
 
+    # TODO : à virer, car redéfini dans le même fichier un peu plus loin.
     def regenerateAllChipsAfterOneGravity(self, crawlerRegen=None):
         """
         warninge : le crawler ne doit pas être None. Même si c'est la val par défaut.
