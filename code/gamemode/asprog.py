@@ -51,9 +51,10 @@ import language
 
 NB_ASPIRIN_TO_TAKE = 3
 COLOR_WIN = (0, 255, 255)
+COLOR_ZAP_OBJECTIVE = (255, 50, 50)
 
-LIST_COORD_ASPRO_HALF_LEFT = ((7, 2), (5, 5), (2, 10))
-LIST_COORD_ASPRO_HALF_RIGHT = ((10, 1), (11, 3), (12, 1))
+LIST_COORD_ASPRO_HALF_LEFT = ((7, 2), (5, 5), (1, 9))
+LIST_COORD_ASPRO_HALF_RIGHT = ((9, 1), (10, 3), (11, 1))
 
 
 class GameAspirin(GameBasic):
@@ -138,15 +139,15 @@ class GameAspirin(GameBasic):
                 else:
                     self.selectorPlayerOne.setStimuliLock(False)
             else:
-                textYeah = language.TEXT_RIFT[language.languageCurrent]
-                self.console.addListTextAndDisplay((textYeah, ))
+                textRift = language.TEXT_RIFT[language.languageCurrent]
+                self.console.addListTextAndDisplay((textRift, ))
                 self.determineGravityRift()
                 self.gravityCounter = DELAY_GRAVITY
 
             if ((self.tutorialScheduler is None) or
                (self.tutorialScheduler.getCurrentTellObjective())):
                 zapValidatorDescrip = self.zapValidatorBase.getListStrDescription()
-                self.console.addListTextAndDisplay(zapValidatorDescrip)
+                self.console.addListTextAndDisplay(zapValidatorDescrip, COLOR_ZAP_OBJECTIVE)
 
         else:
             lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
@@ -261,7 +262,9 @@ class GameAspirin(GameBasic):
                 self.console.addListTextAndDisplay(listTextWin, COLOR_WIN)
             else:
                 textYeah = language.TEXT_YEAH[language.languageCurrent]
-                strBla = u"%d/%d" % (self.nbAspirinTaken, NB_ASPIRIN_TO_TAKE)
-                self.console.addListTextAndDisplay((textYeah, strBla))
+                self.console.addListTextAndDisplay((textYeah, ))
+                if self.tutorialScheduler is None:
+                    strBla = u"%d/%d" % (self.nbAspirinTaken, NB_ASPIRIN_TO_TAKE)
+                    self.console.addListTextAndDisplay((strBla, ))
 
 
