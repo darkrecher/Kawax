@@ -53,7 +53,7 @@ NB_ASPIRIN_TO_TAKE = 3
 COLOR_WIN = (0, 255, 255)
 COLOR_ZAP_OBJECTIVE = (255, 50, 50)
 
-LIST_COORD_ASPRO_HALF_LEFT = ((7, 2), (5, 5), (1, 9))
+LIST_COORD_ASPRO_HALF_LEFT = ((7, 2), (5, 5), (1, 8))
 LIST_COORD_ASPRO_HALF_RIGHT = ((9, 1), (10, 3), (11, 1))
 
 
@@ -113,6 +113,8 @@ class GameAspirin(GameBasic):
         selSuppl = self.selectorPlayerOne.selSuppl
 
         if self.zapValidatorBase.validateZap(selPath, selSuppl, []):
+
+            securedPrint(u"** ZAP **")
 
             textYeah = language.TEXT_YEAH[language.languageCurrent]
             self.console.addListTextAndDisplay((textYeah, ))
@@ -184,6 +186,7 @@ class GameAspirin(GameBasic):
 
     def applyGravity(self):
         """ zonc """
+        securedPrint(u" applyGravity")
         #TRODO : une fonction/propriété, au lieu de ce len de merte.
         if len(self.gravityMovements.dicMovement) > 0:
             param = (self.crawlerGrav, self.gravityMovements, None)
@@ -222,13 +225,15 @@ class GameAspirin(GameBasic):
     def needStabilization(self):
         """ overriden
         """
-        self._determineAnyGravity();
-        if (self.gravityMovements is not None
-            and len(self.gravityMovements.dicMovement) > 0
-        ):
+        securedPrint(u"needStabilization")
+        anyGravToDo = self._determineAnyGravity();
+        if anyGravToDo:
+            securedPrint(u"needStabilization TRUE")
             return True
-        if self.arena.hasChipToRegenerate(self.crawlerRegenRift):
+        if self.arena.hasAnyEmptyChipInBottom():
+            securedPrint(u"needStabilization true")
             return True
+        securedPrint(u"needStabilization false")
         return False
 
     def handleGravity(self):
