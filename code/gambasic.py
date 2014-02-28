@@ -369,8 +369,8 @@ class GameBasic():
                 # C'est peut être mieux non ?
                 if self.arena.stimuliInteractiveTouch(posInteract):
                     self.selectorPlayerOne.cancelAllSelection()
-                    self.selectorPlayerOne.setStimuliLock(True)
                     if self.needStabilization():
+                        self.selectorPlayerOne.setStimuliLock(True)
                         self.gravityCounter = DELAY_GRAVITY
                     if (self.tutorialScheduler is not None and
                         self.tutorialScheduler.takeStimInteractiveTouch()):
