@@ -8,6 +8,7 @@ Repo : https://github.com/darkrecher/Kawax
 
 from common   import (pyRect, pyRectTuple,
                       UP, DOWN, LEFT, RIGHT, NO_SOUND)
+from language import LANGUAGE_FRENCH, LANGUAGE_ENGLISH
 
 from console  import Console
 from coins    import ChipCoin, ChipSugar, ChipAsproHalfLeft, ChipAsproHalfRight
@@ -23,27 +24,47 @@ LIST_TUT_STEP_DESCRIP = (
     (
         STEP_COND_STIM,
         (),
-        NO_SOUND,
-        (u"Salut. T'es encore là ?",
-         u"C'est bien, t'es un bon",
-         u"petit soldat.",),
+        "tuto_03_01",
+        {
+            LANGUAGE_FRENCH : (
+                u"Salut. T'es encore là ?",
+                u"C'est bien, t'es un bon",
+                u"petit soldat.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"Hi. Still there ?",
+                u"Fine. You are a good",
+                u"little soldier.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
-        (u"Les 2 machins blancs ",
-         u"au milieu de l'écran,",
-         u"ce sont des demis-cachets",
-         u"d'aspirine.",
-         u"Faut les coller ensemble."),
+        "tuto_03_02",
+        {
+            LANGUAGE_FRENCH : (
+                u"Les 2 machins blancs ",
+                u"au milieu de l'écran,",
+                u"ce sont des demis-cachets",
+                u"d'aspirine.",
+                u"Faut les coller ensemble.",
+            ),
+            LANGUAGE_ENGLISH : (
+                u"The two white crappies,",
+                u"in the middle of",
+                u"the screen, are",
+                u"half-aspirin pills.",
+                u"You have to assemble them.",
+            )
+        },
         (),
         False
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
-        NO_SOUND,
+        "tuto_03_03",
         (u"Tu vas commencer par me",
          u"péter tout ça."),
         ((4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 5), (6, 6)),
@@ -51,7 +72,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        "tuto_03_04",
         (u"Ouaf ouaf, Meeeuuhh",
          u"gruuiik grruuuiiiikk !",
          u"Pardon. On en étais où ?",
@@ -62,7 +83,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
-        NO_SOUND,
+        "tuto_03_05",
         (u"Et maintenant, pète-moi",
          u"ça, histoire de vider la",
          u"colonne. Et tu regarderas",
@@ -73,7 +94,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        "tuto_03_06",
         (u"Et hop. Ca s'est déplacé",
          u"vers la gauche.",
          u"C'est-y pas top foufoutre",
@@ -83,7 +104,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        "tuto_03_07",
         (u"Sauf que maintenant,",
          u"les aspirines ne sont",
          u"plus en face."),
@@ -92,14 +113,14 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_SELECT_TILES,
         ((4, 7), (4, 8)),
-        NO_SOUND,
+        "tuto_03_08",
         ((u"Dégomme-moi ce bazar.", )),
         ((4, 7), (4, 8)),
         False
     ),(
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
-        NO_SOUND,
+        "tuto_03_09",
         (u"Bien, petit stagiaire.",
          u"Maintenant, tu vas ",
          u"cliquer sur l'un des ",
@@ -109,7 +130,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
-        NO_SOUND,
+        "tuto_03_10",
         (u"Hop, ils se réunissent.",
          u"Et pour finir, cliques sur",
          u"le cachet entier."),
@@ -118,7 +139,7 @@ LIST_TUT_STEP_DESCRIP = (
     ),(
         STEP_COND_STIM,
         (),
-        NO_SOUND,
+        "tuto_03_11",
         (u"Bon ben voilà, c'était super.",
          u"Est-ce que c'était assez",
          u"pour vous ?"),
