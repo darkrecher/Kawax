@@ -27,7 +27,7 @@ LIST_TUT_STEP_DESCRIP = (
         "tuto_03_01",
         {
             LANGUAGE_FRENCH : (
-                u"Salut. T'es encore là ?",
+                u"Ah T'es encore là ?",
                 u"C'est bien, t'es un bon",
                 u"petit soldat.",
             ),
@@ -45,11 +45,11 @@ LIST_TUT_STEP_DESCRIP = (
         "tuto_03_02",
         {
             LANGUAGE_FRENCH : (
-                u"Les 2 machins blancs ",
-                u"au milieu de l'écran,",
-                u"ce sont des demis-cachets",
-                u"d'aspirine.",
-                u"Faut les coller ensemble.",
+                u"Les 2 machins au milieu",
+                u"de l'écran, ce sont",
+                u"des cachets d'aspirine.",
+                u"Il faut les coller ",
+                u"ensemble.",
             ),
             LANGUAGE_ENGLISH : (
                 u"The two white crappies,",
@@ -73,10 +73,10 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_STIM,
         (),
         "tuto_03_04",
-        (u"Ouaf ouaf, Meeeuuhh",
-         u"gruuiik grruuuiiiikk !",
-         u"Pardon. On en étais où ?",
-         u"Ah oui. Cliquez sur",
+        (u"Ouaf ouaf, gruuiik",
+         u"grruuuiiiikk ! Teuheu !",
+         u"Pardon. Où on en étais ?",
+         u"Oui euh... Cliquez sur",
          u"Suivant, comme d'hab'."),
         (),
         False
@@ -86,7 +86,7 @@ LIST_TUT_STEP_DESCRIP = (
         "tuto_03_05",
         (u"Et maintenant, pète-moi",
          u"ça, histoire de vider la",
-         u"colonne. Et tu regarderas",
+         u"colonne. Et tu regardes",
          u"bien ce que ça fait,",
          u"jeune boulawan."),
         ((5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (6, 9), (7, 9)),
@@ -131,18 +131,19 @@ LIST_TUT_STEP_DESCRIP = (
         STEP_COND_INTERACTIVE_TOUCH_SUCCESSED,
         (),
         "tuto_03_10",
-        (u"Hop, ils se réunissent.",
-         u"Et pour finir, cliques sur",
-         u"le cachet entier."),
+        (u"Et hop, ils se",
+         u"réunissent.",
+         u"Et pour finir, clique",
+         u"sur le cachet entier."),
         (),
         False
     ),(
         STEP_COND_STIM,
         (),
         "tuto_03_11",
-        (u"Bon ben voilà, c'était super.",
-         u"Est-ce que c'était assez",
-         u"pour vous ?"),
+        (u"Voilà, c'était super.",
+         u"J'espère que c'était",
+         u"assez pour vous."),
         (),
         False
     ),(
