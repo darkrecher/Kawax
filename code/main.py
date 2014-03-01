@@ -55,6 +55,7 @@ LIST_INTRO_TEXT_FRENCH = (
     u"6 : mode aspirine - jeu",
     u"",
     u"E : english.   F : français",
+    u"http://recher.wordpress.com",
 )
 
 LIST_INTRO_TEXT_ENGLISH = (
@@ -67,6 +68,7 @@ LIST_INTRO_TEXT_ENGLISH = (
     u"6 : aspirin - game",
     u"",
     u"E : english.   F : français",
+    u"http://recher.wordpress.com",
 )
 
 DICT_GAME_CLASS_FROM_KEY = {
