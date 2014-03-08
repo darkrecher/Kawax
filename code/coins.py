@@ -116,12 +116,17 @@ class ChipCoin(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_COIN, brouzouf=brouzouf)
-        #self.brouzouf = brouzouf
 
-        #tout à l'arrache. Osef.
-        if brouzouf == 1:
-            self.coinImage = loadImg("coin_01.png", colorkey=None)
+        DICT_IMG_FILE_FROM_BROUZOUF = {
+            1 : "coin_01.png",
+            2 : "coin_02.png",
+        }
+        img_file = DICT_IMG_FILE_FROM_BROUZOUF.get(brouzouf)
+
+        if img_file is not None:
+            self.coinImage = loadImg(img_file, colorkey=None)
         else:
+            # TODO : à virer quand y'aura toutes les images.
             self.color = (240, 240, 240)
             self.coinImage = pygame.Surface((32, 32)).convert()
 
