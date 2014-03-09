@@ -120,6 +120,7 @@ class ChipCoin(Chip):
         DICT_IMG_FILE_FROM_BROUZOUF = {
             1 : "coin_01.png",
             2 : "coin_02.png",
+            5 : "coin_05.png",
         }
         img_file = DICT_IMG_FILE_FROM_BROUZOUF.get(brouzouf)
 
