@@ -1,13 +1,13 @@
 # Document de conception de Kawax #
 
-Ce document décrit le code du jeu vidéo Kawax. Pour chaque fichier de code, son utilité, ainsi que son interaction avec les autres fichiers, est expliquée.
+Ce document décrit le code du jeu vidéo Kawax. 
 
 
 ## Avertissement ##
 
 J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et contient beaucoup de parties non factorisée.
 
-Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants qui lui jetaient des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
+Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
 
 ## Déroulement des actions lors d'une partie type ##
@@ -32,9 +32,7 @@ Affichage du menu principal
 
 Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
-Instanciaton de la classe GameXXX correspondant au mode de jeu choisi.
-
-Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game".
+Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game".
 
 ### Initialisation des trucs dans GameXXX ###
 
@@ -44,7 +42,7 @@ On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails con
 
 Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par la fonction interne `initCommonStuff`
 
- - Récupération de la surface (objet pygame représentant une zone de dessin) dans laquelle doit se dessiner le jeu. C'est à dire la fenêtre à l'écran de l'ordinateur.
+ - Récupération de la surface (objet pygame représentant une zone de dessin) dans laquelle doit se dessiner le jeu. Cette surface correspond à la fenêtre affichée à l'écran.
 
  - Création d'un objet `Console` : affichage de texte sur le côté droit de l'écran.
 
@@ -80,7 +78,7 @@ Cette fonction commence par faire quelques bidouilleries d'init :
 
  - Affichage de la première étape du tutoriel, si il y a un tutoriel,
 
- - ou sinon, affichage de l'objectif à atteindre, selon le ZapValidator (en terme de brouzouf et de nombre de sucres). (désolé pour le "en terme de", ici , il me semble réellement approprié).
+ - ou sinon, affichage de l'objectif à atteindre, en terme de brouzouf et de nombre de sucres. (désolé pour le "en terme de", ici , il me semble réellement approprié). Le texte d'objectif à afficher est déterminé par le ZapValidator.
 
 Puis, la fonction `GameXXX.playOneGame()` entre dans la game loop (boucle principale qui fait fonctionner le jeu).
 
@@ -102,7 +100,7 @@ Le déroulement global de la game loop est le suivant :
 
  - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je l'ai pas fait.
 
- - Rafraîchissement complet de l'écran. (bourrin aussi).
+ - Rafraîchissement complet de l'écran. C'est bourrin aussi.
 
 ### Sélection des tiles ###
 
@@ -128,4 +126,4 @@ Le déroulement global de la game loop est le suivant :
 
 ## Vrac à détailler ##
 
-Le code d'init des fonctions GameXXX est pourri. Y'en a dans __init__, dans initCommonStuff, et dans les __init__ des classes héritées. On pige rien.
+Le code d'init des fonctions GameXXX est pourri. Y'en a dans `__init__`, dans `initCommonStuff`, et dans les `__init__` des classes héritées. On pige rien.
