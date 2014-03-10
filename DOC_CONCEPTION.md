@@ -112,11 +112,9 @@ La classe Tile contient une liste appelée `dicPlayerSel` (on me dit dans l'orei
 
 Cet élément peut prendre l'une des trois valeurs suivantes :
 
- - SELTYPE_PATH : La tile est sélectionnée dans le chemin principal.
- 
- - SELTYPE_SUPPL : La tile est sélectionnée par une sélection additionnelle.
-
- - SELTYPE_NONE : La tile n'est pas sélectionnée.
+ - SELTYPE_PATH : La tile est sélectionnée dans le chemin principal. Elle apparaît à l'écran encadrée en rouge.
+ - SELTYPE_SUPPL : La tile est sélectionnée par une sélection additionnelle. Elle apparaît à l'écran encadrée en orange.
+ - SELTYPE_NONE : La tile n'est pas sélectionnée. Elle apparaît à l'écran sans cadre.
 
 Tout le blabla de ce chapitre a pour but de décrire de quelle manière la valeur de `dicPlayerSel` est modifiée, en fonction des actions effectuées par le joueur.  
 
@@ -194,7 +192,22 @@ C'est important qu'elles soient transmises une par une, car ça simplifie les ch
 
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
-WIP
+le `Selector` possède une variable interne `selMode`, indiquant le mode de sélection en cours. Cette variable peut prendre 4 valeurs différentes :
+
+ - SELMODE_PATH : le joueur est en train de tracer le chemin principal de sélection des tiles.
+ - SELMODE\_SUPPL\_ADD : le joueur ajoute des tiles dans la sélection additionnelle.
+ - SELMODE\_SUPPL\_REMOVE : le joueur retire des tiles dans la sélection additionnelle.
+ - SELMODE\_STANDBY : le joueur ne fait rien. On attend une première action de sa part pour connaître le mode de sélection.
+
+Il reste un dernier mode : SELMODE_FORBIDDEN, mais on ne s'en sert jamais.
+
+Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine le mode de sélection courant. Ensuite, on garde le même mode au fur et à mesure que les activation suivantes arrivent.
+
+Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY. Et ainsi de suite.
+
+#### Détermination du mode de sélection à la première activation de tile ####
+
+WIP.   
 
 ### "Zap" d'un ensemble d'éléments ###
 
