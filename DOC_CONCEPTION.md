@@ -60,7 +60,7 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Création d'un objet `ArenaXXX` : à partir de la classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ...
 
- - Création d'un objet Selector : gère les différents mode de sélection de tile, (chemin principal, tuiles additionnelles, ...).
+ - Création d'un objet Selector : gère les différents mode de sélection de tile : chemin principal, tuiles additionnelles, ... (une "tile" = une case dans l'aire de jeu).
 
  - Ajout des éléments dans l'arène, au hasard (pièces, sucres, aspirine, touillettes, ...).
 
@@ -104,11 +104,75 @@ Le déroulement global de la game loop est le suivant :
 
 ### Sélection des tiles ###
 
+#### Lorsque le joueur clique sur la fenêtre du jeu : ####
+
+L'objet `GameXXX.stimuliStocker` le détecte (événement `pygame.locals.MOUSEBUTTONDOWN`).
+
+Le stimuliStocker détermine, à partir des coordonnées du curseur de la souris, si le clic s'est fait sur l'aire de jeu, et si oui, sur quelle tile. (fonction `determinePosArenaMouse`).
+
+Le stimuliStocker place les coordonnées de la tile dans la variable interne `posArenaMouse`.
+
+Si c'est oui, le stimuliStocker ajoute les coordonnées de cette tile dans la liste `listPosArenaToActivate`. Dans ce cas, `listPosArenaToActivate` ne contient forcément qu'un seul élément. (fonction `activateTileWithMouse`).
+
+Le code extérieur utilisera le contenu de `listPosArenaToActivate` pour en déduire ce qu'il doit faire concernant la sélection des tiles.
+
+D'autre part, le stimuliStocker retient les coordonnées de cette tile activée, dans la variable interne `posArenaPrevious`.
+
+`listPosArenaToActivate` est remis à zéro à chaque appel à la fonction `resetStimuli`, c'est à dire à chaque itération de la game loop. (Donc lorsque `listPosArenaToActivate` contient quelque chose, le code extérieur doit le prendre en compte tout de suite).
+
+Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
+
+#### Lorsque le joueur déplace le curseur de la souris en maintenant le bouton appuyé : ####
+
+Le stimuliStocker détermine si les nouvelles coordonnées du curseur de souris correspondent à une tile dans l'aire de jeu. Si ce n'est pas le cas, `posArenaPrevious` est réinitialisé à None, et `listPosArenaToActivate` reste vide.
+
+Mais si c'est le cas, et que `posArenaPrevious` et `posArenaMouse` correspondent à deux positions différentes, alors le stimuliStocker effectue les actions suivantes (re fonction `activateTileWithMouse`) :
+
+ - Placement des coordonnées de la nouvelle tile dans la variable interne `posArenaMouse`.
+
+ - Traçage d'un chemin depuis `posArenaPrevious`, jusqu'à `posArenaMouse`.
+
+ - Enregistrement de ce chemin dans `listPosArenaToActivate`.
+
+ - Réactualisation de `posArenaPrevious`, qui devient `posArenaMouse`.
+
+Si le joueur bouge la souris lentement, les coordonnées du curseur de souris ont peu changée depuis la dernière fois. `listPosArenaToActivate` ne contiendra qu'un seul élément : la nouvelle tile.
+
+Si le joueur bouge la souris rapidement, `listPosArenaToActivate` peut contenir plusieurs éléments.
+
+Si `posArenaPrevious` est très éloignée de `posArenaMouse`, il peut y avoir plusieurs chemins possible pour les relier. Dans ce cas, on décide arbitrairement de toujours prendre le chemin qui fait d'abord les déplacements en X, puis ceux en Y.
+
+Si le joueur bouge un tout petit peu le curseur de souris, `posArenaPrevious` et `posArenaMouse` sont égaux. Le stimuliStocker ne trace pas de chemin, et ne met rien dans `listPosArenaToActivate`.
+
+Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu, alors `posArenaPrevious` correspond à une tile qui n'est pas sur un bord, et `posArenaMouse` ne correspond pas à une position valide (None). Dans ce cas, on ne peut pas tracer de chemin, alors on réinitialise `posArenaPrevious` à None. Le joueur risque de voir un chemin de sélection qui ne semble pas être allé jusque là où il voulait. C'est de sa faute, il avait qu'à bouger la souris moins vite. 
+
+Si le joueur maintient le curseur de souris appuyé, et revient vers l'aire de jeu mais par un autre endroit, alors `listPosArenaToActivate` contiendra une tile qui n'est pas forcément adjacente avec la dernière tile placée dans `listPosArenaToActivate`. Le code extérieur doit s'en débrouiller. 
+
+#### Lorsque le joueur relâche le bouton de la souris ####
+
+On réinitialise à None la variable `posArenaPrevious`.
+
+On met à True la variable `mustStandBy`, qui sera utilisée par le code extérieur.
+
+Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False à chaque itération de game loop. Donc si le code extérieur veut réagir à cette variable, il doit le faire tout de suite.
+
+#### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
+
+ - Renvoyer `listPosArenaToActivate` : une liste de coordonnées (contenant 0, 1 ou plusieurs éléments) correspondant aux tiles que le joueur veut activer. Les valeurs successives contenues dans `listPosArenaToActivate` ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
+
+ - Renvoyer `mustStandBy == True` lorsque le joueur relâche le bouton de souris.
+
+Le stimulistocker n'a aucune idée de ce qu'il faut faire avec les tiles activées (sélection en chemin principal, sélection additionnelle, déselection, ...). C'est le code extérieur qui s'en occupera. 
+
+#### Transmission des tiles activées ####
+
+WIP
+
 ### "Zap" d'un ensemble d'éléments ###
 
-### Gravité et regénération ###
-
 ### Stimuli lock/delock ###
+
+### Gravité et regénération ###
 
 ### Interactive Touch ###
 
