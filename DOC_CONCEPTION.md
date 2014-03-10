@@ -110,11 +110,11 @@ L'objet `GameXXX.stimuliStocker` le détecte (événement `pygame.locals.MOUSEBU
 
 Le stimuliStocker détermine, à partir des coordonnées du curseur de la souris, si le clic s'est fait sur l'aire de jeu, et si oui, sur quelle tile. (fonction `determinePosArenaMouse`).
 
-Le stimuliStocker place les coordonnées de la tile dans la variable interne `posArenaMouse`.
+Si c'est oui, le stimuliStocker place les coordonnées de la tile dans la variable interne `posArenaMouse`.
 
-Si c'est oui, le stimuliStocker ajoute les coordonnées de cette tile dans la liste `listPosArenaToActivate`. Dans ce cas, `listPosArenaToActivate` ne contient forcément qu'un seul élément. (fonction `activateTileWithMouse`).
+Puis il ajoute les coordonnées de cette tile dans la liste `listPosArenaToActivate`. Dans ce cas, `listPosArenaToActivate` ne contient qu'un seul élément. (fonction `activateTileWithMouse`).
 
-Le code extérieur utilisera le contenu de `listPosArenaToActivate` pour en déduire ce qu'il doit faire concernant la sélection des tiles.
+Le code extérieur utilisera le contenu de `listPosArenaToActivate` pour en déduire ce qu'il doit faire.
 
 D'autre part, le stimuliStocker retient les coordonnées de cette tile activée, dans la variable interne `posArenaPrevious`.
 
@@ -130,9 +130,9 @@ Mais si c'est le cas, et que `posArenaPrevious` et `posArenaMouse` correspondent
 
  - Placement des coordonnées de la nouvelle tile dans la variable interne `posArenaMouse`.
 
- - Traçage d'un chemin depuis `posArenaPrevious`, jusqu'à `posArenaMouse`.
+ - Détermination de la liste de coordonnées effectuant le chemin depuis `posArenaPrevious`, jusqu'à `posArenaMouse`.
 
- - Enregistrement de ce chemin dans `listPosArenaToActivate`.
+ - Enregistrement de cette liste dans `listPosArenaToActivate`.
 
  - Réactualisation de `posArenaPrevious`, qui devient `posArenaMouse`.
 
@@ -146,7 +146,7 @@ Si le joueur bouge un tout petit peu le curseur de souris, `posArenaPrevious` et
 
 Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu, alors `posArenaPrevious` correspond à une tile qui n'est pas sur un bord, et `posArenaMouse` ne correspond pas à une position valide (None). Dans ce cas, on ne peut pas tracer de chemin, alors on réinitialise `posArenaPrevious` à None. Le joueur risque de voir un chemin de sélection qui ne semble pas être allé jusque là où il voulait. C'est de sa faute, il avait qu'à bouger la souris moins vite. 
 
-Si le joueur maintient le curseur de souris appuyé, et revient vers l'aire de jeu mais par un autre endroit, alors `listPosArenaToActivate` contiendra une tile qui n'est pas forcément adjacente avec la dernière tile placée dans `listPosArenaToActivate`. Le code extérieur doit s'en débrouiller. 
+Si le joueur maintient le curseur de souris appuyé, et revient vers l'aire de jeu mais par un autre endroit, alors `listPosArenaToActivate` contiendra une tile qui n'est pas forcément adjacente avec la dernière tile placée précédemment dans `listPosArenaToActivate`. Le code extérieur doit s'en débrouiller. 
 
 #### Lorsque le joueur relâche le bouton de la souris ####
 
@@ -158,7 +158,7 @@ Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False �
 
 #### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
 
- - Renvoyer `listPosArenaToActivate` : une liste de coordonnées (contenant 0, 1 ou plusieurs éléments) correspondant aux tiles que le joueur veut activer. Les valeurs successives contenues dans `listPosArenaToActivate` ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
+ - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les valeurs successives contenues dans `listPosArenaToActivate` ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
 
  - Renvoyer `mustStandBy == True` lorsque le joueur relâche le bouton de souris.
 
