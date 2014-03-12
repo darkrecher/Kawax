@@ -237,6 +237,14 @@ C'est comme lors de la première activation, mais en plus simple, car on a moins
 
 #### Déselection en cascade ####
 
+Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles, quel que soit la méthode de déselection), il y a un risque que des sélections additionnelles ne soient plus reliées au chemin principal. Dans ce cas, il faut automatiquement déselectionner toutes ces tiles non reliées. Car l'ensemble de la sélection doit être d'un seul bloc.
+
+Ces déselections automatiques sont réalisées par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment fonctionne en détail l'algo de la fonction. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut. 
+
+#### Modification effective de la sélection d'une tile ####
+
+
+
 ### "Zap" d'un ensemble d'éléments ###
 
 ### Stimuli lock/delock ###
