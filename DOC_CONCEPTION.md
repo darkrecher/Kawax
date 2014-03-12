@@ -225,7 +225,15 @@ La détermination du mode de sélection dépend des tiles déjà sélectionnées
 
 #### Prise en compte des activations de tile qui suivent, une fois que le mode de sélection a été déterminé
 
-WIP
+Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autres blocs `if`, et également par la fonction `tryToActivatePath`.
+
+C'est comme lors de la première activation, mais en plus simple, car on a moins de cas possibles.
+
+ - Si on est en SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
+
+ - Si on est en SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'on ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
+
+ - Si on est en SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
 
 #### Déselection en cascade ####
 
