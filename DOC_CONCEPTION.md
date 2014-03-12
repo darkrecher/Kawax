@@ -243,7 +243,16 @@ Ces déselections automatiques sont réalisées par la fonction `Selector.unsele
 
 #### Modification effective de la sélection d'une tile ####
 
+Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus. Il faut le faire. C'est un peu alambiqué, et ça passe à travers plusieurs fonctions.
 
+Le `Selector` connait son numéro de joueur. (Concrètement, c'est toujours 0, car il n'y a qu'un joueur, mais on pourrait imaginer qu'il y en ait plus).
+
+Enchaînement des fonctions exécutées, pour une modification de sélection : 
+
+ - `Selector.selectionChange`. En param : la position de la tile et le type de sélection.
+ - `ArenaXXX.selectionChange`. En param : le numéro du joueur, la position de la tile et le type de sélection.
+ - `Tile[position].selectionChange`.  param : le numéro du joueur et le type de sélection.
+ - Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
 
 ### "Zap" d'un ensemble d'éléments ###
 
