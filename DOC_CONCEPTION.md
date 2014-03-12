@@ -104,9 +104,9 @@ Le déroulement global de la game loop est le suivant :
 
 ### Sélection des tiles ###
 
-La manière de stocker l'information "quelle tile est sélectionnée, et de quelle manière", est un peu alambiquée. Je l'ai faite ainsi parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui ferait chacun leurs sélections indépendamment des autres.
+L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui ferait chacun leurs sélections respectives.
 
-Donc, cette information de sélection est stockée dans les classes Tile. (une arène contient un tableau en deux dimensions d'instances de Tile).
+Donc, cette info de sélection est stockée dans la classe Tile. (une arène contient un tableau en deux dimensions d'instances de Tile).
 
 La classe Tile contient une liste appelée `dicPlayerSel` (on me dit dans l'oreillette que c'est confusionnant). Chaque élément de la liste correspond à la sélection d'un joueur. Concrètement, dans tout le code que j'ai fait, il n'y a qu'un joueur, et `dicPlayerSel` ne contient toujours qu'un et un seul élément.
 
@@ -118,7 +118,7 @@ Cet élément peut prendre l'une des trois valeurs suivantes :
 
 Tout le blabla de ce chapitre a pour but de décrire de quelle manière la valeur de `dicPlayerSel` est modifiée, en fonction des actions effectuées par le joueur.  
 
-À l'initialisation de l'objet ArenaXXX, le tableau de tile est créé. On lui indique le nombre de joueur (c'est toujours 1). chaque Tile est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.   
+À l'initialisation de ArenaXXX, On indique le nombre de joueur (c'est toujours 1). Le tableau de tile est créé. chaque Tile est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.   
 
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
@@ -128,25 +128,29 @@ Le stimuliStocker détermine, à partir des coordonnées du curseur de la souris
 
 Si c'est oui, le stimuliStocker place les coordonnées de la tile dans la variable interne `posArenaMouse`.
 
-Puis il ajoute les coordonnées de cette tile dans la liste `listPosArenaToActivate`. Dans ce cas, `listPosArenaToActivate` ne contient qu'un seul élément. (fonction `activateTileWithMouse`).
+Puis il ajoute les coordonnées de cette tile dans la liste `listPosArenaToActivate`. (fonction `activateTileWithMouse`). Dans ce cas, `listPosArenaToActivate` ne contient qu'un seul élément. 
 
 Le code extérieur utilisera le contenu de `listPosArenaToActivate` pour en déduire ce qu'il doit faire.
 
 D'autre part, le stimuliStocker retient les coordonnées de cette tile activée, dans la variable interne `posArenaPrevious`.
 
-`listPosArenaToActivate` est remis à zéro à chaque appel à la fonction `resetStimuli`, c'est à dire à chaque itération de la game loop. (Donc lorsque `listPosArenaToActivate` contient quelque chose, le code extérieur doit le prendre en compte tout de suite).
+`listPosArenaToActivate` est remis à zéro à chaque appel à la fonction `resetStimuli`, c'est à dire à chaque itération de la game loop. (Donc, lorsque `listPosArenaToActivate` contient quelque chose, le code extérieur doit le prendre en compte tout de suite).
 
 Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
 
-#### Lorsque le joueur déplace le curseur de la souris en maintenant le bouton appuyé : ####
+#### Lorsque le joueur déplace la souris en maintenant le bouton appuyé : ####
 
-Le stimuliStocker détermine si les nouvelles coordonnées du curseur de souris correspondent à une tile dans l'aire de jeu. Si ce n'est pas le cas, `posArenaPrevious` est réinitialisé à None, et `listPosArenaToActivate` reste vide.
+Les actions décrites dans ce chapitre sont effectuées par la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
 
-Mais si c'est le cas, et que `posArenaPrevious` et `posArenaMouse` correspondent à deux positions différentes, alors le stimuliStocker effectue les actions suivantes (re fonction `activateTileWithMouse`) :
+Le stimuliStocker détermine si les nouvelles coordonnées du curseur correspondent à une tile dans l'aire de jeu. Si ce n'est pas le cas, `posArenaPrevious` est réinitialisé à None, et `listPosArenaToActivate` reste vide.
+
+Si les coordonnées du curseur correspondent à une tile, mais que c'est la même que `posArenaPrevious`, le stimuliStocker ne fait rien. `posArenaPrevious` conserve sa valeur. `listPosArenaToActivate` reste vide.
+
+Mais si le curseur est sur une autre tile, alors le stimuliStocker effectue les actions suivantes :
 
  - Placement des coordonnées de la nouvelle tile dans la variable interne `posArenaMouse`.
 
- - Détermination de la liste de coordonnées effectuant le chemin depuis `posArenaPrevious`, jusqu'à `posArenaMouse`.
+ - Détermination de la liste de coordonnées effectuant un chemin de `posArenaPrevious` (exclue) jusqu'à `posArenaMouse` (inclue).
 
  - Enregistrement de cette liste dans `listPosArenaToActivate`.
 
@@ -156,9 +160,7 @@ Si le joueur bouge la souris lentement, les coordonnées du curseur de souris on
 
 Si le joueur bouge la souris rapidement, `listPosArenaToActivate` peut contenir plusieurs éléments.
 
-Si `posArenaPrevious` est très éloignée de `posArenaMouse`, il peut y avoir plusieurs chemins possible pour les relier. Dans ce cas, on décide arbitrairement de toujours prendre le chemin qui fait d'abord les déplacements en X, puis ceux en Y.
-
-Si le joueur bouge un tout petit peu le curseur de souris, `posArenaPrevious` et `posArenaMouse` sont égaux. Le stimuliStocker ne trace pas de chemin, et ne met rien dans `listPosArenaToActivate`.
+Si `posArenaPrevious` est très éloignée de `posArenaMouse`, il peut y avoir plusieurs chemins possible pour les relier. On décide arbitrairement de toujours prendre le chemin qui fait d'abord les déplacements en X, puis ceux en Y.
 
 Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu, alors `posArenaPrevious` correspond à une tile qui n'est pas sur un bord, et `posArenaMouse` ne correspond pas à une position valide (None). Dans ce cas, on ne peut pas tracer de chemin, alors on réinitialise `posArenaPrevious` à None. Le joueur risque de voir un chemin de sélection qui ne semble pas être allé jusque là où il voulait. C'est de sa faute, il avait qu'à bouger la souris moins vite. 
 
@@ -184,11 +186,11 @@ Le stimulistocker n'a aucune idée de ce qu'il faut faire avec les tiles activé
 
 Cette action est effectuée dans la game loop. Les tiles activées sont transmises à l'objet `selectorPlayerOne` (instance de `Selector`, contenus dans l'objet `GameXXX`).
 
-En théorie, il pourrait y avoir plusieurs objet `Selector` dans `GameXXX`, qui prendrait leurs stimulis depuis différentes sources (on sait pas exactement lesquelles mais osef). En pratique, il n'y a toujours qu'un seul `Selector`, qui s'appelle `selectorPlayerOne`.
+En théorie, il pourrait y avoir plusieurs objets `Selector` dans `GameXXX`, qui prendraient leurs stimulis depuis différentes sources (on sait pas exactement lesquelles mais osef). En pratique, il n'y a toujours qu'un seul `Selector`, qui s'appelle `selectorPlayerOne`.
 
 Les tiles activées sont transmises une par une, dans l'ordre de `listPosArenaToActivate`, au `selectorPlayerOne`, via la fonction `takeStimuliActivateTile(posSelected)`.
 
-C'est important qu'elles soient transmises une par une, car ça simplifie les choses. Cela oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement (`listPosArenaToActivate` ne contient qu'un seul élément à la fois) ou qu'il l'ait bougé rapidement (`listPosArenaToActivate` contient plusieurs éléments).
+C'est important qu'elles soient transmises une par une, car ça simplifie les choses. Cela oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement ou rapidement.
 
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
