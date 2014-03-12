@@ -194,66 +194,72 @@ C'est important qu'elles soient transmises une par une, car ça simplifie les ch
 
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
-le `Selector` possède une variable interne `selMode`, indiquant le mode de sélection en cours. Cette variable peut prendre 4 valeurs différentes :
+le `Selector` possède une variable interne `selMode`, indiquant le mode de sélection en cours. Elle a 4 valeurs possibles :
 
  - SELMODE_PATH : le joueur est en train de tracer le chemin principal de sélection des tiles.
  - SELMODE\_SUPPL\_ADD : le joueur ajoute des tiles dans la sélection additionnelle.
  - SELMODE\_SUPPL\_REMOVE : le joueur retire des tiles dans la sélection additionnelle.
- - SELMODE\_STANDBY : le joueur ne fait rien. On attend une première action de sa part pour déterminer un mode de sélection "utile".
+ - SELMODE\_STANDBY : le joueur ne fait rien.
 
-Il reste un dernier mode : SELMODE_FORBIDDEN, mais on ne s'en sert jamais.
+Il reste un dernier mode : SELMODE_FORBIDDEN, mais je m'en sers jamais. (Je sais plus ce que je voulais faire avec, donc osef).
 
-Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine le mode de sélection courant. Ensuite, on garde le même mode au fur et à mesure que les activation suivantes arrivent.
+Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine un mode de sélection "utile". On garde ce mode au fur et à mesure des activations ultérieures.
 
-Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY. Et ainsi de suite.
+Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY. 
 
-#### Détermination du mode de sélection à la première activation de tile ####
+#### Prise en compte de la première activation de tile, et détermination du mode de sélection ####
 
-Lorsque le `Selector` est en mode SELMODE\_STANDBY et qu'il reçoit une première activation de tile, il détermine son mode de sélection, et l'applique immédiatement sur cette première tile activée. Ces actions sont réalisées par la fonction `takeStimuliActivateTile`, dans le bloc commençant par `if self.selMode == SELMODE_STANDBY:`, ainsi que par la fonction `tryToActivatePath`.
+Ces actions sont réalisées par la fonction `takeStimuliActivateTile`, dans le bloc commençant par `if self.selMode == SELMODE_STANDBY:`, ainsi que par la fonction `tryToActivatePath`.
 
 La détermination du mode de sélection dépend des tiles déjà sélectionnées, ainsi que de celle qui est activée. On teste les situations suivantes, dans cet ordre :
 
- - Activation d'une tile sélectionnée par le chemin principal. On déselectionne toutes les tiles du chemin principal, depuis la tile activée (exclue) jusqu'à la fin du chemin. Le mode devient SELMODE_PATH.
+ - La tile activée est déjà sélectionnée dans le chemin principal. -> On déselectionne toutes les tiles du chemin principal, depuis la tile activée (exclue) jusqu'à la fin du chemin. Le mode devient SELMODE_PATH.
 
- - Activation d'une tile adjacente à la première tile du chemin principal. On ajoute cette tile au début du chemin. Le mode devient SELMODE_PATH.
+ - La tile activée est adjacente à la première tile du chemin principal. -> On ajoute cette tile au début du chemin. Le mode devient SELMODE_PATH.
 
- - Activation d'une tile adjacente à la dernière tile du chemin principal. On ajoute cette tile à la fin du chemin. Le mode devient SELMODE_PATH.
+ - La tile activée est adjacente à la dernière tile du chemin principal. -> On ajoute cette tile à la fin du chemin. Le mode devient SELMODE_PATH.
 
- - Activation d'une tile appartenant à la sélection additionnelle. On déselectionne cette tile. Le mode devient SELMODE\_SUPPL\_REMOVE.
+ - La tile activée est déjà sélectionnée dans la sélection additionnelle. -> On déselectionne cette tile. Le mode devient SELMODE\_SUPPL\_REMOVE.
 
- - Activation d'une tile ajacente à une tile sélectionnée (chemin principal ou sélection additionnelle). On sélectionne cette tile en sélection additionnelle. Le mode devient SELMODE\_SUPPL\_ADD.
+ - La tile activée est ajacente à une tile sélectionnée (chemin principal ou sélection additionnelle). -> On sélectionne cette tile en sélection additionnelle. Le mode devient SELMODE\_SUPPL\_ADD.
 
- - Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un nouveau path sur la tile activée. Le mode devient SELMODE_PATH. 
+ - Dans tous les autres cas. -> Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un nouveau path sur la tile activée. Le mode devient SELMODE_PATH. 
 
-#### Prise en compte des activations de tile qui suivent, une fois que le mode de sélection a été déterminé
+#### Prise en compte des activations de tile qui viennent après ####
 
-Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autres blocs `if`, et également par la fonction `tryToActivatePath`.
+Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autres blocs `if`), et également par `tryToActivatePath`.
 
 C'est comme lors de la première activation, mais en plus simple, car on a moins de cas possibles.
 
- - Si on est en SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
+ - en mode SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
 
- - Si on est en SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'on ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
+ - en mode SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'on ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
 
- - Si on est en SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
+ - en mode SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
 
 #### Déselection en cascade ####
 
-Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles, quel que soit la méthode de déselection), il y a un risque que des sélections additionnelles ne soient plus reliées au chemin principal. Dans ce cas, il faut automatiquement déselectionner toutes ces tiles non reliées. Car l'ensemble de la sélection doit être d'un seul bloc.
+L'ensemble de la sélection doit toujours être constitué d'un seul bloc.
 
-Ces déselections automatiques sont réalisées par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment fonctionne en détail l'algo de la fonction. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut. 
+Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles, quel que soit la méthode de déselection), il y a un risque que des sélections additionnelles ne soient plus reliées au chemin principal. Dans ce cas, il faut automatiquement déselectionner toutes ces tiles non reliées. 
+
+Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment l'algo fonctionne en détail. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut. 
 
 #### Modification effective de la sélection d'une tile ####
 
-Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus. Il faut le faire. C'est un peu alambiqué, et ça passe à travers plusieurs fonctions.
+Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. La méthode est un peu alambiquée, et passe à travers plusieurs fonctions.
 
-Le `Selector` connait son numéro de joueur. (Concrètement, c'est toujours 0, car il n'y a qu'un joueur, mais on pourrait imaginer qu'il y en ait plus).
+Le `Selector` a tout ce qu'il faut pour lancer l'action : 
+ - Le numéro du joueur (Concrètement, c'est toujours 0, car il n'y a qu'un joueur).
+ - Une référence vers l'ArenaXXX
+ - La position de la tile
+ - Le type de sélection (PATH/SUPPL/NONE).
 
-Enchaînement des fonctions exécutées, pour une modification de sélection : 
+Une modification de sélection est effectuée par une imbrication d'exécution de fonction : 
 
  - `Selector.selectionChange`. En param : la position de la tile et le type de sélection.
  - `ArenaXXX.selectionChange`. En param : le numéro du joueur, la position de la tile et le type de sélection.
- - `Tile[position].selectionChange`.  param : le numéro du joueur et le type de sélection.
+ - `Tile[position].selectionChange`.  En param : le numéro du joueur et le type de sélection.
  - Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
 
 ### "Zap" d'un ensemble d'éléments ###
