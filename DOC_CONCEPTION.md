@@ -197,7 +197,7 @@ le `Selector` possède une variable interne `selMode`, indiquant le mode de sél
  - SELMODE_PATH : le joueur est en train de tracer le chemin principal de sélection des tiles.
  - SELMODE\_SUPPL\_ADD : le joueur ajoute des tiles dans la sélection additionnelle.
  - SELMODE\_SUPPL\_REMOVE : le joueur retire des tiles dans la sélection additionnelle.
- - SELMODE\_STANDBY : le joueur ne fait rien. On attend une première action de sa part pour connaître le mode de sélection.
+ - SELMODE\_STANDBY : le joueur ne fait rien. On attend une première action de sa part pour déterminer un mode de sélection "utile".
 
 Il reste un dernier mode : SELMODE_FORBIDDEN, mais on ne s'en sert jamais.
 
@@ -207,7 +207,27 @@ Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand 
 
 #### Détermination du mode de sélection à la première activation de tile ####
 
-WIP.   
+Lorsque le `Selector` est en mode SELMODE\_STANDBY et qu'il reçoit une première activation de tile, il détermine son mode de sélection, et l'applique immédiatement sur cette première tile activée. Ces actions sont réalisées par la fonction `takeStimuliActivateTile`, dans le bloc commençant par `if self.selMode == SELMODE_STANDBY:`, ainsi que par la fonction `tryToActivatePath`.
+
+La détermination du mode de sélection dépend des tiles déjà sélectionnées, ainsi que de celle qui est activée. On teste les situations suivantes, dans cet ordre :
+
+ - Activation d'une tile sélectionnée par le chemin principal. On déselectionne toutes les tiles du chemin principal, depuis la tile activée (exclue) jusqu'à la fin du chemin. Le mode devient SELMODE_PATH.
+
+ - Activation d'une tile adjacente à la première tile du chemin principal. On ajoute cette tile au début du chemin. Le mode devient SELMODE_PATH.
+
+ - Activation d'une tile adjacente à la dernière tile du chemin principal. On ajoute cette tile à la fin du chemin. Le mode devient SELMODE_PATH.
+
+ - Activation d'une tile appartenant à la sélection additionnelle. On déselectionne cette tile. Le mode devient SELMODE\_SUPPL\_REMOVE.
+
+ - Activation d'une tile ajacente à une tile sélectionnée (chemin principal ou sélection additionnelle). On sélectionne cette tile en sélection additionnelle. Le mode devient SELMODE\_SUPPL\_ADD.
+
+ - Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un nouveau path sur la tile activée. Le mode devient SELMODE_PATH. 
+
+#### Prise en compte des activations de tile qui suivent, une fois que le mode de sélection a été déterminé
+
+WIP
+
+#### Déselection en cascade ####
 
 ### "Zap" d'un ensemble d'éléments ###
 
