@@ -264,6 +264,28 @@ Une modification de sélection est effectuée par une imbrication d'exécution d
 
 ### "Zap" d'un ensemble d'éléments ###
 
+Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélectionné des tiles, pour tenter de les faire disparaître. Le zap ne fonctionne pas forcément, ça dépend de la contrainte actuelle du zap, et des tiles sélectionnés.
+
+#### La classe ZapValidator ####
+
+Lors de l'initialisation, l'objet GameXXX a créé une instance héritant de `ZapValidator`. Cette classe, et toutes celles qui en héritent, doivent contenir 3 fonctions :
+
+ - `getListStrDescription` : Renvoie une liste de chaînes de caractères, décrivant la contrainte à respecter pour que le zap soit réalisé. 
+ - `getListStrLastTry` : Renvoie une liste de chaînes de caractères, décrivant la dernière tentative de zap du joueur, pourquoi ça a raté, etc.
+ - `validateZap` : Prend en paramètre la sélection effectuée par le joueur (chemin principal + sélection additionnelle). Renvoie un booléen, indiquant si le zap a réussi ou pas.
+
+Un `ZapValidator` doit être utilisé comme un one-shot. Une fois que le joueur a réussi le zap, il faut recréer un nouveau `ZapValidator`.
+
+Bon, euh... tout ça pour dire que concrètement, je n'ai fait hériter qu'une seule fois le `ZapValidator`, en une classe appelée `ZapValidatorBase`.
+
+Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne tous les brouzoufs et tous les sucres des tiles sélectionnées, si c'est égal, le zap est validé. Sinon, eh bien non.
+
+#### Déroulement d'un zap ####
+
+Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. L'objet GameXXX contrôle cette variable, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, mais j'expliquerais ça un peu plus loin).
+
+ 
+
 ### Stimuli lock/delock ###
 
 ### Gravité et regénération ###
