@@ -34,6 +34,9 @@ class ZapValidator():
         """
         return (u"contrainte qui fonctionne jamay", )
 
+    def getListStrLastTry(self):
+        return (u"je sais pas ce que le joueur a fait avant.")
+
 
     def validateZap(self, selPath, selSuppl, selAdj):
         """
@@ -81,7 +84,7 @@ class ZapValidatorBase(ZapValidator):
                     u"buck-cent : %s" % self.brouzoufTotal,
                     u"sugar : %s" % self.sugarTotal)
         else:
-            return (u"selection de :",
+            return (u"sélection de :",
                     u"brouzouf : %s" % self.brouzoufTotal,
                     u"sucre : %s" % self.sugarTotal)
 
