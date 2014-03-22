@@ -107,6 +107,28 @@ Le déroulement global de la game loop est le suivant :
 
 ## Description détaillée des aspects du jeu ##
 
+### Initialisation des classes GameXXX et ArenaXXX ###
+
+L'initialisation est organisée de manière un peu bordelique. Les classes `GameXXX` possèdent toutes une fonction `__init__` et une fonction `initCommonStuff`. 
+
+`initCommonStuff` est définie dans la classe de base `GameBasic`. Elle n'est jamais héritée.
+
+`__init__` doit systématiquement appeler `initCommonStuff` dès le début. Le code qui vient ensuite peut varier d'un héritage à l'autre.
+
+J'ai fait comme ça pour pouvoir factoriser du code. Sauf que ça a pas été si efficace que ça, parce qu'à la fin des fonctions `GameXXX.__init`, on retrouve très souvent le même mini-bloc de code :
+ 
+ - `self.populateArena()`
+ - `self.arena.draw()`
+ - `pygame.display.flip()`
+
+Mais pas toujours, et pas forcément exactement comme ça. Mais ça me tirlapines de voir ça se répéter. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, parce que ça finit par être dangereux.
+
+Pour les classes `ArenaXXX`, j'ai utilisé la même idée. 
+
+Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer une bière de trop. J'ai créé une fonction vide `ArenaBasic.start`, qu'on peut overrider dans les `ArenaXXX` héritées. Ça fait double emploi avec l'idée précédente.
+
+Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
+
 ### Initialisation de l'aire de jeu ###
 
 TODO.
