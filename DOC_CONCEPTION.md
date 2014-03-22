@@ -280,11 +280,37 @@ Bon, euh... tout ça pour dire que concrètement, je n'ai fait hériter qu'une s
 
 Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne tous les brouzoufs et tous les sucres des tiles sélectionnées, si c'est égal, le zap est validé. Sinon, eh bien non.
 
+`ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
+
 #### Déroulement d'un zap ####
 
-Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. L'objet GameXXX contrôle cette variable, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, mais j'expliquerais ça un peu plus loin).
+Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. L'objet GameXXX voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, voir plus loin).
 
- 
+La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValidatorBase`. Si celui-ci répond que le zap n'est pas valide, on affiche dans la console 
+
+Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
+
+ - Envoi d'un message au tutoriel, pour prévenir qu'un zap a été fait. (Le fonctionnement des tutoriels sera détaillé plus loin).
+ - Exécution de `GameXXX.zapWin` : fonction qui ne fait pas grand-chose, mais qui peut être overridé dans d'autres classes GameXXX.
+ - Refabrication d'un autre `ZapValidatorBase`, avec une autre contrainte sur les brouzoufs et les sucres (déterminées au hasard).
+ - Envoi du zap à toutes les tiles sélectionnées. Ce qui enchaîne l'exécution imbriquée des fonctions suivantes :
+	 - `GameXXX.arena.zapSelection()`. Cette fonction agit sur chaque position de la sélection :
+		 - `GameXXX.arena.zapOnePos()`.
+			 - `tile.zap()`
+				 - `tile.chip.zap()`, sur la chip contenue dans la tile.
+				 	- Cette fonction renvoie un nouvel objet Chip, correspondant au résultat du zap. 
+				 	- Dans les faits, toutes les chip renvoient `ChipNothing`, c'est à dire un emplacement vide.
+			 - L'objet arena remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.   
+ - (revenons à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. (fonction `selectorPlayerOne.cancelAllSelection()`)
+ - Si le jeu a besoin de se "stabiliser" : Déclenchement du délai de gravité et lock des stimulis. Cette action a pour but d'appliquer la gravité sur l'aire de jeu. (Voir plus loin).
+ - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription` Cet affichage n'est pas forcément effectué dans le cas des tutoriels. (Voir plus loin aussi). 
+
+#### Trucs qui auraient pu servir pour le zap, et en fait non ####
+
+(WIP)
+force.
+type.
+chip renvoyée.
 
 ### Stimuli lock/delock ###
 
