@@ -3,12 +3,15 @@
 Ce document décrit le code du jeu vidéo Kawax. 
 
 
-## Avertissement ##
+## Avertissements ##
 
 J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et contient beaucoup de parties non factorisée.
 
 Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
+Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé ma réponse à l'un des exercices, en expliquant pourquoi il fallait choisir cette solution là, quelle conditions il fallait respecter dans le choix de la solution, comment ça se justifiait, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
+
+Ceci est ma vengeance.
 
 ## Déroulement des actions lors d'une partie type ##
 
