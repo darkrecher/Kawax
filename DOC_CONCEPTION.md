@@ -9,7 +9,7 @@ J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et cont
 
 Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
-Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé ma réponse à l'un des exercices, en expliquant pourquoi il fallait choisir cette solution là, quelle conditions il fallait respecter dans le choix de la solution, comment ça se justifiait, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
+Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution là, quelles conditions génériques il fallait respecter dans le choix de cette solution, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
 
 Ceci est ma vengeance.
 
@@ -104,6 +104,12 @@ Le déroulement global de la game loop est le suivant :
  - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je l'ai pas fait.
 
  - Rafraîchissement complet de l'écran. C'est bourrin aussi.
+
+## Description détaillée des aspects du jeu ##
+
+### Initialisation de l'aire de jeu ###
+
+TODO.
 
 ### Sélection des tiles ###
 
@@ -310,10 +316,16 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
 
-(WIP)
-force.
-type.
-chip renvoyée.
+Durant l'imbrication de fonction exécutée pour le zap, on transmet deux paramètres : 
+ - `zapType` : correspond à la façon dont la tile a été sélectionnée pour le zap. `ZAP_PATH` : chemin principal. `ZAP_SUPPL` : sélection additionnelle.
+ - `zapForce` : force du zap. Concrètement, on met toujours 1.
+ 
+Ces deux valeurs pourraient être utilisées par la méthode `Chip.zap()`, pour des cas spécifiques. Exemple :
+
+ - Une chip avec des points de vie. Si le jeu permet, d'une manière ou d'une autre, de faire des zap de force supérieure à 1, on enlève plusieurs points de vie d'un coup.
+ - Une chip qui ne disparaît que si elle est sélectionnée dans le chemin principal.  
+
+La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais elle pourrait faire d'autre chose. (     _ _               _                                                                                                                                                                                                              Une chip qui se transforme en une autre). Elle peu également renvoyer `None`, pour signaler de ne pas faire de remplacement de chip. Ça peut servir dans le cas des chip à points de vie, par exemple. Le zap modifie la quantité de points de vie (valeur contenue dans la chip), mais ne modifie pas la chip elle-même.
 
 ### Stimuli lock/delock ###
 
@@ -321,7 +333,7 @@ chip renvoyée.
 
 ### Interactive Touch ###
 
-## Actions effectuées lors des mode de jeu spécifique ##
+## Spécificités des modes de jeu spécifique (ha ha) ##
 
 ### Gestion des "gros objets" ###
 
