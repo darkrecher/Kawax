@@ -366,7 +366,3 @@ La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais el
 ### Interactive Touch sur les aspirines ###
 
 ### Tutoriel ###
-
-## Vrac à détailler ##
-
-Le code d'init des fonctions GameXXX est pourri. Y'en a dans `__init__`, dans `initCommonStuff`, et dans les `__init__` des classes héritées. On pige rien.
