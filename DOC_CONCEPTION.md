@@ -131,7 +131,21 @@ Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
 ### Initialisation de l'aire de jeu ###
 
-TODO.
+`ArenaXXX` possède une variable membre `matrixTile`, qui est un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
+
+Une tile = une case de l'aire de jeu.
+
+Chaque tile contient une instance d'une classe `Chip`. 
+
+Une chip = un objet dans l'aire de jeu : une pièce de monnaie, un sucre, un mégot de clope, ...
+
+Les différents types de chip sont définis en héritant la classe `Chip`. Tout est placé dans le fichier `coins.py`. (Le nom est mal choisi, désolé).
+
+Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la gravité), on déplace la chip, mais pas la tile. La tile ne change jamais, et on n'en crée pas de nouvelle durant une partie. 
+
+L'initialisation de l'aire de jeu consiste à remplir les tile `matrixTile` avec des chips, de manière plus ou moins aléatoire.
+
+WIP. `RandomChipGenerator`
 
 ### Sélection des tiles ###
 
