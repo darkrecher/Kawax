@@ -351,6 +351,25 @@ La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais el
 
 ### Stimuli lock/delock ###
 
+Le lock/delock des stimulis est un truc pas très bien géré, et qui a provoqué plein de bugs de partout. Je pense les avoir tout corrigé, mais rien n'est sûr.
+
+Objectif initial du lock/delock : empêcher le joueur de sélectionner des tiles, et de les zapper, durant les moments où le jeu est occupé à autre chose, ce qui aurait risqué de mettre le jeu dans un état chambardesque.
+
+Le jeu est "occupé à autre chose" dans les cas suivants :
+
+ - Le jeu est en cours de "stabilisation". La gravité est en cours. Ou bien des chips sont en train d'être créés, pour combler des espaces vides.
+ - (En mode tutoriel). Le joueur doit appuyer sur la touche "F", afin d'afficher du texte explicatif dans la console.
+
+Le lock a lieu dans la classe `Selector`, et non pas, contrairement à ce qu'on aurait pu croire, dans la classe `StimuliStockerForGame`. 
+
+Pour effectuer un lock, exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, c'est la même chose, mais avec `False` en paramètre.
+
+Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` est toujours appelée, mais elle ne fait plus rien.
+
+Par contre, les clics "d'interactive touch" restent pris en compte, même lorsque le lock est activé. Ce n'est peut-être pas tout à fait logique. Euh... Hem... Passons.
+
+Les moments où les lock/delock sont effectués sont détaillés dans d'autre partie de cette documentation. Voir partie "Gravité" et partie "Tutoriel".
+
 ### Gravité et regénération ###
 
 ### Interactive Touch ###
