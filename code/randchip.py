@@ -28,6 +28,7 @@ DICT_CHIP_CREATION_INFO_FROM_CHIP_TYPE = {
     CHIP_CLOPE : (ChipClope, ),
     CHIP_BIG_OBJECT : (ChipBigObject, ),
     CHIP_ASPRO_FULL : (ChipAsproFull, ),
+    # TRODO : wtf. Pourquoi c'est pas des classes dans la valeur ?
     CHIP_ASPRO_HALF_LEFT : (CHIP_ASPRO_HALF_LEFT, ),
     CHIP_ASPRO_HALF_RIGHT : (CHIP_ASPRO_HALF_RIGHT, ),
 }
