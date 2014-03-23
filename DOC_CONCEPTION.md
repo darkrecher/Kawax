@@ -145,7 +145,13 @@ Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la g
 
 L'initialisation de l'aire de jeu consiste à remplir les tile `matrixTile` avec des chips, de manière plus ou moins aléatoire.
 
-WIP. `RandomChipGenerator`
+Cette action est effectuée par l'imbrication d'appels de fonction suivant :
+
+ - `ArenaBasic.createMatrixTile`.
+ 	- `ArenaBasic.createChipAtStart` (pour chaque tile de l'aire de jeu).
+	 	- `randomChipGenInit.chooseChip`. `randomChipGenInit` étant un membre de `ArenaBasic`, qui a été instancié au départ.
+		 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
+    - Création de la tile, en plaçant la chip nouvellement créé dedans. 
 
 ### Sélection des tiles ###
 
