@@ -131,7 +131,9 @@ Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
 ### Initialisation de l'aire de jeu ###
 
-`ArenaXXX` possède une variable membre `matrixTile`, qui est un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
+`ArenaXXX` possède une variable membre `randomChipGenInit` : une instance de `RandomChipGenerator` créée au début.
+
+`ArenaXXX` possède également une `matrixTile` : un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
 
 Une tile = une case de l'aire de jeu.
 
@@ -149,9 +151,21 @@ Cette action est effectuée par l'imbrication d'appels de fonction suivant :
 
  - `ArenaBasic.createMatrixTile`.
  	- `ArenaBasic.createChipAtStart` (pour chaque tile de l'aire de jeu).
-	 	- `randomChipGenInit.chooseChip`. `randomChipGenInit` étant un membre de `ArenaBasic`, qui a été instancié au départ.
+	 	- `ArenaBasic.randomChipGenInit.chooseChip`.
 		 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
     - Création de la tile, en plaçant la chip nouvellement créé dedans. 
+
+Les probabilités de choix de chip sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
+ - Information de génération d'une chip en particulier.
+ - Coefficient de probabilité (nombre entier).
+
+La somme des coeffs de tous les éléments de la liste peut faire n'importe quelle valeur, on s'en fout.
+
+Une information de génération est un tuple, de x éléments. Le premier est un identifiant permettant de savoir quelle classe héritée de chip il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...) et les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe en paramètre la valeur de la pièce (en brouzouf). Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
+
+La regénération des chip, après un zap, est également effectuée selon le même principe. C'est une classe `RandomChipGenerator` qui s'en occupe. Mais pas la même. Il s'agit de `ArenaXXX.randomChipGenAfterGrav`.
+
+Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération au fur et à mesure d'une partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
 
 ### Sélection des tiles ###
 
