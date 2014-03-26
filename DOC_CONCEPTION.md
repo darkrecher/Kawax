@@ -423,22 +423,38 @@ Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gr
 
 #### Première vérification de l'instabilité ####
 
-La fonction `GameXXX.needStabilization` permet de connaître l'état courant. Si elle renvoie True, l'état est instable. Sinon, il est stable. Cette fonction peut être overridée.
+Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un "interactive touch" qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`). 
 
-zap, ou interactive touch.
-set de gravityCounter
-définition des gravityMovements
-lock
+Il faut le faire après les interactive touch, car ils peuvent modifier l'aire de jeu. Par exemple : on clique sur un aspirine, ça l'enlève de l'aire de jeu, donc il faut appliquer la gravité, etc.
 
-#### Application de la gravité une fois ####
+Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable. 
 
-applyGravity
-set de gravityCounter
-définition des gravityMovements
+Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Si elle vaut None ou une liste vide : pas de gravité à appliquer.
+
+Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a appelée doit effectuer les deux actions suivantes :
+ - Locker les stimulis (voir chapitre d'avant).
+ - Définir `gravityCounter` à `DELAY_GRAVITY`, ce qui permettra d'appliquer la gravité/regénération ultérieurement. (la gravité n'est pas appliquée tout de suite lors de la première vérification).  
+
+Sauf que dans les modes de jeu spécifiques (touillettes, aspro), `gravityCounter` est défini durant un appel à `GameXXX.needStabilization`, qui a été overridée. Ce n'est pas très homogène tout ça. Y'a qu'à dire que c'est pas grave. 
+
+#### Application des gravités successives ####
+
+Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1 (ça se passe à la fin de la fonction). lorsque `GameXXX.gravityCounter` vaut 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
+
+ - Application de la gravité une fois, en utilisant `GameXXX.gravityMovements` qui a été définie précédemment.
+	 - Exécution de `GameXXX.applyGravity`
+		 - Exécution de `ArenaXXX.applyGravity`. Déplacement effectif des chips dans l'aire de jeu, pour les faire tomber d'une case.
+	     - Exécution de `ArenaXXX.regenerateAllChipsAfterOneGravity`. Création de nouvelle chips, en haut de l'aire de jeu, dans les emplacements qui ont été laissés vides par la gravité.
+     - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
+     - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.          
 
 #### Fin de gravité ####
 
-delock
+Si `GameXXX.needStabilization` renvoie False, on laisse `gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n y'a plus de gravité à gérer. `gravityCounter` restera à 0, et `GameXXX.handleGravity` ne sera plus appelée. 
+
+Si `GameXXX.needStabilization` renvoie False, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
+
+D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou à une liste vide. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
 
 #### Regénération sans gravité ####
 
