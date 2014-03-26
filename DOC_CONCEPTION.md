@@ -429,7 +429,7 @@ Il faut le faire après les interactive touch, car ils peuvent modifier l'aire d
 
 Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable. 
 
-Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Si elle vaut None ou une liste vide : pas de gravité à appliquer.
+Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Si elle vaut None ou une liste vide : pas de gravité à appliquer. **TODO** : c'est pas une liste vide. C'est un peu plus compliqué. 
 
 Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a appelée doit effectuer les deux actions suivantes :
  - Locker les stimulis (voir chapitre d'avant).
@@ -454,26 +454,43 @@ Si `GameXXX.needStabilization` renvoie False, on laisse `gravityCounter` à 0. L
 
 Si `GameXXX.needStabilization` renvoie False, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
 
-D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou à une liste vide. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
+D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou à une liste vide. **TODO** : c'est pas une liste vide. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
 
 #### Regénération sans gravité ####
 
-WIP : `hasChipToRegenerate` c'est nécessaire quand y'a aucune gravité à appliquer, mais qu'il faut quand même regénérer des chips. (Par exemple, on a détruit des chips sur la ligne du haut uniquement).
+Lorsqu'en exécute une gravité une fois, on regénère tout de suite après les chips aux emplacements laissés vides, dans la ligne du haut. Cette action est effectuée par la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`.
 
-#### contenu de gravityMovements ####
+On pourrait donc penser qu'à aucun moment, on n'ait besoin de juste regénérer des chips. 
 
-#### détermination des mouvements de gravité ####
+Si pas de gravité -> pas d'emplacements vides en haut de l'aire de jeu -> pas besoin de regénération.
+
+Eh bien non. Lorsque le joueur a zappé des chips uniquement dans la ligne du haut, on est dans un cas où il faut regénérer, mais où il n'y a pas de gravité à appliquer.
+
+Cette situation se règle avec l'enchaînement d'actions suivants :
+
+ - Il y a eu un zap ou un interactive touch.
+ - Exécution de `GameXXX.needStabilization`.
+	 - Détermination de `GameXXX.gravityMovements`, mais en indiquant dedans qu'il n'y a aucun mouvement à effectuer.
+	 - Appel de la fonction `ArenaXXX.hasChipToRegenerate`. La fonction répond qu'il y a des chips à regénérer.
+ - Du coup, `GameXXX.needStabilization` répond True. Il y a des choses à faire pour stabiliser l'aire de jeu, bien qu'il n'y ait pas de gravité à appliquer.
+ - Le code extérieur fixe `gravityCounter` à `DELAY_GRAVITY`.
+ - `playOneGame` décrémente `gravityCounter`, et quelques cycles plus tard, `handleGravity` est appelé.
+	 - `GameXXX.applyGravity` est appelé.
+		 - `ArenaXXX.applyGravity` est appelé, avec `gravityMovements` ne contenant aucun mouvement. La fonction ne fait rien.
+		 - `arena.regenerateAllChipsAfterOneGravity` est appelé. Les chips de la ligne du haut sont regénérées.
+		 - À nouveau, appel de `GameXXX.needStabilization`, qui devrait répondre False. On arrête les gravités et on délocke les stimulis.
+
+#### Fonctionnement de gravityMovements ####
+
+
+
+#### Détermination des mouvements de gravité ####
 
 `arenaXXX.determineGravity()`
 
 `arenaXXX.determineGravityFullSegment()`
 
 #### configuration de gravité par les crawlers ####
-
-
-
-
-
 
 ### Interactive Touch ###
 
