@@ -406,6 +406,59 @@ Les moments où les lock/delock sont effectués sont détaillés dans d'autre pa
 
 ### Gravité et regénération ###
 
+Ces actions sont gérées par les fonctions et variables suivantes :
+
+ - `GameXXX.needStabilization()`
+ - `GameXXX.handleGravity()`
+ - `GameXXX.applyGravity()`
+ - `GameXXX.gravityCounter` 
+ - `GameXXX.gravityMovements`
+ - `arenaXXX.determineGravity()`
+ - `arenaXXX.applyGravity()`
+ - `arenaXXX.regenerateAllChipsAfterOneGravity()`
+ - `arenaXXX.hasChipToRegenerate()`
+ - `ArenaCrawler` (classe définie dans `crawler.py`).
+
+Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gravité, ou lorsqu'il faut regénérer des chips, on dit qu'elle est dans un état "instable".
+
+#### Première vérification de l'instabilité ####
+
+La fonction `GameXXX.needStabilization` permet de connaître l'état courant. Si elle renvoie True, l'état est instable. Sinon, il est stable. Cette fonction peut être overridée.
+
+zap, ou interactive touch.
+set de gravityCounter
+définition des gravityMovements
+lock
+
+#### Application de la gravité une fois ####
+
+applyGravity
+set de gravityCounter
+définition des gravityMovements
+
+#### Fin de gravité ####
+
+delock
+
+#### Regénération sans gravité ####
+
+WIP : `hasChipToRegenerate` c'est nécessaire quand y'a aucune gravité à appliquer, mais qu'il faut quand même regénérer des chips. (Par exemple, on a détruit des chips sur la ligne du haut uniquement).
+
+#### contenu de gravityMovements ####
+
+#### détermination des mouvements de gravité ####
+
+`arenaXXX.determineGravity()`
+
+`arenaXXX.determineGravityFullSegment()`
+
+#### configuration de gravité par les crawlers ####
+
+
+
+
+
+
 ### Interactive Touch ###
 
 ## Spécificités des modes de jeu spécifique (ha ha) ##
