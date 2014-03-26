@@ -429,7 +429,9 @@ Il faut le faire après les interactive touch, car ils peuvent modifier l'aire d
 
 Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable. 
 
-Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Si elle vaut None ou une liste vide : pas de gravité à appliquer. **TODO** : c'est pas une liste vide. C'est un peu plus compliqué. 
+Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements` (voir plus loin pour une explication détaillée de son fonctionnement interne). 
+
+`GameXXX.gravityMovements` peut être None, ou elle peut être définie, mais ne décrire aucun mouvement. Dans ces deux cas, c'est qu'il n'y a pas de gravité à appliquer.
 
 Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a appelée doit effectuer les deux actions suivantes :
  - Locker les stimulis (voir chapitre d'avant).
@@ -454,7 +456,7 @@ Si `GameXXX.needStabilization` renvoie False, on laisse `gravityCounter` à 0. L
 
 Si `GameXXX.needStabilization` renvoie False, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
 
-D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou à une liste vide. **TODO** : c'est pas une liste vide. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
+D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
 
 #### Regénération sans gravité ####
 
@@ -482,7 +484,24 @@ Cette situation se règle avec l'enchaînement d'actions suivants :
 
 #### Fonctionnement de gravityMovements ####
 
+La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité quel que soit le sens de la gravité (les chips pourraient tomber vers le haut, vers la gauche, ...).
 
+Elle peut également gérer des mouvements de gravité dans les arènes possédant des "gros objets" (par exemple, les touillettes).
+
+Dans une arène à gros objets, il peut y avoir plusieurs mouvements de gravité séparé, sur une même colonne. Exemple :
+
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 . .
+    +++++++ .
+    0 0 0 0 .
+    0 0 0 . .
+    0 0 0 0 0
+
+0 = une pièce, un sucre ou n'importe quoi d'autre.
+. = une tile vide, car
+
+WIP 
 
 #### Détermination des mouvements de gravité ####
 
