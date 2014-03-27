@@ -488,20 +488,26 @@ La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour voca
 
 Elle peut également gérer des mouvements de gravité dans les arènes possédant des "gros objets" (par exemple, les touillettes).
 
-Dans une arène à gros objets, il peut y avoir plusieurs mouvements de gravité séparé, sur une même colonne. Exemple :
+Dans une arène à gros objets, il peut y avoir plusieurs mouvements de gravité séparés, sur une même colonne. Exemple, avec un zap en forme de "C" :
 
+    0 0 0 0 0    
     0 0 0 0 0
-    0 0 0 0 0
-    0 0 0 . .
-    +++++++ .
-    0 0 0 0 .
-    0 0 0 . .
-    0 0 0 0 0
+    . . 0 0 0
+    . 1 0 0 0
+    . +++++++
+    . 2 0 0 0
+    . . 0 0 0
+    0 5 0 0 0
 
-0 = une pièce, un sucre ou n'importe quoi d'autre.
-. = une tile vide, car
+    0, 1, 2, 5 = une pièce, un sucre ou n'importe quoi d'autre.
+    . = une tile vide, car on vient tout juste de la zapper.
+    + = une touillette.
 
-WIP 
+Dans la deuxième colonne, Les deux 0 du haut vont tomber. Le 1 ne va pas tomber, car il est retenu par la touillette, le 2 va tomber, le 5 ne va pas tomber, car il est tout en bas.
+
+La classe `GravityMovements` doit être capable de gérer ce genre de subtilité.
+
+  
 
 #### Détermination des mouvements de gravité ####
 
