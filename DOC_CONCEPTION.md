@@ -507,7 +507,38 @@ Dans la deuxième colonne, Les deux 0 du haut vont tomber. Le 1 ne va pas tomber
 
 La classe `GravityMovements` doit être capable de gérer ce genre de subtilité.
 
-  
+Les infos stockées par cette classe ne peuvent servir que pour l'application d'une seule gravité (chaque chip soumise à la gravité ne fera qu'un seul mouvement). Pour faire la gravité suivante il faut repartir d'une nouvelle instance de `GravityMovements` et remettre des infos dedans à partir de 0.
+
+Comme il faut gérer des gravités dans n'importe quelle direction, on ne raisonne pas en coordonnées X et Y, mais en coordonnés primaire (les lignes le long desquelles s'appliquent la gravité) et en coordonnées secondaires (la coordonnée qui va augmenter ou diminuer de 1).
+
+La classe `GravityMovements` contient la variable `dicMovement` : un dictionnaire.
+
+ - La clé est une coordonnée primaire
+ - La valeur est une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
+	 - premier élément : coordonnée secondaire du début du segment.
+	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices qui n'incluent pas le dernier élément).
+
+Si on reprend l'exemple précédent, après analyse complète de l'arène, après prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
+
+    {
+        0: (    # pour la colonne de gauche. X = 0
+            (1, -1),  # La deuxième chip "0" va tomber (coord Y = 1)
+                      # ainsi que la première (coord Y = 0)
+                      # le dernier élément du segment n'est pas inclus (coord Y = -1)
+        ),
+        1: (    # pour la colonne suivante. X = 1
+            (1, -1),  # Pareil. Les deux chip "0" du haut vont tomber
+            (5,  4),  # Et en plus, la chip "2" va tomber (coord Y = 5)
+                      # Le dernier élément du segment n'est pas inclus (coord Y = 4)
+        )
+    }
+
+Lorsque la gravité est vers le bas, le premier élément de chaque segment gravitant est toujours strictement supérieur au dernier élément. Lorsque la gravité est vers le haut, c'est le contraire.
+
+Lorsque la gravité est vers la droite : premier élément > dernier élément.
+Lorsque la gravité est vers la gauche : dernier élément > premier élément. 
+
+
 
 #### Détermination des mouvements de gravité ####
 
@@ -515,7 +546,7 @@ La classe `GravityMovements` doit être capable de gérer ce genre de subtilité
 
 `arenaXXX.determineGravityFullSegment()`
 
-#### configuration de gravité par les crawlers ####
+#### Configuration de gravité par les crawlers ####
 
 ### Interactive Touch ###
 
