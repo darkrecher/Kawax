@@ -640,9 +640,30 @@ Exemple :
         6   7   .
         8   .   .
 
+Durant le crawling, on peut lire les variables membres suivantes, pour savoir où on est (elles sont pertinentes dès l'appel à `start`, avant même d'avoir exécuté un premier `crawl` ou un premier `jumpOnPrimCoord` :
 
+ - `posCur` : objet `pygame.Rect`. Position courante.
+ - `posPrev` : objet `pygame.Rect`. Position précédente (si on a exécuté un `jumpOnPrimCoord`, `posPrev` se trouve forcément sur la ligne/colonne précédente.
+ - `coP` : entier. coordonnée primaire courante. 
+ - `coS` : entier. coordonnée secondaire courante. 
+ - `crawledOnPrimCoord` : booléen. Indique si on vient de changer de coordonnée primaire.
+ - Les fonctions `crawl` et `jumpOnPrimCoord` renvoient un booléen. Si celui-ci est True, on est sur une position valide. Si il est False, la position courante est invalide, car on est arrivé au bout de l'aire de jeu. Dans ce cas, on ne devrait pas consulter les variables ci-dessus, car elles contiennent des informations non utilisables.
+
+Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés ne sont pas vraiment utilisables. (En fait ça devrait s'arrêter, ou carrément balancer une exception).  
 
 #### Configuration de gravité par les crawlers ####
+
+La détermination de la gravité, son application, et la regénération des chips après gravité sont tous gérés avec des `ArenaCrawler`. 
+
+Selon le sens dans lequel on parcourt l'aire de jeu pour effectuer ces tâches, on peut appliquer la gravité dans la direction qu'on veut.
+
+La configuration des crawlers en fonction de la direction de gravité souhaitée est effectuée dans `GameXXX.initCommonStuff`, (fin de la fonction). On se sert de `DICT_GRAVITY_CONFIG`, défini dans `gambasic.py`.
+
+Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode aspro, mais sa gravité vers la gauche est gérée différemment). Tout ça pour dire que la super-généricité de code que j'ai mis en place, avec les crawlers et la gravité, n'est pas utilisée. Mais ça pourrait. J'avais testé, ça marchait. (Disons que ça a marché à un certain moment de la vie du programme).
+
+Pour une explication détaillée de "comment ça marche dans des directions autres que vers le bas" : voir code. Si j'explique avec du texte, ça va être super long et compliqué. C'est presque plus simple de regarder le code.
+
+"Algorithme : voir code". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis ! 
 
 ### Interactive Touch ###
 
