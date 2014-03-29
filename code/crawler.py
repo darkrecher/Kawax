@@ -172,6 +172,65 @@ class ArenaCrawler():
 #-------------------------------------------------------------------
 
 if __name__ == "__main__":
+
+    print "--------------- POUR PIGER COMMENT CA MARCHE --------------"
+
+    aC = ArenaCrawler( (3, 5) )  # X=3, Y=5
+    aC.config(DOWN, RIGHT)
+    aC.start()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.crawl()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.jumpOnPrimCoord()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.jumpOnPrimCoord()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.crawl()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.crawl()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.crawl()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.crawl()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    aC.jumpOnPrimCoord()
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    res = aC.jumpOnPrimCoord()  # La fonction renvoie False. On doit s'arrêter là.
+    print "res :", res
+    # Les infos récupérées ici ne sont pas valides, et ne correspondent pas à de vraies positions.
+    print "current :", aC.posCur, "previous :", aC.posPrev
+    print "prim :", aC.coP, "sec : ", aC.coS,
+    print "bigCrawl", aC.crawledOnPrimCoord
+
+    print "--------------- TESTS --------------"
+
     # TRODO : faut inverser tout ces tests. Le crawl est à la fin.
     # Bien joué !!!
     aC = ArenaCrawler((3, 7))
@@ -310,3 +369,5 @@ if __name__ == "__main__":
     assert aC.coS == aC.posCur.x
 
     print "---------- tests OK ------------"
+
+

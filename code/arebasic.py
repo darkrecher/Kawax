@@ -321,7 +321,7 @@ class ArenaBasic():
 
             #print "currentState end", currentState
 
-        #print self.gravityMovements.dicMovement
+        #print gravityMovements.dicMovement
 
         return gravityMovements
 

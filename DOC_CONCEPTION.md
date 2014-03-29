@@ -515,21 +515,24 @@ La classe `GravityMovements` contient la variable `dicMovement` : un dictionnair
 
  - La clé est une coordonnée primaire
  - La valeur est une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
-	 - premier élément : coordonnée secondaire du début du segment.
+	 - premier élément : coordonnée secondaire du début du segment. Cela correspond toujours à l'emplacement vide qui permet de démarrer la gravité.
 	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices qui n'incluent pas le dernier élément).
 
 Si on reprend l'exemple précédent, après analyse complète de l'arène, après prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
 
     {
         0: [    # pour la colonne de gauche. X = 0
-            (1, -1),  # La deuxième chip "0" va tomber (coord Y = 1)
-                      # ainsi que la première (coord Y = 0)
-                      # le dernier élément du segment n'est pas inclus (coord Y = -1)
+            (2,     # coord (X=0, Y=2) : 
+                    # emplacement vide juste en dessous des deux chip "0"
+             -1     # coord (X=0, Y=-1) :
+                    # Dernier élément du segment, qui n'est pas inclus 
+            ),
         ],
         1: [    # pour la colonne suivante. X = 1
-            (1, -1),  # Pareil. Les deux chips "0" du haut vont tomber
-            (5,  4),  # Et en plus, la chip "2" va tomber (coord Y = 5)
-                      # Le dernier élément du segment n'est pas inclus (coord Y = 4)
+            (2, -1),  # Pareil. Les deux chips "0" du haut vont tomber
+            (6,  4),  # Et en plus, la chip "2" va tomber,
+                      # à cause du vide (coord X=1, Y=6)
+                      # Le dernier élément n'est pas inclus (coord Y = 4)
         ]
     }
 
@@ -550,9 +553,94 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
 
 #### Détermination des mouvements de gravité ####
 
-`arenaXXX.determineGravity()`
+La détermination des chips subissant une gravité (donc, le remplissage d'un objet `GravityMovements`) est effectué par la fonction `arenaXXX.determineGravity()`
 
-`arenaXXX.determineGravityFullSegment()`
+L'algorithme est le suivant (dans le cas d'une gravité vers le bas) :
+
+Pour chaque colonne, on parcourt toutes les chip, en allant du bas vers le haut:
+
+ - On passe les premières chips non vides. Elles ne tomberont pas. `currentState = SKIP_NOT_FALLING_TILE`
+ - Dès qu'on rencontre une chip vide, on change d'état. `currentState = ADVANCE_NOTHING_TILE`. Et on continue d'avancer tant qu'on est dans les chips vides.
+ - Si on rencontre une chip qui ne peut pas tomber (ça existe pas dans le jeu, mais ça pourrait). On oublie ce qu'on a fait, et on revient à `currentState = SKIP_NOT_FALLING_TILE`. 
+ - Si on rencontre une chip non vide, qui peut tomber, on retient la coordonnée de l'emplacement précédent (c'est l'emplacement vide qui permet de démarrer la gravité). Et `currentState = ADVANCE_CONSEQUENT_TILE`. On avance de cette manière tant qu'on rencontre des chips on vides acceptant de tomber.
+ - Lorsqu'on rencontre autre chose, ou qu'on arrive tout en haut de l'aire de jeu, on a trouvé un segment gravitant. On l'enregistre dans un `GravityMovements`, avec : 
+ 	- coord primaire = X de la colonne courante. 
+ 	- coord secondaire de début du segment = Y de l'emplacement vide précédemment retenu. 
+ 	- coord secondaire de fin du segment = Y actuel.
+ - On revient `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip non vide qui n'accepte pas la gravité. 
+
+Pour les gravités des modes de jeu spécifiques (gros objets, rift) : voir plus loin.
+
+#### La classe ArenaCrawler ####
+
+Cette classe est définie dans le fichier `crawler.py`. Elle permet de parcourir les positions d'une aire de jeu dans le sens qu'on veut, et éventuellement en passant directement à la ligne/colonne suivante.
+
+Un `ArenaCrawler` se contente de renvoyer des coordonnées (sous forme de classes `pygame.Rect`), correspondant à des positions successives dans une aire de jeu. Il connaît la taille de l'aire de jeu, mais pas l'aire de jeu en elle-même. Il n'analyse pas les tiles ou les chips. C'est au code extérieur de faire ça.
+
+On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée primaire est X, les "gros" changements de coordonnées seront sur le X. C'est à dire que le crawler se déplacera le long des colonnes. Il parcourt tous les Y d'une colonne. Puis fait un "gros" changement, modifie son X et passe à la colonne suivante, et ainsi de suite.
+
+Plus précisément, on ne spécifie pas de coordonnée primaire/secondaire, mais des directions primaire/secondaire.
+
+Si la direction primaire est LEFT ou RIGHT, la coordonnée primaire est X. Si la direction primaire est UP ou DOWN, la coordonnée primaire est Y. Pareil pour le secondaire.
+
+La coordonnée primaire et la coordonnée secondaire doivent être différente. Sinon c'est n'importe quoi.
+
+Exemple d'ordre de parcours de l'aire de jeu, pour une taille de X=3, Y=5.
+
+    direction primaire = DOWN. direction secondaire = RIGHT.
+
+    Y    0   1   2
+    |    3   4   5
+         6   7   8
+         9  10  11
+        12  13  14 
+ 
+    X ->
+
+    dirPrim = RIGHT. dirSec = UP
+         4   9  14
+         3   8  13
+         2   7  12
+         1   6  11
+         0   5  10            
+
+    etc.
+
+Pour utiliser un `ArenaCrawler`, il faut commencer par l'instancier, le configurer et le démarrer :
+ - Instanciation, en spécifiant la taille de l'aire de jeu.
+ - Exécution de `ArenaCrawler.config`, en spécifiant la direction primaire et la secondaire.
+ - Exécution de `ArenaCrawler.start()`
+
+Le crawler est alors initialisé à sa première position.
+
+Pour avancer, il faut utiliser les fonction suivantes :
+
+ - `ArenaCrawler.crawl()` : avance d'une position. Passe automatiquement à la ligne/colonne suivante si on est arrivée au bout de la ligne/colonne en cours.
+ - `ArenaCrawler.jumpOnPrimCoord()` : passe directement à la ligne/colonne suivante, même si on n'a pas fini celle en cours.
+
+Exemple :
+
+    a = ArenaCrawler( (3, 5) )  # X=3, Y=5
+    a.config(DOWN, RIGHT)
+    a.start()
+    a.crawl()
+    a.jumpOnPrimCoord()
+    a.jumpOnPrimCoord()
+    a.crawl()
+    a.crawl()
+    a.crawl()
+    a.crawl()
+    a.jumpOnPrimCoord()
+    a.jumpOnPrimCoord()  # La fonction renvoie False. On doit s'arrêter là.
+
+    Positions parcourues :
+        0   1   .
+        2   .   .
+        3   4   5
+        6   7   .
+        8   .   .
+
+
 
 #### Configuration de gravité par les crawlers ####
 
