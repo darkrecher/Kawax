@@ -259,6 +259,13 @@ class ArenaBasic():
         crawlerGravity.start()
         continueCrawl = True
 
+        #Il faut retenir des colonnes à grav, de Y1 à Y2.
+        #Si y'a plusieurs vides dans une même colonne, on retient plusieurs colonnes.
+        #Car c'est deux tombages différent, pour deux raisons différentes.
+        #Donc on retient : X, Y1, Y2
+
+        #TRIP: "Je ne sais pas ce qui me retient de ..." "Hi hi hi. Moi je sais." "Connard".
+
         while continueCrawl:
 
             #print "start loop at : ", crawlerGravity.posCur
@@ -315,40 +322,6 @@ class ArenaBasic():
             #print "currentState end", currentState
 
         #print self.gravityMovements.dicMovement
-
-        #while 1:
-        #    pass
-
-
-
-            #quand on a vu une chipnothing :
-            #on remonte de cette chip nothing, vers le haut. on signale à toute les tiles en passant
-            #qu'elles subissent une gravité vers le bas. Elles répondent qu'elles acceptent ou pas.
-            #On retient les tiles soumises à grav.
-            #C'est un peu plus compliqué que ça. Il faut retenir des colonnes à grav, de Y1 à Y2.
-            #Si y'a plusieurs vides dans une même colonne, on retient plusieurs colonnes.
-            #Car c'est deux tombages différent, pour deux raisons différentes.
-            #Donc on retient : X, Y1, Y2
-
-            #TRIP: "Je ne sais pas ce qui me retient de ..." "Hi hi hi. Moi je sais." "Connard".
-
-            #Ensuite, on prend chaque big object. On vérifie que toutes leurs tiles sont dans
-            #l'une des colonne à grav. Si non, on coupe toutes les colonnes à grave comportant
-            #des tiles du bigObjet. (On coupe de la tile jusqu'en haut de la colonne à grav.
-
-            #Tant qu'on enlève des trucs de cette manière, on continue.
-
-            #A la fin, on fait tomber les tiles, et les big objects qu'on sait qu'ils tombent.
-
-            #on ne fera plus ça du coup. (les chipNothing du haut tomberont aussi.
-            #C'est pas optimisé mais c'est plus sûr.) Ah bah non. C'est bon.
-
-        #bon reprenons. boucle sur une liste des bigobject in gravity.
-        #on verif si ils sont in_gravity. Si not, osef, on le vire de la liste.
-        #si partly, on cancel les tiles. on le vire de la liste. on retient qu'on a cancelé
-        #si yes, on le laisse dans la liste.
-        #et on recommence jusqu'à ce que plus rien de cancelé.
-        #et faut stocker une liste de bigobj soumis à la gravité.
 
         return gravityMovements
 
