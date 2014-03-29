@@ -521,16 +521,16 @@ La classe `GravityMovements` contient la variable `dicMovement` : un dictionnair
 Si on reprend l'exemple précédent, après analyse complète de l'arène, après prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
 
     {
-        0: (    # pour la colonne de gauche. X = 0
+        0: [    # pour la colonne de gauche. X = 0
             (1, -1),  # La deuxième chip "0" va tomber (coord Y = 1)
                       # ainsi que la première (coord Y = 0)
                       # le dernier élément du segment n'est pas inclus (coord Y = -1)
-        ),
-        1: (    # pour la colonne suivante. X = 1
-            (1, -1),  # Pareil. Les deux chip "0" du haut vont tomber
+        ],
+        1: [    # pour la colonne suivante. X = 1
+            (1, -1),  # Pareil. Les deux chips "0" du haut vont tomber
             (5,  4),  # Et en plus, la chip "2" va tomber (coord Y = 5)
                       # Le dernier élément du segment n'est pas inclus (coord Y = 4)
-        )
+        ]
     }
 
 Lorsque la gravité est vers le bas, le premier élément de chaque segment gravitant est toujours strictement supérieur au dernier élément. Lorsque la gravité est vers le haut, c'est le contraire.
@@ -538,7 +538,15 @@ Lorsque la gravité est vers le bas, le premier élément de chaque segment grav
 Lorsque la gravité est vers la droite : premier élément > dernier élément.
 Lorsque la gravité est vers la gauche : dernier élément > premier élément. 
 
+Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivantes :
 
+ - `__init__`, en précisant le type de gravité.
+ - `cancelAllMoves` : vidage du dictionnaire `dicMovement`.
+ - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors d'appels successifs à `addSegmentMove`.
+ - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut "raccourcir" un segment. Elle n'est utilisée que dans les arènes contenant des gros objets (touillettes). Voir explication détaillée plus loin.
+ - `isInGravity` : indique, pour une position donnée, si elle se trouve dans un segment gravitant ou pas. (Renvoie True/False).
+ - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), ou si seulement certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles le sont (`IN_GRAVITY_NO`).
+ - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires qui n'ont plus aucun segments gravitants. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.     
 
 #### Détermination des mouvements de gravité ####
 
