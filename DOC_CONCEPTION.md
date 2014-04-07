@@ -1,15 +1,12 @@
 # Document de conception de Kawax #
 
-Ce document décrit le code du jeu vidéo Kawax. 
-
-
 ## Avertissements ##
 
 J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et contient beaucoup de parties non factorisée.
 
 Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
-Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution là, quelles conditions génériques il fallait respecter dans le choix de cette solution, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
+Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution, quelles conditions génériques il fallait respecter dans le choix de la solution, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
 
 Ceci est ma vengeance.
 
@@ -35,7 +32,7 @@ Affichage du menu principal
 
 Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
-Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game".
+Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game". Dans la suite de cette documentation, ces classes seront désignées par `GameXXX`.
 
 ### Initialisation des trucs dans GameXXX ###
 
@@ -51,21 +48,21 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Premier dessin de la console à l'écran.
 
- - Création d'un objet `ManualnGame` : affichage des touches de jeu, en bas à gauche de l'écran.
+ - Création d'un `ManualnGame` : affichage des touches du jeu, en bas à gauche de l'écran.
 
  - Premier (et unique) dessin du manuel à l'écran.
 
- - Création d'un objet `StimuliStockerForGame` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
+ - Création d'un `StimuliStockerForGame` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
 
- - Créaton d'un objet `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS
+ - Création d'un `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS.
 
- - Configuration de la gravité (dans quelle direction les objets du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
+ - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
 
- - Création d'un objet `ArenaXXX` : à partir de la classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ...
+ - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par `ArenaXXX`.
 
- - Création d'un objet Selector : gère les différents mode de sélection de tile : chemin principal, tuiles additionnelles, ... (une "tile" = une case dans l'aire de jeu).
+ - Création d'un Selector : gère les différents mode de sélection de tile : chemin principal, sélection additionnelles. (Une "tile" = une case dans l'aire de jeu).
 
- - Ajout des éléments dans l'arène, au hasard (pièces, sucres, aspirine, touillettes, ...).
+ - Ajout des éléments dans l'arène, au hasard : pièces, sucres, aspirine, touillettes, ...
 
  - Premier dessin de l'arène.
 
@@ -77,13 +74,13 @@ Exécution de la fonction `GameXXX.playOneGame()`.
 
 Cette fonction commence par faire quelques bidouilleries d'init :
 
- - Création d'un objet `ZapValidatorBase`, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir.
+ - Création d'un `ZapValidatorBase`, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir.
 
  - Affichage de la première étape du tutoriel, si il y a un tutoriel,
 
  - ou sinon, affichage de l'objectif à atteindre, en terme de brouzouf et de nombre de sucres. (désolé pour le "en terme de", ici , il me semble réellement approprié). Le texte d'objectif à afficher est déterminé par le ZapValidator.
 
-Puis, la fonction `GameXXX.playOneGame()` entre dans la game loop (boucle principale qui fait fonctionner le jeu).
+Puis, la fonction `GameXXX.playOneGame()` entre dans la "game loop", la boucle principale qui fait fonctionner le jeu.
 
 ### Game Loop ###
 
