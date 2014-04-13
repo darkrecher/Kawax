@@ -6,7 +6,7 @@ J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et cont
 
 Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
-Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution, quelles conditions génériques il fallait respecter dans le choix de la solution, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
+Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution, quelles conditions génériques il fallait respecter dans ce choix, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
 
 Ceci est ma vengeance.
 
@@ -32,13 +32,13 @@ Affichage du menu principal
 
 Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
-Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game". Dans la suite de cette documentation, ces classes seront désignées par `GameXXX`.
+Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game". **Dans la suite de cette documentation, ces classes seront désignées par `GameXXX`.**
 
 ### Initialisation des trucs dans GameXXX ###
 
 fonction `GameXXX.__init__` :
 
-On va considérer que le mode de jeu choisi est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
+On va considérer que le mode de jeu actuel est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
 
 Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par la fonction interne `initCommonStuff`
 
@@ -58,13 +58,13 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
 
- - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par `ArenaXXX`.
+ - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par `ArenaXXX`.**
 
- - Création d'un Selector : gère les différents mode de sélection de tile : chemin principal, sélection additionnelles. (Une "tile" = une case dans l'aire de jeu).
+ - Création d'un Selector : gère les différents mode de sélection des cases de l'aire de jeu (chemin principal, sélections additionnelles).
 
- - Ajout des éléments dans l'arène, au hasard : pièces, sucres, aspirine, touillettes, ...
+ - Remplissage au hasard de l'aire de jeu : pièces, sucres, aspirine, touillettes, ...
 
- - Premier dessin de l'arène.
+ - Premier dessin de l'aire de jeu.
 
  - Premier rafraîchissement de l'écran (bien que ça n'ait pas grand-chose à foutre dans l'init, puisque ça sera fait en boucle après).
 
@@ -86,17 +86,17 @@ Puis, la fonction `GameXXX.playOneGame()` entre dans la "game loop", la boucle p
 
 Le déroulement global de la game loop est le suivant :
 
- - Auto-ralentissage de la game loop pour qu'elle ne s'exécute au maximum que 60 frames par secondes.
+ - Auto-ralentissage pour qu'elle ne s'exécute au maximum que 60 frames par secondes.
 
  - Récupération des appuis de touches, mouvements de souris, appui/relâchage de bouton de souris par le `stimuliStocker` (instance de `StimuliStockerForGame`). Conversion de ces événements en "stimulis". ("Un stimuli", "des stimulis", et que les latinistes distingués ne viennent pas me faire chier).
 
- - Récupération de ces stimulis par la game loop, action sur divers membres de la classe `GameXXX` selon ces stimulis (cette étape sera détaillée plus loin).
+ - Récupération de ces stimulis par la game loop, actions sur divers membres de la classe `GameXXX` selon ces stimulis.
 
  - Application de la gravité (certains éléments de l'aire de jeu descendront d'une case), et regénération de tiles (ajout de nouvelles pièces/sucres/autres dans les espaces laissés vides par la gravité). Cette action n'est exécutée qui s'il y a de la gravité à appliquer. De plus, elle n'est exécutée que toutes les 18 frames, afin de laisser le temps au joueur de voir ce qu'il se passe.
 
- - Exécution de la fonction `periodicAction`. Elle ne fait rien dans le mode GameBasic. Les autres modes de jeu peuvent y rajouter des choses.
+ - Exécution de la fonction `periodicAction` : ne fait rien dans le mode GameBasic. Les autres modes de jeu peuvent y rajouter des choses.
 
- - Mises à jour du clignotement des tiles, si il y en a à faire clignoter. Cela n'arrive que durant les tutoriels, ce sera expliqué plus loin.
+ - Mises à jour du clignotement des tiles, si il y en a à faire clignoter. Cela n'arrive que durant les tutoriels. Voir plus loin.
 
  - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je l'ai pas fait.
 
@@ -118,7 +118,7 @@ J'ai fait comme ça pour pouvoir factoriser du code. Sauf que ça a pas été si
  - `self.arena.draw()`
  - `pygame.display.flip()`
 
-Mais pas toujours, et pas forcément exactement comme ça. Mais ça me tirlapines de voir ça se répéter. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, parce que ça finit par être dangereux.
+Mais pas toujours, et pas forcément exactement comme ça. Ça me tirlapines de voir ça se répéter. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, parce que ça finit par être dangereux.
 
 Pour les classes `ArenaXXX`, j'ai utilisé la même idée. 
 
@@ -128,9 +128,9 @@ Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
 ### Initialisation de l'aire de jeu ###
 
-`ArenaXXX` possède une variable membre `randomChipGenInit` : une instance de `RandomChipGenerator` créée au début.
+lors de l'initialisation de `ArenaXXX` : création de `ArenaXXX.randomChipGenInit`. Il s'agit d'une instance de `RandomChipGenerator`.
 
-`ArenaXXX` possède également une `matrixTile` : un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
+création de `ArenaXXX.matrixTile` : un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
 
 Une tile = une case de l'aire de jeu.
 
@@ -142,17 +142,18 @@ Les différents types de chip sont définis en héritant la classe `Chip`. Tout 
 
 Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la gravité), on déplace la chip, mais pas la tile. La tile ne change jamais, et on n'en crée pas de nouvelle durant une partie. 
 
-L'initialisation de l'aire de jeu consiste à remplir les tile `matrixTile` avec des chips, de manière plus ou moins aléatoire.
+L'initialisation de l'aire de jeu consiste à remplir `matrixTile` avec des chips, de manière plus ou moins aléatoire.
 
 Cette action est effectuée par l'imbrication d'appels de fonction suivant :
 
  - `ArenaBasic.createMatrixTile`.
- 	- `ArenaBasic.createChipAtStart` (pour chaque tile de l'aire de jeu).
+ 	- pour chaque tile de l'aire de jeu : `ArenaBasic.createChipAtStart`.
 	 	- `ArenaBasic.randomChipGenInit.chooseChip`.
 		 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
-    - Création de la tile, en plaçant la chip nouvellement créé dedans. 
+    - Création de la tile, en plaçant la chip nouvellement créée dedans. 
 
 Les probabilités de choix de chip sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
+
  - Information de génération d'une chip en particulier.
  - Coefficient de probabilité (nombre entier).
 
@@ -162,25 +163,25 @@ Une information de génération est un tuple, de x éléments. Le premier est un
 
 La regénération des chip, après un zap, est également effectuée selon le même principe. C'est une classe `RandomChipGenerator` qui s'en occupe. Mais pas la même. Il s'agit de `ArenaXXX.randomChipGenAfterGrav`.
 
-Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération au fur et à mesure d'une partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
+Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération durant la partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
 
 ### Sélection des tiles ###
 
-L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui ferait chacun leurs sélections respectives.
+L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui feraient chacun leurs sélections respectives.
 
-Donc, cette info de sélection est stockée dans la classe Tile. (une arène contient un tableau en deux dimensions d'instances de Tile).
+Or donc, cette info de sélection est stockée dans la classe Tile.
 
 La classe Tile contient une liste appelée `dicPlayerSel` (on me dit dans l'oreillette que c'est confusionnant). Chaque élément de la liste correspond à la sélection d'un joueur. Concrètement, dans tout le code que j'ai fait, il n'y a qu'un joueur, et `dicPlayerSel` ne contient toujours qu'un et un seul élément.
 
 Cet élément peut prendre l'une des trois valeurs suivantes :
 
- - SELTYPE_PATH : La tile est sélectionnée dans le chemin principal. Elle apparaît à l'écran encadrée en rouge.
- - SELTYPE_SUPPL : La tile est sélectionnée par une sélection additionnelle. Elle apparaît à l'écran encadrée en orange.
- - SELTYPE_NONE : La tile n'est pas sélectionnée. Elle apparaît à l'écran sans cadre.
+ - SELTYPE_PATH : La tile est sélectionnée dans le chemin principal. À l'écran, elle est dessinée avec un cadre rouge.
+ - SELTYPE_SUPPL : La tile est sélectionnée par une sélection additionnelle. Elle est dessinée avec un cadre orange.
+ - SELTYPE_NONE : La tile n'est pas sélectionnée. Elle est dessinée sans cadre.
 
 Tout le blabla de ce chapitre a pour but de décrire de quelle manière la valeur de `dicPlayerSel` est modifiée, en fonction des actions effectuées par le joueur.  
 
-À l'initialisation de ArenaXXX, On indique le nombre de joueur (c'est toujours 1). Le tableau de tile est créé. chaque Tile est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.   
+À l'initialisation de ArenaXXX, On indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque Tile est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.   
 
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
@@ -222,7 +223,7 @@ Si le joueur bouge la souris lentement, les coordonnées du curseur de souris on
 
 Si le joueur bouge la souris rapidement, `listPosArenaToActivate` peut contenir plusieurs éléments.
 
-Si `posArenaPrevious` est très éloignée de `posArenaMouse`, il peut y avoir plusieurs chemins possible pour les relier. On décide arbitrairement de toujours prendre le chemin qui fait d'abord les déplacements en X, puis ceux en Y.
+Si `posArenaPrevious` est très éloignée de `posArenaMouse`, il peut y avoir plusieurs chemins possible pour les relier. On décide arbitrairement de faire d'abord le déplacement en X, puis celui en Y.
 
 Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu, alors `posArenaPrevious` correspond à une tile qui n'est pas sur un bord, et `posArenaMouse` ne correspond pas à une position valide (None). Dans ce cas, on ne peut pas tracer de chemin, alors on réinitialise `posArenaPrevious` à None. Le joueur risque de voir un chemin de sélection qui ne semble pas être allé jusque là où il voulait. C'est de sa faute, il avait qu'à bouger la souris moins vite. 
 
@@ -263,9 +264,9 @@ le `Selector` possède une variable interne `selMode`, indiquant le mode de sél
  - SELMODE\_SUPPL\_REMOVE : le joueur retire des tiles dans la sélection additionnelle.
  - SELMODE\_STANDBY : le joueur ne fait rien.
 
-Il reste un dernier mode : SELMODE_FORBIDDEN, mais je m'en sers jamais. (Je sais plus ce que je voulais faire avec, donc osef).
+Il reste un dernier mode : SELMODE\_FORBIDDEN, mais je m'en sers jamais. (Je sais plus ce que je voulais faire avec, donc osef).
 
-Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine un mode de sélection "utile". On garde ce mode au fur et à mesure des activations ultérieures.
+Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine un mode de sélection "utile" (c'est à dire, différent de SELMODE\_STANDBY). On garde ce mode durant les activations ultérieures.
 
 Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY. 
 
@@ -295,7 +296,7 @@ C'est comme lors de la première activation, mais en plus simple, car on a moins
 
  - en mode SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
 
- - en mode SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'on ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
+ - en mode SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
 
  - en mode SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
 
@@ -312,17 +313,18 @@ Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. J
 Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. La méthode est un peu alambiquée, et passe à travers plusieurs fonctions.
 
 Le `Selector` a tout ce qu'il faut pour lancer l'action : 
+
  - Le numéro du joueur (Concrètement, c'est toujours 0, car il n'y a qu'un joueur).
- - Une référence vers l'ArenaXXX
- - La position de la tile
+ - Une référence vers ArenaXXX.
+ - La position de la tile.
  - Le type de sélection (PATH/SUPPL/NONE).
 
-Une modification de sélection est effectuée par une imbrication d'exécution de fonction : 
+La modification de sélection est effectuée par l'imbrication d'exécution de fonction suivante : 
 
  - `Selector.selectionChange`. En param : la position de la tile et le type de sélection.
- - `ArenaXXX.selectionChange`. En param : le numéro du joueur, la position de la tile et le type de sélection.
- - `Tile[position].selectionChange`.  En param : le numéro du joueur et le type de sélection.
- - Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
+ 	- `ArenaXXX.selectionChange`. En param : le numéro du joueur, la position de la tile et le type de sélection.
+ 		- `Tile[position].selectionChange`.  En param : le numéro du joueur et le type de sélection.
+ 			- Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
 
 ### "Zap" d'un ensemble d'éléments ###
 
