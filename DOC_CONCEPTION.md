@@ -693,6 +693,27 @@ Le fonctionnement général est le suivant :
 
 ### Gestion des "gros objets" ###
 
+Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étendent sur plus d'une tile.
+
+Ils sont gérés dans les fichiers suivants :
+
+ - `bigobj.py` : définition de la classe `BigObject`, définissant un gros objet générique. Et définition de classes héritées de `BigObject`, pour des objets ayant une forme spécifique.
+ - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Contient la gestion des gros objets.
+ - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Cette classe sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus. 
+ - Rien dans `GameBasic` ni dans aucune classe héritée de `GameBasic`. La gestion des gros objets n'a pas d'influence à ce niveau du code. (Ce qui est presque étonnant vu comme tout est plus ou moins spaghettifié).
+
+WIP
+
+forme générique
+
+touillette
+
+fonctions de BigObject
+
+dessin
+
+gravité
+
 ### periodicAction (dans le mode touillette) ###
 
 ### Gravity Rift (dans le mode aspro) ###
