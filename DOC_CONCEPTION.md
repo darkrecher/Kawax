@@ -695,24 +695,45 @@ Le fonctionnement général est le suivant :
 
 Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étendent sur plus d'une tile.
 
-Ils sont gérés dans les fichiers suivants :
+Ils sont gérés par les bouts de codes suivants :
 
  - `bigobj.py` : définition de la classe `BigObject`, définissant un gros objet générique. Et définition de classes héritées de `BigObject`, pour des objets ayant une forme spécifique.
  - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Contient la gestion des gros objets.
  - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Cette classe sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus. 
  - Rien dans `GameBasic` ni dans aucune classe héritée de `GameBasic`. La gestion des gros objets n'a pas d'influence à ce niveau du code. (Ce qui est presque étonnant vu comme tout est plus ou moins spaghettifié).
 
-WIP
+La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle forme (tant qu'ils rentrent dans l'arène) : avec des trous dedans, en plusieurs morceaux séparés, ...
 
-forme générique
+J'avais testé tous ces cas, à une époque. Et ça marchait. À priori, ça devrait toujours marcher maintenant.
 
-touillette
+Le seul cas concret d'utilisation des gros objets est le mode "touillette", avec des gros objets horizontaux longs de 5 cases. 
 
-fonctions de BigObject
+#### la classe BigObject ####
 
-dessin
+Définit le comportement générique des gros objets. Contient les membres suivants : 
 
-gravité
+ - `posTopLeft` : objet `pygame.Rect`. Position, dans l'aire de jeu, du coin supérieur gauche du rectangle englobant dans lequel se trouve actuellement le gros objet.
+ - `listPosRel` : liste d'objet `pygame.Rect`. Position relative à `posTopLeft` de chaque tile occupée par le gros objet. Chaque coordonnée X et Y de chaque élément de cette liste doit être positif ou nul. 
+ - `listPosArena` : Position, dans l'aire de jeu, de chaque tile occupée par le gros objet. 
+ - `imgBigObj` : objet `pygame.Surface`. Image à afficher dans l'aire de jeu, représentant le gros objet.
+ - `typeBigObj` : entier. type du gros objet. (ne sert à rien dans tout le reste du code, grâce à la magie de l'héritage, du duck typing et toutes ces sortes de choses.
+
+La classe contient plusieurs méthodes, permettant de mettre à jour `listPosArena` par rapport à `postTopLeft` et `listPosRel`. (Ces 3 variables membres doivent toujours être cohérentes entre elles).
+
+La classe est indépendante, elle ne possède pas de lien vers l'aire de jeu qui la contient. Aucune vérification de cohérence n'est faite. Par exemple, `posTopLeft` peut être placé trop bas ou trop à droite. Le gros objet peut alors occuper des tiles hors de l'aire de jeu. C'est au code extérieur de s'occuper de ces contrôles.  
+
+#### La classe ArenaBigObject ####
+
+Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et quelques fonctions overridée, afin de gérer les gros objets dans l'aire de jeu.
+
+##### Ajout d'un gros objet ##### 
+
+WIP.
+Création des `ChipBigObject` dans l'aire de jeu sur les tiles occupées par le gros objet.
+
+##### Dessin ##### 
+
+##### Gestion de la gravité #####
 
 ### periodicAction (dans le mode touillette) ###
 
