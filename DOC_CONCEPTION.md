@@ -350,7 +350,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 
 Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. L'objet GameXXX voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, voir plus loin).
 
-La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValidatorBase`. Si celui-ci répond que le zap n'est pas valide, on affiche dans la console 
+La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValidatorBase`. Si celui-ci répond que le zap n'est pas valide, on affiche dans la console la description du zap échoué.
 
 Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 
@@ -358,20 +358,21 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
  - Exécution de `GameXXX.zapWin` : fonction qui ne fait pas grand-chose, mais qui peut être overridé dans d'autres classes GameXXX.
  - Refabrication d'un autre `ZapValidatorBase`, avec une autre contrainte sur les brouzoufs et les sucres (déterminées au hasard).
  - Envoi du zap à toutes les tiles sélectionnées. Ce qui enchaîne l'exécution imbriquée des fonctions suivantes :
-	 - `GameXXX.arena.zapSelection()`. Cette fonction agit sur chaque position de la sélection :
-		 - `GameXXX.arena.zapOnePos()`.
+	 - `GameXXX.arena.zapSelection()`. 
+		 - Sur chaque position de la sélection : `GameXXX.arena.zapOnePos()`.
 			 - `tile.zap()`
-				 - `tile.chip.zap()`, sur la chip contenue dans la tile.
+				 - sur la chip contenue dans la tile : `tile.chip.zap()`.
 				 	- Cette fonction renvoie un nouvel objet Chip, correspondant au résultat du zap. 
 				 	- Dans les faits, toutes les chip renvoient `ChipNothing`, c'est à dire un emplacement vide.
 			 - L'objet arena remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.   
- - (revenons à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. (fonction `selectorPlayerOne.cancelAllSelection()`)
+ - (revenons à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. Fonction `selectorPlayerOne.cancelAllSelection()`.
  - Si le jeu a besoin de se "stabiliser" : Déclenchement du délai de gravité et lock des stimulis. Cette action a pour but d'appliquer la gravité sur l'aire de jeu. (Voir plus loin).
  - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription` Cet affichage n'est pas forcément effectué dans le cas des tutoriels. (Voir plus loin aussi). 
 
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
 
 Durant l'imbrication de fonction exécutée pour le zap, on transmet deux paramètres : 
+
  - `zapType` : correspond à la façon dont la tile a été sélectionnée pour le zap. `ZAP_PATH` : chemin principal. `ZAP_SUPPL` : sélection additionnelle.
  - `zapForce` : force du zap. Concrètement, on met toujours 1.
  
@@ -380,7 +381,9 @@ Ces deux valeurs pourraient être utilisées par la méthode `Chip.zap()`, pour 
  - Une chip avec des points de vie. Si le jeu permet, d'une manière ou d'une autre, de faire des zap de force supérieure à 1, on enlève plusieurs points de vie d'un coup.
  - Une chip qui ne disparaît que si elle est sélectionnée dans le chemin principal.  
 
-La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais elle pourrait faire d'autre chose. (     _ _               _                                                                                                                                                                                                              Une chip qui se transforme en une autre). Elle peu également renvoyer `None`, pour signaler de ne pas faire de remplacement de chip. Ça peut servir dans le cas des chip à points de vie, par exemple. Le zap modifie la quantité de points de vie (valeur contenue dans la chip), mais ne modifie pas la chip elle-même.
+La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais elle pourrait faire d'autre chose. Par exemple : une chip qui se transforme en une autre. 
+
+La fonction peut également renvoyer `None`, pour signaler de ne pas faire de remplacement. Ça peut servir dans le cas des chip à points de vie. Le zap modifie la quantité de points de vie (valeur contenue dans la chip), mais ne remplace pas la chip elle-même.
 
 ### Stimuli lock/delock ###
 
@@ -390,14 +393,14 @@ Objectif initial du lock/delock : empêcher le joueur de sélectionner des tiles
 
 Le jeu est "occupé à autre chose" dans les cas suivants :
 
- - Le jeu est en cours de "stabilisation". La gravité est en cours. Ou bien des chips sont en train d'être créés, pour combler des espaces vides.
- - (En mode tutoriel). Le joueur doit appuyer sur la touche "F", afin d'afficher du texte explicatif dans la console.
+ - Le jeu est en cours de stabilisation : la gravité est en cours, ou bien des chips sont en cours de création afin de combler des espaces vides.
+ - En mode tutoriel : du texte explicatif est affiché dans la console, et le joueur doit appuyer sur la touche "F", afin de passer à l'étape de tutoriel suivante.
 
 Le lock a lieu dans la classe `Selector`, et non pas, contrairement à ce qu'on aurait pu croire, dans la classe `StimuliStockerForGame`. 
 
-Pour effectuer un lock, exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, c'est la même chose, mais avec `False` en paramètre.
+Pour effectuer un lock, exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, faire pareil, avec le paramètre `False`.
 
-Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` est toujours appelée, mais elle ne fait plus rien.
+Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` est toujours appelée, mais ne fait plus rien.
 
 Par contre, les clics "d'interactive touch" restent pris en compte, même lorsque le lock est activé. Ce n'est peut-être pas tout à fait logique. Euh... Hem... Passons.
 
@@ -424,15 +427,16 @@ Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gr
 
 Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un "interactive touch" qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`). 
 
-Il faut le faire après les interactive touch, car ils peuvent modifier l'aire de jeu. Par exemple : on clique sur un aspirine, ça l'enlève de l'aire de jeu, donc il faut appliquer la gravité, etc.
+Les interactive touch peuvent modifier l'aire de jeu, c'est pour ça qu'on fait la vérif aussi à ce moment là. Par exemple : on clique sur un aspirine, ça le supprime, donc il faut appliquer la gravité, etc.
 
 Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable. 
 
 Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements` (voir plus loin pour une explication détaillée de son fonctionnement interne). 
 
-`GameXXX.gravityMovements` peut être None, ou elle peut être définie, mais ne décrire aucun mouvement. Dans ces deux cas, c'est qu'il n'y a pas de gravité à appliquer.
+`GameXXX.gravityMovements` peut être None, ou définie avec une liste de mouvements vide. Dans les deux cas il n'y a pas de gravité à appliquer.
 
 Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a appelée doit effectuer les deux actions suivantes :
+
  - Locker les stimulis (voir chapitre d'avant).
  - Définir `gravityCounter` à `DELAY_GRAVITY`, ce qui permettra d'appliquer la gravité/regénération ultérieurement. (la gravité n'est pas appliquée tout de suite lors de la première vérification).  
 
@@ -440,7 +444,7 @@ Sauf que dans les modes de jeu spécifiques (touillettes, aspro), `gravityCounte
 
 #### Application des gravités successives ####
 
-Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1 (ça se passe à la fin de la fonction). lorsque `GameXXX.gravityCounter` vaut 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
+Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
 
  - Application de la gravité une fois, en utilisant `GameXXX.gravityMovements` qui a été définie précédemment.
 	 - Exécution de `GameXXX.applyGravity`
@@ -451,9 +455,9 @@ Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par
 
 #### Fin de gravité ####
 
-Si `GameXXX.needStabilization` renvoie False, on laisse `gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n y'a plus de gravité à gérer. `gravityCounter` restera à 0, et `GameXXX.handleGravity` ne sera plus appelée. 
+Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n y'a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée. 
 
-Si `GameXXX.needStabilization` renvoie False, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
+En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
 
 D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
 
@@ -461,9 +465,7 @@ D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir 
 
 Lorsqu'en exécute une gravité une fois, on regénère tout de suite après les chips aux emplacements laissés vides, dans la ligne du haut. Cette action est effectuée par la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`.
 
-On pourrait donc penser qu'à aucun moment, on n'ait besoin de juste regénérer des chips. 
-
-Si pas de gravité -> pas d'emplacements vides en haut de l'aire de jeu -> pas besoin de regénération.
+On pourrait donc penser qu'à aucun moment, on n'ait besoin de juste regénérer des chips. Si pas de gravité -> pas d'emplacements vides en haut de l'aire de jeu -> pas besoin de regénération.
 
 Eh bien non. Lorsque le joueur a zappé des chips uniquement dans la ligne du haut, on est dans un cas où il faut regénérer, mais où il n'y a pas de gravité à appliquer.
 
@@ -471,7 +473,7 @@ Cette situation se règle avec l'enchaînement d'actions suivants :
 
  - Il y a eu un zap ou un interactive touch.
  - Exécution de `GameXXX.needStabilization`.
-	 - Détermination de `GameXXX.gravityMovements`, mais en indiquant dedans qu'il n'y a aucun mouvement à effectuer.
+	 - Détermination de `GameXXX.gravityMovements`. On s'aperçoit qu'il n'y a aucun mouvement à effectuer.
 	 - Appel de la fonction `ArenaXXX.hasChipToRegenerate`. La fonction répond qu'il y a des chips à regénérer.
  - Du coup, `GameXXX.needStabilization` répond True. Il y a des choses à faire pour stabiliser l'aire de jeu, bien qu'il n'y ait pas de gravité à appliquer.
  - Le code extérieur fixe `gravityCounter` à `DELAY_GRAVITY`.
@@ -483,11 +485,11 @@ Cette situation se règle avec l'enchaînement d'actions suivants :
 
 #### Fonctionnement de gravityMovements ####
 
-La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité quel que soit le sens de la gravité (les chips pourraient tomber vers le haut, vers la gauche, ...).
+La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité quel que soit la direction (les chips pourraient tomber vers le haut, vers la gauche, ...).
 
-Elle peut également gérer des mouvements de gravité dans les arènes possédant des "gros objets" (par exemple, les touillettes).
+Elle peut également gérer des mouvements de gravité avec des "gros objets" (par exemple, les touillettes).
 
-Dans une arène à gros objets, il peut y avoir plusieurs mouvements de gravité séparés, sur une même colonne. Exemple, avec un zap en forme de "C" :
+Dans une aire de jeu à gros objets, il peut y avoir plusieurs mouvements de gravité séparés, sur une même colonne. Exemple, avec un zap en forme de "C" :
 
     0 0 0 0 0    
     0 0 0 0 0
@@ -508,16 +510,16 @@ La classe `GravityMovements` doit être capable de gérer ce genre de subtilité
 
 Les infos stockées par cette classe ne peuvent servir que pour l'application d'une seule gravité (chaque chip soumise à la gravité ne fera qu'un seul mouvement). Pour faire la gravité suivante il faut repartir d'une nouvelle instance de `GravityMovements` et remettre des infos dedans à partir de 0.
 
-Comme il faut gérer des gravités dans n'importe quelle direction, on ne raisonne pas en coordonnées X et Y, mais en coordonnés primaire (les lignes le long desquelles s'appliquent la gravité) et en coordonnées secondaires (la coordonnée qui va augmenter ou diminuer de 1).
+Comme il faut gérer n'importe quelle direction, on ne raisonne pas en coordonnées X et Y, mais en coordonnés primaire (les lignes/colonnes le long desquelles s'appliquent la gravité) et en coordonnées secondaires (la coordonnée qui va augmenter ou diminuer de 1).
 
 La classe `GravityMovements` contient la variable `dicMovement` : un dictionnaire.
 
- - La clé est une coordonnée primaire
- - La valeur est une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
+ - clé : une coordonnée primaire
+ - valeur : une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
 	 - premier élément : coordonnée secondaire du début du segment. Cela correspond toujours à l'emplacement vide qui permet de démarrer la gravité.
-	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices qui n'incluent pas le dernier élément).
+	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices python qui n'incluent pas le dernier élément).
 
-Si on reprend l'exemple précédent, après analyse complète de l'arène, après prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
+Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
 
     {
         0: [    # pour la colonne de gauche. X = 0
@@ -544,7 +546,7 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
 
  - `__init__`, en précisant le type de gravité.
  - `cancelAllMoves` : vidage du dictionnaire `dicMovement`.
- - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors d'appels successifs à `addSegmentMove`.
+ - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors des appels successifs à `addSegmentMove`.
  - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut "raccourcir" un segment. Elle n'est utilisée que dans les arènes contenant des gros objets (touillettes). Voir explication détaillée plus loin.
  - `isInGravity` : indique, pour une position donnée, si elle se trouve dans un segment gravitant ou pas. (Renvoie True/False).
  - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), ou si seulement certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles le sont (`IN_GRAVITY_NO`).
@@ -556,17 +558,17 @@ La détermination des chips subissant une gravité (donc, le remplissage d'un ob
 
 L'algorithme est le suivant (dans le cas d'une gravité vers le bas) :
 
-Pour chaque colonne, on parcourt toutes les chip, en allant du bas vers le haut:
+Pour chaque colonne, on parcourt toutes les chips, en allant du bas vers le haut:
 
  - On passe les premières chips non vides. Elles ne tomberont pas. `currentState = SKIP_NOT_FALLING_TILE`
  - Dès qu'on rencontre une chip vide, on change d'état. `currentState = ADVANCE_NOTHING_TILE`. Et on continue d'avancer tant qu'on est dans les chips vides.
  - Si on rencontre une chip qui ne peut pas tomber (ça existe pas dans le jeu, mais ça pourrait). On oublie ce qu'on a fait, et on revient à `currentState = SKIP_NOT_FALLING_TILE`. 
- - Si on rencontre une chip non vide, qui peut tomber, on retient la coordonnée de l'emplacement précédent (c'est l'emplacement vide qui permet de démarrer la gravité). Et `currentState = ADVANCE_CONSEQUENT_TILE`. On avance de cette manière tant qu'on rencontre des chips on vides acceptant de tomber.
+ - Si on rencontre une chip non vide, qui peut tomber, on retient la coordonnée de l'emplacement précédent (emplacement vide qui permet de démarrer la gravité). Et `currentState = ADVANCE_CONSEQUENT_TILE`. On avance de cette manière tant qu'on rencontre des chips non vides acceptant de tomber.
  - Lorsqu'on rencontre autre chose, ou qu'on arrive tout en haut de l'aire de jeu, on a trouvé un segment gravitant. On l'enregistre dans un `GravityMovements`, avec : 
  	- coord primaire = X de la colonne courante. 
  	- coord secondaire de début du segment = Y de l'emplacement vide précédemment retenu. 
  	- coord secondaire de fin du segment = Y actuel.
- - On revient `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip non vide qui n'accepte pas la gravité. 
+ - On revient `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip qui n'accepte pas la gravité. 
 
 Pour les gravités des modes de jeu spécifiques (gros objets, rift) : voir plus loin.
 
@@ -606,6 +608,7 @@ Exemple d'ordre de parcours de l'aire de jeu, pour une taille de X=3, Y=5.
     etc.
 
 Pour utiliser un `ArenaCrawler`, il faut commencer par l'instancier, le configurer et le démarrer :
+
  - Instanciation, en spécifiant la taille de l'aire de jeu.
  - Exécution de `ArenaCrawler.config`, en spécifiant la direction primaire et la secondaire.
  - Exécution de `ArenaCrawler.start()`
@@ -619,7 +622,7 @@ Pour avancer, il faut utiliser les fonction suivantes :
 
 Exemple :
 
-    a = ArenaCrawler( (3, 5) )  # X=3, Y=5
+    a = ArenaCrawler( (3, 5) )  # taille X = 3, taille Y = 5
     a.config(DOWN, RIGHT)
     a.start()
     a.crawl()
