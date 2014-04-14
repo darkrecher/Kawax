@@ -669,6 +669,26 @@ Pour une explication détaillée de "comment ça marche dans des directions autr
 
 ### Interactive Touch ###
 
+Les "interactive touch" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça pourrait permettre de faire un tas de choses, dans des modes de jeu spécifiques, ou pour des chips spécifiques : téléportation, échange de chip, augmentation de la valeur d'une pièce, ...
+
+Les "interactive touch" sont totalement indépendant des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Mais il ne sert à rien. Il faut overrider quelques fonctions pour le rendre utile. C'est ce qui est fait dans le mode aspro (Voir plus loin).
+
+Le fonctionnement général est le suivant :
+
+ - L'utilisateur clique dans la fenêtre du jeu.
+ - Le `stimuliStocker` détecte ce clic, en déduit la tile cliquée, et enregistre sa position dans la variable interne `posArenaToInteractTouch`. (Cette action est effectuée uniquement sur les clics, pas sur les mouvements de souris, ni sur le maintien du bouton appuyé)
+ - dans la game loop : récupération de `stimuliStocker.posArenaToInteractTouch`. 
+ - Si la variable contient une position, exécution de la fonction `ArenaXXX.stimuliInteractiveTouch`, en passant la position en paramètre.
+ - Cette fonction a le droit de faire tout et n'importe quoi sur les tiles et les chips de l'aire de jeu. Si elle fait quelque chose, elle doit répondre `True`, sinon elle répond `False`. 
+ - Concrètement, `ArenaBasic.stimuliInteractiveTouch` ne fait rien et renvoie toujours False. Mais la fonction peut être overridée dans d'autres modes de jeu spécifiques.
+ - (retour à la game loop). Si la fonction a renvoyé `True` :
+	 - Annulation de la sélection faite par le joueur, parce que s'il s'est passé quelque chose dans l'aire de jeu, la sélection précédente n'est peut-être plus valid.
+	 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
+	 - Gestion du tutoriel, s'il y en a un (voir plus loin).
+ - Plusieurs gravités peuvent s'effectuer les unes après les autres, si besoin. Le délockage des stimulis sera effectuée à la fin de la dernière gravité, comme pour le zap.  
+ - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaBasic.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `GameXXX`, et pas de `ArenaXXX`. Par contre, pas la peine de renvoyer `True` ou `False` pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
+ - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Seule la fonction overridée dans le mode aspro fait quelque chose.
+
 ## Spécificités des modes de jeu spécifique (ha ha) ##
 
 ### Gestion des "gros objets" ###
