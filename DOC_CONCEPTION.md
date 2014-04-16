@@ -748,13 +748,38 @@ Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. El
 
 ##### Gestion de la gravité #####
 
-### le mode touillette ### 
+Cette action est réalisée par les fonction overridée `ArenaBigObject.determineGravity` et `ArenaBigObject.applyGravity`. 
 
-#### ajout des touillettes ####
+La fonction `determineGravity` effectue les actions suivantes :
 
-#### periodicAction ####
+ - Détermination de la gravité, par la fonction `ArenaBasic.determineGravity`. Comme si il n'y avait aucun gros objet dans l'aire de jeu.
+ - On obtient donc un objet `gravityMovements`, décrivant toutes les positions à déplacer dans le cadre de la gravité.
+ - Pour qu'un gros objet tombe, il faut que toutes les tiles qu'il occupe soient soumises à la gravité. Sinon, le gros objet ne tombe pas, et toutes les tiles qui reposent sur lui ne tomberont pas non plus. Le non-tombage d'un gros objet peut entraîner le non-tombage d'autres gros objets qui reposent sur lui, et ainsi de suite. Pour implémenter cela, on utilise l'algorithme suivant :
+ - Placement de tous les gros objets de l'aire de jeu dans `listBigObjInGravity`.
+ - Pour chaque gros objet de cette liste :
+	 - On vérifie si les tiles occupée par le gros objet sont soumise à la gravité.
+	 - Si il n'en a aucune, on enlève le gros objet de `listBigObjInGravity`.
+	 - Si elles y sont toutes, on laisse le gros objet dans `listBigObjInGravity`. On ne fait rien de plus.
+	 - Si il y en a certaines, mais pas toutes, on effectue les actions suivantes :
+		 - On enlève le gros objet de `listBigObjInGravity`.
+		 - On annule la gravité pour toutes les tiles occupées par le gros objet. (fonction gravityMovements.cancelGravity). C'est à dire que les tiles du gros objet, et toutes les tiles au-dessus d'elles, ne sont plus soumises à la gravité.
+		 - On retient qu'on a effectuée une modification dans la gravité, donc il faudra reprendre la boucle depuis sur `listBigObjInGravity` depuis le début. (Mais `listBigObjInGravity` a un ou plusieur élément de moins par rapport à la boucle précédente, donc au bout d'un moment, ça s'arrête forcément). 
+ - Lorsqu'on a terminé, les gros objets qui restent dans `listBigObjInGravity` sont ceux qui sont réellement soumis à la gravité. On garde cette liste en mémoire pour plus tard. 
 
-### le mode aspro ###
+La fonction `applyGravity` effectue les actions suivantes :
+
+ - Exécution de `ArenaBasic.applyGravity` : Application de la gravité sur les tiles qui y sont soumises.
+ - Application de la gravité sur tous les gros objets qui sont restés dans `listBigObjInGravity` : on modifie `bigObj.posTopLeft`, ainsi que tous les éléments de `bigObj.listPosArena`.   
+
+### Le mode Touillette ### 
+
+#### Ajout des touillettes ####
+
+#### Disparition des touillettes en bas de l'écran ####
+
+PeriodicAction 
+
+### Le mode Aspro ###
 
 #### Gravity Rift ####
 
