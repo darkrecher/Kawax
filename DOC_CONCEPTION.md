@@ -728,17 +728,36 @@ Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et qu
 
 ##### Ajout d'un gros objet ##### 
 
-WIP.
-Création des `ChipBigObject` dans l'aire de jeu sur les tiles occupées par le gros objet.
+Cette action est réalisée par la fonction `ArenaBigObject.addBigObject`. Elle nécessite deux paramètres :
+
+ - une classe héritée de `BigObject`, qui sera instanciée pour créer le gros objet à ajouter dans l'aire de jeu.
+ - `posTopLeft` : un objet `pygame.Rect`, indiquant la coordonnée du coin supérieur gauche du gros objet.
+
+La fonction effectue les actions suivantes :
+
+ - Instanciation du `BigObject`, et ajout dans la variable membre `listBigObj`. (Cette liste est précédemment créé dans `ArenaBasic`, sauf que ça devrait pas. Elle ne devrait exister que dans `ArenaBigObject`. C'est pas grave, on n'est plus à ça près).
+ - Création des `ChipBigObject` dans l'aire de jeu, sur toutes les tiles occupées par le gros objet. (On écrase les chip qui étaient à leur place, tel le gros bourrin). 
 
 ##### Dessin ##### 
 
+Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. Elle effectue les actions suivantes :
+
+ - Dessin des tiles, comme dans `ArenaBasic.draw`. (Les `ChipBigObject` sont dessinées comme les autres, sauf que leur image de dessin est totalement transparentes).
+ - Pour chaque `BigObject` de `self.listBigObj` :
+	 -  Récupération de l'image correspondant au gros objet, et dessin de cette image, au bon endroit, dans l'aire de jeu.
+
 ##### Gestion de la gravité #####
 
-### periodicAction (dans le mode touillette) ###
+### le mode touillette ### 
 
-### Gravity Rift (dans le mode aspro) ###
+#### ajout des touillettes ####
 
-### Interactive Touch sur les aspirines ###
+#### periodicAction ####
+
+### le mode aspro ###
+
+#### Gravity Rift ####
+
+#### Interactive Touch sur les aspirines ####
 
 ### Tutoriel ###
