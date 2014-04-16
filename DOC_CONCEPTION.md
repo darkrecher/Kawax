@@ -773,9 +773,19 @@ La fonction `applyGravity` effectue les actions suivantes :
 
 ### Le mode Touillette ### 
 
+Ce mode est implémenté par la classe `GameTouillette`, définie dans le fichier `touyettg.py`, ainsi que par la classe `ArenaTouillette`, définie dans le fichier `touyetta.py`. Il comporte les particularités suivantes :
+
+ - Présence de touillettes : gros objets ayant la forme d'une ligne horizontale longue de 5 tiles. (Voir chapitre précédent pour la gestion des gros objets).
+ - Une première touillette est créée dans l'aire de jeu, à un emplacement prédéfini.
+ - Lors de l'étape de regénération des chips, après l'application d'une gravité, d'autres touillettes peuvent être créées.
+ - Lorsqu'une touillette arrive en bas de l'aire de jeu, elle disparaît automatiquement.
+ - Il faut faire disparaître 2 touillettes pour gagner.   
+
 #### Ajout des touillettes ####
 
 #### Disparition des touillettes en bas de l'écran ####
+
+#### Affichage du nombre de touillettes disparues ####
 
 PeriodicAction 
 
