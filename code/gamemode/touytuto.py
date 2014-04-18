@@ -92,9 +92,9 @@ LIST_TUT_STEP_DESCRIP = (
         u"tuto_02_04",
         {
             LANGUAGE_FRENCH : (
-               (u"Wouhouuuu !",
+                u"Wouhouuuu !",
                 u"Regardez la touillette,",
-                u"elle est descendue."),
+                u"elle est descendue.",
             ),
             LANGUAGE_ENGLISH : (
                 u"Woohooo !",
@@ -110,8 +110,8 @@ LIST_TUT_STEP_DESCRIP = (
         u"tuto_02_05",
         {
             LANGUAGE_FRENCH : (
-               (u"Encore un petit effort,",
-                u"feignasse de stagiaire."),
+                u"Encore un petit effort,",
+                u"feignasse de stagiaire.",
             ),
             LANGUAGE_ENGLISH : (
                 u"One more effort,",
@@ -126,9 +126,9 @@ LIST_TUT_STEP_DESCRIP = (
         u"tuto_02_06",
         {
             LANGUAGE_FRENCH : (
-               (u"Et crac ! La touillette ",
+                u"Et crac ! La touillette ",
                 u"a disparue.",
-                u"C'est top foufoutre. "),
+                u"C'est top foufoutre. ",
             ),
             LANGUAGE_ENGLISH : (
                 u"Bing ! the spoon",
@@ -168,12 +168,12 @@ LIST_TUT_STEP_DESCRIP = (
         u"tuto_02_08",
         {
             LANGUAGE_FRENCH : (
-               (u"Faut que j'y aille,",
+                u"Faut que j'y aille,",
                 u"j'ai une réunion avec ",
                 u"d'autres morceaux de ",
                 u"mon cerveau.",
                 u"Eclate-toi bien",
-                u"jeune boulawan !"),
+                u"jeune boulawan !",
             ),
             LANGUAGE_ENGLISH : (
                 u"I have to go, I got",
