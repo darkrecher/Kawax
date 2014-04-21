@@ -103,7 +103,6 @@ class GameAspirin(GameBasic):
         """ zonc """
         securedPrint(u" applyGravity")
         #TRODO : une fonction/propriété, au lieu de ce len de merte.
-        # TODO : pourquoi y'a du crawlerGravRiftApply et du crawlerGravRift ?
         if len(self.gravityMovements.dicMovement) > 0:
             param = (self.crawlerGrav, self.gravityMovements, None)
             self.arena.applyGravity(*param)
@@ -120,9 +119,7 @@ class GameAspirin(GameBasic):
         gravNormalToDo = (self.gravityMovements is not None
                           and len(self.gravityMovements.dicMovement) > 0)
 
-
         if gravNormalToDo:
-            self.gravityCounter = DELAY_GRAVITY
             return True
 
         param = (self.crawlerGravRift, self.gravityMovementsRift)
@@ -132,7 +129,6 @@ class GameAspirin(GameBasic):
                           and len(self.gravityMovementsRift.dicMovement) > 0)
 
         if gravColumnToDo:
-            self.gravityCounter = DELAY_GRAVITY
             return True
 
         return False
