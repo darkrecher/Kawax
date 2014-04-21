@@ -891,8 +891,32 @@ Pour appliquer une gravité, il faut un crawler dont le sens secondaire est inve
 
 Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effectuées :
 
-WIP
+ - Appel de la fonction `GameBasic.tryToZap`, lorsque l'utilisateur tente un zap, comme dans un mode de jeu normal.
+ - Si le zap réussi, appel de la fonction overridée `GameAspirin.needStabilization`.
+	 - Exécution de la fonction `GameAspirin._determineAnyGravity`
+		 - Détermination de gravité normale à effectuer (vers le bas).
+		 - Si il y en a, l'objet `GameAspirin.gravityMovements` contient des mouvements à faire. La fonction _determineAnyGravity ne fait rien de plus, et renvoie `True`
+		 - S'il n'y a pas de gravité normale à effectuer, détermination de gravité "full segment" à effectuer.
+		 - Si il y en a, l'objet `gravityMovementsRift` contient des mouvements à faire. La fonction `_determineAnyGravity` renvoie `True`.
+		 - Sinon, la fonction renvoie `False`.
+	 - `needStabilization` renvoie `True` si `_determineAnyGravity` a renvoyé `True`.
+	 - Sinon, on vérifie s'il n'y a pas de chip vide en bas de l'aire de jeu (voir chapitre suivant : "Suppression des cachets en bas de l'aire de jeu")
+	 - Si il y en a, on renvoie `True`.
+	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie `False`
 
+Et à un autre moment du jeu, les actions suivantes sont effectuées :
+
+ - Durant la "game loop", appel de la fonction overridée `GameAspirin.handleGravity` lorsque le jeu est dans un état "instable" et que `gravityCounter` retombe à 0.
+	 - Appel de la fonction `GameAspirin.applyGravity`.
+		 - Application de la gravité normale, s'il y a des choses dans `GameAspirin.gravityMovements`
+		 - Sinon :
+			 - application de la gravité "full segment", s'il y a des choses dans `GameAspirin.gravityMovementsRift`.
+			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`. 
+		 - (retour à `applyGravity`)
+		 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
+		 - Pour finir, exécution des mêmes actions que dans le mode de jeu normal.
+		 - Appel de `needStabilization`. Si la fonction renvoie `True`, il faudra refaire une autre gravité plus tard.
+		 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
 #### Suppression des cachets en bas de l'aire de jeu ####
 
