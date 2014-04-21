@@ -43,11 +43,6 @@ TEXT_YEAH = {
     LANGUAGE_ENGLISH : u"yeah !!",
 }
 
-TEXT_RIFT = {
-    LANGUAGE_FRENCH : u"** RIFT **",
-    LANGUAGE_ENGLISH : u"** RIFT **",
-}
-
 TEXT_TOUY = {
     LANGUAGE_FRENCH : u"Touillettes :",
     LANGUAGE_ENGLISH : u"Spoons :",

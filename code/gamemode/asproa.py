@@ -98,6 +98,124 @@ class ArenaAspirin(ArenaBasic):
         self.hasTakenAsproFull = False
         securedPrint(u"aspirin !!!")
 
+    def mergeAsproHalf(self, posArena):
+        """ zob """
+        tileOnPos = self.getTile(posArena)
+        if isinstance(tileOnPos.chip, ChipAsproHalfLeft):
+
+            posArenaAdjRight = posArena.move((+1, 0))
+            if posArenaAdjRight.x >= self.width:
+                return False
+
+            chipOnPosAdjRight = self.getTile(posArenaAdjRight).chip
+
+            if not isinstance(chipOnPosAdjRight, ChipAsproHalfRight):
+                securedPrint(u"fail aspro right")
+                return False
+
+            securedPrint(u"aspro ok")
+            self.zapOnePos(posArenaAdjRight, ZAP_INTERACTIVE, 1)
+            tileOnPos.chip = ChipAsproFull()
+
+            return True
+
+        elif isinstance(tileOnPos.chip, ChipAsproHalfRight):
+
+            posArenaAdjLeft = posArena.move((-1, 0))
+            if posArenaAdjLeft.x < 0:
+                return False
+
+            chipOnPosAdjLeft = self.getTile(posArenaAdjLeft).chip
+
+            if not isinstance(chipOnPosAdjLeft, ChipAsproHalfLeft):
+                securedPrint(u"fail aspro left")
+                return False
+
+            securedPrint(u"aspro ok")
+            self.zapOnePos(posArenaAdjLeft, ZAP_INTERACTIVE, 1)
+            tileOnPos.chip = ChipAsproFull()
+
+            return True
+
+        else:
+
+            return False
+
+    def takeAsproFull(self, posArena):
+        """ zob """
+        chipOnPos = self.getTile(posArena).chip
+        if isinstance(chipOnPos, ChipAsproFull):
+            self.zapOnePos(posArena, ZAP_PATH, 1)
+            self.hasTakenAsproFull = True
+            return True
+        else:
+            return False
+
+    #C'est vraiment le bordel ce code. Oh on s'en fiche. C'est pas grave.
+    def getAndResetTakenAsproFull(self):
+        """ zob """
+        if self.hasTakenAsproFull:
+            self.hasTakenAsproFull = False
+            return True
+        else:
+            return False
+
+    def stimuliInteractiveTouch(self, posArena):
+        """ zob """
+        securedPrint(u"interactive touch on : %s" % posArena)
+        if self.mergeAsproHalf(posArena):
+            return True
+        elif self.takeAsproFull(posArena):
+            return True
+        else:
+            return False
+
+    def removeHalfAsproBottom(self):
+        """
+        zob
+        """
+        crawlerBottom = ArenaCrawler(self.arenaSize)
+        crawlerBottom.config(UP, RIGHT)
+        crawlerBottom.start()
+        #le crawler doit avoir un boolean à la con indiquant si on a changé
+        #la prim coord ou pas (est-on encore dans la première ligne/col ou pas)
+
+        while crawlerBottom.coP == crawlerBottom.primStart:
+            #securedPrint(unicode(crawlerBottom.posCur))
+            tile = self.getTile(crawlerBottom.posCur)
+            chipType = tile.chip.chipType
+            if chipType in (CHIP_ASPRO_HALF_LEFT, CHIP_ASPRO_HALF_RIGHT):
+                tile.chip = ChipNothing()
+            crawlerBottom.crawl()
+
+    def hasAnyEmptyChipInBottom(self):
+        # Codé à l'arrache pour corriger un bug à l'arrache.
+        crawlerBottom = ArenaCrawler(self.arenaSize)
+        crawlerBottom.config(UP, RIGHT)
+        crawlerBottom.start()
+
+        while crawlerBottom.coP == crawlerBottom.primStart:
+            #securedPrint(u"crawl " + unicode(crawlerBottom.posCur))
+            tile = self.getTile(crawlerBottom.posCur)
+            if tile.chip.chipType == CHIP_NOTHING:
+                return True
+            crawlerBottom.crawl()
+        return False
+
+    # ----------------------------------
+    # Section de code non utilisée.
+    # ----------------------------------
+
+    # J'ai commencé de coder des trucs pour regénérer des demi-cachets
+    # d'aspirine dans l'aire de jeu. Et je suis pas sûr d'avoir fini. Toutes
+    # les fonctions ci-dessous ne sont jamais exécutées. Je ne sais plus
+    # exactement ce qu'elles sont censées faire, je ne sais plus si elles le
+    # font comme il faut car je ne sais plus si je les ais testées.
+    # Bref, bon courage.
+
+    # Blabla que je sais plus de quoi que je cause.
+    # -------------
+
     # Pour ajouter des nouveaux aspirines :
     # gauche à gauche et droite à droite, comme ça, pas de risque de daubage.
     #  ou alors on décale la limite petit à petit. Ca ce sera pour le vrai mode.
@@ -224,118 +342,16 @@ class ArenaAspirin(ArenaBasic):
         param = (probaAsproRight, listPosPotAsproRight, ChipAsproHalfRight)
         self._regenerateAsproHalf(*param)
 
-    def mergeAsproHalf(self, posArena):
-        """ zob """
-        tileOnPos = self.getTile(posArena)
-        if isinstance(tileOnPos.chip, ChipAsproHalfLeft):
 
-            posArenaAdjRight = posArena.move((+1, 0))
-            if posArenaAdjRight.x >= self.width:
-                return False
+    #def regenerateAllChipsAfterOneGravity(self, crawlerRegen):
+    #    """
+    #    zob
+    #    j'override, car va falloir ajouter des trucs là dedans.
+    #    (Même si c'est dégueu.)
+    #    """
+    #    #self._regenerateAspro(crawlerRegen)
+    #    ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
 
-            chipOnPosAdjRight = self.getTile(posArenaAdjRight).chip
-
-            if not isinstance(chipOnPosAdjRight, ChipAsproHalfRight):
-                securedPrint(u"fail aspro right")
-                return False
-
-            securedPrint(u"aspro ok")
-            self.zapOnePos(posArenaAdjRight, ZAP_INTERACTIVE, 1)
-            tileOnPos.chip = ChipAsproFull()
-
-            return True
-
-        elif isinstance(tileOnPos.chip, ChipAsproHalfRight):
-
-            posArenaAdjLeft = posArena.move((-1, 0))
-            if posArenaAdjLeft.x < 0:
-                return False
-
-            chipOnPosAdjLeft = self.getTile(posArenaAdjLeft).chip
-
-            if not isinstance(chipOnPosAdjLeft, ChipAsproHalfLeft):
-                securedPrint(u"fail aspro left")
-                return False
-
-            securedPrint(u"aspro ok")
-            self.zapOnePos(posArenaAdjLeft, ZAP_INTERACTIVE, 1)
-            tileOnPos.chip = ChipAsproFull()
-
-            return True
-
-        else:
-
-            return False
-
-    def takeAsproFull(self, posArena):
-        """ zob """
-        chipOnPos = self.getTile(posArena).chip
-        if isinstance(chipOnPos, ChipAsproFull):
-            self.zapOnePos(posArena, ZAP_PATH, 1)
-            self.hasTakenAsproFull = True
-            return True
-        else:
-            return False
-
-    #C'est vraiment le bordel ce code. Oh on s'en fiche. C'est pas grave.
-    def getAndResetTakenAsproFull(self):
-        """ zob """
-        if self.hasTakenAsproFull:
-            self.hasTakenAsproFull = False
-            return True
-        else:
-            return False
-
-    def stimuliInteractiveTouch(self, posArena):
-        """ zob """
-        securedPrint(u"interactive touch on : %s" % posArena)
-        if self.mergeAsproHalf(posArena):
-            return True
-        elif self.takeAsproFull(posArena):
-            return True
-        else:
-            return False
-
-    def regenerateAllChipsAfterOneGravity(self, crawlerRegen):
-        """
-        zob
-        j'override, car va falloir ajouter des trucs là dedans.
-        (Même si c'est dégueu.)
-        """
-        #self._regenerateAspro(crawlerRegen)
-        ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
-
-    def removeHalfAsproBottom(self):
-        """
-        zob
-        """
-        crawlerBottom = ArenaCrawler(self.arenaSize)
-        crawlerBottom.config(UP, RIGHT)
-        crawlerBottom.start()
-        #le crawler doit avoir un boolean à la con indiquant si on a changé
-        #la prim coord ou pas (est-on encore dans la première ligne/col ou pas)
-
-        while crawlerBottom.coP == crawlerBottom.primStart:
-            #securedPrint(unicode(crawlerBottom.posCur))
-            tile = self.getTile(crawlerBottom.posCur)
-            chipType = tile.chip.chipType
-            if chipType in (CHIP_ASPRO_HALF_LEFT, CHIP_ASPRO_HALF_RIGHT):
-                tile.chip = ChipNothing()
-            crawlerBottom.crawl()
-
-    def hasAnyEmptyChipInBottom(self):
-        # Codé à l'arrache pour corriger un bug à l'arrache.
-        crawlerBottom = ArenaCrawler(self.arenaSize)
-        crawlerBottom.config(UP, RIGHT)
-        crawlerBottom.start()
-
-        while crawlerBottom.coP == crawlerBottom.primStart:
-            #securedPrint(u"crawl " + unicode(crawlerBottom.posCur))
-            tile = self.getTile(crawlerBottom.posCur)
-            if tile.chip.chipType == CHIP_NOTHING:
-                return True
-            crawlerBottom.crawl()
-        return False
-
-
-
+    # ----------------------------------
+    # Fin de section de code non utilisée.
+    # ----------------------------------
