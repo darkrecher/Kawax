@@ -843,8 +843,21 @@ Les étapes suivantes sont effectuées :
 
 ### Le mode Aspro ###
 
+Ce mode est implémenté par la classe `GameAspirin`, définie dans le fichier `asprog.py`, ainsi que par la classe `ArenaAspirin`, définie dans le fichier `asproa.py`. Il comporte les particularités suivantes :
+
+ - Il y a une gravité vers le bas, comme d'habitude, mais les chips ne se regénèrent pas par le haut.
+ - "Gravity Rift" : après application de la gravité normale, lorsqu'il y a une colonne complètement vide, toutes les colonnes à droite sont déplacées d'un cran vers la gauche. Puis, les chips de la colonne tout à droite sont regénérées.
+ - L'aire de jeu comporte des demi-cachets d'aspirine, placés à l'initialisation, à des endroits spécifiques. 
+ - Lorsque deux demi-cachets gauche et droite sont l'un à côté de l'autre, le joueur peut cliquer sur l'un d'eux, pour les fusionner en un cachet entier. Puis, il peut cliquer sur le cachet entier pour le prendre.
+ - Le but est de prendre 3 cachets d'aspirine.
+ - Les demi-cachets d'aspirine qui atterrissent en bas de l'aire de jeu sont supprimés, et ne sont pas comptabilisés dans les cachets à prendre pour gagner. (C'est pour augmenter un peu la difficulté, sinon on s'ennuie).
+
 #### Gravity Rift ####
 
+#### Suppression des cachets en bas de l'aire de jeu ####
+
 #### Interactive Touch sur les aspirines ####
+
+#### Génération des demi-cachets (non implémenté) ####
 
 ### Tutoriel ###
