@@ -854,6 +854,46 @@ Ce mode est implémenté par la classe `GameAspirin`, définie dans le fichier `
 
 #### Gravity Rift ####
 
+Cette action est réalisé par les fonctions et les classes suivantes :
+
+ - `ArenaBasic.determineGravityFullSegment()`
+ - `GameAspirin.crawlerGravRift`
+ - `GameAspirin.gravityMovementsRift`
+ - `GameAspirin.crawlerRegenRift`
+ - `GameAspirin.crawlerGravRiftApply`
+ - `GameAspirin.applyGravity()`
+ - `GameAspirin._determineAnyGravity()`
+ - `GameAspirin.needStabilization()`
+
+La gravité du mode aspro s'effectue en deux temps. Le premier temps est normal, vers le bas. On utilise le même crawler pour déterminer les mouvements et les appliquer : `GameAspirin.crawlerGrav`. On utilise également une instance de `GravityMovements` :  `GameAspirin.gravityMovements`. Ces deux objets sont configurés et utilisés de la même manière que dans le mode normal (voir fonction `GameBasic.initCommonStuff`).
+
+Par contre, on n'utilise jamais `GameAspirin.crawlerRegen` (bien qu'il soit créé par `GameBasic.initCommonStuff`). Dans `GameAspirin`, on appelle parfois la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`, mais on ne l'appelle jamais avec `GameAspirin.crawlerRegen`.
+
+Le second temps de la gravité s'effectue en "full segment", vers la gauche. Contrairement au premier temps, on a besoin d'un crawler pour déterminer les mouvements (`GameAspirin.gravityMovementsRift`) et d'un autre pour les appliquer (`GameAspirin.crawlerGravRiftApply`). On a également besoin d'une autre instance de `GravityMovements` :  `GameAspirin.gravityMovementsRift`.
+
+Le second temps de la gravité provoque des regénérations. Pour cela, on utilise le crawler `GameAspirin.crawlerRegenRift`.
+
+Pour déterminer les mouvements de gravité "rift", on utilise la fonction `ArenaBasic.determineGravityFullSegment`, avec en paramètre le crawler `GameAspirin.gravityMovementsRift`. Ce crawler parcoure l'aire de jeu colonne par colonne, en allant de la gauche, vers la droite. (Chaque colonne est parcourue de haut en bas, mais on s'en fout).
+
+La fonction `ArenaBasic.determineGravityFullSegment` effectue les actions suivantes :
+
+ - Parcours de l'aire de jeu avec le crawler, jusqu'à trouver une colonne entièrement vide. Lorsque ça arrive, on retient la coordonnée X de la colonne, et on passe tout de suite à l'étape suivante. Pas la peine de parcourir le reste de l'aire de jeu. S'il y a d'autres segments vides, ils seront détectés lors de gravité suivantes.
+ - Ajout de plusieurs mouvements de gravité, dans l'objet `GravityMovements` à retourner. Alors là c'est fait de manière un peu bizarre, avec un fort risque de se mélanger les crayons entre les différentes coordonnées. 
+	 - Les coordonnées primaires des mouvements de gravité, c'est Y = (de 0 à tout en bas de l'aire de jeu). 
+	 - La coordonnée secondaire de chaque début de mouvement de gravité, c'est X = (position de la colonne vide)
+	 - La coordonnée secondaire de chaque fin de mouvement de gravité, c'est X = (tout à droite de l'aire de jeu).  
+ - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération : la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler. 
+ - Je vous laisse réfléchir à tout ça. Si c'était à refaire, j'essayerais de trouver une manière plus simple d'exprimer tous ces mouvements et ces parcours, tout en essayant de rester le plus générique possible. 
+
+Pour appliquer les mouvements de gravité "rift", on utilise donc `GameAspirin.gravityMovementsRift`, dûment rempli par l'étape décrite ci-dessus, ainsi que le crawler "qui va bien" pour appliquer une gravité vers la gauche. C'est à dire `GameAspirin.crawlerGravRiftApply`. 
+
+Pour appliquer une gravité, il faut un crawler dont le sens secondaire est inverse au sens de la gravité. (Le sens primaire peut être n'importe lequel, on s'en fout).
+
+Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effectuées :
+
+WIP
+
+
 #### Suppression des cachets en bas de l'aire de jeu ####
 
 #### Interactive Touch sur les aspirines ####
