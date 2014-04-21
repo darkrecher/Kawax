@@ -184,6 +184,9 @@ class GameBasic():
                 param = (selPath, selSuppl)
                 if self.tutorialScheduler.takeStimTileSelected(*param):
                     self.showCurrentTutoStep()
+                if self.tutorialScheduler.totallyFailed:
+                    listTextFail = self.tutorialScheduler.getFailText()
+                    self.console.addListTextAndDisplay(listTextFail)
 
             self.zapWin()
             self.respawnZapValidator()

@@ -99,63 +99,6 @@ class GameAspirin(GameBasic):
             tileToHardDefine = self.arena.getTile(pyRect(coordX, coordY))
             tileToHardDefine.chip = ChipAsproHalfRight()
 
-
-    def tryToZap(self):
-        """ zob """
-        # TRODO : copier-coller depuis le basic, un peu quand même.
-        selPath = self.selectorPlayerOne.selPath
-        selSuppl = self.selectorPlayerOne.selSuppl
-
-        if self.zapValidatorBase.validateZap(selPath, selSuppl, []):
-
-            securedPrint(u"** ZAP **")
-
-            textYeah = language.TEXT_YEAH[language.languageCurrent]
-            self.console.addListTextAndDisplay((textYeah, ))
-
-            # gestion du tutorial, si y'en a un.
-            if self.tutorialScheduler is not None:
-                param = (selPath, selSuppl)
-                if self.tutorialScheduler.takeStimTileSelected(*param):
-                    self.showCurrentTutoStep()
-                if self.tutorialScheduler.totallyFailed:
-                    listTextFail = self.tutorialScheduler.getFailText()
-                    self.console.addListTextAndDisplay(listTextFail)
-
-            #TRODO : devrait pas y avoir un zapWin ici ?
-            self.respawnZapValidator()
-
-            self.arena.zapSelection(selPath, selSuppl)
-            self.selectorPlayerOne.cancelAllSelection()
-            self.selectorPlayerOne.setStimuliLock(True)
-
-
-            if self.needStabilization():
-                self.gravityCounter = DELAY_GRAVITY
-            else:
-                self.selectorPlayerOne.setStimuliLock(False)
-
-
-            if ((self.tutorialScheduler is None) or
-               (self.tutorialScheduler.getCurrentTellObjective())):
-                zapValidatorDescrip = self.zapValidatorBase.getListStrDescription()
-                self.console.addListTextAndDisplay(zapValidatorDescrip, COLOR_ZAP_OBJECTIVE)
-
-        else:
-            lastTryDescrip = self.zapValidatorBase.getListStrLastTry()
-            textFail = language.TEXT_FAIL[language.languageCurrent]
-            self.console.addListTextAndDisplay(lastTryDescrip + (textFail, ))
-
-
-    def zapWin(self):
-        """ à overrider """
-        textYeah = language.TEXT_YEAH[language.languageCurrent]
-        self.console.addListTextAndDisplay((textYeah, ))
-
-    def periodicAction(self):
-        """ à overrider """
-        pass
-
     def applyGravity(self):
         """ zonc """
         securedPrint(u" applyGravity")

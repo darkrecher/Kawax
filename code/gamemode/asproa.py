@@ -92,9 +92,12 @@ class ArenaAspirin(ArenaBasic):
         self.randomChipGenAfterGrav = RandomChipGenerator(listGenAfterGravity)
         self.createMatrixTile()
         self.start()
-        # TRODO : on pourrait déplacer ces limites durant la partie.
-        self.xLimitAsproLeft = self.width/2
-        self.xLimitAsproRight = self.width/2 + 1
+
+        # Ne sert à rien pour l'instant. C'est pour la regénération des demi-cachets.
+        # Et je n'avais pas fini d'implémenter cette fonctionnalité.
+        #self.xLimitAsproLeft = self.width/2
+        #self.xLimitAsproRight = self.width/2 + 1
+
         self.hasTakenAsproFull = False
         securedPrint(u"aspirin !!!")
 
