@@ -98,17 +98,6 @@ class ArenaAspirin(ArenaBasic):
         self.hasTakenAsproFull = False
         securedPrint(u"aspirin !!!")
 
-
-    #def start(self):
-    #    #degueu
-    #    self.getTile(pyRect(7, 2)).chip = ChipAsproHalfLeft()
-    #    self.getTile(pyRect(5, 5)).chip = ChipAsproHalfLeft()
-    #    self.getTile(pyRect(2, 10)).chip = ChipAsproHalfLeft()
-    #    self.getTile(pyRect(10, 1)).chip = ChipAsproHalfRight()
-    #    self.getTile(pyRect(11, 3)).chip = ChipAsproHalfRight()
-    #    self.getTile(pyRect(12, 1)).chip = ChipAsproHalfRight()
-
-
     # Pour ajouter des nouveaux aspirines :
     # gauche à gauche et droite à droite, comme ça, pas de risque de daubage.
     #  ou alors on décale la limite petit à petit. Ca ce sera pour le vrai mode.
@@ -235,16 +224,6 @@ class ArenaAspirin(ArenaBasic):
         param = (probaAsproRight, listPosPotAsproRight, ChipAsproHalfRight)
         self._regenerateAsproHalf(*param)
 
-
-    # TODO : à virer, car redéfini dans le même fichier un peu plus loin.
-    def regenerateAllChipsAfterOneGravity(self, crawlerRegen=None):
-        """
-        warninge : le crawler ne doit pas être None. Même si c'est la val par défaut.
-        zob """
-        #self._regenerateAspro(crawlerRegen)
-        ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
-
-
     def mergeAsproHalf(self, posArena):
         """ zob """
         tileOnPos = self.getTile(posArena)
@@ -288,7 +267,6 @@ class ArenaAspirin(ArenaBasic):
 
             return False
 
-
     def takeAsproFull(self, posArena):
         """ zob """
         chipOnPos = self.getTile(posArena).chip
@@ -318,31 +296,14 @@ class ArenaAspirin(ArenaBasic):
         else:
             return False
 
-
-    def determineNbGravityRift(self, selPath, selSuppl):
-        """
-        zob adjacenceType
-        """
-        if len(selSuppl) > 0:
-            return 0
-
-        nbSelTilePerLine = [0, ] * self.height
-
-        for pos in selPath:
-            nbSelTilePerLine[pos.y] += 1
-
-        #print "min(nbSelTilePerLine)", min(nbSelTilePerLine)
-        return min(nbSelTilePerLine)
-
-
     def regenerateAllChipsAfterOneGravity(self, crawlerRegen):
         """
         zob
         j'override, car va falloir ajouter des trucs là dedans.
         (Même si c'est dégueu.)
         """
+        #self._regenerateAspro(crawlerRegen)
         ArenaBasic.regenerateAllChipsAfterOneGravity(self, crawlerRegen)
-
 
     def removeHalfAsproBottom(self):
         """

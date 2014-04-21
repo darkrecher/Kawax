@@ -74,17 +74,11 @@ class GameAspirin(GameBasic):
         self.arena = ArenaAspirin(surfaceDest, self.posPixelArena, ARENA_SIZE, 2)
         self.selectorPlayerOne = Selector(self.arena, 0)
 
-        (gravPrimDir, gravSecDir, primCoordIsX, gravIncsCoord,
-         regenPrimDir, regenSecDir) = DICT_GRAVITY_CONFIG[LEFT]
         self.crawlerGravRift = ArenaCrawler(ARENA_SIZE)
-        #self.crawlerGravRift.config(gravPrimDir, gravSecDir)
         self.crawlerGravRift.config(RIGHT, DOWN)
-        #param = (gravityDir, primCoordIsX, gravIncsCoord)
-        param = (LEFT, False, False)
-        self.gravityMovementsRift = GravityMovements(*param)
+        self.gravityMovementsRift = GravityMovements(LEFT, False, False)
         self.crawlerRegenRift = ArenaCrawler(ARENA_SIZE)
         self.crawlerRegenRift.config(LEFT, UP)
-        self.nbrGravityRift = 0
         self.crawlerGravRiftApply = ArenaCrawler(ARENA_SIZE)
         self.crawlerGravRiftApply.config(UP, RIGHT)
         self.nbAspirinTaken = 0
@@ -135,16 +129,12 @@ class GameAspirin(GameBasic):
             self.selectorPlayerOne.cancelAllSelection()
             self.selectorPlayerOne.setStimuliLock(True)
 
-            if self.nbrGravityRift == 0:
-                if self.needStabilization():
-                    self.gravityCounter = DELAY_GRAVITY
-                else:
-                    self.selectorPlayerOne.setStimuliLock(False)
-            else:
-                textRift = language.TEXT_RIFT[language.languageCurrent]
-                self.console.addListTextAndDisplay((textRift, ))
-                self.determineGravityRift()
+
+            if self.needStabilization():
                 self.gravityCounter = DELAY_GRAVITY
+            else:
+                self.selectorPlayerOne.setStimuliLock(False)
+
 
             if ((self.tutorialScheduler is None) or
                (self.tutorialScheduler.getCurrentTellObjective())):
@@ -166,33 +156,15 @@ class GameAspirin(GameBasic):
         """ à overrider """
         pass
 
-
-    def applyGravityRift(self):
-        """ zonc """
-        param = (self.crawlerGravRift, self.gravityMovementsRift, self.crawlerRegenRift)
-        self.arena.applyGravity(*param)
-        self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegenRift)
-
-
-    def determineGravityRift(self):
-        """ zob
-        """
-        param = (self.crawlerGravRift, self.gravityMovementsRift)
-        self.gravityMovementsRift = self.arena.determineGravity(*param)
-
-        return (self.gravityMovementsRift is not None
-                and self.gravityMovementsRift.dicMovement != {})
-
-
     def applyGravity(self):
         """ zonc """
         securedPrint(u" applyGravity")
         #TRODO : une fonction/propriété, au lieu de ce len de merte.
+        # TODO : pourquoi y'a du crawlerGravRiftApply et du crawlerGravRift ?
         if len(self.gravityMovements.dicMovement) > 0:
             param = (self.crawlerGrav, self.gravityMovements, None)
             self.arena.applyGravity(*param)
         elif len(self.gravityMovementsRift.dicMovement) > 0:
-            # TODO : pourquoi c'est pas factorisé avec applyGravityRift, ce truc ?
             param = (self.crawlerGravRiftApply, self.gravityMovementsRift, self.crawlerRegenRift)
             self.arena.applyGravity(*param)
             self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegenRift)
