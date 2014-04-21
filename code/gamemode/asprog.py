@@ -152,25 +152,19 @@ class GameAspirin(GameBasic):
         return False
 
     def handleGravity(self):
-        """ zob
-        True : il reste encore de la gravité à faire
-        False : y'en a plus.
-        osef ???
-        """
-        #mal foutu ??
-        securedPrint(u"handleGravity")
+        securedPrint(u"handleGravity aspro")
         self.applyGravity()
         self.arena.removeHalfAsproBottom()
 
-        #copier-coller vilain
-        if not self.needStabilization():
-            #arrache un peu no ? Réponse : oui, double-arrache, et même : double-arrache copié deux fois.
-            if self.tutorialScheduler is None:
+        # Morceaux copié-collé exactement de GameBasic.handleGravity
+        if self.needStabilization():
+            self.gravityCounter = DELAY_GRAVITY
+        else:
+            #arrache un peu no ? Réponse : oui. double-arrache.
+            if (self.tutorialScheduler is None
+                or not self.tutorialScheduler.mustLockGameStimuli()
+            ):
                 self.selectorPlayerOne.setStimuliLock(False)
-            else:
-                if not self.tutorialScheduler.mustLockGameStimuli():
-                    self.selectorPlayerOne.setStimuliLock(False)
-
 
     def gameStimuliInteractiveTouch(self):
         """ overriden """
