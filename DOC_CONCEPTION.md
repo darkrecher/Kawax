@@ -969,6 +969,50 @@ Sauf que dans la façon où c'est codé actuellement, c'est pas si clair que ça
 
 #### Interactive Touch sur les aspirines ####
 
+Cette action est réalisée par les fonctions suivantes :
+
+ - `GameAspirin.gameStimuliInteractiveTouch`
+ - `ArenaAspirin.stimuliInteractiveTouch`
+ - `ArenaAspirin.mergeAsproHalf`
+ - `ArenaAspirin.takeAsproFull`
+ - `ArenaAspirin.getAndResetTakenAsproFull`
+
+Les actions suivantes sont effectuées :
+
+ - Le joueur clique sur une chip de l'aire de jeu. Cette action est enregistré dans `GameBasic.stimuliStocker.posArenaToInteractTouch`. 
+ - La game loop appelle la fonction overridée `ArenaAspirin.stimuliInteractiveTouch`
+ 	- Exécution de la fonction `ArenaAspirin.mergeAsproHalf`
+	 	- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfLeft`, et que la chip à droite est une `ChipAsproHalfRight`, alors on effectue les actions suivantes :
+		 	- Zap de la tile de droite, afin de remplacer la `ChipAsproHalfRight` par une `ChipNothing`
+		 	- Remplacement de la chip sur laquelle le joueur a cliqué par une `ChipAsproFull`
+		 	- `mergeAsproHalf` renvoie True
+		- Sinon, on fait pareil, mais de l'autre côté : Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfRight`, et que la chip à gauche est une `ChipAsproHalfLeft`, alors on effectue les actions suivantes :  
+		 	- Zap de la tile de gauche, afin de remplacer la `ChipAsproHalfLeft` par une `ChipNothing`
+		 	- Remplacement de la chip sur laquelle le joueur a cliqué par une `ChipAsproFull`
+		 	- `mergeAsproHalf` renvoie `True`
+		- Sinon, il ne s'est rien passé d'intéressant. `mergeAsproHalf` renvoie `False`. 
+	- Si `mergeAsproHalf` n'a rien fait, exécution de la fonction `ArenaAspirin.takeAsproFull`.
+		- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproFull` :
+			- Zap de la tile cliqué, afin de remplacer la `ChipAsproFull` par une `ChipNothing`
+			- Définition de la variable membre `hasTakenAsproFull` à True. (Utilisée par le code extérieur).
+			- `takeAsproFull` renvoie `True`.
+		- Sinon, il ne s'est rien passé d'intéressant. `takeAsproFull` renvoie `False`.
+	- Si `mergeAsproHalf` ou `takeAsproFull` a fait quelque chose, `stimuliInteractiveTouch` renvoie `True` pour le signaler au code extérieur. Sinon, elle renvoie `False`.
+ - Si `stimuliInteractiveTouch` a renvoyé `True`, la game loop le prend en compte : vérification si l'aire de jeu est "instable", exécution de gravité, lock des stimulis, ... Comme d'habitude.
+ - Ensuite, la game loop appelle la fonction overridée `GameAspirin.gameStimuliInteractiveTouch`
+	 - Exécution de `ArenaAspirin.getAndResetTakenAsproFull`
+		 - La fonction vérifie la valeur de `hasTakenAsproFull`. 
+		 	 - Si elle est `True`, `getAndResetTakenAsproFull` remet la valeur à `False`, et renvoie `True`.
+		 	 - Sinon, il ne s'est rien passé de spécial précédemment. `getAndResetTakenAsproFull` renvoie `False`.
+	 - Si `getAndResetTakenAsproFull` a renvoyé `True`, on effectue les actions suivantes :
+		 - Augmentation de la variable membre `nbAspirinTaken`.
+		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer.
+		 - Sinon, affichage de texte dans la console indiquant juste que le joueur a pris un aspirine. Et affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin"). 
+ 
+La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à `True`, pour le remettre à `False` tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion de "combien d'aspirine pris" et de "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
+
+Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il est pris en compte. C'est pourquoi on le remet à `False` très peu de temps après l'avoir mis à `True`. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
+
 #### Création des demi-cachets au début du jeu ####
 
 #### Génération des demi-cachets (non implémenté) ####
