@@ -1015,6 +1015,26 @@ Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena 
 
 #### Création des demi-cachets au début du jeu ####
 
+Cette action est réalisée par la fonction overridée `GameAspirin.populateArena`. 
+
+Cette fonction est appelée dans `GameBasic.__init__`, après l'instanciation de l'arena, et après l'avoir rempli de chips au hasard.
+
+La fonction remplace certaines chips existantes par des demi-cachets d'aspirine droit et gauche. Les positions de remplacement dans l'aire de jeu sont en dur. Elles sont définies par les constantes `LIST\_COORD\_ASPRO_HALF_LEFT` et `LIST\_COORD\_ASPRO\_HALF\_RIGHT`, dans le fichier `asprog.py`.
+
 #### Génération des demi-cachets (non implémenté) ####
+
+J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir fini, et je n'ai plus la motivation pour me replonger dedans.
+
+J'ai conservé le code correspondant, mais il n'est utilisé nul part. Je ne me souviens plus comment il fonctionne, si il fonctionne réellement comme je l'avais imaginé, et si je l'avais testé.
+
+Il est entièrement dans le fichier `asproa.py`, signalé entre deux commentaires `Section de code non utilisée` et `Fin de section de code non utilisée`.
+
+Il s'agit des fonctions suivantes :
+
+ - `ArenaAspirin._getPosPotentialAspro`
+ - `ArenaAspirin._countNbAspro`
+ - `ArenaAspirin._calculateProbaAspro`
+ - `ArenaAspirin._regenerateAsproHalf`
+ - `ArenaAspirin._regenerateAspro`
 
 ### Tutoriel ###
