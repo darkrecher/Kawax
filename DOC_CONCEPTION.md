@@ -1019,7 +1019,7 @@ Cette action est réalisée par la fonction overridée `GameAspirin.populateAren
 
 Cette fonction est appelée dans `GameBasic.__init__`, après l'instanciation de l'arena, et après l'avoir rempli de chips au hasard.
 
-La fonction remplace certaines chips existantes par des demi-cachets d'aspirine droit et gauche. Les positions de remplacement dans l'aire de jeu sont en dur. Elles sont définies par les constantes `LIST\_COORD\_ASPRO_HALF_LEFT` et `LIST\_COORD\_ASPRO\_HALF\_RIGHT`, dans le fichier `asprog.py`.
+La fonction remplace certaines chips existantes par des demi-cachets d'aspirine droit et gauche. Les positions de remplacement dans l'aire de jeu sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
 
 #### Génération des demi-cachets (non implémenté) ####
 
