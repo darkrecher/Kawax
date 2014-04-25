@@ -1038,3 +1038,32 @@ Il s'agit des fonctions suivantes :
  - `ArenaAspirin._regenerateAspro`
 
 ### Tutoriel ###
+
+Je ne savais pas trop comment ajouter la gestion des tutoriels. Le problème, c'est que le tutoriel doit faire des trucs à plein d'endroits différents (lorsque l'utilisateur veut afficher le texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code gérant le tutoriel, à plein d'endroits différents de pleins de classes (`GameBasic`, `ArenaBasic`, ...). Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe GameXXX de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Mais je n'ai pas trouvé de meilleure solution.
+
+Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'échangent ici et là, entre différents modules. Ou de la programmation orientée aspect (jamais su ce que c'était vraiment que ce truc). Ou encore, le fameux "entité-composant-système". Dans le cas présent, on se retrouve avec, des objets monolithiques rempli de code spaghetti. Faut faire avec.
+
+Je me permet également d'ajouter que je n'ai jamais su si on doit dire "tutoriels" ou "tutoriaux". Ce sera donc "tutoriels" et ne venez pas m'embêteriels.
+
+Les tutoriels sont gérés par les fichiers de code suivants :
+ - `tutorial.py`
+ - `blinker.py`
+ - `gamemode/gambtuto.py` (tutoriel du mode de jeu Basique)
+ - `gamemode/touytuto.py` (tutoriel du mode de jeu Touillette)
+ - `gamemode/asprtuto.py` (tutoriel du mode de jeu Aspro) 
+ 
+#### La classe TutorialStep ####
+
+Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une étape dans un tutoriel.
+
+L'info principale d'une étape est le type de condition pour passer à l'étape suivante. Cette info est définie par la variable membre `conditionType`. Elle peut prendre l'une des valeurs suivantes :
+ - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape d'un tutoriel).
+ 
+ - `STEP_COND_STIM` : on passe à l'étape suivante sur le stimuli spécifique "next tutorial step". C'est à dire lorsque le joueur appuie sur la touche "F" pour afficher le texte suivant.
+ 
+ - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tile spécifique.
+ TODO : expliquer listPosCond 
+ 
+ - `STEP_COND_INTERACTIVE_TOUCH_SUCCESSED` : on passe à l'étape suivante si le joueur effectue un "interactive touch" ayant une influence sur l'aire de jeu. Il n'y a pas de condition sur la position de cet interactive touch. Ça peut être sur n'importe quelle chip de l'aire de jeu, tant que ça fait quelque chose. (D'ailleurs c'est pas top, j'aurais du ajouter une position).
+
+WIP
