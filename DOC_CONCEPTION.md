@@ -1054,16 +1054,26 @@ Les tutoriels sont gérés par les fichiers de code suivants :
  
 #### La classe TutorialStep ####
 
-Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une étape dans un tutoriel.
+Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une seule étape dans un tutoriel.
 
 L'info principale d'une étape est le type de condition pour passer à l'étape suivante. Cette info est définie par la variable membre `conditionType`. Elle peut prendre l'une des valeurs suivantes :
- - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape d'un tutoriel).
- 
+
+ - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape d'un tutoriel). 
  - `STEP_COND_STIM` : on passe à l'étape suivante sur le stimuli spécifique "next tutorial step". C'est à dire lorsque le joueur appuie sur la touche "F" pour afficher le texte suivant.
- 
- - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tile spécifique.
- TODO : expliquer listPosCond 
- 
+ - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tile spécifique. Lorsqu'on utilise cette condition, il faut définir la variable membre `listPosCond`. Elle doit contenir une liste de `pygame.Rect`, correspondant aux positions à zapper. Le joueur doit zapper exactement cette liste, ni plus ni moins. Mais il n'y a pas de distinction entre les deux types de sélection (chemin principal / sélection additionnelle). 
  - `STEP_COND_INTERACTIVE_TOUCH_SUCCESSED` : on passe à l'étape suivante si le joueur effectue un "interactive touch" ayant une influence sur l'aire de jeu. Il n'y a pas de condition sur la position de cet interactive touch. Ça peut être sur n'importe quelle chip de l'aire de jeu, tant que ça fait quelque chose. (D'ailleurs c'est pas top, j'aurais du ajouter une position).
 
+En plus de `conditionType`, un `TutorialStep` contient également les variables membres suivantes :
+
+ - `soundId` : None, ou objet `pygame.mixer.Sound`. Le son qui sera joué lorsque cette étape de tutoriel sera atteinte. 
+ - `listTextDescrip` : liste de string. Texte à écrire dans la console lorsque cette étape sera atteinte. Rappelons que la console est un peu pourrie, et qu'elle est artificiellement limitée à 10 caractères par ligne. `listTextDescrip` est une liste, et non pas une grande string unique, afin de pouvoir indiquer manuellement où sont les sauts de ligne.   
+ - `listPosBlink` : None, ou liste de `pygame.Rect`. Liste de positions dans l'aire de jeu à faire blinker. Les tiles apparaissent entourées de bleus clignotant pendant quelques secondes.
+ - `tellObjective` : booléen. Indique si il faut afficher l'objectif courant à cette étape de tutoriel. (Le nombre de brouzoufs et de sucres à sélectionner pour le zap)
+ -  
+#### La classe TutorialScheduler ####
+
+
+
+
 WIP
+une string. Si c'est une string, elle doit correspondre à fichier. Le nom complet du fichier est déterminé comme suit : `"sound/" + soundId + ".ogg"`.
