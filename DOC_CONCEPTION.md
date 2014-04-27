@@ -1104,5 +1104,47 @@ Dans l'état `totallyFailed`, on ne peut plus du tout avancer dans les étapes. 
 
 Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`. Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
 
+#### la classe Blinker #### 
+
+TODO WIP.
+
 #### Création d'un tutoriel à partir d'un mode de jeu ####
+
+Les 3 tutoriels existants sont définis dans les 3 fichiers suivants :
+
+ - `gambtuto.py` : tutoriel du mode de jeu basique.
+ - `touytuto.py` : tutoriel du mode Touillette.
+ - `asprtuto.py` : tutoriel du mode Aspro.
+
+Morceaux de code à implémenter pour créer un mode tutoriel :
+
+##### Étapes du tutoriel ##### 
+
+Définir la liste d'étape `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite dans le chapitre précédent. (voir avant).
+
+Certaines étapes de `listTutStepsDescrip` définissent des zap à effectuer, sur des listes de positions définies en dur (`listPosCond`). La bienséance veut que pour ces étapes, on indique également des positions à blinker (`listPosBlink`), avec `listPosCond == listPosBlink`. Il n'y a aucune contrainte sur ce point, mais pour ne pas perdre le joueur, c'est mieux de faire comme ça.
+
+La dernière étape de `listTutStepsDescrip` devrait également avoir `conditionType == STEP_COND_NEVER`. Mais une fois de plus, il n'y a aucune contrainte réelle là-dessus.
+
+##### Aire de jeu #####
+
+Ensuite, il faut définir une liste de chips en dur, à placer dans l'aire de jeu. (positions en dur, valeur et type de chips en dur aussi). Le but est que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips en dur. Il faut évidemment tenir compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas.
+
+Les positions de l'aire de jeu non définies seront remplies avec des chips créées au hasard, comme d'habitude.    
+
+En général, cette liste de chips en dur est défine par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
+ - Tuple de deux int : positions (X, Y) dans l'aire de jeu à définir en dur.
+ - Tuple d'une string et d'un int :
+	 - "C" : pièce de monnaie. "S" : sucre.
+	 - int : valeur de la pièce. 0 si c'est un sucre.
+
+##### Liste des consignes de zap #####
+
+
+
+##### Implémentation de tout ce bazar ##### 
+
+Créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` correspondant au mode de jeu que l'on veut tutorialiser. C'est ce qui est fait dans les 3 fichiers de code précédemment mentionnées.
+
+L'héritage doit overrider 
 
