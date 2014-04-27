@@ -1116,7 +1116,13 @@ Les 3 tutoriels existants sont définis dans les 3 fichiers suivants :
  - `touytuto.py` : tutoriel du mode Touillette.
  - `asprtuto.py` : tutoriel du mode Aspro.
 
-Morceaux de code à implémenter pour créer un mode tutoriel :
+Le fonctionnement d'un mode de jeu doit respecter les mêmes règles, qu'il y ait le tutoriel ou pas. Donc pour amener le joueur à effectuer un zap en particulier, il faut définir en dur, et en cohérence entre elles, les infos suivantes :
+
+ - Les positions à zapper
+ - Les chips de ces positions
+ - Les consignes de zap (nombres exacts de brouzoufs et de sucre à atteindre). 
+
+Les morceaux de code à implémenter pour créer un mode tutoriel sont donc les suivants.
 
 ##### Étapes du tutoriel ##### 
 
@@ -1128,7 +1134,7 @@ La dernière étape de `listTutStepsDescrip` devrait également avoir `condition
 
 ##### Aire de jeu #####
 
-Ensuite, il faut définir une liste de chips en dur, à placer dans l'aire de jeu. (positions en dur, valeur et type de chips en dur aussi). Le but est que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips en dur. Il faut évidemment tenir compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas.
+Il faut définir une liste de chips en dur, à placer dans l'aire de jeu. (positions en dur, valeur et type de chips en dur aussi). Le but est que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips en dur. Il faut évidemment tenir compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas.
 
 Les positions de l'aire de jeu non définies seront remplies avec des chips créées au hasard, comme d'habitude.    
 
@@ -1140,11 +1146,14 @@ En général, cette liste de chips en dur est défine par une liste de tuple de 
 
 ##### Liste des consignes de zap #####
 
-
+Chaque zap de tutoriel doit avoir une contrainte définie en dur, qui correspond aux chips définies en dur aussi. Ça fait beaucoup de dur. Bref. On définit ça dans la `LIST_ZAP_CONSTRAINT`. Chaque élément de cette liste est un tuple, qui contient les infos suivantes :
+ - int. Total de de brouzoufs à sélectionner.
+ - int. Nombre de sucre à sélectionner.
 
 ##### Implémentation de tout ce bazar ##### 
 
-Créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` correspondant au mode de jeu que l'on veut tutorialiser. C'est ce qui est fait dans les 3 fichiers de code précédemment mentionnées.
+Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` correspondant au mode de jeu que l'on veut tutorialiser. C'est ce qui est fait dans les 3 fichiers de code précédemment mentionnées.
 
-L'héritage doit overrider 
+La classe `GameXXXTuto` doit overrider les fonctions suivantes :
+
 
