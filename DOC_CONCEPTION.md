@@ -1072,8 +1072,37 @@ En plus de `conditionType`, un `TutorialStep` contient également les variables 
  -  
 #### La classe TutorialScheduler ####
 
+Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit pas par elle-même sur des objets externes. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
 
+Cette classe ne sait que renvoyer les informations du `TutorialStep` courant, et recevoir des stimuli externes, afin d'avancer d'une étape, ou pas.
 
+Pour instancier un `TutorialScheduler`, il faut lui passer une `listTutStepsDescrip`. Chaque élément de cette liste est un tuple, contenant les informations nécessaires à la création d'un `TutorialStep`. Un tuple doit contenir, dans cet ordre, les informations suivantes 
+  
+ - `conditionType`
+ - Une liste de coordonnées (tuple de 2 éléments) dans l'aire de jeu. Sera convertie en liste de `pygame.Rect` pour créer `listPosCond`. 
+ - None, ou une string. Doit correspondre à un fichier son existant, dont le nom complet est déterminé comme suit : `"sound/" + <string> + ".ogg"`. Permet de créer `soundId`
+ - Un dictionnaire, ou une liste de string. Si c'est une liste de string, elle correspond directement à `listTextDescrip`. Si c'est un dictionnaire, la clé doit être un identifiant de langage (`LANGUAGE_FRENCH` ou `LANGUAGE_ENGLISH`, défini dans le fichier `language.py`). On utilise la langue courante, pour récupérer la valeur correspondante dans le dictionnaire, qui est une liste de string. Cette liste sera `listTextDescrip`.
+ - Une liste de coordonnées. Sera convertie en liste de `pygame.Rect` pour créer `listPosBlink`.
+ - `tellObjective`
 
-WIP
-une string. Si c'est une string, elle doit correspondre à fichier. Le nom complet du fichier est déterminé comme suit : `"sound/" + soundId + ".ogg"`.
+À la création, le `TutorialScheduler` se place à sa première étape de tutoriel. 
+
+Les fonctions suivantes permettent de récupérer les informations de l'étape courante : 
+
+ - getCurrentSound
+ - getCurrentText
+ - getCurrentBlink
+ - getCurrentTellObjective
+
+Les fonctions suivantes permettent d'envoyer un stimuli au `TutorialScheduler`. (Elle s'appellent toute `takeStim`, parce qu'elles sont nommées du point de vue de la classe, qui prend le stimuli, et non pas du point de vue du code extérieur. C'est complètement con, oui, je sais). Ces fonctions renvoient toutes un booléen, indiquant si le `TutorialScheduler` a avancé d'une étape ou pas.
+
+ - takeStimTutoNext : Le joueur a appuyé sur la touche "F". Le `TutorialScheduler` avance d'une étape si l'étape courante a `conditionType == STEP_COND_STIM`. 
+ - takeStimInteractiveTouch : Le joueur a effectué un interactive touch qui a eu un impact sur l'aire de jeu. Avance d'une étape si `conditionType == STEP_COND_INTERACTIVE_TOUCH_SUCCESSED`.    
+ - takeStimTileSelected : Le joueur a effectué un zap. On passe en paramètre les positions de tiles sélectionnées. Avance d'une étape Si `conditionType == STEP_COND_SELECT_TILES` et que `listPosCond` est égal à la sélection du joueur. Mais si `listPosCond` ne correspond pas, non seulement on avance pas d'étape, mais en plus, Le `TutorialScheduler` se met dans l'état `totallyFailed`. 
+
+Dans l'état `totallyFailed`, on ne peut plus du tout avancer dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, mais il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et totally fail, donc.   
+
+Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`. Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
+
+#### Création d'un tutoriel à partir d'un mode de jeu ####
+
