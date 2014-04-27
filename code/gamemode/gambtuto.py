@@ -381,9 +381,6 @@ class GameBasicTuto(GameBasic):
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
         GameBasic.__init__(self, surfaceDest, gravityDir, tutorialScheduler)
         self.blinker = Blinker(self.arena)
-        #self.refreshTutoInfo()
-        #self.selectorPlayerOne.setStimuliLock(True)
-        self.showObjectivesAtStart = False
         self.listZapConstraint = LIST_ZAP_CONSTRAINT
         self.nbZapMade = 0
 

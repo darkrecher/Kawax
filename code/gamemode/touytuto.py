@@ -240,9 +240,6 @@ class GameTouyetteTuto(GameTouillette):
         param = (self, surfaceDest, gravityDir, tutorialScheduler, xyFirstTouillette)
         GameTouillette.__init__(*param)
         self.blinker = Blinker(self.arena)
-        #self.refreshTutoInfo()
-        #self.selectorPlayerOne.setStimuliLock(True)
-        self.showObjectivesAtStart = False
         self.listZapConstraint = LIST_ZAP_CONSTRAINT
         self.nbZapMade = 0
         # truc spécifique au GameTouillette, que je sais même plus à quoi ça sert

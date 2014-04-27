@@ -290,9 +290,6 @@ class GameAspirinTuto(GameAspirin):
         self.listTileToHardDefine = LIST_TILE_TO_HARDDEFINE
         GameAspirin.__init__(self, surfaceDest, gravityDir, tutorialScheduler)
         self.blinker = Blinker(self.arena)
-        #self.refreshTutoInfo()
-        #self.selectorPlayerOne.setStimuliLock(True)
-        self.showObjectivesAtStart = False
         self.listZapConstraint = LIST_ZAP_CONSTRAINT
         self.nbZapMade = 0
 
