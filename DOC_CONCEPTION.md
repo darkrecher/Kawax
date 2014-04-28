@@ -1104,9 +1104,22 @@ Dans l'état `totallyFailed`, on ne peut plus du tout avancer dans les étapes. 
 
 Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`. Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
 
-#### la classe Blinker #### 
+#### la classe Blinker ####
 
-TODO WIP.
+La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessinée autour de la tile. Comme les cadres orange et rouge de sélection, mais en plus épais. D'ailleurs, la façon dont cette épaissisation est effectuée est particulièrement horrible. Je vous laisse regarder le code de la fonction `draw`.
+
+Le but de la classe `Blinker` est de mettre à jour `tutoHighLight` dans les différentes tile, afin de faire clignoter le carré bleu.
+
+Le fichier `blinker.py` définit la classe `Blinker`, ainsi que deux constantes 
+ - `BLINK_PERIOD` : demi-période (en cycle de jeu) de clignotement des tiles. Les tiles sont allumés durant `BLINK_PERIOD` cycles, puis éteintes durant `BLINK_PERIOD` cycles, et ainsi de suite. 
+ - `BLINK_DURATION` : temps total du blink, en cycle de jeu. Le clignotement des tiles s'arrête automatiquement au bout d'un certain temps.
+
+La classe `Blinker` s'utilise de la manière suivante :
+
+ - instanciation, en lui passant en paramètre l'aire de jeu dans laquelle se trouve les tiles qu'elle devra blinker.
+ - exécution de `startBlink`, en passant en paramètre le liste des positions de tile à faire blinker.
+ - Pour que le blink soit effectué, il faut exécuter périodiquement, une fois par cycle de jeu, la fonction `advanceTimerAndHandle`. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la game loop. Après appel de cette `advanceTimerAndHandle`, il faut redessiner l'aire de jeu.
+ - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. La variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où. 
 
 #### Création d'un tutoriel à partir d'un mode de jeu ####
 
@@ -1172,6 +1185,6 @@ Le tutoriel du mode Touillette override une fonction supplémentaire : `periodi
 
 (C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).  
 	 
-#### Intégratiod du tutoriel dans le reste du code ####
+#### Intégration du tutoriel dans le reste du code ####
 
  
