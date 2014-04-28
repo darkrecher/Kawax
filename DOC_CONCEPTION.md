@@ -1156,4 +1156,22 @@ Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` corres
 
 La classe `GameXXXTuto` doit overrider les fonctions suivantes :
 
+ - `……init__` : 
+	 - Récupération des variables `LIST_TILE_TO_HARDDEFINE`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT`, pour les stocker en interne.
+	 - créaton d'un `tutorialScheduler`, en lui passant `LIST_TILE_TO_HARDDEFINE`.
+	 - exécution de l'__init__de base, en lui passant le `tutorialScheduler`. 
+	 - création d'un `blinker`
+	 - initialisation d'une variable qui comptera le nombre de zap effectués.
+	
+ - `populateArena` : placement des chips en dur, selon les infos définies au départ dans `LIST_TILE_TO_HARDDEFINE`.
 
+ - `respawnZapValidator` : dans la version de base, cette fonction doit recréer un nouveau `zapValidatorBase`, afin de définir la nouvelle consigne de zap, au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon les infos définies dans `LIST_ZAP_CONSTRAINT`. On utilise le compteur de zap effectuées. Lorsque toutes les consignes de zap définies en dur ont été passées, on peut faire ce qu'on veut, et on crée des consignes au hasard.
+  
+
+Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillettes. Le tutoriel ne doit pas être pollué par ce genre de message, car il écrit déjà beaucoup de textes dans la console. L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
+
+(C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).  
+	 
+#### Intégratiod du tutoriel dans le reste du code ####
+
+ 
