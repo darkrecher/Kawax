@@ -1102,7 +1102,9 @@ Les fonctions suivantes permettent d'envoyer un stimuli au `TutorialScheduler`. 
 
 Dans l'état `totallyFailed`, on ne peut plus du tout avancer dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, mais il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et totally fail, donc.   
 
-Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`. Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
+Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`.
+
+Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
 
 #### la classe Blinker ####
 
@@ -1163,7 +1165,7 @@ Chaque zap de tutoriel doit avoir une contrainte définie en dur, qui correspond
  - int. Total de de brouzoufs à sélectionner.
  - int. Nombre de sucre à sélectionner.
 
-##### Implémentation de tout ce bazar ##### 
+##### Implémentation de tout ce bazar #####
 
 Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` correspondant au mode de jeu que l'on veut tutorialiser. C'est ce qui est fait dans les 3 fichiers de code précédemment mentionnées.
 
@@ -1187,4 +1189,47 @@ Le tutoriel du mode Touillette override une fonction supplémentaire : `periodi
 	 
 #### Intégration du tutoriel dans le reste du code ####
 
- 
+Le `TutorialScheduler` est principalement utilisé par `GameBasic`, mais pas que.  
+
+##### fonction GameBasic.showCurrentTutoStep #####
+
+Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape de tutoriel. Elle effectue toutes les actions relative à l'étape courante :
+
+ - Affichage de `listTextDescrip` dans la console.
+ - Émission du son, si il y en a (avec ma superbe voix qui raconte n'importe quoi).
+ - Démarrage du blink, si il y a des tiles à blinker.
+ - Lock des stimulis, si c'est nécessaire pour l'étape courante.
+
+##### réalisation d'un zap #####
+
+Dans la game loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
+
+Dans la fonction `GameBasic.tryToZap`, après avoir vérifié que le zap a réussi, on exécute la fonction `TutorialScheduler.takeStimTileSelected`, afin d'envoyer le stimuli de réalisation d'un zap. Si ça fait avancer d'une étape, on exécutel a fonction `showCurrentTutoStep`. 
+
+Si le `TutorialScheduler` est tombé dans l'état `totallyFailed`, on affiche le texte de fail.
+
+Lorsqu'un zap est réussi, il faut afficher la description de la consigne du zap (qui vient de changer). Mais on ne le fait que si le `TutorialScheduler` l'autorise (le `tellObjective` de l'étape courante doit être à True).  
+
+##### Appui sur la touche "F" #####
+
+Lorsque le joueur appuie sur "F", le `stimuliStocker` met à True sa variable `stimTutoNext`. Lorsque la game loop le détecte, elle exécute la fonction `GameBasic.execStimTutoNext`.
+
+Le stimuli est directement transféré au tutoriel, par un appel à la fonction `tutorialScheduler.takeStimTutoNext`. 
+
+Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on exécute la foncton `GameBasic.showCurrentTutoStep`. Puis, on affiche la description de la consigne actuelle du zap, si le `TutorialScheduler` l'autorise.
+
+Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape de tutoriel courante indique qu'il faut faire des blinks. Ça permet au joueur de revoir les blinks, si il les a ratés la première fois.
+
+##### interactive touch #####
+
+##### handleGravity #####
+
+(on le retrouve dans GameAspirin).
+
+##### début du jeu #####
+
+##### stimReblink #####
+
+##### ManualInGame #####
+  
+##### GameAspirin.gameStimuliInteractiveTouch #####
