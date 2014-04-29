@@ -83,8 +83,7 @@ class GameBasic():
         """
         self.initCommonStuff(surfaceDest, gravityDir, tutorialScheduler)
 
-        self.arena = ArenaBasic(surfaceDest, self.posPixelArena, ARENA_SIZE, 2,
-                                tutorialScheduler=tutorialScheduler)
+        self.arena = ArenaBasic(surfaceDest, self.posPixelArena, ARENA_SIZE, 2)
         self.selectorPlayerOne = Selector(self.arena, 0)
 
         self.populateArena()

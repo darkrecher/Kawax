@@ -58,8 +58,7 @@ class ArenaBasic():
 
     def __init__(self, surfaceDest, posPixelTopLeft, arenaSize, nbrPlayer,
                  listGenInit=DEFAULT_LIST_CHIP_GENERATION,
-                 listGenAfterGravity=None,
-                 tutorialScheduler=None):
+                 listGenAfterGravity=None):
         """
         constructeur. (thx captain obvious)
 
