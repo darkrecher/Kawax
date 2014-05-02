@@ -14,13 +14,13 @@ Ceci est ma vengeance.
 
 ![diagramme classe kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/diagramme_pas_UML.png)
 
-Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à me servir de cette norme, c'était à l'école, et je l'ai oubliée parce que j'étais bourré.
+Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à m'en servir, c'était à l'école, et ensuite je l'ai oubliée parce que j'étais bourré.
 
 Les flèches vertes indiquent des liens d'héritage.
 
 Les cadres bleus avec des lignes pointillés indiquent des zooms sur une partie spécifique.
 
-Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic`, puis elle est envoyée à `ArenaBasic` qui fait des modifs dedans, puis la renvoie, et ainsi de suite.
+Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic` puis envoyée à `ArenaBasic`, qui fait des modifs dedans, la renvoie, et ainsi de suite.
 
 ## Déroulement des actions lors d'une partie type ##
 
@@ -681,25 +681,26 @@ Pour une explication détaillée de "comment ça marche dans des directions autr
 
 ### Interactive Touch ###
 
-Les "interactive touch" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça pourrait permettre de faire un tas de choses, dans des modes de jeu spécifiques, ou pour des chips spécifiques : téléportation, échange de chip, augmentation de la valeur d'une pièce, ...
+Les "interactive touch" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
 
-Les "interactive touch" sont totalement indépendant des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Mais il ne sert à rien. Il faut overrider quelques fonctions pour le rendre utile. C'est ce qui est fait dans le mode aspro (Voir plus loin).
+Les "interactive touch" sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce que ça fait. Il y en a un exemple dans le mode aspro (Voir plus loin).
 
 Le fonctionnement général est le suivant :
 
  - L'utilisateur clique dans la fenêtre du jeu.
  - Le `stimuliStocker` détecte ce clic, en déduit la tile cliquée, et enregistre sa position dans la variable interne `posArenaToInteractTouch`. (Cette action est effectuée uniquement sur les clics, pas sur les mouvements de souris, ni sur le maintien du bouton appuyé)
  - dans la game loop : récupération de `stimuliStocker.posArenaToInteractTouch`. 
- - Si la variable contient une position, exécution de la fonction `ArenaXXX.stimuliInteractiveTouch`, en passant la position en paramètre.
- - Cette fonction a le droit de faire tout et n'importe quoi sur les tiles et les chips de l'aire de jeu. Si elle fait quelque chose, elle doit répondre `True`, sinon elle répond `False`. 
- - Concrètement, `ArenaBasic.stimuliInteractiveTouch` ne fait rien et renvoie toujours False. Mais la fonction peut être overridée dans d'autres modes de jeu spécifiques.
- - (retour à la game loop). Si la fonction a renvoyé `True` :
-	 - Annulation de la sélection faite par le joueur, parce que s'il s'est passé quelque chose dans l'aire de jeu, la sélection précédente n'est peut-être plus valid.
-	 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
-	 - Gestion du tutoriel, s'il y en a un (voir plus loin).
- - Plusieurs gravités peuvent s'effectuer les unes après les autres, si besoin. Le délockage des stimulis sera effectuée à la fin de la dernière gravité, comme pour le zap.  
- - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaBasic.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `GameXXX`, et pas de `ArenaXXX`. Par contre, pas la peine de renvoyer `True` ou `False` pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
- - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Seule la fonction overridée dans le mode aspro fait quelque chose.
+ - Si la variable contient une position valide : 
+	 - exécution de la fonction `ArenaXXX.stimuliInteractiveTouch`, en transmettant cette position.
+		 - Cette fonction a le droit de faire tout et n'importe quoi sur les tiles et les chips de l'aire de jeu. Si elle fait quelque chose, elle doit répondre True. 
+		 - Concrètement, `ArenaBasic.stimuliInteractiveTouch` ne fait rien et renvoie toujours False. Mais la fonction peut être overridée dans un mode de jeu spécifique.
+	 - (Retour à la game loop). Si on a récupéré True, exécution des actions suivantes :
+		 - Comme il s'est passé quelque chose dans l'aire de jeu, les tiles sélectionnées par le joueur ne correspondent peut-être plus à rien. Donc on efface la sélection. 
+		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
+		 - Gestion du tutoriel, s'il y en a un (voir plus loin).
+	 - Si besoin, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité, comme pour le zap.  
+	 - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaBasic.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `GameXXX`, et pas de `ArenaXXX`. Par contre, pas la peine de renvoyer un booléen pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
+	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
 
 ## Spécificités des modes de jeu spécifique (ha ha) ##
 
@@ -709,26 +710,26 @@ Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étend
 
 Ils sont gérés par les bouts de codes suivants :
 
- - `bigobj.py` : définition de la classe `BigObject`, définissant un gros objet générique. Et définition de classes héritées de `BigObject`, pour des objets ayant une forme spécifique.
- - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Contient la gestion des gros objets.
- - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Cette classe sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus. 
+ - `bigobj.py` : définition de la classe `BigObject`, (un gros objet générique). Et définition de classes héritées de `BigObject`, dotées d'une forme spécifique.
+ - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Permet la gestion des gros objets.
+ - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Elle sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus. 
  - Rien dans `GameBasic` ni dans aucune classe héritée de `GameBasic`. La gestion des gros objets n'a pas d'influence à ce niveau du code. (Ce qui est presque étonnant vu comme tout est plus ou moins spaghettifié).
 
-La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle forme (tant qu'ils rentrent dans l'arène) : avec des trous dedans, en plusieurs morceaux séparés, ...
+La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle forme, tant qu'ils rentrent dans l'arène : avec des trous dedans, en plusieurs morceaux séparés, etc.
 
 J'avais testé tous ces cas, à une époque. Et ça marchait. À priori, ça devrait toujours marcher maintenant.
 
-Le seul cas concret d'utilisation des gros objets est le mode "touillette", avec des gros objets horizontaux longs de 5 cases. 
+Le seul cas concret d'utilisation des gros objets est le mode Touillette, avec des gros objets horizontaux longs de 5 cases. 
 
-#### la classe BigObject ####
+#### La classe BigObject ####
 
 Définit le comportement générique des gros objets. Contient les membres suivants : 
 
  - `posTopLeft` : objet `pygame.Rect`. Position, dans l'aire de jeu, du coin supérieur gauche du rectangle englobant dans lequel se trouve actuellement le gros objet.
  - `listPosRel` : liste d'objet `pygame.Rect`. Position relative à `posTopLeft` de chaque tile occupée par le gros objet. Chaque coordonnée X et Y de chaque élément de cette liste doit être positif ou nul. 
- - `listPosArena` : Position, dans l'aire de jeu, de chaque tile occupée par le gros objet. 
+ - `listPosArena` : position, dans l'aire de jeu, de chaque tile occupée par le gros objet. 
  - `imgBigObj` : objet `pygame.Surface`. Image à afficher dans l'aire de jeu, représentant le gros objet.
- - `typeBigObj` : entier. type du gros objet. (ne sert à rien dans tout le reste du code, grâce à la magie de l'héritage, du duck typing et toutes ces sortes de choses.
+ - `typeBigObj` : entier. Type du gros objet. Ne sert à rien dans tout le reste du code, grâce à la magie de l'héritage, du duck typing et toutes ces sortes de choses.
 
 La classe contient plusieurs méthodes, permettant de mettre à jour `listPosArena` par rapport à `postTopLeft` et `listPosRel`. (Ces 3 variables membres doivent toujours être cohérentes entre elles).
 
@@ -736,27 +737,28 @@ La classe est indépendante, elle ne possède pas de lien vers l'aire de jeu qui
 
 #### La classe ArenaBigObject ####
 
-Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et quelques fonctions overridée, afin de gérer les gros objets dans l'aire de jeu.
+Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et quelques fonctions overridées.
 
-##### Ajout d'un gros objet ##### 
+##### Ajout d'un gros objet #####
 
 Cette action est réalisée par la fonction `ArenaBigObject.addBigObject`. Elle nécessite deux paramètres :
 
- - une classe héritée de `BigObject`, qui sera instanciée pour créer le gros objet à ajouter dans l'aire de jeu.
+ - Une classe héritée de `BigObject`, qui sera instanciée pour créer le gros objet à ajouter dans l'aire de jeu.
  - `posTopLeft` : un objet `pygame.Rect`, indiquant la coordonnée du coin supérieur gauche du gros objet.
 
 La fonction effectue les actions suivantes :
 
- - Instanciation du `BigObject`, et ajout dans la variable membre `listBigObj`. (Cette liste est précédemment créé dans `ArenaBasic`, sauf que ça devrait pas. Elle ne devrait exister que dans `ArenaBigObject`. C'est pas grave, on n'est plus à ça près).
- - Création des `ChipBigObject` dans l'aire de jeu, sur toutes les tiles occupées par le gros objet. (On écrase les chip qui étaient à leur place, tel le gros bourrin). 
+ - Instanciation du `BigObject`, et ajout dans la variable membre `listBigObj`, une liste créée dans `ArenaBasic`. (Ça devrait pas, elle ne devrait exister que dans `ArenaBigObject`, mais on n'est plus à ça près).
+ - Création des `ChipBigObject` dans l'aire de jeu, sur toutes les tiles occupées par le gros objet. On écrase les chips qui étaient là avant, tel le gros bourrin. 
 
-##### Dessin ##### 
+##### Dessin #####
 
 Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. Elle effectue les actions suivantes :
 
- - Dessin des tiles, comme dans `ArenaBasic.draw`. (Les `ChipBigObject` sont dessinées comme les autres, sauf que leur image de dessin est totalement transparentes).
+ - Dessin des tiles, comme dans `ArenaBasic.draw`. 
+ 	- Les `ChipBigObject` sont dessinées comme les autres, sauf que leur image de dessin est totalement transparente.
  - Pour chaque `BigObject` de `self.listBigObj` :
-	 -  Récupération de l'image correspondant au gros objet, et dessin de cette image, au bon endroit, dans l'aire de jeu.
+	 -  Récupération de l'image correspondant au gros objet, et dessin au bon endroit, dans l'aire de jeu.
 
 ##### Gestion de la gravité #####
 
@@ -770,20 +772,20 @@ La fonction `determineGravity` effectue les actions suivantes :
  - Placement de tous les gros objets de l'aire de jeu dans `listBigObjInGravity`.
  - Pour chaque gros objet de cette liste :
 	 - On vérifie si les tiles occupée par le gros objet sont soumise à la gravité.
-	 - Si il n'en a aucune, on enlève le gros objet de `listBigObjInGravity`.
+	 - S'il n'y en a aucune, on enlève le gros objet de `listBigObjInGravity`.
 	 - Si elles y sont toutes, on laisse le gros objet dans `listBigObjInGravity`. On ne fait rien de plus.
-	 - Si il y en a certaines, mais pas toutes, on effectue les actions suivantes :
+	 - S'il y en a certaines, mais pas toutes, on effectue les actions suivantes :
 		 - On enlève le gros objet de `listBigObjInGravity`.
-		 - On annule la gravité pour toutes les tiles occupées par le gros objet. (fonction gravityMovements.cancelGravity). C'est à dire que les tiles du gros objet, et toutes les tiles au-dessus d'elles, ne sont plus soumises à la gravité.
-		 - On retient qu'on a effectuée une modification dans la gravité, donc il faudra reprendre la boucle depuis sur `listBigObjInGravity` depuis le début. (Mais `listBigObjInGravity` a un ou plusieur élément de moins par rapport à la boucle précédente, donc au bout d'un moment, ça s'arrête forcément). 
+		 - On annule la gravité pour toutes les tiles occupées par le gros objet. (fonction `gravityMovements.cancelGravity`). C'est à dire que les tiles du gros objet, et toutes les tiles au-dessus d'elles, ne sont plus soumises à la gravité.
+		 - On retient qu'on a effectuée une modification dans la gravité, donc il faudra reprendre la boucle sur `listBigObjInGravity` depuis le début. (Mais `listBigObjInGravity` a un ou plusieurs élément de moins par rapport à la boucle précédente, donc au bout d'un moment, ça s'arrête forcément). 
  - Lorsqu'on a terminé, les gros objets qui restent dans `listBigObjInGravity` sont ceux qui sont réellement soumis à la gravité. On garde cette liste en mémoire pour plus tard. 
 
 La fonction `applyGravity` effectue les actions suivantes :
 
  - Exécution de `ArenaBasic.applyGravity` : Application de la gravité sur les tiles qui y sont soumises.
- - Application de la gravité sur tous les gros objets qui sont restés dans `listBigObjInGravity` : on modifie `bigObj.posTopLeft`, ainsi que tous les éléments de `bigObj.listPosArena`.   
+ - Application de la gravité sur tous les gros objets restés dans `listBigObjInGravity` : on modifie `bigObject.posTopLeft`, ainsi que tous les éléments de `bigObject.listPosArena`.   
 
-### Le mode Touillette ### 
+### Le mode Touillette ###
 
 Ce mode est implémenté par la classe `GameTouillette`, définie dans le fichier `touyettg.py`, ainsi que par la classe `ArenaTouillette`, définie dans le fichier `touyetta.py`. Il comporte les particularités suivantes :
 
