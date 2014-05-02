@@ -10,6 +10,18 @@ Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus 
 
 Ceci est ma vengeance.
 
+## Diagramme de classe ##
+
+![diagramme classe kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/diagramme_pas_UML.png)
+
+Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à me servir de cette norme, c'était à l'école, et je l'ai oubliée parce que j'étais bourré.
+
+Les flèches vertes indiquent des liens d'héritage.
+
+Les cadres bleus avec des lignes pointillés indiquent des zooms sur une partie spécifique.
+
+Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic`, puis elle est envoyée à `ArenaBasic` qui fait des modifs dedans, puis la renvoie, et ainsi de suite.
+
 ## Déroulement des actions lors d'une partie type ##
 
 ### Initialisation générale, choix du mode de jeu ###
