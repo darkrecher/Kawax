@@ -191,7 +191,7 @@ class ArenaAspirin(ArenaBasic):
                 tile.chip = ChipNothing()
             crawlerBottom.crawl()
 
-    def hasAnyEmptyChipInBottom(self):
+    def hasAnyHalfAsproInBottom(self):
         # Codé à l'arrache pour corriger un bug à l'arrache.
         crawlerBottom = ArenaCrawler(self.arenaSize)
         crawlerBottom.config(UP, RIGHT)
@@ -200,7 +200,7 @@ class ArenaAspirin(ArenaBasic):
         while crawlerBottom.coP == crawlerBottom.primStart:
             #securedPrint(u"crawl " + unicode(crawlerBottom.posCur))
             tile = self.getTile(crawlerBottom.posCur)
-            if tile.chip.chipType == CHIP_NOTHING:
+            if tile.chip.chipType in ( CHIP_ASPRO_HALF_LEFT, CHIP_ASPRO_HALF_RIGHT):
                 return True
             crawlerBottom.crawl()
         return False

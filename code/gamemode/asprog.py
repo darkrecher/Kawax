@@ -110,6 +110,8 @@ class GameAspirin(GameBasic):
             param = (self.crawlerGravRiftApply, self.gravityMovementsRift, self.crawlerRegenRift)
             self.arena.applyGravity(*param)
             self.arena.regenerateAllChipsAfterOneGravity(self.crawlerRegenRift)
+        else:
+            self.arena.removeHalfAsproBottom()
 
     def _determineAnyGravity(self):
         param = (self.crawlerGrav, self.gravityMovements)
@@ -141,7 +143,7 @@ class GameAspirin(GameBasic):
         if anyGravToDo:
             securedPrint(u"needStabilization TRUE")
             return True
-        if self.arena.hasAnyEmptyChipInBottom():
+        if self.arena.hasAnyHalfAsproInBottom():
             securedPrint(u"needStabilization true")
             return True
         securedPrint(u"needStabilization false")
@@ -150,7 +152,6 @@ class GameAspirin(GameBasic):
     def handleGravity(self):
         securedPrint(u"handleGravity aspro")
         self.applyGravity()
-        self.arena.removeHalfAsproBottom()
 
         # Morceaux copié-collé exactement de GameBasic.handleGravity
         if self.needStabilization():
