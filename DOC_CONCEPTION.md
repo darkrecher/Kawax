@@ -858,10 +858,11 @@ Les étapes suivantes sont effectuées :
 
 Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ainsi que par la classe `ArenaAspirin`, (fichier `asproa.py`). Il comporte les particularités suivantes :
 
- - La gravité est vers le bas, comme d'habitude, mais les chips ne se regénèrent pas par le haut.
- - Une seconde gravité est appliquée, après la normale. Il s'agit du "Gravity Rift" : lorsqu'il y a une colonne complètement vide, toutes les colonnes à droite sont déplacées vers la gauche. La colonne tout à droite devient donc vide, c'est là qu'on regénère des chips.
+ - La gravité est vers le bas, comme d'habitude, mais les chips ne se regénèrent pas en haut.
+ - Une seconde gravité est appliquée, après celle vers le bas. Il s'agit du "Gravity Rift" : lorsqu'il y a une colonne complètement vide, toutes les colonnes à droite sont déplacées vers la gauche. La colonne tout à droite devient donc vide, c'est là qu'on regénère des chips.
  - L'aire de jeu comporte des demi-cachets d'aspirine, placés initialement à des endroits définis en dur.
- - Lorsque deux demi-cachets gauche et droite sont l'un à côté de l'autre, le joueur peut cliquer sur l'un d'eux, pour les fusionner en un cachet entier. Puis, il peut cliquer sur le cachet entier pour le prendre.
+ - Lorsque deux demi-cachets gauche et droite sont l'un à côté de l'autre, le joueur peut cliquer sur l'un d'eux, pour les fusionner en un cachet entier.
+ - Le joueur peut également cliquer sur un cachet entier pour le prendre.
  - Le but est de prendre 3 cachets d'aspirine.
  - Les demi-cachets d'aspirine qui atterrissent en bas de l'aire de jeu sont supprimés, et ne sont pas comptabilisés dans les cachets récupérés.
 
@@ -880,25 +881,25 @@ Cette action est réalisé par les fonctions et les classes suivantes :
 
 La gravité du mode aspro s'effectue en deux temps. Le premier temps est normal, vers le bas. On utilise le même crawler pour déterminer les mouvements et les appliquer : `GameAspirin.crawlerGrav`. On utilise également une instance de `GravityMovements` :  `GameAspirin.gravityMovements`. Ces deux objets sont configurés et utilisés de la même manière que dans le mode normal (voir fonction `GameBasic.initCommonStuff`).
 
-Par contre, on n'utilise jamais `GameAspirin.crawlerRegen` (bien qu'il soit créé par `GameBasic.initCommonStuff`). Dans `GameAspirin`, on appelle parfois la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`, mais on ne l'appelle jamais avec `GameAspirin.crawlerRegen`.
+Par contre, on n'utilise jamais `GameAspirin.crawlerRegen` (bien qu'il soit créé par `GameBasic.initCommonStuff`). Dans `GameAspirin`, on appelle parfois la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`, mais jamais avec `GameAspirin.crawlerRegen` en paramètre.
 
-Le second temps de la gravité s'effectue en "rift", vers la gauche. Contrairement au premier temps, on a besoin de deux crawlers distincts pour la détermination des mouvements (`GameAspirin.gravityMovementsRift`) et leurs applications (`GameAspirin.crawlerGravRiftApply`). On a également besoin d'une autre instance de `GravityMovements` :  `GameAspirin.gravityMovementsRift`.
+Le second temps de la gravité est un "Rift", vers la gauche. Contrairement au premier temps, on a besoin de deux crawlers distincts : un pour déterminer les mouvements (`GameAspirin.gravityMovementsRift`) et un autre pour les appliquer (`GameAspirin.crawlerGravRiftApply`). On a également besoin d'une autre instance de `GravityMovements` :  `GameAspirin.gravityMovementsRift`.
 
 Le second temps de la gravité provoque des regénérations. Pour cela, on utilise le crawler `GameAspirin.crawlerRegenRift`.
 
-Pour déterminer les mouvements de gravité "rift", on utilise la fonction `ArenaBasic.determineGravityFullSegment`, avec en paramètre le crawler `GameAspirin.gravityMovementsRift`. Ce crawler parcoure l'aire de jeu colonne par colonne, en allant de la gauche vers la droite. (Chaque colonne est parcourue de haut en bas, mais on s'en fout).
+Pour déterminer les mouvements de Rift, on utilise la fonction `ArenaBasic.determineGravityFullSegment`, avec en paramètre le crawler `GameAspirin.gravityMovementsRift`. Ce crawler parcourt l'aire de jeu colonne par colonne, en allant de la gauche vers la droite. (Chaque colonne est parcourue de haut en bas, mais on s'en fout).
 
 La fonction `ArenaBasic.determineGravityFullSegment` effectue les actions suivantes :
 
- - Parcours de l'aire de jeu avec le crawler, jusqu'à trouver une colonne entièrement vide. Lorsque ça arrive, on retient la coordonnée X de la colonne, et on passe tout de suite à l'étape suivante. Pas la peine de parcourir le reste de l'aire de jeu. S'il y a d'autres segments vides, ils seront détectés lors de gravité suivantes.
+ - Parcours de l'aire de jeu avec le crawler, jusqu'à trouver une colonne entièrement vide. Lorsque ça arrive, on retient sa coordonnée X, et on passe tout de suite à l'étape suivante. Pas la peine de parcourir le reste de l'aire de jeu. S'il y a d'autres segments vides, ils seront détectés lors de gravité suivantes.
  - Ajout de plusieurs mouvements de gravité, dans l'objet `GravityMovements` à retourner. Alors là c'est fait de manière un peu bizarre, avec un fort risque de se mélanger les crayons entre les différentes coordonnées.
-	 - Les coordonnées primaires des mouvements de gravité, c'est Y = (de 0 à tout en bas de l'aire de jeu).
-	 - La coordonnée secondaire de chaque début de mouvement de gravité, c'est X = (position de la colonne vide)
-	 - La coordonnée secondaire de chaque fin de mouvement de gravité, c'est X = (tout à droite de l'aire de jeu).
- - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération : la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler.
+	 - Les coordonnées primaires des mouvements de gravité sont : Y = (de 0 à tout en bas de l'aire de jeu).
+	 - La coordonnée secondaire de chaque début de mouvement de gravité est X = (position de la colonne vide)
+	 - La coordonnée secondaire de chaque fin de mouvement de gravité est X = (tout à droite de l'aire de jeu).
+ - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération, la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler.
  - Je vous laisse réfléchir à tout ça. Si c'était à refaire, j'essayerais de trouver une manière plus simple d'exprimer tous ces mouvements et ces parcours, tout en essayant de rester le plus générique possible.
 
-Pour appliquer les mouvements de gravité "rift", on utilise donc `GameAspirin.gravityMovementsRift`, dûment rempli par l'étape décrite ci-dessus, ainsi que le crawler "qui va bien" pour appliquer une gravité vers la gauche. C'est à dire `GameAspirin.crawlerGravRiftApply`.
+Pour appliquer les mouvements de Rift, on utilise donc `GameAspirin.gravityMovementsRift`, dûment rempli par l'étape ci-dessus. On utilise aussi le crawler "qui va bien" pour appliquer une gravité vers la gauche. C'est à dire `GameAspirin.crawlerGravRiftApply`.
 
 Pour appliquer une gravité, il faut un crawler dont le sens secondaire est inverse au sens de la gravité. (Le sens primaire peut être n'importe lequel, on s'en fout).
 
@@ -907,27 +908,28 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
  - Appel de la fonction `GameBasic.tryToZap`, lorsque l'utilisateur tente un zap, comme dans un mode de jeu normal.
  - Si le zap réussi, appel de la fonction overridée `GameAspirin.needStabilization`.
 	 - Exécution de la fonction `GameAspirin._determineAnyGravity`
-		 - Détermination de gravité normale à effectuer (vers le bas).
+		 - Détermination de gravité normale.
 		 - Si il y en a, l'objet `GameAspirin.gravityMovements` contient des mouvements à faire. La fonction _determineAnyGravity ne fait rien de plus, et renvoie True
-		 - S'il n'y a pas de gravité normale à effectuer, détermination de gravité "rift" à effectuer.
+		 - S'il n'y a pas de gravité normale à effectuer, détermination de gravité Rift.
 		 - Si il y en a, l'objet `gravityMovementsRift` contient des mouvements à faire. La fonction `_determineAnyGravity` renvoie True.
 		 - Sinon, la fonction renvoie False.
+	 - (retour à `needStabilization`)
 	 - `needStabilization` renvoie True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, on vérifie s'il n'y a pas de chip vide en bas de l'aire de jeu (voir chapitre suivant : "Suppression des cachets en bas de l'aire de jeu")
+	 - Sinon, détermination de la présence de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu"). 
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
-Et durant la game loop, les actions suivantes sont effectuées :
+Et durant la Game Loop, les actions suivantes sont effectuées :
 
  - Appel de la fonction overridée `GameAspirin.handleGravity`. (Ça se fait au moment habituel : lorsque le jeu est dans un état instable et que `gravityCounter` arrive à 0).
 	 - Appel de la fonction `GameAspirin.applyGravity`.
 		 - Application de la gravité normale, s'il y a des choses dans `GameAspirin.gravityMovements`
 		 - Sinon :
-			 - application de la gravité "rift", s'il y a des choses dans `GameAspirin.gravityMovementsRift`.
+			 - application de la gravité Rift, s'il y a des choses dans `GameAspirin.gravityMovementsRift`.
 			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
-		 - (retour à `applyGravity`)
-		 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
-		 - Pour finir, exécution des mêmes actions que dans le mode de jeu normal.
+		 - Sinon :
+			 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
+	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal :
 		 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
 		 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
@@ -956,29 +958,28 @@ Les actions suivantes sont effectuées :
 
  - Durant la Game Loop, appel de la fonction overridée `GameAspirin.handleGravity`.
 	 - Appel de la fonction `GameAspirin.applyGravity`.
-		 - Application de la gravité normale, ou de la gravité "rift", ou de aucune des deux (ça pourrait arriver, même si je ne saurais pas dire exactement dans quelle situation).
-		 - Exécution de `ArenaAspirin.removeHalfAsproBottom`
+		 - Application de la gravité normale, si on a précédemment détecté que c'était nécessaire.
+		 - Sinon, application de la gravité "rift", si on a précédemment détecté que c'était nécessaire.
+		 - Sinon, exécution de `ArenaAspirin.removeHalfAsproBottom`
 			 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu, et remplace tous les demi-cachets d'aspirine (gauche ou droit) par une `ChipNothing`.
 		 - (retour à `handleGravity`)
-		 - Exécution de `GameAspirin.needStabilization`
-			 - Si un demi-cachet vient d'être supprimé, il y a un emplacement vide, et il y a donc de grandes chances que la fonction `GameAspirin._determineAnyGravity` détecte une gravité normale à effectuer.
-			 - Dans une autre situation, on peut avoir, non pas un demi-cachet qui vient d'être supprimé, mais un demi-cachet qui vient de tomber en bas de l'aire de jeu. C'est pourquoi, si `_determineAnyGravity` renvoie False, on appelle alors la fonction `ArenaAspirin.hasAnyEmptyChipInBottom`
-				 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu. Si on trouve un demi-cachet (gauche ou droit), la fonction renvoie True, sinon, elle renvoie False.
-			 - (retour à `needStabilization`)
-			 - `needStabilization` considère que le jeu est "instable" s'il y a un demi-cachet en bas de l'aire de jeu. (il sera supprimé au prochain appel de `handleGravity`. Sinon, `needStabilization` considère que le jeu est stable.
+		 - Exécution de `GameAspirin.needStabilization` : 
+			 - Si un demi-cachet vient d'être supprimé, il y a un emplacement vide. `GameAspirin._determineAnyGravity` détectera forcément une gravité normale, ou une gravité rift à effectuer. Elle sera effectué au prochain coup.
+			 - Si il n'y a aucune gravité à appliquer, on appelle la fonction `ArenaAspirin.hasAnyHalfAsproInBottom`
+				 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu. Si on trouve un demi-cachet (gauche ou droit), la fonction renvoie True, sinon, elle renvoie False. Ce demi-cachet sera supprimé au prochain appel de `handleGravity`.
 
 Donc, la suppression d'un demi-cachet s'effectue sur plusieurs appels à handleGravity, durant des "game loop" successives.
 
  - Application de gravité normale, vers le bas, jusqu'à ce qu'un demi-cachet tombe en bas.
- - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). Mais `ArenaAspirin.hasAnyEmptyChipInBottom` renvoie True, donc le jeu reste instable.
+ - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). Mais `ArenaAspirin.hasAnyHalfAsproInBottom` renvoie True, donc le jeu reste instable.
  - On n'applique aucune gravité, mais la fonction `ArenaAspirin.removeHalfAsproBottom` effectue quelque chose. Elle supprime le demi-cachet.
- - Détection d'un mouvement de gravité normal, à l'endroit où il y avait le demi-cachet.
+ - Détection d'une gravité normale à effectuer, à l'endroit où il y avait le demi-cachet.
  - Application de ce mouvement de gravité.
- - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). `ArenaAspirin.hasAnyEmptyChipInBottom` renvoie False. Le jeu est redevenu stable.
+ - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). `ArenaAspirin.hasAnyHalfAsproInBottom` renvoie False. Le jeu est redevenu stable.
 
-Je n'ai pas testé le cas où il y a en même temps une gravité "rift", et un demi-cachet à supprimer en bas de l'aire de jeu. Il est possible que les deux actions soient effectuées en même temps. Ce serait un comportement non voulu, car on veut décomposer les étapes pour bien montrer au joueur ce qu'il se passe. Eh bien si ce genre de désagrément survient, tant pis. Le joueur y survivra. (En espérant que ça fasse pas planter le jeu).
+Le but de tout ce bazar, c'est de bien décomposer les étapes, en les affichant à chaque fois, afin que le joueur comprenne bien ce qu'il se passe. 
 
-Sauf que dans la façon où c'est codé actuellement, c'est pas si clair que ça. Dès que le demi-cachet arrive en bas, il disparaît tout de suite. On n'a pas le temps de le voir tomber, puis disparaître. J'ai pas envie de corriger cette subtilité. Le joueur y survivra, une fois de plus.
+Je n'ai pas testé le cas où il y a en même temps une gravité "rift" et un demi-cachet à supprimer en bas de l'aire de jeu. Normalement, ça plante pas, et toutes les étapes sont bien décomposées. 
 
 #### Interactive Touch sur les aspirines ####
 
