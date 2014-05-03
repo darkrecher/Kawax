@@ -719,7 +719,7 @@ La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle f
 
 J'avais testé tous ces cas, à une époque. Et ça marchait. À priori, ça devrait toujours marcher maintenant.
 
-Le seul cas concret d'utilisation des gros objets est le mode Touillette, avec des gros objets horizontaux longs de 5 cases. 
+Le seul cas concret d'utilisation des gros objets est le mode Touillette. (Voir plus loin). 
 
 #### La classe BigObject ####
 
@@ -789,15 +789,15 @@ La fonction `applyGravity` effectue les actions suivantes :
 
 Ce mode est implémenté par la classe `GameTouillette`, définie dans le fichier `touyettg.py`, ainsi que par la classe `ArenaTouillette`, définie dans le fichier `touyetta.py`. Il comporte les particularités suivantes :
 
- - Présence de touillettes : gros objets ayant la forme d'une ligne horizontale longue de 5 tiles. (Voir chapitre précédent pour la gestion des gros objets).
+ - Présence de touillettes : gros objet ayant la forme d'une ligne horizontale de 5 tiles. (Voir chapitre précédent).
  - Une première touillette est créée dans l'aire de jeu, à un emplacement prédéfini.
- - Lors de l'étape de regénération des chips, après l'application d'une gravité, d'autres touillettes peuvent être créées.
+ - D'autres touillettes peuvent être créées durant l'étape de regénération des chips.
  - Lorsqu'une touillette arrive en bas de l'aire de jeu, elle disparaît automatiquement.
  - Il faut faire disparaître 2 touillettes pour gagner.   
 
 #### Ajout des touillettes ####
 
-La première touillette est créé à l'initialisation (`GameTouillette.__init__`), avec la fonction `addBigObject`.
+La première touillette est créé à l'initialisation (`GameTouillette.__init__`), avec la fonction `ArenaBigObject.addBigObject`.
 
 L'ajout des touillettes est réalisé par les fonctions suivantes :
 
@@ -807,13 +807,12 @@ L'ajout des touillettes est réalisé par les fonctions suivantes :
 Les étapes suivantes sont effectuées :
 
  - Appel de `regenerateAllChipsAfterOneGravity` par le code extérieur, après l'application d'une gravité.
- - Parcours de la ligne du haut de l'aire de jeu, pour détecter la liste des positions potentielles pouvant accueillir une touillette. Une position potentielle est une tile vide, ayant les 4 tiles à sa droite vide aussi (oh surprise, ça fait pil poil la largeur d'une touillette). Les positions potentielles peuvent se confondre. Par exemple, une ligne de 6 tiles vide générera 2 positions potentielles.
+ - Parcours de la ligne du haut de l'aire de jeu, pour détecter la liste des positions potentielles pouvant accueillir une touillette. Il s'agit des tiles vides, suivi de 4 tiles à droite vide aussi (oh surprise, ça fait pil poil la largeur d'une touillette). Les positions potentielles peuvent se chevaucher. Par exemple, une ligne de 6 tiles vide générera 2 positions potentielles.
  - Exécution de `regenerateTouillette`, en donnant la liste des positions potentielles en paramètre.
 	 - Calcul de probabilité, en fonction du nombre de touillettes déjà présentes dans l'aire de jeu, et du nombre de positions potentielles, pour déterminer si on doit créer une touillette ou pas.
-	 - Si oui, choix d'une position potentielle au hasard.
-	 - Ajout de la touillette dans l'aire de jeu. (`addBigObject`).
+	 - Si oui, choix d'une position potentielle au hasard, et ajout de la touillette dans l'aire de jeu. (`addBigObject`).
  - (Retour à `regenerateAllChipsAfterOneGravity`)
- - Exécution de la fonction de base `ArenaBigObject.regenerateAllChipsAfterOneGravity`, afin de regénérer des chips sur les tiles qui sont restés vide. (Comme dans un mode de jeu normal). 
+ - Exécution de la fonction de base `ArenaBigObject.regenerateAllChipsAfterOneGravity`, afin de regénérer des chips sur les tiles qui sont restés vide. 
 
 #### Disparition des touillettes en bas de l'écran ####
 
@@ -842,18 +841,18 @@ Les étapes suivantes sont effectuées :
 
 #### Affichage du nombre de touillettes disparues ####
 
-Cette action est réalisée par la fonction `GameTouillette.periodicAction`. C'est vraiment bizarre d'avoir mis ce code ici, mais je ne savais pas où le mettre ailleurs. C'est du code qui doit être exécuté à la fin d'une gravité, ou d'une suite de gravité, mais qui n'a rien à voir avec la gravité elle-même. On pourrait imaginer d'autres processus qui éliminent des touillettes dans l'aire de jeu, et qui provoquerait également cette action d'affichage.
+Cette action est réalisée par la fonction `GameTouillette.periodicAction`. C'est vraiment bizarre et salement bourrin d'avoir mis ce code ici, mais je ne savais pas où le mettre ailleurs. C'est du code qui doit être exécuté à la fin d'une suite de gravité, mais qui n'a rien à voir avec la gravité elle-même. Car on pourrait imaginer d'autres processus qui éliminent des touillettes dans l'aire de jeu, et qui provoquerait également cette action d'affichage.
 
 Bref voilà, c'est dans `periodicAction`, et puis c'est tout.
 
 Les étapes suivantes sont effectuées :
 
- - Appel de `periodicAction`, à chaque cycle du jeu. (C'est donc bien bourrin).
+ - Appel de `periodicAction`, à chaque cycle du jeu.
  - Si `mustDisplayRemoving` vaut True, on effectue toutes les actions suivantes :
-	 - On remet `mustDisplayRemoving` à False, pour ne pas effectuer cette action plusieurs fois de suite. (Ça me fait penser que si plusieurs touillettes sont supprimées par plusieurs zap différents, dans le même cycle, eh bien un seul affichage sera effectuée. Mais ce genre de cas bien débile n'arrive jamais. Ne serait-ce parce qu'on ne peut pas faire 2 zap dans un même cycle).
-	 - Affichage, dans la console, du nombre total de touillettes supprimés, et du nombre à supprimer pour gagner.
+	 - On remet `mustDisplayRemoving` à False, pour ne pas effectuer cette action plusieurs fois de suite. (Ça me fait penser que si plusieurs touillettes sont supprimées par plusieurs zap différents, dans le même cycle, eh bien un seul affichage sera effectuée. Mais ce genre de cas bien débile n'arrive jamais. Ne serait-ce que parce qu'on ne peut pas faire 2 zap dans un même cycle).
+	 - Affichage, dans la console, du nombre de touillettes supprimés / nombre total à supprimer.
 	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte dans la console, indiquant que le joueur a gagné. 
-	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie, et de ne pas avoir à se faire suer à gérer un événement de quittage du programme.
+	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie. Et moi j'ai pas à me faire suer à gérer un événement de quittage du programme.
 
 ### Le mode Aspro ###
 
