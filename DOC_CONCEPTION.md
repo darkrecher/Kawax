@@ -868,7 +868,7 @@ Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ain
 
 #### Gravity Rift ####
 
-Cette action est réalisé par les fonctions et les classes suivantes :
+Cette action est réalisée par les fonctions et les classes suivantes :
 
  - `ArenaBasic.determineGravityFullSegment()`
  - `GameAspirin.crawlerGravRift`
@@ -910,12 +910,11 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
 	 - Exécution de la fonction `GameAspirin._determineAnyGravity`
 		 - Détermination de gravité normale.
 		 - Si il y en a, l'objet `GameAspirin.gravityMovements` contient des mouvements à faire. La fonction _determineAnyGravity ne fait rien de plus, et renvoie True
-		 - S'il n'y a pas de gravité normale à effectuer, détermination de gravité Rift.
+		 - Sinon, détermination de gravité Rift.
 		 - Si il y en a, l'objet `gravityMovementsRift` contient des mouvements à faire. La fonction `_determineAnyGravity` renvoie True.
 		 - Sinon, la fonction renvoie False.
-	 - (retour à `needStabilization`)
-	 - `needStabilization` renvoie True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, détermination de la présence de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu"). 
+	 - (retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
+	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu"). 
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
@@ -929,9 +928,9 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
 		 - Sinon :
 			 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
-	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal :
-		 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
-		 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
+	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal.
+	 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
+	 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
 #### Suppression des demi-cachets en bas de l'aire de jeu ####
 
@@ -958,28 +957,27 @@ Les actions suivantes sont effectuées :
 
  - Durant la Game Loop, appel de la fonction overridée `GameAspirin.handleGravity`.
 	 - Appel de la fonction `GameAspirin.applyGravity`.
-		 - Application de la gravité normale, si on a précédemment détecté que c'était nécessaire.
-		 - Sinon, application de la gravité "rift", si on a précédemment détecté que c'était nécessaire.
-		 - Sinon, exécution de `ArenaAspirin.removeHalfAsproBottom`
+		 - Application de la gravité normale, ou de la gravité Rift, selon ce qu'il y a à faire.
+		 - Si aucune gravité n'a eu besoin d'être appliquée, exécution de `ArenaAspirin.removeHalfAsproBottom`
 			 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu, et remplace tous les demi-cachets d'aspirine (gauche ou droit) par une `ChipNothing`.
-		 - (retour à `handleGravity`)
-		 - Exécution de `GameAspirin.needStabilization` : 
-			 - Si un demi-cachet vient d'être supprimé, il y a un emplacement vide. `GameAspirin._determineAnyGravity` détectera forcément une gravité normale, ou une gravité rift à effectuer. Elle sera effectué au prochain coup.
-			 - Si il n'y a aucune gravité à appliquer, on appelle la fonction `ArenaAspirin.hasAnyHalfAsproInBottom`
-				 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu. Si on trouve un demi-cachet (gauche ou droit), la fonction renvoie True, sinon, elle renvoie False. Ce demi-cachet sera supprimé au prochain appel de `handleGravity`.
+	 - (retour à `handleGravity`)
+	 - Exécution de `GameAspirin.needStabilization` : 
+		 - Si un demi-cachet vient d'être supprimé, il y a un emplacement vide. `GameAspirin._determineAnyGravity` détectera forcément une gravité normale, ou une gravité rift à effectuer. Elle sera effectuée au prochain coup.
+		 - Si il n'y a aucune gravité à appliquer, on appelle la fonction `ArenaAspirin.hasAnyHalfAsproInBottom`
+			 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu. Si on trouve un demi-cachet (gauche ou droit), la fonction renvoie True, sinon, elle renvoie False. Ce demi-cachet sera supprimé au prochain appel de `handleGravity`.
 
-Donc, la suppression d'un demi-cachet s'effectue sur plusieurs appels à handleGravity, durant des "game loop" successives.
+Donc, la suppression d'un demi-cachet s'effectue sur plusieurs appels à handleGravity, durant plusieurs Game Loop.
 
  - Application de gravité normale, vers le bas, jusqu'à ce qu'un demi-cachet tombe en bas.
  - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). Mais `ArenaAspirin.hasAnyHalfAsproInBottom` renvoie True, donc le jeu reste instable.
  - On n'applique aucune gravité, mais la fonction `ArenaAspirin.removeHalfAsproBottom` effectue quelque chose. Elle supprime le demi-cachet.
- - Détection d'une gravité normale à effectuer, à l'endroit où il y avait le demi-cachet.
+ - Détection d'une gravité à effectuer, à l'endroit où il y avait le demi-cachet.
  - Application de ce mouvement de gravité.
  - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). `ArenaAspirin.hasAnyHalfAsproInBottom` renvoie False. Le jeu est redevenu stable.
 
 Le but de tout ce bazar, c'est de bien décomposer les étapes, en les affichant à chaque fois, afin que le joueur comprenne bien ce qu'il se passe. 
 
-Je n'ai pas testé le cas où il y a en même temps une gravité "rift" et un demi-cachet à supprimer en bas de l'aire de jeu. Normalement, ça plante pas, et toutes les étapes sont bien décomposées. 
+Je n'ai pas testé le cas où il y a à la fois une gravité Rift et un demi-cachet à supprimer en bas. Normalement, ça plante pas, et toutes les étapes sont bien décomposées. 
 
 #### Interactive Touch sur les aspirines ####
 
