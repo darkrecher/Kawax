@@ -148,7 +148,7 @@ Une tile = une case de l'aire de jeu.
 
 Chaque tile contient une instance d'une classe `Chip`.
 
-Une chip = un objet dans l'aire de jeu : une pièce de monnaie, un sucre, un mégot de clope, ...
+Une chip = un objet dans l'aire de jeu : une pièce de monnaie, un sucre, un mégot de clope, ...
 
 Les différents types de chip sont définis en héritant la classe `Chip`. Tout est placé dans le fichier `coins.py`. (Le nom est mal choisi, désolé).
 
@@ -164,7 +164,7 @@ Cette action est effectuée par l'imbrication d'appels de fonction suivant :
 		 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
     - Création de la tile, en plaçant la chip nouvellement créée dedans.
 
-Les probabilités de choix de chip sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
+Les probabilités de choix de chip sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
 
  - Information de génération d'une chip en particulier.
  - Coefficient de probabilité (nombre entier).
@@ -276,7 +276,7 @@ le `Selector` possède une variable interne `selMode`, indiquant le mode de sél
  - SELMODE\_SUPPL\_REMOVE : le joueur retire des tiles dans la sélection additionnelle.
  - SELMODE\_STANDBY : le joueur ne fait rien.
 
-Il reste un dernier mode : SELMODE\_FORBIDDEN, mais je m'en sers jamais. (Je sais plus ce que je voulais faire avec, donc osef).
+Il reste un dernier mode : SELMODE\_FORBIDDEN, mais je m'en sers jamais. (Je sais plus ce que je voulais faire avec, donc osef).
 
 Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, on détermine un mode de sélection "utile" (c'est à dire, différent de SELMODE\_STANDBY). On garde ce mode durant les activations ultérieures.
 
@@ -306,7 +306,7 @@ Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autre
 
 C'est comme lors de la première activation, mais en plus simple, car on a moins de cas possibles.
 
- - en mode SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
+ - en mode SELMODE_PATH : On reprend les 3 premiers cas du chapitre précédent. Si on n'est dans aucun de ces 3 cas, on ne fait rien. Ça arrive lorsque le joueur active une tile non-adjacente au chemin principal (par exemple, le joueur sort le curseur de souris de l'aire de jeu, et y revient, mais par un autre endroit).
 
  - en mode SELMODE\_SUPPL\_ADD : Si la tile activée n'est pas sélectionnée, on l'ajoute à la sélection additionnelle. Si elle est déjà sélectionnée, on ne fait rien.
 
@@ -439,7 +439,7 @@ Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gr
 
 Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un "interactive touch" qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`).
 
-Les interactive touch peuvent modifier l'aire de jeu, c'est pour ça qu'on fait la vérif aussi à ce moment là. Par exemple : on clique sur un aspirine, ça le supprime, donc il faut appliquer la gravité, etc.
+Les interactive touch peuvent modifier l'aire de jeu, c'est pour ça qu'on fait la vérif aussi à ce moment là. Par exemple : on clique sur un aspirine, ça le supprime, donc il faut appliquer la gravité, etc.
 
 Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable.
 
@@ -456,7 +456,7 @@ Sauf que dans les modes de jeu spécifiques (touillettes, aspro), `gravityCounte
 
 #### Application des gravités successives ####
 
-Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
+Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
 
  - Application de la gravité une fois, en utilisant `GameXXX.gravityMovements` qui a été définie précédemment.
 	 - Exécution de `GameXXX.applyGravity`
@@ -529,7 +529,7 @@ La classe `GravityMovements` contient la variable `dicMovement` : un dictionnair
  - clé : une coordonnée primaire
  - valeur : une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
 	 - premier élément : coordonnée secondaire du début du segment. Cela correspond toujours à l'emplacement vide qui permet de démarrer la gravité.
-	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices python qui n'incluent pas le dernier élément).
+	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices python qui n'incluent pas le dernier élément).
 
 Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
 
@@ -594,7 +594,7 @@ On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée 
 
 Plus précisément, on ne spécifie pas de coordonnée primaire/secondaire, mais des directions primaire/secondaire.
 
-Si la direction primaire est LEFT ou RIGHT, la coordonnée primaire est X. Si la direction primaire est UP ou DOWN, la coordonnée primaire est Y. Pareil pour le secondaire.
+Si la direction primaire est LEFT ou RIGHT, la coordonnée primaire est X. Si la direction primaire est UP ou DOWN, la coordonnée primaire est Y. Pareil pour le secondaire.
 
 La coordonnée primaire et la coordonnée secondaire doivent être différente. Sinon c'est n'importe quoi.
 
@@ -656,11 +656,11 @@ Exemple :
 
 Durant le crawling, on peut lire les variables membres suivantes, pour savoir où on est (elles sont pertinentes dès l'appel à `start`, avant même d'avoir exécuté un premier `crawl` ou un premier `jumpOnPrimCoord` :
 
- - `posCur` : objet `pygame.Rect`. Position courante.
+ - `posCur` : objet `pygame.Rect`. Position courante.
  - `posPrev` : objet `pygame.Rect`. Position précédente (si on a exécuté un `jumpOnPrimCoord`, `posPrev` se trouve forcément sur la ligne/colonne précédente.
- - `coP` : entier. coordonnée primaire courante.
- - `coS` : entier. coordonnée secondaire courante.
- - `crawledOnPrimCoord` : booléen. Indique si on vient de changer de coordonnée primaire.
+ - `coP` : entier. coordonnée primaire courante.
+ - `coS` : entier. coordonnée secondaire courante.
+ - `crawledOnPrimCoord` : booléen. Indique si on vient de changer de coordonnée primaire.
  - Les fonctions `crawl` et `jumpOnPrimCoord` renvoient un booléen. Si celui-ci est True, on est sur une position valide. Si il est False, la position courante est invalide, car on est arrivé au bout de l'aire de jeu. Dans ce cas, on ne devrait pas consulter les variables ci-dessus, car elles contiennent des informations non utilisables.
 
 Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés ne sont pas vraiment utilisables. (En fait ça devrait s'arrêter, ou carrément balancer une exception).
@@ -677,7 +677,7 @@ Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode a
 
 Pour une explication détaillée de "comment ça marche dans des directions autres que vers le bas" : voir code. Si j'explique avec du texte, ça va être super long et compliqué. C'est presque plus simple de regarder le code.
 
-"Algorithme : voir code". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis !
+"Algorithme : voir code". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis !
 
 ### Interactive Touch ###
 
@@ -696,7 +696,7 @@ Le fonctionnement général est le suivant :
 		 - Concrètement, `ArenaBasic.stimuliInteractiveTouch` ne fait rien et renvoie toujours False. Mais la fonction peut être overridée dans un mode de jeu spécifique.
 	 - (Retour à la game loop). Si on a récupéré True, exécution des actions suivantes :
 		 - Comme il s'est passé quelque chose dans l'aire de jeu, les tiles sélectionnées par le joueur ne correspondent peut-être plus à rien. Donc on efface la sélection.
-		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
+		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
 		 - Gestion du tutoriel, s'il y en a un (voir plus loin).
 	 - Si besoin, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité, comme pour le zap.
 	 - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaBasic.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `GameXXX`, et pas de `ArenaXXX`. Par contre, pas la peine de renvoyer un booléen pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
@@ -710,8 +710,8 @@ Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étend
 
 Ils sont gérés par les bouts de codes suivants :
 
- - `bigobj.py` : définition de la classe `BigObject`, (un gros objet générique). Et définition de classes héritées de `BigObject`, dotées d'une forme spécifique.
- - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Permet la gestion des gros objets.
+ - `bigobj.py` : définition de la classe `BigObject`, (un gros objet générique). Et définition de classes héritées de `BigObject`, dotées d'une forme spécifique.
+ - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Permet la gestion des gros objets.
  - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Elle sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus.
  - Rien dans `GameBasic` ni dans aucune classe héritée de `GameBasic`. La gestion des gros objets n'a pas d'influence à ce niveau du code. (Ce qui est presque étonnant vu comme tout est plus ou moins spaghettifié).
 
@@ -723,12 +723,12 @@ Le seul cas concret d'utilisation des gros objets est le mode Touillette. (Voir 
 
 #### La classe BigObject ####
 
-Définit le comportement générique des gros objets. Contient les membres suivants : 
+Définit le comportement générique des gros objets. Contient les membres suivants :
 
  - `posTopLeft` : objet `pygame.Rect`. Position, dans l'aire de jeu, du coin supérieur gauche du rectangle englobant dans lequel se trouve actuellement le gros objet.
- - `listPosRel` : liste d'objet `pygame.Rect`. Position relative à `posTopLeft` de chaque tile occupée par le gros objet. Chaque coordonnée X et Y de chaque élément de cette liste doit être positif ou nul.
- - `listPosArena` : position, dans l'aire de jeu, de chaque tile occupée par le gros objet.
- - `imgBigObj` : objet `pygame.Surface`. Image à afficher dans l'aire de jeu, représentant le gros objet.
+ - `listPosRel` : liste d'objet `pygame.Rect`. Position relative à `posTopLeft` de chaque tile occupée par le gros objet. Chaque coordonnée X et Y de chaque élément de cette liste doit être positif ou nul.
+ - `listPosArena` : position, dans l'aire de jeu, de chaque tile occupée par le gros objet.
+ - `imgBigObj` : objet `pygame.Surface`. Image à afficher dans l'aire de jeu, représentant le gros objet.
  - `typeBigObj` : entier. Type du gros objet. Ne sert à rien dans tout le reste du code, grâce à la magie de l'héritage, du duck typing et toutes ces sortes de choses.
 
 La classe contient plusieurs méthodes, permettant de mettre à jour `listPosArena` par rapport à `postTopLeft` et `listPosRel`. (Ces 3 variables membres doivent toujours être cohérentes entre elles).
@@ -828,7 +828,7 @@ Les étapes suivantes sont effectuées :
  - Exécution de `removeBottomTouillette`.
 	 - Vérification s'il y a une ou plusieurs touillettes dans la ligne du bas de l'aire de jeu.
 	 - Si oui, suppression du/des `bigObject` correspondants, dans la liste `listBigObj`.
-	 - Suppression des `ChipBigObject` correspondantes. Truc bizarre : la suppression se fait via des exécutions de `zapOnePos`. Je ne parviens pas à me souvenir pourquoi j'ai pas fait un remplacement direct des chips. Ce serait plus logique.
+	 - Suppression des `ChipBigObject` correspondantes. Truc bizarre : la suppression se fait via des exécutions de `zapOnePos`. Je ne parviens pas à me souvenir pourquoi j'ai pas fait un remplacement direct des chips. Ce serait plus logique.
 	 - renvoi de True si au moins une touillette a été supprimée.
  - (Retour à `handleGravity`)
  - Si on a supprimé une touillette, enregistrement de cette info dans la variable membre `mustDisplayRemoving` (ça servira plus tard).
@@ -851,7 +851,7 @@ Les étapes suivantes sont effectuées :
  - Si `mustDisplayRemoving` vaut True, on effectue toutes les actions suivantes :
 	 - On remet `mustDisplayRemoving` à False, pour ne pas effectuer cette action plusieurs fois de suite. (Ça me fait penser que si plusieurs touillettes sont supprimées par plusieurs zap différents, dans le même cycle, eh bien un seul affichage sera effectuée. Mais ce genre de cas bien débile n'arrive jamais. Ne serait-ce que parce qu'on ne peut pas faire 2 zap dans un même cycle).
 	 - Affichage, dans la console, du nombre de touillettes supprimés / nombre total à supprimer.
-	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte dans la console, indiquant que le joueur a gagné.
+	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte dans la console, indiquant que le joueur a gagné.
 	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie. Et moi j'ai pas à me faire suer à gérer un événement de quittage du programme.
 
 ### Le mode Aspro ###
@@ -883,7 +883,7 @@ La gravité du mode aspro s'effectue en deux temps. Le premier temps est normal,
 
 Par contre, on n'utilise jamais `GameAspirin.crawlerRegen` (bien qu'il soit créé par `GameBasic.initCommonStuff`). Dans `GameAspirin`, on appelle parfois la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`, mais jamais avec `GameAspirin.crawlerRegen` en paramètre.
 
-Le second temps de la gravité est un "Rift", vers la gauche. Contrairement au premier temps, on a besoin de deux crawlers distincts : un pour déterminer les mouvements (`GameAspirin.gravityMovementsRift`) et un autre pour les appliquer (`GameAspirin.crawlerGravRiftApply`). On a également besoin d'une autre instance de `GravityMovements` :  `GameAspirin.gravityMovementsRift`.
+Le second temps de la gravité est un "Rift", vers la gauche. Contrairement au premier temps, on a besoin de deux crawlers distincts : un pour déterminer les mouvements (`GameAspirin.gravityMovementsRift`) et un autre pour les appliquer (`GameAspirin.crawlerGravRiftApply`). On a également besoin d'une autre instance de `GravityMovements` :  `GameAspirin.gravityMovementsRift`.
 
 Le second temps de la gravité provoque des regénérations. Pour cela, on utilise le crawler `GameAspirin.crawlerRegenRift`.
 
@@ -896,7 +896,7 @@ La fonction `ArenaBasic.determineGravityFullSegment` effectue les actions suivan
 	 - Les coordonnées primaires des mouvements de gravité sont : Y = (de 0 à tout en bas de l'aire de jeu).
 	 - La coordonnée secondaire de chaque début de mouvement de gravité est X = (position de la colonne vide)
 	 - La coordonnée secondaire de chaque fin de mouvement de gravité est X = (tout à droite de l'aire de jeu).
- - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération, la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler.
+ - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération, la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler.
  - Je vous laisse réfléchir à tout ça. Si c'était à refaire, j'essayerais de trouver une manière plus simple d'exprimer tous ces mouvements et ces parcours, tout en essayant de rester le plus générique possible.
 
 Pour appliquer les mouvements de Rift, on utilise donc `GameAspirin.gravityMovementsRift`, dûment rempli par l'étape ci-dessus. On utilise aussi le crawler "qui va bien" pour appliquer une gravité vers la gauche. C'est à dire `GameAspirin.crawlerGravRiftApply`.
@@ -914,7 +914,7 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
 		 - Si il y en a, l'objet `gravityMovementsRift` contient des mouvements à faire. La fonction `_determineAnyGravity` renvoie True.
 		 - Sinon, la fonction renvoie False.
 	 - (retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu"). 
+	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu").
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
@@ -925,7 +925,7 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 		 - Application de la gravité normale, s'il y a des choses dans `GameAspirin.gravityMovements`
 		 - Sinon :
 			 - application de la gravité Rift, s'il y a des choses dans `GameAspirin.gravityMovementsRift`.
-			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
+			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
 		 - Sinon :
 			 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
 	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal.
@@ -961,7 +961,7 @@ Les actions suivantes sont effectuées :
 		 - Si aucune gravité n'a eu besoin d'être appliquée, exécution de `ArenaAspirin.removeHalfAsproBottom`
 			 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu, et remplace tous les demi-cachets d'aspirine (gauche ou droit) par une `ChipNothing`.
 	 - (retour à `handleGravity`)
-	 - Exécution de `GameAspirin.needStabilization` : 
+	 - Exécution de `GameAspirin.needStabilization` :
 		 - Si un demi-cachet vient d'être supprimé, il y a un emplacement vide. `GameAspirin._determineAnyGravity` détectera forcément une gravité normale, ou une gravité rift à effectuer. Elle sera effectuée au prochain coup.
 		 - Si il n'y a aucune gravité à appliquer, on appelle la fonction `ArenaAspirin.hasAnyHalfAsproInBottom`
 			 - Utilisation d'un crawler qui parcourt la ligne du bas de l'aire de jeu. Si on trouve un demi-cachet (gauche ou droit), la fonction renvoie True, sinon, elle renvoie False. Ce demi-cachet sera supprimé au prochain appel de `handleGravity`.
@@ -975,9 +975,9 @@ Donc, la suppression d'un demi-cachet s'effectue sur plusieurs appels à handleG
  - Application de ce mouvement de gravité.
  - Aucun mouvement de gravité n'est à effectuer (ni normaux, ni rift). `ArenaAspirin.hasAnyHalfAsproInBottom` renvoie False. Le jeu est redevenu stable.
 
-Le but de tout ce bazar, c'est de bien décomposer les étapes, en les affichant à chaque fois, afin que le joueur comprenne bien ce qu'il se passe. 
+Le but de tout ce bazar, c'est de bien décomposer les étapes, en les affichant à chaque fois, afin que le joueur comprenne bien ce qu'il se passe.
 
-Je n'ai pas testé le cas où il y a à la fois une gravité Rift et un demi-cachet à supprimer en bas. Normalement, ça plante pas, et toutes les étapes sont bien décomposées. 
+Je n'ai pas testé le cas où il y a à la fois une gravité Rift et un demi-cachet à supprimer en bas. Normalement, ça plante pas, et toutes les étapes sont bien décomposées.
 
 #### Interactive Touch sur les aspirines ####
 
@@ -1019,7 +1019,7 @@ Les actions suivantes sont effectuées :
 	 - Si `getAndResetTakenAsproFull` a renvoyé True, on effectue les actions suivantes :
 		 - Augmentation de la variable membre `nbAspirinTaken`.
 		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer).
-		 - Sinon, affichage de texte dans la console indiquant que le joueur a pris un aspirine. Affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin").
+		 - Sinon, affichage de texte dans la console indiquant que le joueur a pris un aspirine. Affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin").
 
 La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True, pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
 
@@ -1120,7 +1120,7 @@ Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F
 
 #### La classe Blinker ####
 
-La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessiné sur les bords. (D'ailleurs, la façon dont l'épaissisation de cadre est effectuée est particulièrement horrible. Je vous laisse regarder le code).
+La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessiné sur les bords. (D'ailleurs, la façon dont l'épaissisation de cadre est effectuée est particulièrement horrible. Je vous laisse regarder le code).
 
 Le but de la classe `Blinker` est de mettre à jour `tutoHighLight` dans les différentes tiles, afin de faire clignoter le cadre.
 
@@ -1141,8 +1141,8 @@ La classe `Blinker` s'utilise de la manière suivante :
 Les 3 tutoriels existants sont définis dans les 3 fichiers suivants :
 
  - `gambtuto.py` : tutoriel du mode de jeu basique.
- - `touytuto.py` : tutoriel du mode Touillette.
- - `asprtuto.py` : tutoriel du mode Aspro.
+ - `touytuto.py` : tutoriel du mode Touillette.
+ - `asprtuto.py` : tutoriel du mode Aspro.
 
 Le fonctionnement d'un mode de jeu doit respecter les mêmes règles, qu'il y ait le tutoriel ou pas. Donc pour amener le joueur à effectuer un zap en particulier, il faut définir en dur, et en cohérence entre elles, les infos suivantes :
 
@@ -1166,11 +1166,11 @@ Il faut définir une liste de chips en dur, à placer dans l'aire de jeu. (posit
 
 Les positions de l'aire de jeu non définies seront remplies avec des chips créées au hasard, comme d'habitude.
 
-En général, cette liste de chips en dur est défine par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
- - Tuple de deux int : positions (X, Y) dans l'aire de jeu à définir en dur.
+En général, cette liste de chips en dur est défine par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
+ - Tuple de deux int : positions (X, Y) dans l'aire de jeu à définir en dur.
  - Tuple d'une string et d'un int :
-	 - "C" : pièce de monnaie. "S" : sucre.
-	 - int : valeur de la pièce. 0 si c'est un sucre.
+	 - "C" : pièce de monnaie. "S" : sucre.
+	 - int : valeur de la pièce. 0 si c'est un sucre.
 
 ##### Liste des consignes de zap #####
 
@@ -1196,7 +1196,7 @@ La classe `GameXXXTuto` doit overrider les fonctions suivantes :
  - `respawnZapValidator` : dans la version de base, cette fonction doit recréer un nouveau `zapValidatorBase`, afin de définir la nouvelle consigne de zap, au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon les infos définies dans `LIST_ZAP_CONSTRAINT`. On utilise le compteur de zap effectuées. Lorsque toutes les consignes de zap définies en dur ont été passées, on peut faire ce qu'on veut, et on crée des consignes au hasard.
 
 
-Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillettes. Le tutoriel ne doit pas être pollué par ce genre de message, car il écrit déjà beaucoup de textes dans la console. L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
+Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillettes. Le tutoriel ne doit pas être pollué par ce genre de message, car il écrit déjà beaucoup de textes dans la console. L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
 
 (C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).
 
