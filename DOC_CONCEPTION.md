@@ -992,7 +992,7 @@ Cette action est réalisée par les fonctions suivantes :
 Les actions suivantes sont effectuées :
 
  - Le joueur clique sur une chip de l'aire de jeu. Cette action est enregistré dans `GameBasic.stimuliStocker.posArenaToInteractTouch`.
- - La game loop appelle la fonction overridée `ArenaAspirin.stimuliInteractiveTouch`
+ - La Game Loop appelle la fonction overridée `ArenaAspirin.stimuliInteractiveTouch`
  	- Exécution de la fonction `ArenaAspirin.mergeAsproHalf`
 	 	- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfLeft`, et que la chip à droite est une `ChipAsproHalfRight`, alors on effectue les actions suivantes :
 		 	- Zap de la tile de droite, afin de remplacer la `ChipAsproHalfRight` par une `ChipNothing`
@@ -1010,34 +1010,34 @@ Les actions suivantes sont effectuées :
 			- `takeAsproFull` renvoie True.
 		- Sinon, il ne s'est rien passé d'intéressant. `takeAsproFull` renvoie False.
 	- Si `mergeAsproHalf` ou `takeAsproFull` a fait quelque chose, `stimuliInteractiveTouch` renvoie True pour le signaler au code extérieur. Sinon, elle renvoie False.
- - Si `stimuliInteractiveTouch` a renvoyé True, la game loop le prend en compte : vérification si l'aire de jeu est "instable", exécution de gravité, lock des stimulis, ... Comme d'habitude.
- - Ensuite, la game loop appelle la fonction overridée `GameAspirin.gameStimuliInteractiveTouch`
+ - Si `stimuliInteractiveTouch` a renvoyé True, la Game Loop le prend en compte : vérification si l'aire de jeu est "instable", exécution de gravité, lock des stimulis, ... Comme d'habitude.
+ - Ensuite, la Game Loop appelle la fonction overridée `GameAspirin.gameStimuliInteractiveTouch`
 	 - Exécution de `ArenaAspirin.getAndResetTakenAsproFull`
 		 - La fonction vérifie la valeur de `hasTakenAsproFull`.
 		 	 - Si elle est True, `getAndResetTakenAsproFull` remet la valeur à False, et renvoie True.
 		 	 - Sinon, il ne s'est rien passé de spécial précédemment. `getAndResetTakenAsproFull` renvoie False.
 	 - Si `getAndResetTakenAsproFull` a renvoyé True, on effectue les actions suivantes :
 		 - Augmentation de la variable membre `nbAspirinTaken`.
-		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer.
-		 - Sinon, affichage de texte dans la console indiquant juste que le joueur a pris un aspirine. Et affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin").
+		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer).
+		 - Sinon, affichage de texte dans la console indiquant que le joueur a pris un aspirine. Affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin").
 
-La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True, pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion de "combien d'aspirine pris" et de "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
+La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True, pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
 
-Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il est pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
+Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il a été pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
 
 #### Création des demi-cachets au début du jeu ####
 
 Cette action est réalisée par la fonction overridée `GameAspirin.populateArena`.
 
-Cette fonction est appelée dans `GameBasic.__init__`, après l'instanciation de l'arena, et après l'avoir rempli de chips au hasard.
+Elle est appelée dans `GameBasic.__init__`, après instanciation de l'arena, et remplissage avec des chips au hasard.
 
-La fonction remplace certaines chips existantes par des demi-cachets d'aspirine droit et gauche. Les positions de remplacement dans l'aire de jeu sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
+La fonction remplace certaines chips existantes par des demi-cachets droit et gauche. Les positions de remplacement sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
 
 #### Génération des demi-cachets (non implémenté) ####
 
 J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir fini, et je n'ai plus la motivation pour me replonger dedans.
 
-J'ai conservé le code correspondant, mais il n'est utilisé nul part. Je ne me souviens plus comment il fonctionne, si il fonctionne réellement comme je l'avais imaginé, et si je l'avais testé.
+J'ai conservé le code correspondant, mais il n'est utilisé nul part. Je ne me souviens plus comment il fonctionne, si il fonctionne réellement comme je l'avais imaginé, et si il a été testé.
 
 Il est entièrement dans le fichier `asproa.py`, signalé entre deux commentaires `Section de code non utilisée` et `Fin de section de code non utilisée`.
 
@@ -1051,11 +1051,11 @@ Il s'agit des fonctions suivantes :
 
 ### Tutoriel ###
 
-Je ne savais pas trop comment ajouter la gestion des tutoriels. Le problème, c'est que le tutoriel doit faire des trucs à plein d'endroits différents (lorsque l'utilisateur veut afficher le texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code gérant le tutoriel, à plein d'endroits différents de pleins de classes (`GameBasic`, `ArenaBasic`, ...). Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe GameXXX de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Mais je n'ai pas trouvé de meilleure solution.
+Je ne savais pas trop comment implémenter la gestion des tutoriels. Le problème, c'est que ça doit faire des trucs à plein de moments différents (lorsque l'utilisateur veut passer au texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code associé au tutoriel, à plein d'endroits différents de pleins de classes. Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe GameXXX de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Pas mieux.
 
-Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'échangent ici et là, entre différents modules. Ou de la programmation orientée aspect (jamais su ce que c'était vraiment que ce truc). Ou encore, le fameux "entité-composant-système". Dans le cas présent, on se retrouve avec, des objets monolithiques rempli de code spaghetti. Faut faire avec.
+Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'échangent ici et là, entre différents modules. Ou de la programmation orientée aspect (jamais vraiment su ce que c'était, ce truc). Ou encore, le fameux "entité-composant-système". Dans le cas présent, on se retrouve avec des objets monolithiques rempli de code spaghetti. Faut faire avec.
 
-Je me permet également d'ajouter que je n'ai jamais su si on doit dire "tutoriels" ou "tutoriaux". Ce sera donc "tutoriels" et ne venez pas m'embêteriels.
+Je me permet également d'ajouter que je n'ai jamais su si on doit dire "tutoriels" ou "tutoriaux". Ce sera donc "tutoriels". Ne venez pas m'embêteriels.
 
 Les tutoriels sont gérés par les fichiers de code suivants :
  - `tutorial.py`
@@ -1183,7 +1183,7 @@ Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` corres
 
 La classe `GameXXXTuto` doit overrider les fonctions suivantes :
 
- - `……init__` :
+ - `__init__` :
 	 - Récupération des variables `LIST_TILE_TO_HARDDEFINE`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT`, pour les stocker en interne.
 	 - créaton d'un `tutorialScheduler`, en lui passant `LIST_TILE_TO_HARDDEFINE`.
 	 - exécution de l'__init__de base, en lui passant le `tutorialScheduler`.
