@@ -1051,9 +1051,9 @@ Il s'agit des fonctions suivantes :
 
 ### Tutoriel ###
 
-Je ne savais pas trop comment implémenter la gestion des tutoriels. Le problème, c'est que ça doit faire des trucs à plein de moments différents (lorsque l'utilisateur veut passer au texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code associé au tutoriel, à plein d'endroits différents de pleins de classes. Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe GameXXX de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Pas mieux.
+Je n'ais pas trop su comment l'implémenter. Le problème, c'est que le tutoriel doit agir à plein de moments différents (lorsque l'utilisateur veut passer au texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code, à plein d'endroits différents de pleins de classes. Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe GameXXX de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Pas mieux.
 
-Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'échangent ici et là, entre différents modules. Ou de la programmation orientée aspect (jamais vraiment su ce que c'était, ce truc). Ou encore, le fameux "entité-composant-système". Dans le cas présent, on se retrouve avec des objets monolithiques rempli de code spaghetti. Faut faire avec.
+Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'échangent ici et là, entre différents modules. Ou de la programmation orientée aspect (jamais vraiment su ce que c'était, ce truc). Ou encore, le fameux "entité-composant-système". Dans le cas présent, on se retrouve avec des objets monolithiques remplis de code spaghetti. Faut faire avec.
 
 Je me permet également d'ajouter que je n'ai jamais su si on doit dire "tutoriels" ou "tutoriaux". Ce sera donc "tutoriels". Ne venez pas m'embêteriels.
 
@@ -1066,38 +1066,38 @@ Les tutoriels sont gérés par les fichiers de code suivants :
 
 #### La classe TutorialStep ####
 
-Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une seule étape dans un tutoriel.
+Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une seule étape d'un tutoriel.
 
 L'info principale d'une étape est le type de condition pour passer à l'étape suivante. Cette info est définie par la variable membre `conditionType`. Elle peut prendre l'une des valeurs suivantes :
 
- - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape d'un tutoriel).
+ - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape).
  - `STEP_COND_STIM` : on passe à l'étape suivante sur le stimuli spécifique "next tutorial step". C'est à dire lorsque le joueur appuie sur la touche "F" pour afficher le texte suivant.
- - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tile spécifique. Lorsqu'on utilise cette condition, il faut définir la variable membre `listPosCond`. Elle doit contenir une liste de `pygame.Rect`, correspondant aux positions à zapper. Le joueur doit zapper exactement cette liste, ni plus ni moins. Mais il n'y a pas de distinction entre les deux types de sélection (chemin principal / sélection additionnelle).
- - `STEP_COND_INTERACTIVE_TOUCH_SUCCESSED` : on passe à l'étape suivante si le joueur effectue un "interactive touch" ayant une influence sur l'aire de jeu. Il n'y a pas de condition sur la position de cet interactive touch. Ça peut être sur n'importe quelle chip de l'aire de jeu, tant que ça fait quelque chose. (D'ailleurs c'est pas top, j'aurais du ajouter une position).
+ - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tiles spécifique. Lorsqu'on utilise cette condition, il faut définir la variable membre `listPosCond`. Elle doit contenir une liste de `pygame.Rect`, correspondant aux positions à zapper. Le joueur doit zapper exactement cette liste, ni plus ni moins. Mais il n'y a pas de distinction entre les sélections "chemin principal" et "sélection additionnelle".
+ - `STEP_COND_INTERACTIVE_TOUCH_SUCCESSED` : on passe à l'étape suivante si le joueur effectue un Interactive Touch qui a une influence sur l'aire de jeu. Cet Interactive Touch peut être fait sur n'importe quelle chip. (D'ailleurs c'est pas top, j'aurais du ajouter une contrainte éventuelle sur la position).
 
 En plus de `conditionType`, un `TutorialStep` contient également les variables membres suivantes :
 
- - `soundId` : None, ou objet `pygame.mixer.Sound`. Le son qui sera joué lorsque cette étape de tutoriel sera atteinte.
- - `listTextDescrip` : liste de string. Texte à écrire dans la console lorsque cette étape sera atteinte. Rappelons que la console est un peu pourrie, et qu'elle est artificiellement limitée à 10 caractères par ligne. `listTextDescrip` est une liste, et non pas une grande string unique, afin de pouvoir indiquer manuellement où sont les sauts de ligne.
+ - `soundId` : None, ou objet `pygame.mixer.Sound`. Le son à jouer lorsque l'étape est atteinte.
+ - `listTextDescrip` : liste de string. Texte à écrire dans la console lorsque l'étape est atteinte. Rappelons que la console est un peu pourrie, et qu'elle est artificiellement limitée à 10 caractères par ligne. `listTextDescrip` est donc une liste, et non pas une grande string unique. Ça permet d'indiquer manuellement où sont les sauts de ligne.
  - `listPosBlink` : None, ou liste de `pygame.Rect`. Liste de positions dans l'aire de jeu à faire blinker. Les tiles apparaissent entourées de bleus clignotant pendant quelques secondes.
- - `tellObjective` : booléen. Indique si il faut afficher l'objectif courant à cette étape de tutoriel. (Le nombre de brouzoufs et de sucres à sélectionner pour le zap)
- -
+ - `tellObjective` : booléen. Indique s'il faut afficher l'objectif courant (nombre de brouzoufs et de sucres) à cette étape de tutoriel.
+
 #### La classe TutorialScheduler ####
 
-Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit pas par elle-même sur des objets externes. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
+Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit pas sur des objets externes par elle-même. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
 
 Cette classe ne sait que renvoyer les informations du `TutorialStep` courant, et recevoir des stimuli externes, afin d'avancer d'une étape, ou pas.
 
-Pour instancier un `TutorialScheduler`, il faut lui passer une `listTutStepsDescrip`. Chaque élément de cette liste est un tuple, contenant les informations nécessaires à la création d'un `TutorialStep`. Un tuple doit contenir, dans cet ordre, les informations suivantes
+Pour instancier un `TutorialScheduler`, il faut lui passer une `listTutStepsDescrip`. Chaque élément de cette liste est un tuple, contenant les informations nécessaires à la création d'un `TutorialStep`. Chaque tuple doit contenir, dans cet ordre, les informations suivantes :
 
  - `conditionType`
  - Une liste de coordonnées (tuple de 2 éléments) dans l'aire de jeu. Sera convertie en liste de `pygame.Rect` pour créer `listPosCond`.
- - None, ou une string. Doit correspondre à un fichier son existant, dont le nom complet est déterminé comme suit : `"sound/" + <string> + ".ogg"`. Permet de créer `soundId`
- - Un dictionnaire, ou une liste de string. Si c'est une liste de string, elle correspond directement à `listTextDescrip`. Si c'est un dictionnaire, la clé doit être un identifiant de langage (`LANGUAGE_FRENCH` ou `LANGUAGE_ENGLISH`, défini dans le fichier `language.py`). On utilise la langue courante, pour récupérer la valeur correspondante dans le dictionnaire, qui est une liste de string. Cette liste sera `listTextDescrip`.
- - Une liste de coordonnées. Sera convertie en liste de `pygame.Rect` pour créer `listPosBlink`.
+ - None, ou une string. Doit correspondre à un fichier son existant, dont le nom complet est déterminé comme suit : `"sound/" + <string> + ".ogg"`. Permet de créer `soundId`.
+ - Un dictionnaire, ou une liste de string. Si c'est une liste de string, elle correspond directement à `listTextDescrip`. Si c'est un dictionnaire, la clé doit être un identifiant de langage défini dans `language.py` (`LANGUAGE_FRENCH` ou `LANGUAGE_ENGLISH`). On utilise la langue courante, pour récupérer la valeur correspondante dans le dictionnaire, qui sera affectée à `listTextDescrip`.
+ - Une liste, éventuellement vide, de coordonnées. Sera convertie en liste de `pygame.Rect` pour créer `listPosBlink`.
  - `tellObjective`
 
-À la création, le `TutorialScheduler` se place à sa première étape de tutoriel.
+À la création, le `TutorialScheduler` se place à sa première étape.
 
 Les fonctions suivantes permettent de récupérer les informations de l'étape courante :
 
@@ -1106,33 +1106,34 @@ Les fonctions suivantes permettent de récupérer les informations de l'étape c
  - getCurrentBlink
  - getCurrentTellObjective
 
-Les fonctions suivantes permettent d'envoyer un stimuli au `TutorialScheduler`. (Elle s'appellent toute `takeStim`, parce qu'elles sont nommées du point de vue de la classe, qui prend le stimuli, et non pas du point de vue du code extérieur. C'est complètement con, oui, je sais). Ces fonctions renvoient toutes un booléen, indiquant si le `TutorialScheduler` a avancé d'une étape ou pas.
+D'autres fonctions permettent d'envoyer un stimuli au `TutorialScheduler`. Leur nom commence tous par `takeStim`, parce qu'elles sont nommées du point de vue de la classe, et non du point de vue du code extérieur. (C'est complètement con, je sais). Ces fonctions renvoient toutes un booléen, indiquant si le `TutorialScheduler` a avancé d'une étape ou pas. Il s'agit des fonctions suivantes :
 
- - takeStimTutoNext : Le joueur a appuyé sur la touche "F". Le `TutorialScheduler` avance d'une étape si l'étape courante a `conditionType == STEP_COND_STIM`.
- - takeStimInteractiveTouch : Le joueur a effectué un interactive touch qui a eu un impact sur l'aire de jeu. Avance d'une étape si `conditionType == STEP_COND_INTERACTIVE_TOUCH_SUCCESSED`.
- - takeStimTileSelected : Le joueur a effectué un zap. On passe en paramètre les positions de tiles sélectionnées. Avance d'une étape Si `conditionType == STEP_COND_SELECT_TILES` et que `listPosCond` est égal à la sélection du joueur. Mais si `listPosCond` ne correspond pas, non seulement on avance pas d'étape, mais en plus, Le `TutorialScheduler` se met dans l'état `totallyFailed`.
+ - `takeStimTutoNext` : Le joueur a appuyé sur la touche "F". Le `TutorialScheduler` avance d'une étape si l'étape courante a `conditionType == STEP_COND_STIM`.
+ - `takeStimInteractiveTouch` : Le joueur a effectué un Interactive Touch avec un impact sur l'aire de jeu. Avance d'une étape si `conditionType == STEP_COND_INTERACTIVE_TOUCH_SUCCESSED`.
+ - `takeStimTileSelected` : Le joueur a effectué un zap. On passe en paramètre les positions des tiles sélectionnées. Avance d'une étape Si `conditionType == STEP_COND_SELECT_TILES` et que `listPosCond` est égal à la sélection du joueur. Mais si `listPosCond` ne correspond pas, non seulement on n'avance pas, mais en plus le `TutorialScheduler` se met dans l'état `totallyFailed`.
 
-Dans l'état `totallyFailed`, on ne peut plus du tout avancer dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, mais il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et totally fail, donc.
+L'état `totallyFailed` ne permet plus du tout d'avancer dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, sauf qu'il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et donc totally fail.
 
-Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqué, du fait de l'état actuel du `TutorialScheduler`.
+Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqués, du fait de l'état actuel du `TutorialScheduler`.
 
 Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
 
-#### la classe Blinker ####
+#### La classe Blinker ####
 
-La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessinée autour de la tile. Comme les cadres orange et rouge de sélection, mais en plus épais. D'ailleurs, la façon dont cette épaissisation est effectuée est particulièrement horrible. Je vous laisse regarder le code de la fonction `draw`.
+La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessiné sur les bords. (D'ailleurs, la façon dont l'épaissisation de cadre est effectuée est particulièrement horrible. Je vous laisse regarder le code).
 
-Le but de la classe `Blinker` est de mettre à jour `tutoHighLight` dans les différentes tile, afin de faire clignoter le carré bleu.
+Le but de la classe `Blinker` est de mettre à jour `tutoHighLight` dans les différentes tiles, afin de faire clignoter le cadre.
 
-Le fichier `blinker.py` définit la classe `Blinker`, ainsi que deux constantes
- - `BLINK_PERIOD` : demi-période (en cycle de jeu) de clignotement des tiles. Les tiles sont allumés durant `BLINK_PERIOD` cycles, puis éteintes durant `BLINK_PERIOD` cycles, et ainsi de suite.
+Le fichier `blinker.py` définit la classe `Blinker`, ainsi que deux constantes :
+
+ - `BLINK_PERIOD` : demi-période (en cycle de jeu) de clignotement des tiles. Les tiles sont allumées durant `BLINK_PERIOD` cycles, puis éteintes durant `BLINK_PERIOD` cycles, et ainsi de suite.
  - `BLINK_DURATION` : temps total du blink, en cycle de jeu. Le clignotement des tiles s'arrête automatiquement au bout d'un certain temps.
 
 La classe `Blinker` s'utilise de la manière suivante :
 
- - instanciation, en lui passant en paramètre l'aire de jeu dans laquelle se trouve les tiles qu'elle devra blinker.
- - exécution de `startBlink`, en passant en paramètre le liste des positions de tile à faire blinker.
- - Pour que le blink soit effectué, il faut exécuter périodiquement, une fois par cycle de jeu, la fonction `advanceTimerAndHandle`. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la game loop. Après appel de cette `advanceTimerAndHandle`, il faut redessiner l'aire de jeu.
+ - Instanciation, en lui passant en paramètre l'aire de jeu dans laquelle se trouve les tiles qu'elle devra blinker.
+ - Exécution de `startBlink`, en passant en paramètre la liste des positions à faire blinker.
+ - Pour que le blink soit effectué, il faut exécuter périodiquement, une fois par cycle de jeu, la fonction `advanceTimerAndHandle`. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la Game Loop. Après appel de cette fonction, il faut redessiner l'aire de jeu.
  - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. La variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où.
 
 #### Création d'un tutoriel à partir d'un mode de jeu ####
@@ -1203,7 +1204,7 @@ Le tutoriel du mode Touillette override une fonction supplémentaire : `periodi
 
 Le `TutorialScheduler` est principalement utilisé par `GameBasic`, mais pas que.
 
-##### fonction GameBasic.showCurrentTutoStep #####
+##### Fonction GameBasic.showCurrentTutoStep #####
 
 Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape de tutoriel. Elle effectue toutes les actions relative à l'étape courante :
 
@@ -1212,7 +1213,7 @@ Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape de tut
  - Démarrage du blink, si il y a des tiles à blinker.
  - Lock des stimulis, si c'est nécessaire pour l'étape courante.
 
-##### réalisation d'un zap #####
+##### Réalisation d'un zap #####
 
 Dans la game loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
 
@@ -1232,7 +1233,7 @@ Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on
 
 Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape de tutoriel courante indique qu'il faut faire des blinks. Ça permet au joueur de revoir les blinks, si il les a ratés la première fois.
 
-##### interactive touch #####
+##### Interactive touch #####
 
 Durant la game loop, lorsqu'un Interactive Touch est réussi, le stimuli correspondant est envoyé, via la fonction `tutorialScheduler.takeStimInteractiveTouch`. Si la fonction renvoie True, on a avancé d'une étape, donc on exécute `GameBasic.showCurrentTutoStep`. On ne réaffiche pas la description de consigne du zap. Elle n'est pas censée avoir changé suite à un Interactive Touch.
 
@@ -1248,7 +1249,7 @@ Au début du jeu (début de la fonction `playOneGame`), on affiche la première 
 
 Ensuite, il faut afficher la consigne de zap, à condition que le `TutorialScheduler` l'autorise.
 
-##### stimReblink #####
+##### Reblink #####
 
 Fonctionnalité très peu documentée parce qu'on s'en fout (le reclignotement des tiles est déjà géré quand on appuie sur "F" et qu'on est sur une étape `STEP_COND_SELECT_TILES`.
 
