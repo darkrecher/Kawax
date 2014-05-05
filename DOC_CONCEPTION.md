@@ -1144,59 +1144,61 @@ Les 3 tutoriels existants sont définis dans les 3 fichiers suivants :
  - `touytuto.py` : tutoriel du mode Touillette.
  - `asprtuto.py` : tutoriel du mode Aspro.
 
-Le fonctionnement d'un mode de jeu doit respecter les mêmes règles, qu'il y ait le tutoriel ou pas. Donc pour amener le joueur à effectuer un zap en particulier, il faut définir en dur, et en cohérence entre elles, les infos suivantes :
+Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc pour amener le joueur à effectuer des étapes prédéfines (en particulier les zaps), il faut définir en dur, et en cohérence entre elles, les infos suivantes :
 
  - Les positions à zapper
  - Les chips de ces positions
- - Les consignes de zap (nombres exacts de brouzoufs et de sucre à atteindre).
+ - Les consignes de zap (quantités de brouzoufs et de sucre à atteindre).
 
-Les morceaux de code à implémenter pour créer un mode tutoriel sont donc les suivants.
+Nous allons maintenant voir les morceaux de code à implémenter pour créer un mode tutoriel. (C'est nul de dire "nous allons voir", mais je sais pas comment le dire autrement).
 
 ##### Étapes du tutoriel #####
 
 Définir la liste d'étape `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite dans le chapitre précédent. (voir avant).
 
-Certaines étapes de `listTutStepsDescrip` définissent des zap à effectuer, sur des listes de positions définies en dur (`listPosCond`). La bienséance veut que pour ces étapes, on indique également des positions à blinker (`listPosBlink`), avec `listPosCond == listPosBlink`. Il n'y a aucune contrainte sur ce point, mais pour ne pas perdre le joueur, c'est mieux de faire comme ça.
+Certaines étapes de `listTutStepsDescrip` définissent des zap à effectuer, sur des listes de positions définies en dur (`listPosCond`). La bienséance veut qu'on fasse blinker ces positions, pour les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut faire ce qu'on veut si on a envie d'embrouiller le joueur.  
 
-La dernière étape de `listTutStepsDescrip` devrait également avoir `conditionType == STEP_COND_NEVER`. Mais une fois de plus, il n'y a aucune contrainte réelle là-dessus.
+La dernière étape de `listTutStepsDescrip` doit avoir `conditionType == STEP_COND_NEVER`. Aucune contrainte réelle sur ce point. Mais je ne sais pas ce que ça fait si on ne la respecte pas, je n'ai pas testé.
 
 ##### Aire de jeu #####
 
-Il faut définir une liste de chips en dur, à placer dans l'aire de jeu. (positions en dur, valeur et type de chips en dur aussi). Le but est que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips en dur. Il faut évidemment tenir compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas.
+Afin que le tutoriel soit réussissable, il faut que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips prédéfinis. En tenant compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas. 
 
-Les positions de l'aire de jeu non définies seront remplies avec des chips créées au hasard, comme d'habitude.
+Bref, il est donc nécessaire de définir une liste de chips en dur (position dans l'aire de jeu, type et valeur en brouzoufs). Les chips non définies seront créées au hasard, comme d'habitude.
 
-En général, cette liste de chips en dur est défine par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
- - Tuple de deux int : positions (X, Y) dans l'aire de jeu à définir en dur.
+En général, les chips en dur sont définies par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
+ - Tuple de deux int : positions (X, Y) dans l'aire de jeu.
  - Tuple d'une string et d'un int :
 	 - "C" : pièce de monnaie. "S" : sucre.
-	 - int : valeur de la pièce. 0 si c'est un sucre.
+	 - int : valeur de la pièce. (0 si c'est un sucre).
 
 ##### Liste des consignes de zap #####
 
-Chaque zap de tutoriel doit avoir une contrainte définie en dur, qui correspond aux chips définies en dur aussi. Ça fait beaucoup de dur. Bref. On définit ça dans la `LIST_ZAP_CONSTRAINT`. Chaque élément de cette liste est un tuple, qui contient les infos suivantes :
+Chaque zap de tutoriel doit avoir une contrainte définie en dur, correspondant à des chips définies en dur aussi. (Ça fait beaucoup de dur). On utilise généralement une variable `LIST_ZAP_CONSTRAINT`. Chaque élément de cette liste est un tuple de deux éléments :
+
  - int. Total de de brouzoufs à sélectionner.
  - int. Nombre de sucre à sélectionner.
 
 ##### Implémentation de tout ce bazar #####
 
-Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` correspondant au mode de jeu que l'on veut tutorialiser. C'est ce qui est fait dans les 3 fichiers de code précédemment mentionnées.
+Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` que l'on veut tutorialiser. C'est ce qui est fait avec les 3 fichiers de code précédemment mentionnées.
 
 La classe `GameXXXTuto` doit overrider les fonctions suivantes :
 
  - `__init__` :
-	 - Récupération des variables `LIST_TILE_TO_HARDDEFINE`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT`, pour les stocker en interne.
-	 - créaton d'un `tutorialScheduler`, en lui passant `LIST_TILE_TO_HARDDEFINE`.
-	 - exécution de l'__init__de base, en lui passant le `tutorialScheduler`.
-	 - création d'un `blinker`
-	 - initialisation d'une variable qui comptera le nombre de zap effectués.
+	 - Récupération des variables `LIST_TUT_STEP_DESCRIP`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT`, pour les stocker en interne.
+	 - Créaton d'un `tutorialScheduler`, en lui passant `LIST_TUT_STEP_DESCRIP`.
+	 - Exécution de l'`__init__` de base, en lui passant le `tutorialScheduler`.
+	 - Création d'un `Blinker`
+	 - Initialisation d'une variable qui comptera le nombre de zap effectués.
 
- - `populateArena` : placement des chips en dur, selon les infos définies au départ dans `LIST_TILE_TO_HARDDEFINE`.
+ - `populateArena` : 
+	 - Placement des chips en dur, selon les infos définies au départ dans `LIST_TILE_TO_HARDDEFINE`.
 
- - `respawnZapValidator` : dans la version de base, cette fonction doit recréer un nouveau `zapValidatorBase`, afin de définir la nouvelle consigne de zap, au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon les infos définies dans `LIST_ZAP_CONSTRAINT`. On utilise le compteur de zap effectuées. Lorsque toutes les consignes de zap définies en dur ont été passées, on peut faire ce qu'on veut, et on crée des consignes au hasard.
+ - `respawnZapValidator` : 
+	 - Dans les versions sans tuto, cette fonction doit recréer, après chaque zap, un nouveau `zapValidatorBase` à partir de données choisies au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon les infos définies dans `LIST_ZAP_CONSTRAINT`. On utilise le compteur de zap. Lorsque toutes les consignes de zap définies en dur ont été passées, on peut faire ce qu'on veut. Pour ne pas s'embêter, on revient à des créations avec du hasard.
 
-
-Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillettes. Le tutoriel ne doit pas être pollué par ce genre de message, car il écrit déjà beaucoup de textes dans la console. L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
+Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillette. Cependant, lorsqu'il y a un tutoriel, il ne faut pas polluer la console avec ce genre de message. (Il y a déjà suffisamment de blablabla). L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
 
 (C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).
 
