@@ -1208,42 +1208,42 @@ Le `TutorialScheduler` est principalement utilisé par `GameBasic`, mais pas que
 
 ##### Fonction GameBasic.showCurrentTutoStep #####
 
-Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape de tutoriel. Elle effectue toutes les actions relative à l'étape courante :
+Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape. Elle effectue toutes les actions relative à l'étape courante :
 
  - Affichage de `listTextDescrip` dans la console.
- - Émission du son, si il y en a (avec ma superbe voix qui raconte n'importe quoi).
+ - Émission du son, si il y en a (la plupart viennent de ma superbe voix qui raconte n'importe quoi).
  - Démarrage du blink, si il y a des tiles à blinker.
- - Lock des stimulis, si c'est nécessaire pour l'étape courante.
+ - Lock des stimulis, si nécessaire.
 
 ##### Réalisation d'un zap #####
 
 Dans la game loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
 
-Dans la fonction `GameBasic.tryToZap`, après avoir vérifié que le zap a réussi, on exécute la fonction `TutorialScheduler.takeStimTileSelected`, afin d'envoyer le stimuli de réalisation d'un zap. Si ça fait avancer d'une étape, on exécutel a fonction `showCurrentTutoStep`.
+Dans la fonction `GameBasic.tryToZap`, après avoir vérifié que le zap a réussi, on exécute la fonction `TutorialScheduler.takeStimTileSelected`, afin d'envoyer le stimuli de réalisation d'un zap. Si ça fait avancer d'une étape, on exécute la fonction `showCurrentTutoStep`.
 
 Si le `TutorialScheduler` est tombé dans l'état `totallyFailed`, on affiche le texte de fail.
 
-Lorsqu'un zap est réussi, il faut afficher la description de la consigne du zap (qui vient de changer). Mais on ne le fait que si le `TutorialScheduler` l'autorise (le `tellObjective` de l'étape courante doit être à True).
+Lorsqu'un zap est réussi, il faut afficher la description de la consigne du zap, car elle vient de changer. Mais on ne le fait que si le `TutorialScheduler` l'autorise (le `tellObjective` de l'étape courante doit être à True).
 
 ##### Appui sur la touche "F" #####
 
-Lorsque le joueur appuie sur "F", le `stimuliStocker` met à True sa variable `stimTutoNext`. Lorsque la game loop le détecte, elle exécute la fonction `GameBasic.execStimTutoNext`.
+Lorsque le joueur appuie sur "F", le `stimuliStocker` met à True sa variable `stimTutoNext`. Lorsque la Game Loop le détecte, elle exécute la fonction `GameBasic.execStimTutoNext`.
 
 Le stimuli est directement transféré au tutoriel, par un appel à la fonction `tutorialScheduler.takeStimTutoNext`.
 
-Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on exécute la foncton `GameBasic.showCurrentTutoStep`. Puis, on affiche la description de la consigne actuelle du zap, si le `TutorialScheduler` l'autorise.
+Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on exécute la foncton `GameBasic.showCurrentTutoStep`. Puis, on affiche la consigne actuelle du zap, si le `TutorialScheduler` l'autorise.
 
-Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape de tutoriel courante indique qu'il faut faire des blinks. Ça permet au joueur de revoir les blinks, si il les a ratés la première fois.
+Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape courante indique qu'il y en a à faire. Ça permet au joueur de revoir les blinks, s'il les a ratés la première fois.
 
 ##### Interactive touch #####
 
-Durant la game loop, lorsqu'un Interactive Touch est réussi, le stimuli correspondant est envoyé, via la fonction `tutorialScheduler.takeStimInteractiveTouch`. Si la fonction renvoie True, on a avancé d'une étape, donc on exécute `GameBasic.showCurrentTutoStep`. On ne réaffiche pas la description de consigne du zap. Elle n'est pas censée avoir changé suite à un Interactive Touch.
+Durant la Game Loop, lorsqu'un Interactive Touch est réussi, le stimuli correspondant est envoyé, via la fonction `tutorialScheduler.takeStimInteractiveTouch`. Si la fonction renvoie True, on a avancé d'une étape, donc on exécute `GameBasic.showCurrentTutoStep`. On ne réaffiche pas la description de consigne du zap. Elle n'est pas censée avoir changé suite à un Interactive Touch.
 
 ##### handleGravity #####
 
-Lorsque la fonction `GameBasic.handleGravity` s'aperçoit que le jeu est devenu stable, elle est censée délocker les stimulis. Mais avant, elle vérifie (via un appel à `mustLockGameStimuli`) que le `tutorialScheduler` n'a pas demandé un lock des stimulis
+Lorsque la fonction `GameBasic.handleGravity` s'aperçoit que le jeu est devenu stable, elle est censée délocker les stimulis. Mais avant, elle vérifie (via un appel à `mustLockGameStimuli`) que le `tutorialScheduler` ne souhaite pas conserver un lock.
 
-On retrouve ce même code dans `GameAspirin.handleGravity`, car une partie du code de `GameBasic` est vilainement copié-collé dans `GameAspirin`.
+On retrouve ce même code dans `GameAspirin.handleGravity`. Une partie du code de `GameBasic` est vilainement copié-collé dans `GameAspirin`.
 
 ##### Début du jeu #####
 
@@ -1255,18 +1255,18 @@ Ensuite, il faut afficher la consigne de zap, à condition que le `TutorialSched
 
 Fonctionnalité très peu documentée parce qu'on s'en fout (le reclignotement des tiles est déjà géré quand on appuie sur "F" et qu'on est sur une étape `STEP_COND_SELECT_TILES`.
 
-Quand le joueur appuie sur "G", le `stimuliStocker` active le stimuli `stimReblink`, la game loop récupère auprès du `TutorialScheduler` la liste de tile à blinker, et il redémarre le blink, en exécutant la fonction `blinker.startBlink`. Et ça sert pas à grand chose.
+Quand le joueur appuie sur "G", le `stimuliStocker` active le stimuli `stimReblink`, la Game Loop récupère la liste de blinks courante auprès du `TutorialScheduler`, et il redémarre le blink, en exécutant `blinker.startBlink`. Et ça sert pas à grand chose.
 
 ##### ManualInGame #####
 
 La classe `ManualInGame`, qui affiche les touches de fonction à l'écran, a besoin du `TutorialScheduler`. On lui passe en paramètre dans la fonction `__init__`.
 
-En réalité, le `ManualInGame` n'appelle aucune fonction du `TutorialScheduler`. Il teste juste si celui-ci est défini (différent de None). Si oui, il affiche deux chaînes de caractère de manuel en plus. Il s'agit des chaînes suivantes :
+En réalité, cette classe n'appelle aucune fonction du `TutorialScheduler`. Il teste juste si celui-ci est défini (différent de None). Si oui, il affiche deux chaînes de caractère de manuel en plus. Il s'agit des chaînes suivantes :
 
  - u"tutoriel :"
  - u"   F : message suivant / refaire clignoter",
 
-Elles ne sont donc affichés que si le mode de jeu est un mode à tutoriel.
+Elles ne sont donc affichées que si le mode de jeu est un mode à tutoriel.
 
 ##### GameAspirin.gameStimuliInteractiveTouch #####
 
