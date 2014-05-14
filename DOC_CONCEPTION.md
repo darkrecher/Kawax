@@ -6,7 +6,7 @@ J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et cont
 
 Vous constaterez également que le PEP8 a été foulé aux pieds, écartelé, équarri, et humilié en place publique par des petits enfants jetant des cailloux. C'est la faute à l'entreprise dans laquelle je bossais à l'époque, qui m'a appris à coder en python avec les conventions de nommage du C++. Il va falloir faire avec !
 
-Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse de l'un des exercices, en expliquant pourquoi il fallait choisir cette solution, quelles conditions génériques il fallait respecter dans ce choix, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
+Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus jeunes). J'avais énormément détaillé la réponse d'un des exercices, en expliquant pourquoi il fallait choisir cette solution, quelles conditions génériques celle-ci devait respecter, etc. Lorsque le prof a corrigé le contrôle, il a dit que "certains d'entre nous en avaient mis une tartine et qu'on n'y comprenait rien".
 
 Ceci est ma vengeance.
 
@@ -44,13 +44,13 @@ Affichage du menu principal
 
 Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
-Instanciaton de la classe GameXXX correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée de `GameBasic`. Elles commencent toutes par "Game". **Dans la suite de cette documentation, ces classes seront désignées par `GameXXX`.**
+Instanciaton de la classe correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
 
 ### Initialisation des trucs dans GameXXX ###
 
 fonction `GameXXX.__init__` :
 
-On va considérer que le mode de jeu actuel est sans tutoriel. (Les détails concernant les tutoriaux seront expliqués plus loin).
+On va considérer que le mode de jeu actuel est sans tutoriel.  [Voir par ici pour les détails concernant les tutoriaux](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
 
 Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par la fonction interne `initCommonStuff`
 
