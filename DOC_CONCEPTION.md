@@ -14,7 +14,7 @@ Ceci est ma vengeance.
 
 ![diagramme classe kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/diagramme_pas_UML.png)
 
-Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à m'en servir, c'était à l'école, et ensuite je l'ai oubliée parce que j'étais bourré.
+Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à m'en servir, c'était à l'école, et ensuite j'ai tout oublié parce que j'étais bourré.
 
 Les flèches vertes indiquent des liens d'héritage.
 
@@ -26,25 +26,25 @@ Les deux flèches en rond indiquent que la classe `GravityMovements` est créé 
 
 ### Initialisation générale, choix du mode de jeu ###
 
-Début du code de `main.py`
+ - Début du code de `main.py`
 
-Import de `common.py`
+ - Import de `common.py`
 
-Initialisation de la librairie pygame au début du fichier common.py. `pygame.init()`
+ - Initialisation de la librairie pygame au début du fichier common.py. `pygame.init()`
 
-Import de `language.py`
+ - Import de `language.py`
 
-Initialisation de la langue en cours. (français)
+ - Initialisation de la langue en cours. (français)
 
-Retour à `main.py`
+ - Retour à `main.py`
 
-Création de la fenêtre du jeu. (640x480 pixels)
+ - Création de la fenêtre du jeu. (640x480 pixels)
 
-Affichage du menu principal
+ - Affichage du menu principal
 
-Attente d'un appui de touche correspondant au choix d'un mode de jeu
+ - Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
-Instanciaton de la classe correspondant au mode de jeu choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
+ - Instanciaton de la classe correspondant au mode choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
 
 ### Initialisation des trucs dans GameXXX ###
 
@@ -56,25 +56,25 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Récupération de la surface (objet pygame représentant une zone de dessin) dans laquelle doit se dessiner le jeu. Cette surface correspond à la fenêtre affichée à l'écran.
 
- - Création d'un objet `Console` : affichage de texte sur le côté droit de l'écran.
+ - Création d'un objet `Console` : permet l'affichage de texte sur le côté droit de l'écran.
 
  - Premier dessin de la console à l'écran.
 
- - Création d'un `ManualnGame` : affichage des touches du jeu, en bas à gauche de l'écran.
+ - Création d'un `ManualnGame` : permet l'affichage des touches du jeu, en bas à gauche de l'écran.
 
  - Premier (et unique) dessin du manuel à l'écran.
 
- - Création d'un `StimuliStockerForGame` : récupération de tous les événements souris et clavier, traduction en "stimulis" de jeu.
+ - Création d'un `StimuliStockerForGame` : effectue la récupération de tous les événements souris et clavier, et la traduction en "stimulis" de jeu.
 
  - Création d'un `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS.
 
- - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". Voir plus loin.
+ - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". [Voir plus loin] (https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
 
- - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par `ArenaXXX`.**
+ - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par le terme générique `ArenaXXX`.**
 
  - Création d'un Selector : gère les différents mode de sélection des cases de l'aire de jeu (chemin principal, sélections additionnelles).
 
- - Remplissage au hasard de l'aire de jeu : pièces, sucres, aspirine, touillettes, ...
+ - Remplissage plus ou moins au hasard de l'aire de jeu : pièces, sucres, aspirine, touillettes, ...
 
  - Premier dessin de l'aire de jeu.
 
@@ -90,17 +90,17 @@ Cette fonction commence par faire quelques bidouilleries d'init :
 
  - Affichage de la première étape du tutoriel, si il y a un tutoriel,
 
- - ou sinon, affichage de l'objectif à atteindre, en terme de brouzouf et de nombre de sucres. (désolé pour le "en terme de", ici , il me semble réellement approprié). Le texte d'objectif à afficher est déterminé par le ZapValidator.
+ - ou sinon, affichage de l'objectif à atteindre, en terme de brouzouf et de nombre de sucres. (désolé pour le "en terme de", ici , il me semble réellement approprié). Le texte d'objectif à afficher est déterminé par le `ZapValidatorBase`.
 
-Puis, la fonction `GameXXX.playOneGame()` entre dans la "game loop", la boucle principale qui fait fonctionner le jeu.
+Pour finir, la fonction `GameXXX.playOneGame()` entre dans la Game Loop, c'est à dire la boucle principale qui fait fonctionner le jeu.
 
 ### Game Loop ###
 
-Le déroulement global de la game loop est le suivant :
+Le déroulement global de la Game Loop est le suivant :
 
  - Auto-ralentissage pour qu'elle ne s'exécute au maximum que 60 frames par secondes.
 
- - Récupération des appuis de touches, mouvements de souris, appui/relâchage de bouton de souris par le `stimuliStocker` (instance de `StimuliStockerForGame`). Conversion de ces événements en "stimulis". ("Un stimuli", "des stimulis", et que les latinistes distingués ne viennent pas me faire chier).
+ - Récupération des appuis de touches, mouvements de souris, et clics de boutons de souris par le `stimuliStocker` (instance de `StimuliStockerForGame`). Conversion de ces événements en "stimulis". (Je dis : "un stimuli, des stimulis", et que les latinistes distingués ne viennent pas me faire chier).
 
  - Récupération de ces stimulis par la game loop, actions sur divers membres de la classe `GameXXX` selon ces stimulis.
 
