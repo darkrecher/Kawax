@@ -44,7 +44,7 @@ Les deux flèches en rond indiquent que la classe `GravityMovements` est créé 
 
  - Attente d'un appui de touche correspondant au choix d'un mode de jeu
 
- - Instanciaton de la classe correspondant au mode choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
+ - Instanciation de la classe correspondant au mode choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
 
 ### Initialisation des trucs dans GameXXX ###
 
@@ -68,9 +68,9 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Création d'un `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS.
 
- - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". [Voir plus loin] (https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
+ - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
 
- - Instanciaton d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par le terme générique `ArenaXXX`.**
+ - Instanciation d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par le terme générique `ArenaXXX`.**
 
  - Création d'un Selector : gère les différents mode de sélection des cases de l'aire de jeu (chemin principal, sélections additionnelles).
 
@@ -88,9 +88,9 @@ Cette fonction commence par faire quelques bidouilleries d'init :
 
  - Création d'un `ZapValidatorBase`, afin de définir une première valeur de brouzouf et de sucre que le joueur doit obtenir.
 
- - Affichage de la première étape du tutoriel, si il y a un tutoriel,
+ - Affichage de la première étape du tutoriel, s'il y en a un,
 
- - ou sinon, affichage de l'objectif à atteindre, en terme de brouzouf et de nombre de sucres. (désolé pour le "en terme de", ici , il me semble réellement approprié). Le texte d'objectif à afficher est déterminé par le `ZapValidatorBase`.
+ - ou sinon, affichage de l'objectif à atteindre, (brouzouf et nombre de sucres). Le texte d'objectif à afficher est déterminé par le `ZapValidatorBase`.
 
 Pour finir, la fonction `GameXXX.playOneGame()` entre dans la Game Loop, c'est à dire la boucle principale qui fait fonctionner le jeu.
 
@@ -102,17 +102,21 @@ Le déroulement global de la Game Loop est le suivant :
 
  - Récupération des appuis de touches, mouvements de souris, et clics de boutons de souris par le `stimuliStocker` (instance de `StimuliStockerForGame`). Conversion de ces événements en "stimulis". (Je dis : "un stimuli, des stimulis", et que les latinistes distingués ne viennent pas me faire chier).
 
- - Récupération de ces stimulis par la game loop, actions sur divers membres de la classe `GameXXX` selon ces stimulis.
+ - Récupération de ces stimulis par la Game Loop. En fonction de ceux qui sont activés : actions sur divers membres de la classe `GameXXX`.
 
- - Application de la gravité (certains éléments de l'aire de jeu descendront d'une case), et regénération de tiles (ajout de nouvelles pièces/sucres/autres dans les espaces laissés vides par la gravité). Cette action n'est exécutée qui s'il y a de la gravité à appliquer. De plus, elle n'est exécutée que toutes les 18 frames, afin de laisser le temps au joueur de voir ce qu'il se passe.
+ - Application de la gravité, si nécessaire. Certains éléments de l'aire de jeu descendent d'une case.
 
- - Exécution de la fonction `periodicAction` : ne fait rien dans le mode GameBasic. Les autres modes de jeu peuvent y rajouter des choses.
+ - Regénération de tiles, si nécessaire. De nouvelles pièces/sucres/autres sont ajoutés dans les espaces laissés vides par la gravité.
 
- - Mises à jour du clignotement des tiles, si il y en a à faire clignoter. Cela n'arrive que durant les tutoriels. Voir plus loin.
+ - Ces deux actions (gravité et regénération) ne sont éventuellement exécutées que toutes les 18 frames, afin de laisser le temps au joueur de voir ce qu'il se passe.
 
- - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je l'ai pas fait.
+ - Exécution de `periodicAction`. Cette fonction ne fait rien dans le mode `GameBasic`, mais les autres modes de jeu peuvent y rajouter des choses.
 
- - Rafraîchissement complet de l'écran. C'est bourrin aussi.
+ - Mises à jour du clignotement des tiles, si nécessaire. Cela n'arrive que durant les tutoriels. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
+
+ - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je ne l'ai pas fait.
+
+ - Rafraîchissement complet de l'écran. (Bourrin aussi).
 
 ## Description détaillée des aspects du jeu ##
 
@@ -124,17 +128,17 @@ L'initialisation est organisée de manière un peu bordelique. Les classes `Game
 
 `__init__` doit systématiquement appeler `initCommonStuff` dès le début. Le code qui vient ensuite peut varier d'un héritage à l'autre.
 
-J'ai fait comme ça pour pouvoir factoriser du code. Sauf que ça a pas été si efficace que ça, parce qu'à la fin des fonctions `GameXXX.__init`, on retrouve très souvent le même mini-bloc de code :
+J'ai fait comme ça pour pouvoir factoriser du code. Sauf que ça n'a pas vraiment été efficace, puisqu'à la fin des fonctions `GameXXX.__init`, on retrouve très souvent ce même mini-bloc :
 
- - `self.populateArena()`
- - `self.arena.draw()`
- - `pygame.display.flip()`
+    self.populateArena()
+    self.arena.draw()
+    pygame.display.flip()
 
-Mais pas toujours, et pas forcément exactement comme ça. Ça me tirlapines de voir ça se répéter. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, parce que ça finit par être dangereux.
+Mais pas toujours, et pas forcément exactement sous cette forme. Ça me tirlapines de voir des répétitions de code. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, ça finit par être dangereux.
 
 Pour les classes `ArenaXXX`, j'ai utilisé la même idée.
 
-Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer une bière de trop. J'ai créé une fonction vide `ArenaBasic.start`, qu'on peut overrider dans les `ArenaXXX` héritées. Ça fait double emploi avec l'idée précédente.
+Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer une bière de trop. J'ai créé une fonction vide `ArenaBasic.start`, qu'on peut overrider dans les `ArenaXXX` héritées. Ça fait double emploi avec l'overridage de `__init__`.
 
 Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
