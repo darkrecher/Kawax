@@ -134,7 +134,7 @@ J'ai fait comme ça pour pouvoir factoriser du code. Sauf que ça n'a pas vraime
     self.arena.draw()
     pygame.display.flip()
 
-Mais pas toujours, et pas forcément exactement sous cette forme. Ça me tirlapines de voir des répétitions de code. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, ça finit par être dangereux.
+Mais pas toujours, et pas forcément exactement sous cette forme. Ça me tirlapine de voir des répétitions de code. Il faut que je dise à mon cerveau d'arrêter de vouloir systématiquement factoriser, ça finit par être dangereux.
 
 Pour les classes `ArenaXXX`, j'ai utilisé la même idée.
 
@@ -142,40 +142,42 @@ Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer 
 
 Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
-### Initialisation de l'aire de jeu ###
+### Structure d'une Arena ###
 
-lors de l'initialisation de `ArenaXXX` : création de `ArenaXXX.randomChipGenInit`. Il s'agit d'une instance de `RandomChipGenerator`.
+Les classes `ArenaXXX` possèdent une variable membre `matrixTile`. Il s'agit d'un tableau en 2D contenant des instances de `Tile` (une classe définie dans le fichier `tile.py`).
 
-création de `ArenaXXX.matrixTile` : un tableau en 2D d'instance de `Tile` (classe définie dans le fichier `tile.py`).
-
-Une tile = une case de l'aire de jeu.
+Une `Tile` = une case de l'aire de jeu.
 
 Chaque tile contient une instance d'une classe `Chip`.
 
-Une chip = un objet dans l'aire de jeu : une pièce de monnaie, un sucre, un mégot de clope, ...
+Une `Chip` = un objet dans l'aire de jeu : pièce de monnaie, sucre, mégot de clope, ...
 
 Les différents types de chip sont définis en héritant la classe `Chip`. Tout est placé dans le fichier `coins.py`. (Le nom est mal choisi, désolé).
 
 Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la gravité), on déplace la chip, mais pas la tile. La tile ne change jamais, et on n'en crée pas de nouvelle durant une partie.
 
-L'initialisation de l'aire de jeu consiste à remplir `matrixTile` avec des chips, de manière plus ou moins aléatoire.
+### Initialisation d'une Arena ###
 
-Cette action est effectuée par l'imbrication d'appels de fonction suivant :
+Les actions suivantes sont effectuées :
 
- - `ArenaBasic.createMatrixTile`.
- 	- pour chaque tile de l'aire de jeu : `ArenaBasic.createChipAtStart`.
-	 	- `ArenaBasic.randomChipGenInit.chooseChip`.
-		 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
-    - Création de la tile, en plaçant la chip nouvellement créée dedans.
+ - Création de `ArenaXXX.randomChipGenInit`. (Instance de `RandomChipGenerator`).
 
-Les probabilités de choix de chip sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
+ - Remplissage de `matrixTile` avec des chips, plus ou moins aléatoirement. Cette action est effectuée par l'imbrication d'appels de fonction suivant :
+
+	 - `ArenaBasic.createMatrixTile`.
+	 	- pour chaque tile de l'aire de jeu : `ArenaBasic.createChipAtStart`.
+		 	- `ArenaBasic.randomChipGenInit.chooseChip`.
+			 	- Choix d'une chip au hasard, selon des coefficients de probabilité spécifiques. Renvoi de la chip.
+	    - Création de la tile, en plaçant la chip nouvellement créée dedans.
+
+Les probabilités de choix de chips sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
 
  - Information de génération d'une chip en particulier.
  - Coefficient de probabilité (nombre entier).
 
-La somme des coeffs de tous les éléments de la liste peut faire n'importe quelle valeur, on s'en fout.
+La somme des coefs de tous les éléments de la liste peut faire n'importe quelle valeur, on s'en fout.
 
-Une information de génération est un tuple, de x éléments. Le premier est un identifiant permettant de savoir quelle classe héritée de chip il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...) et les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe en paramètre la valeur de la pièce (en brouzouf). Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
+Une information de génération de chip est un tuple, de x éléments. Le premier est un identifiant qui détermine quelle classe il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...). Les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe la valeur de la pièce. Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
 
 La regénération des chip, après un zap, est également effectuée selon le même principe. C'est une classe `RandomChipGenerator` qui s'en occupe. Mais pas la même. Il s'agit de `ArenaXXX.randomChipGenAfterGrav`.
 
@@ -185,9 +187,9 @@ Donc potentiellement, on peut avoir des probabilités différentes pour la gén�
 
 L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui feraient chacun leurs sélections respectives.
 
-Or donc, cette info de sélection est stockée dans la classe Tile.
+Or donc, cette info de sélection est stockée dans les `Tile`.
 
-La classe Tile contient une liste appelée `dicPlayerSel` (on me dit dans l'oreillette que c'est confusionnant). Chaque élément de la liste correspond à la sélection d'un joueur. Concrètement, dans tout le code que j'ai fait, il n'y a qu'un joueur, et `dicPlayerSel` ne contient toujours qu'un et un seul élément.
+La classe `Tile` contient une liste appelée `dicPlayerSel` (on me dit dans l'oreillette que c'est confusionnant). Chaque élément de cette liste correspond à la sélection d'un joueur. Concrètement, dans tout le code que j'ai fait, il n'y a qu'un joueur, et `dicPlayerSel` ne contient toujours qu'un et un seul élément.
 
 Cet élément peut prendre l'une des trois valeurs suivantes :
 
@@ -195,9 +197,9 @@ Cet élément peut prendre l'une des trois valeurs suivantes :
  - SELTYPE_SUPPL : La tile est sélectionnée par une sélection additionnelle. Elle est dessinée avec un cadre orange.
  - SELTYPE_NONE : La tile n'est pas sélectionnée. Elle est dessinée sans cadre.
 
-Tout le blabla de ce chapitre a pour but de décrire de quelle manière la valeur de `dicPlayerSel` est modifiée, en fonction des actions effectuées par le joueur.
+Tout le blabla de ce chapitre a pour but de décrire de quelle manière le contenu de `dicPlayerSel` est modifié, en fonction des actions effectuées par le joueur.
 
-À l'initialisation de ArenaXXX, On indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque Tile est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.
+À l'initialisation de `ArenaXXX`, on indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque `Tile` est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.
 
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
@@ -225,7 +227,7 @@ Le stimuliStocker détermine si les nouvelles coordonnées du curseur correspond
 
 Si les coordonnées du curseur correspondent à une tile, mais que c'est la même que `posArenaPrevious`, le stimuliStocker ne fait rien. `posArenaPrevious` conserve sa valeur. `listPosArenaToActivate` reste vide.
 
-Mais si le curseur est sur une autre tile, alors le stimuliStocker effectue les actions suivantes :
+Si le curseur est sur une autre tile, alors le stimuliStocker effectue les actions suivantes :
 
  - Placement des coordonnées de la nouvelle tile dans la variable interne `posArenaMouse`.
 
