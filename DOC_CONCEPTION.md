@@ -449,13 +449,13 @@ Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gr
 
 #### Première vérification de l'instabilité ####
 
-Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un "interactive touch" qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`).
+Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un Interactive Touch qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`).
 
-Les interactive touch peuvent modifier l'aire de jeu, c'est pour ça qu'on fait la vérif aussi à ce moment là. Par exemple : on clique sur un aspirine, ça le supprime, donc il faut appliquer la gravité, etc.
+Les Interactive Touches peuvent modifier l'aire de jeu, c'est pour ça qu'on fait la vérif aussi à ce moment là. Par exemple : on clique sur un aspirine, ça le supprime, donc il faut appliquer la gravité, etc.
 
-Cette vérification est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable.
+La vérification d'instabilité est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable.
 
-Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, qui décrit les mouvements de chip à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements` (voir plus loin pour une explication détaillée de son fonctionnement interne).
+Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, décrivant les mouvements de chips à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements`. [Voir plus loin pour une explication détaillée de son fonctionnement interne](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#fonctionnement-de-gravitymovements).
 
 `GameXXX.gravityMovements` peut être None, ou définie avec une liste de mouvements vide. Dans les deux cas il n'y a pas de gravité à appliquer.
 
@@ -468,22 +468,22 @@ Sauf que dans les modes de jeu spécifiques (touillettes, aspro), `gravityCounte
 
 #### Application des gravités successives ####
 
-Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Elle effectue les actions suivantes :
+Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Celle-c effectue les actions suivantes :
 
  - Application de la gravité une fois, en utilisant `GameXXX.gravityMovements` qui a été définie précédemment.
 	 - Exécution de `GameXXX.applyGravity`
 		 - Exécution de `ArenaXXX.applyGravity`. Déplacement effectif des chips dans l'aire de jeu, pour les faire tomber d'une case.
-	     - Exécution de `ArenaXXX.regenerateAllChipsAfterOneGravity`. Création de nouvelle chips, en haut de l'aire de jeu, dans les emplacements qui ont été laissés vides par la gravité.
+	     - Exécution de `ArenaXXX.regenerateAllChipsAfterOneGravity`. Création de nouvelle chips, en haut de l'aire de jeu, dans les emplacements laissés vides.
      - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
      - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.
 
 #### Fin de gravité ####
 
-Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n y'a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée.
+Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n'y a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée.
 
-En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. Mais "voir plus loin", car c'est déjà assez compliqué et entrelacé comme ça, tout ce bazar.
+En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. ["Voir plus loin"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel), car tout ce bazar est déjà assez compliqué et entrelacé comme ça.
 
-D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne contrôle pas le contenu de cette variable, mais je tenais à le préciser).
+D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne le contrôle pas, mais je tenais à le préciser).
 
 #### Regénération sans gravité ####
 
@@ -491,7 +491,7 @@ Lorsqu'en exécute une gravité une fois, on regénère tout de suite après les
 
 On pourrait donc penser qu'à aucun moment, on n'ait besoin de juste regénérer des chips. Si pas de gravité -> pas d'emplacements vides en haut de l'aire de jeu -> pas besoin de regénération.
 
-Eh bien non. Lorsque le joueur a zappé des chips uniquement dans la ligne du haut, on est dans un cas où il faut regénérer, mais où il n'y a pas de gravité à appliquer.
+Eh bien non. Car il y a également le cas où le joueur a zappé des chips uniquement dans la ligne du haut.
 
 Cette situation se règle avec l'enchaînement d'actions suivants :
 
@@ -509,11 +509,11 @@ Cette situation se règle avec l'enchaînement d'actions suivants :
 
 #### Fonctionnement de gravityMovements ####
 
-La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité quel que soit la direction (les chips pourraient tomber vers le haut, vers la gauche, ...).
+La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité dans n'importe quelle direction (les chips pourraient tomber vers le haut, vers la gauche, ...).
 
 Elle peut également gérer des mouvements de gravité avec des "gros objets" (par exemple, les touillettes).
 
-Dans une aire de jeu à gros objets, il peut y avoir plusieurs mouvements de gravité séparés, sur une même colonne. Exemple, avec un zap en forme de "C" :
+Dans une aire de jeu à gros objets, il peut y avoir plusieurs mouvements de gravité indépendants, sur une même colonne. Exemple, avec un zap en forme de "C" :
 
     0 0 0 0 0
     0 0 0 0 0
@@ -528,52 +528,65 @@ Dans une aire de jeu à gros objets, il peut y avoir plusieurs mouvements de gra
     . = une tile vide, car on vient tout juste de la zapper.
     + = une touillette.
 
-Dans la deuxième colonne, Les deux 0 du haut vont tomber. Le 1 ne va pas tomber, car il est retenu par la touillette, le 2 va tomber, le 5 ne va pas tomber, car il est tout en bas.
+Dans la deuxième colonne, Les deux 0 du haut vont tomber. Le 1 ne va pas tomber, car il est retenu par la touillette. Le 2 va tomber. Le 5 ne va pas tomber, car il est tout en bas.
 
 La classe `GravityMovements` doit être capable de gérer ce genre de subtilité.
 
-Les infos stockées par cette classe ne peuvent servir que pour l'application d'une seule gravité (chaque chip soumise à la gravité ne fera qu'un seul mouvement). Pour faire la gravité suivante il faut repartir d'une nouvelle instance de `GravityMovements` et remettre des infos dedans à partir de 0.
+Les infos stockées par cette classe ne peuvent servir que pour l'application d'une seule gravité (chaque chip ne se déplacera que d'une seule case). Pour faire la gravité suivante il faut repartir d'une nouvelle instance de `GravityMovements` et remettre des infos dedans à partir du début.
 
 Comme il faut gérer n'importe quelle direction, on ne raisonne pas en coordonnées X et Y, mais en coordonnés primaire (les lignes/colonnes le long desquelles s'appliquent la gravité) et en coordonnées secondaires (la coordonnée qui va augmenter ou diminuer de 1).
 
-La classe `GravityMovements` contient la variable `dicMovement` : un dictionnaire.
+La classe `GravityMovements` contient la variable `dicMovement`. Il s'agit d'un dictionnaire contenant les infos suivantes :
 
- - clé : une coordonnée primaire
+ - clé : une coordonnée primaire.
+
  - valeur : une liste de tuple de deux éléments. Chaque tuple définit un "segment gravitant". Avec :
 	 - premier élément : coordonnée secondaire du début du segment. Cela correspond toujours à l'emplacement vide qui permet de démarrer la gravité.
-	 - second élément : coordonnée secondaire de fin du segment (non incluse dans le segment, comme pour les ranges et les slices python qui n'incluent pas le dernier élément).
+	 - second élément : coordonnée secondaire de fin du segment. (Non incluse dans la gravité, je fais comme pour les ranges et les slices python qui n'incluent pas le dernier élément).
 
 Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, prise en compte de la touillette, et dans le cas d'une gravité vers le bas, on devrait avoir un `GravityMovements.dicMovement` comme suit :
 
     {
         0: [    # pour la colonne de gauche. X = 0
+
             (2,     # coord (X=0, Y=2) :
                     # emplacement vide juste en dessous des deux chip "0"
+
              -1     # coord (X=0, Y=-1) :
-                    # Dernier élément du segment, qui n'est pas inclus
+                    # Dernier élément du segment, non inclu. 
+                    # C'est une case hypothétique, au dessus de l'aire de jeu.
             ),
         ],
         1: [    # pour la colonne suivante. X = 1
-            (2, -1),  # Pareil. Les deux chips "0" du haut vont tomber
-            (6,  4),  # Et en plus, la chip "2" va tomber,
-                      # à cause du vide (coord X=1, Y=6)
-                      # Le dernier élément n'est pas inclus (coord Y = 4)
+
+            (2,     # Pareil. Les deux chips "0" du haut vont tomber
+             -1),
+
+            (6,     # Et en plus, la chip "2" va tomber,
+             4),    # à cause du vide (coord X=1, Y=6)
+                    # Le dernier élément n'est pas inclus (coord Y = 4)
         ]
     }
 
-Lorsque la gravité est vers le bas, le premier élément de chaque segment gravitant est toujours strictement supérieur au dernier élément. Lorsque la gravité est vers le haut, c'est le contraire.
+Lorsque la gravité est vers le bas, le premier élément de chaque segment gravitant est toujours strictement supérieur au second élément. Lorsque la gravité est vers le haut, c'est le contraire.
 
-Lorsque la gravité est vers la droite : premier élément > dernier élément.
-Lorsque la gravité est vers la gauche : dernier élément > premier élément.
+Lorsque la gravité est vers la droite : premier élément > second élément.
+Lorsque la gravité est vers la gauche : second élément > premier élément.
 
 Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivantes :
 
  - `__init__`, en précisant le type de gravité.
+
  - `cancelAllMoves` : vidage du dictionnaire `dicMovement`.
+ 
  - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors des appels successifs à `addSegmentMove`.
- - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut "raccourcir" un segment. Elle n'est utilisée que dans les arènes contenant des gros objets (touillettes). Voir explication détaillée plus loin.
+
+ - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et en supprimer. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gestion-de-la-gravit%C3%A9).
+
  - `isInGravity` : indique, pour une position donnée, si elle se trouve dans un segment gravitant ou pas. (Renvoie True/False).
- - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), ou si seulement certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles le sont (`IN_GRAVITY_NO`).
+
+ - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), si certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles le sont (`IN_GRAVITY_NO`).
+
  - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires qui n'ont plus aucun segments gravitants. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.
 
 #### Détermination des mouvements de gravité ####
