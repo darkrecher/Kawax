@@ -352,21 +352,25 @@ Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélect
 
 #### La classe ZapValidator ####
 
-Lors de l'initialisation, l'objet GameXXX a créé une instance héritant de `ZapValidator`. Cette classe, et toutes celles qui en héritent, doivent contenir 3 fonctions :
+Cette classe, et toutes celles qui en héritent, doivent contenir 3 fonctions :
 
  - `getListStrDescription` : Renvoie une liste de chaînes de caractères, décrivant la contrainte à respecter pour que le zap soit réalisé.
  - `getListStrLastTry` : Renvoie une liste de chaînes de caractères, décrivant la dernière tentative de zap du joueur, pourquoi ça a raté, etc.
  - `validateZap` : Prend en paramètre la sélection effectuée par le joueur (chemin principal + sélection additionnelle). Renvoie un booléen, indiquant si le zap a réussi ou pas.
 
-Un `ZapValidator` doit être utilisé comme un one-shot. Une fois que le joueur a réussi le zap, il faut en recréer un nouveau.
+Un `ZapValidator` a accès à l'`ArenaXXX`, ce qui lui permet d'inspecter les tiles et les chips de l'aire de jeu. 
+
+Cette classe doit être utilisée comme un one-shot. Une fois que le joueur a réussi le zap, il faut recréer un nouveau `ZapValidator`.
 
 Bon, euh... tout ça pour dire que concrètement, je n'ai fait hériter qu'une seule fois le `ZapValidator`, en une classe appelée `ZapValidatorBase`.
 
-Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne les brouzoufs et les sucres des tiles sélectionnées: Si ça correspond, le zap est validé. Sinon, eh bien non.
+Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne les brouzoufs et les sucres des tiles sélectionnées. Si ça correspond, le zap est validé. Sinon, eh bien non.
 
 `ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
 
 #### Déroulement d'un zap ####
+
+Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`. 
 
 Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. Le `GameXXX` voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, [voir les tutoriels](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
@@ -374,7 +378,7 @@ La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValid
 
 Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 
- - Envoi d'un message au tutoriel, pour prévenir qu'un zap a été fait. (Le fonctionnement des tutoriels sera détaillé plus loin).
+ - Envoi d'un message au tutoriel, pour prévenir qu'un zap a été fait. (Il en a besoin. Mais pour le zap en lui-même, on s'en fout).
  - Exécution de `GameXXX.zapWin` : fonction qui ne fait pas grand-chose, mais qui peut être overridée.
  - Refabrication d'un autre `ZapValidatorBase`, avec une autre contrainte sur les brouzoufs et les sucres.
  - Envoi du zap à toutes les tiles sélectionnées. Ce qui enchaîne l'exécution imbriquée des fonctions suivantes :
@@ -385,13 +389,13 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 				 	- Cette fonction renvoie un nouvel objet Chip, correspondant au résultat du zap.
 				 	- Dans les faits, toutes les chip renvoient `ChipNothing`, c'est à dire un emplacement vide.
 			 - L'`arena` remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.
- - (revenons à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. Fonction `selectorPlayerOne.cancelAllSelection()`.
+ - (retour à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. Fonction `selectorPlayerOne.cancelAllSelection()`.
  - Si le jeu a besoin de se "stabiliser" : déclenchement de la gravité et lock des stimulis. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
- - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription` Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([voir les tutoriels, donc](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
+ - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription`. Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([Voir les tutoriels, donc](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
 
-Durant l'imbrication de fonction exécutée pour le zap, on transmet deux paramètres :
+Durant l'exécution du zap sur chaque chip, on transmet deux paramètres :
 
  - `zapType` : correspond à la façon dont la tile a été sélectionnée. `ZAP_PATH` : chemin principal. `ZAP_SUPPL` : sélection additionnelle.
  - `zapForce` : force du zap. Concrètement, on met toujours 1.
@@ -403,28 +407,28 @@ Ces deux valeurs pourraient être utilisées par la méthode `Chip.zap()`, pour 
 
 La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais elle pourrait faire d'autre chose. Par exemple : une chip qui se transforme en une autre.
 
-La fonction peut également renvoyer `None`, pour signaler de ne pas faire de remplacement. Ça peut servir dans le cas des chip à points de vie. Le zap modifie la quantité de points de vie (valeur contenue dans la chip), mais ne remplace pas la chip elle-même.
+La fonction peut également renvoyer `None`, pour signaler de ne pas faire de remplacement. Ça peut servir dans le cas des chips à points de vie. Le zap modifie une valeur interne de la chip, mais ne remplace pas la chip elle-même.
 
 ### Stimuli lock/delock ###
 
-Le lock/delock des stimulis est un truc pas très bien géré, et qui a provoqué plein de bugs de partout. Je pense les avoir tout corrigé, mais rien n'est sûr.
+Il s'agit d'un truc pas très bien géré, et qui a provoqué plein de bugs de partout. Je pense les avoir tout corrigé, mais rien n'est sûr.
 
 Objectif initial du lock/delock : empêcher le joueur de sélectionner des tiles, et de les zapper, durant les moments où le jeu est occupé à autre chose, ce qui aurait provoqué des risques de chambardements intempestifs.
 
 Le jeu est "occupé à autre chose" dans les cas suivants :
 
- - En cours de stabilisation : la gravité est en cours, ou bien des chips sont en cours de création afin de combler des espaces vides.
+ - En cours de stabilisation : la gravité est en cours, ou bien des chips sont en cours de regénération.
  - En mode tutoriel : du texte explicatif est affiché dans la console, et le joueur doit appuyer sur la touche "F" afin de passer à l'étape suivante.
 
-Le lock a lieu dans la classe `Selector`, et non pas, contrairement à ce qu'on aurait pu croire, dans la classe `StimuliStockerForGame`.
+Le lock a lieu dans la classe `Selector`, et non pas, contrairement à ce qu'on aurait pu croire, dans la classe `StimuliStockerForGame`. (Oui enfin vous croyez ce que vous voulez, moi je m'en fous en fait).
 
 Pour effectuer un lock, il faut exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, c'est pareil, avec le paramètre False.
 
-Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` est toujours appelée, mais ne fait plus rien.
+Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` ne fait plus rien.
 
 Par contre, les clics "d'interactive touch" restent pris en compte, même lorsque le lock est activé. Ce n'est peut-être pas tout à fait logique. Euh... Hem... Passons.
 
-Les moments où les lock/delock sont effectués sont détaillés dans d'autre partie de cette documentation. Voir partie "Gravité" et partie "Tutoriel".
+Les moments d'activation/suppression du lock sont détaillés dans d'autre partie de cette documentation. Voir partie ["Gravité"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration) et ["Tutoriel"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
 ### Gravité et regénération ###
 
