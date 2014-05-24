@@ -605,17 +605,17 @@ Pour chaque colonne, on parcourt toutes les chips, en allant du bas vers le haut
  	- coord primaire = X de la colonne courante.
  	- coord secondaire de début du segment = Y de l'emplacement vide précédemment retenu.
  	- coord secondaire de fin du segment = Y actuel.
- - On revient `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip qui n'accepte pas la gravité.
+ - On revient à `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip qui n'accepte pas la gravité.
 
-Pour les gravités des modes de jeu spécifiques (gros objets, rift) : voir plus loin.
+Pour la gravité du mode aspro (gravity rift) : [voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravity-rift).
 
 #### La classe ArenaCrawler ####
 
-Cette classe est définie dans le fichier `crawler.py`. Elle permet de parcourir les positions d'une aire de jeu dans le sens qu'on veut, et éventuellement en passant directement à la ligne/colonne suivante.
+Cette classe est définie dans le fichier `crawler.py`. Elle permet de parcourir les positions d'une aire de jeu dans le sens qu'on veut, et de passer directement à la ligne/colonne suivante.
 
 Un `ArenaCrawler` se contente de renvoyer des coordonnées (sous forme de classes `pygame.Rect`), correspondant à des positions successives dans une aire de jeu. Il connaît la taille de l'aire de jeu, mais pas l'aire de jeu en elle-même. Il n'analyse pas les tiles ou les chips. C'est au code extérieur de faire ça.
 
-On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée primaire est X, les "gros" changements de coordonnées seront sur le X. C'est à dire que le crawler se déplacera le long des colonnes. Il parcourt tous les Y d'une colonne. Puis fait un "gros" changement, modifie son X et passe à la colonne suivante, et ainsi de suite.
+On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée primaire est X, les "gros" changements de coordonnées seront sur le X. C'est à dire que le crawler se déplacera le long des colonnes. Il parcourt tous les Y d'une colonne, puis modifie son X et passe à la colonne suivante, et ainsi de suite.
 
 Plus précisément, on ne spécifie pas de coordonnée primaire/secondaire, mais des directions primaire/secondaire.
 
@@ -635,7 +635,7 @@ Exemple d'ordre de parcours de l'aire de jeu, pour une taille de X=3, Y=5.
 
     X ->
 
-    dirPrim = RIGHT. dirSec = UP
+    direction primaire = RIGHT. direction secondaire = UP
          4   9  14
          3   8  13
          2   7  12
@@ -679,7 +679,7 @@ Exemple :
         6   7   .
         8   .   .
 
-Durant le crawling, on peut lire les variables membres suivantes, pour savoir où on est (elles sont pertinentes dès l'appel à `start`, avant même d'avoir exécuté un premier `crawl` ou un premier `jumpOnPrimCoord` :
+Durant le crawling, on peut accéder à diverses variables, renseignant la position actuelle, ce qu'il vient de se passer, etc . Ces variables sont pertinentes dès l'appel à `start`, avant même d'avoir exécuté un premier `crawl` ou un premier `jumpOnPrimCoord`. Il s'agit des variables suivantes :
 
  - `posCur` : objet `pygame.Rect`. Position courante.
  - `posPrev` : objet `pygame.Rect`. Position précédente (si on a exécuté un `jumpOnPrimCoord`, `posPrev` se trouve forcément sur la ligne/colonne précédente.
@@ -688,7 +688,7 @@ Durant le crawling, on peut lire les variables membres suivantes, pour savoir o�
  - `crawledOnPrimCoord` : booléen. Indique si on vient de changer de coordonnée primaire.
  - Les fonctions `crawl` et `jumpOnPrimCoord` renvoient un booléen. Si celui-ci est True, on est sur une position valide. Si il est False, la position courante est invalide, car on est arrivé au bout de l'aire de jeu. Dans ce cas, on ne devrait pas consulter les variables ci-dessus, car elles contiennent des informations non utilisables.
 
-Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés ne sont pas vraiment utilisables. (En fait ça devrait s'arrêter, ou carrément balancer une exception).
+Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés sont inutilisables. (En fait, le crawler devrait s'arrêter, ou carrément balancer une exception).
 
 #### Configuration de gravité par les crawlers ####
 
@@ -696,7 +696,7 @@ La détermination de la gravité, son application, et la regénération des chip
 
 Selon le sens dans lequel on parcourt l'aire de jeu pour effectuer ces tâches, on peut appliquer la gravité dans la direction qu'on veut.
 
-La configuration des crawlers en fonction de la direction de gravité souhaitée est effectuée dans `GameXXX.initCommonStuff`, (fin de la fonction). On se sert de `DICT_GRAVITY_CONFIG`, défini dans `gambasic.py`.
+La configuration des crawlers en fonction de la direction de gravité souhaitée est effectuée dans `GameXXX.initCommonStuff`, (à la fin de la fonction). On se sert de `DICT_GRAVITY_CONFIG`, défini dans `gambasic.py`.
 
 Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode aspro, mais sa gravité vers la gauche est gérée différemment). Tout ça pour dire que la super-généricité de code que j'ai mis en place, avec les crawlers et la gravité, n'est pas utilisée. Mais ça pourrait. J'avais testé, ça marchait. (Disons que ça a marché à un certain moment de la vie du programme).
 
@@ -706,25 +706,25 @@ Pour une explication détaillée de "comment ça marche dans des directions autr
 
 ### Interactive Touch ###
 
-Les "interactive touch" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
+Les "Interactive Touches" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
 
-Les "interactive touch" sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce que ça fait. Il y en a un exemple dans le mode aspro (Voir plus loin).
+Les Interactive Touches sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce que ça fait. Il y en a un exemple dans le mode aspro. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#interactive-touch-sur-les-aspirines).
 
 Le fonctionnement général est le suivant :
 
  - L'utilisateur clique dans la fenêtre du jeu.
  - Le `stimuliStocker` détecte ce clic, en déduit la tile cliquée, et enregistre sa position dans la variable interne `posArenaToInteractTouch`. (Cette action est effectuée uniquement sur les clics, pas sur les mouvements de souris, ni sur le maintien du bouton appuyé)
- - dans la game loop : récupération de `stimuliStocker.posArenaToInteractTouch`.
+ - dans la Game Loop : récupération de `stimuliStocker.posArenaToInteractTouch`.
  - Si la variable contient une position valide :
 	 - exécution de la fonction `ArenaXXX.stimuliInteractiveTouch`, en transmettant cette position.
 		 - Cette fonction a le droit de faire tout et n'importe quoi sur les tiles et les chips de l'aire de jeu. Si elle fait quelque chose, elle doit répondre True.
 		 - Concrètement, `ArenaBasic.stimuliInteractiveTouch` ne fait rien et renvoie toujours False. Mais la fonction peut être overridée dans un mode de jeu spécifique.
-	 - (Retour à la game loop). Si on a récupéré True, exécution des actions suivantes :
+	 - (Retour à la Game Loop). Si on a récupéré True, exécution des actions suivantes :
 		 - Comme il s'est passé quelque chose dans l'aire de jeu, les tiles sélectionnées par le joueur ne correspondent peut-être plus à rien. Donc on efface la sélection.
-		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification s'il faut effectuer une gravité ou une regénération, lock des stimulis, définition de `gravityCounter`, etc.
-		 - Gestion du tutoriel, s'il y en a un (voir plus loin).
+		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification de gravité ou de regénération, lock des stimulis, définition de `gravityCounter`, etc.
+		 - Gestion du tutoriel, s'il y en a un. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
 	 - Si besoin, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité, comme pour le zap.
-	 - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaBasic.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `GameXXX`, et pas de `ArenaXXX`. Par contre, pas la peine de renvoyer un booléen pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
+	 - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
 	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
 
 ## Spécificités des modes de jeu spécifique (ha ha) ##
