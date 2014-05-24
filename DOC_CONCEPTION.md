@@ -172,14 +172,16 @@ Les actions suivantes sont effectuées :
 
 Les probabilités de choix de chips sont définies par `listRandDistribution`, paramètre transmis au `RandomChipGenerator` lors de son initialisation. Chaque élément de cette liste est un tuple de 2 éléments :
 
- - Information de génération d'une chip en particulier.
+ - Information de génération d'une chip.
  - Coefficient de probabilité (nombre entier).
 
 La somme des coefs de tous les éléments de la liste peut faire n'importe quelle valeur, on s'en fout.
 
-Une information de génération de chip est un tuple, de x éléments. Le premier est un identifiant qui détermine quelle classe il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...). Les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe la valeur de la pièce. Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
+Une information de génération de chip est un tuple de x éléments. Le premier est un identifiant qui détermine quelle classe il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...). Les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe la valeur de la pièce. 
 
-La regénération des chip, après un zap, est également effectuée selon le même principe. C'est une classe `RandomChipGenerator` qui s'en occupe. Mais pas la même. Il s'agit de `ArenaXXX.randomChipGenAfterGrav`.
+Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
+
+La regénération des chip après un zap, est également effectuée selon le même principe. C'est une classe `RandomChipGenerator` qui s'en occupe. Mais pas la même. Il s'agit de `ArenaXXX.randomChipGenAfterGrav`.
 
 Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération durant la partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
 
@@ -215,13 +217,13 @@ Le code extérieur utilisera le contenu de `listPosArenaToActivate` pour en déd
 
 D'autre part, le stimuliStocker retient les coordonnées de cette tile activée, dans la variable interne `posArenaPrevious`.
 
-`listPosArenaToActivate` est remis à zéro à chaque appel à la fonction `resetStimuli`, c'est à dire à chaque itération de la game loop. (Donc, lorsque `listPosArenaToActivate` contient quelque chose, le code extérieur doit le prendre en compte tout de suite).
+`listPosArenaToActivate` est remis à zéro à chaque appel à la fonction `resetStimuli`, c'est à dire à chaque itération de la game loop. Donc, lorsque `listPosArenaToActivate` contient quelque chose, le code extérieur doit le prendre en compte tout de suite.
 
 Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
 
 #### Lorsque le joueur déplace la souris en maintenant le bouton appuyé : ####
 
-Les actions décrites dans ce chapitre sont effectuées par la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
+Les actions effectuées suite à cette événement sont dans la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
 
 Le stimuliStocker détermine si les nouvelles coordonnées du curseur correspondent à une tile dans l'aire de jeu. Si ce n'est pas le cas, `posArenaPrevious` est réinitialisé à None, et `listPosArenaToActivate` reste vide.
 
@@ -257,7 +259,7 @@ Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False �
 
 #### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
 
- - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les valeurs successives contenues dans `listPosArenaToActivate` ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
+ - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les tiles dans cette liste ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
 
  - Renvoyer `mustStandBy == True` lorsque le joueur relâche le bouton de souris.
 
@@ -265,13 +267,13 @@ Le stimulistocker n'a aucune idée de ce qu'il faut faire avec les tiles activé
 
 #### Transmission des tiles qui ont été activées ####
 
-Cette action est effectuée dans la game loop. Les tiles activées sont transmises à l'objet `selectorPlayerOne` (instance de `Selector`, contenus dans l'objet `GameXXX`).
+Cette action est effectuée dans la Game Loop. Les tiles activées sont transmises à l'objet `selectorPlayerOne` (instance de `Selector`, contenu dans l'objet `GameXXX`).
 
-En théorie, il pourrait y avoir plusieurs objets `Selector` dans `GameXXX`, qui prendraient leurs stimulis depuis différentes sources (on sait pas exactement lesquelles mais osef). En pratique, il n'y a toujours qu'un seul `Selector`, qui s'appelle `selectorPlayerOne`.
+En théorie, il pourrait y avoir plusieurs objets `Selector` dans `GameXXX`, qui prendraient leurs stimulis depuis différentes sources. En pratique, il n'y a toujours qu'un seul `Selector`, qui s'appelle `selectorPlayerOne`.
 
 Les tiles activées sont transmises une par une, dans l'ordre de `listPosArenaToActivate`, au `selectorPlayerOne`, via la fonction `takeStimuliActivateTile(posSelected)`.
 
-C'est important qu'elles soient transmises une par une, car ça simplifie les choses. Cela oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement ou rapidement.
+C'est important qu'elles soient transmises une par une: Ça simplifie les choses, car ça oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement ou rapidement.
 
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
@@ -304,7 +306,7 @@ La détermination du mode de sélection dépend des tiles déjà sélectionnées
 
  - La tile activée est ajacente à une tile sélectionnée (chemin principal ou sélection additionnelle). -> On sélectionne cette tile en sélection additionnelle. Le mode devient SELMODE\_SUPPL\_ADD.
 
- - Dans tous les autres cas. -> Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un nouveau path sur la tile activée. Le mode devient SELMODE_PATH.
+ - Dans tous les autres cas. -> Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un début de path sur la tile activée. Le mode devient SELMODE_PATH.
 
 #### Prise en compte des activations de tile qui viennent après ####
 
@@ -328,9 +330,9 @@ Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. J
 
 #### Modification effective de la sélection d'une tile ####
 
-Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. La méthode est un peu alambiquée, et passe à travers plusieurs fonctions.
+Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. L'action est un peu alambiquée, et passe à travers plusieurs fonctions.
 
-Le `Selector` a tout ce qu'il faut pour lancer l'action :
+Le `Selector` a tout ce qu'il faut pour lancer cette action :
 
  - Le numéro du joueur (Concrètement, c'est toujours 0, car il n'y a qu'un joueur).
  - Une référence vers ArenaXXX.
@@ -346,7 +348,7 @@ La modification de sélection est effectuée par l'imbrication d'exécution de f
 
 ### "Zap" d'un ensemble d'éléments ###
 
-Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélectionné des tiles, pour tenter de les faire disparaître. Le zap ne fonctionne pas forcément, ça dépend de la contrainte actuelle du zap, et des tiles sélectionnés.
+Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélectionné des tiles, pour tenter de les faire disparaître. Le zap ne fonctionne pas forcément, ça dépend de la contrainte actuelle, et des tiles sélectionnés.
 
 #### La classe ZapValidator ####
 
@@ -356,25 +358,25 @@ Lors de l'initialisation, l'objet GameXXX a créé une instance héritant de `Za
  - `getListStrLastTry` : Renvoie une liste de chaînes de caractères, décrivant la dernière tentative de zap du joueur, pourquoi ça a raté, etc.
  - `validateZap` : Prend en paramètre la sélection effectuée par le joueur (chemin principal + sélection additionnelle). Renvoie un booléen, indiquant si le zap a réussi ou pas.
 
-Un `ZapValidator` doit être utilisé comme un one-shot. Une fois que le joueur a réussi le zap, il faut recréer un nouveau `ZapValidator`.
+Un `ZapValidator` doit être utilisé comme un one-shot. Une fois que le joueur a réussi le zap, il faut en recréer un nouveau.
 
 Bon, euh... tout ça pour dire que concrètement, je n'ai fait hériter qu'une seule fois le `ZapValidator`, en une classe appelée `ZapValidatorBase`.
 
-Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne tous les brouzoufs et tous les sucres des tiles sélectionnées, si c'est égal, le zap est validé. Sinon, eh bien non.
+Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de sucre à atteindre. Lors de l'appel à `validateZap`, on additionne les brouzoufs et les sucres des tiles sélectionnées: Si ça correspond, le zap est validé. Sinon, eh bien non.
 
 `ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
 
 #### Déroulement d'un zap ####
 
-Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. L'objet GameXXX voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, voir plus loin).
+Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. Le `GameXXX` voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, [voir les tutoriels](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
 La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValidatorBase`. Si celui-ci répond que le zap n'est pas valide, on affiche dans la console la description du zap échoué.
 
 Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 
  - Envoi d'un message au tutoriel, pour prévenir qu'un zap a été fait. (Le fonctionnement des tutoriels sera détaillé plus loin).
- - Exécution de `GameXXX.zapWin` : fonction qui ne fait pas grand-chose, mais qui peut être overridé dans d'autres classes GameXXX.
- - Refabrication d'un autre `ZapValidatorBase`, avec une autre contrainte sur les brouzoufs et les sucres (déterminées au hasard).
+ - Exécution de `GameXXX.zapWin` : fonction qui ne fait pas grand-chose, mais qui peut être overridée.
+ - Refabrication d'un autre `ZapValidatorBase`, avec une autre contrainte sur les brouzoufs et les sucres.
  - Envoi du zap à toutes les tiles sélectionnées. Ce qui enchaîne l'exécution imbriquée des fonctions suivantes :
 	 - `GameXXX.arena.zapSelection()`.
 		 - Sur chaque position de la sélection : `GameXXX.arena.zapOnePos()`.
@@ -382,16 +384,16 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 				 - sur la chip contenue dans la tile : `tile.chip.zap()`.
 				 	- Cette fonction renvoie un nouvel objet Chip, correspondant au résultat du zap.
 				 	- Dans les faits, toutes les chip renvoient `ChipNothing`, c'est à dire un emplacement vide.
-			 - L'objet arena remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.
+			 - L'`arena` remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.
  - (revenons à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. Fonction `selectorPlayerOne.cancelAllSelection()`.
- - Si le jeu a besoin de se "stabiliser" : Déclenchement du délai de gravité et lock des stimulis. Cette action a pour but d'appliquer la gravité sur l'aire de jeu. (Voir plus loin).
- - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription` Cet affichage n'est pas forcément effectué dans le cas des tutoriels. (Voir plus loin aussi).
+ - Si le jeu a besoin de se "stabiliser" : déclenchement de la gravité et lock des stimulis. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
+ - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription` Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([voir les tutoriels, donc](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
 
 Durant l'imbrication de fonction exécutée pour le zap, on transmet deux paramètres :
 
- - `zapType` : correspond à la façon dont la tile a été sélectionnée pour le zap. `ZAP_PATH` : chemin principal. `ZAP_SUPPL` : sélection additionnelle.
+ - `zapType` : correspond à la façon dont la tile a été sélectionnée. `ZAP_PATH` : chemin principal. `ZAP_SUPPL` : sélection additionnelle.
  - `zapForce` : force du zap. Concrètement, on met toujours 1.
 
 Ces deux valeurs pourraient être utilisées par la méthode `Chip.zap()`, pour des cas spécifiques. Exemple :
@@ -407,16 +409,16 @@ La fonction peut également renvoyer `None`, pour signaler de ne pas faire de re
 
 Le lock/delock des stimulis est un truc pas très bien géré, et qui a provoqué plein de bugs de partout. Je pense les avoir tout corrigé, mais rien n'est sûr.
 
-Objectif initial du lock/delock : empêcher le joueur de sélectionner des tiles, et de les zapper, durant les moments où le jeu est occupé à autre chose, ce qui aurait risqué de mettre le jeu dans un état chambardesque.
+Objectif initial du lock/delock : empêcher le joueur de sélectionner des tiles, et de les zapper, durant les moments où le jeu est occupé à autre chose, ce qui aurait provoqué des risques de chambardements intempestifs.
 
 Le jeu est "occupé à autre chose" dans les cas suivants :
 
- - Le jeu est en cours de stabilisation : la gravité est en cours, ou bien des chips sont en cours de création afin de combler des espaces vides.
- - En mode tutoriel : du texte explicatif est affiché dans la console, et le joueur doit appuyer sur la touche "F", afin de passer à l'étape de tutoriel suivante.
+ - En cours de stabilisation : la gravité est en cours, ou bien des chips sont en cours de création afin de combler des espaces vides.
+ - En mode tutoriel : du texte explicatif est affiché dans la console, et le joueur doit appuyer sur la touche "F" afin de passer à l'étape suivante.
 
 Le lock a lieu dans la classe `Selector`, et non pas, contrairement à ce qu'on aurait pu croire, dans la classe `StimuliStockerForGame`.
 
-Pour effectuer un lock, exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, faire pareil, avec le paramètre False.
+Pour effectuer un lock, il faut exécuter la fonction `GameXXX.selectorPlayerOne.setStimuliLock(True)`. Pour l'enlever, c'est pareil, avec le paramètre False.
 
 Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compte pour la sélection des tiles. La fonction `Selector.takeStimuliActivateTile` est toujours appelée, mais ne fait plus rien.
 
