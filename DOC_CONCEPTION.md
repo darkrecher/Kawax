@@ -884,7 +884,7 @@ Les étapes suivantes sont effectuées :
 Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ainsi que par la classe `ArenaAspirin`, (fichier `asproa.py`). Il comporte les particularités suivantes :
 
  - La gravité est vers le bas, comme d'habitude, mais les chips ne se regénèrent pas en haut.
- - Une seconde gravité est appliquée, après celle vers le bas. Il s'agit du "Gravity Rift" : lorsqu'il y a une colonne complètement vide, toutes les colonnes à droite sont déplacées vers la gauche. La colonne tout à droite devient donc vide, c'est là qu'on regénère des chips.
+ - Une seconde gravité est appliquée, après celle vers le bas. Il s'agit du "Gravity Rift" : lorsqu'il y a une colonne complètement vide, tous ce qui est à droite est déplacé d'une case vers la gauche. La colonne tout à droite devient donc vide, c'est là qu'on regénère les chips.
  - L'aire de jeu comporte des demi-cachets d'aspirine, placés initialement à des endroits définis en dur.
  - Lorsque deux demi-cachets gauche et droite sont l'un à côté de l'autre, le joueur peut cliquer sur l'un d'eux, pour les fusionner en un cachet entier.
  - Le joueur peut également cliquer sur un cachet entier pour le prendre.
@@ -934,12 +934,12 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
  - Si le zap réussi, appel de la fonction overridée `GameAspirin.needStabilization`.
 	 - Exécution de la fonction `GameAspirin._determineAnyGravity`
 		 - Détermination de gravité normale.
-		 - Si il y en a, l'objet `GameAspirin.gravityMovements` contient des mouvements à faire. La fonction _determineAnyGravity ne fait rien de plus, et renvoie True
+		 - L'objet `GameAspirin.gravityMovements` contient éventuellement des mouvements à appliquer. Si c'est le cas, on ne fait rien de plus, et on renvoie True
 		 - Sinon, détermination de gravité Rift.
-		 - Si il y en a, l'objet `gravityMovementsRift` contient des mouvements à faire. La fonction `_determineAnyGravity` renvoie True.
-		 - Sinon, la fonction renvoie False.
+		 - L'objet `gravityMovementsRift` contient éventuellement des mouvements à appliquer. Si c'est le cas, on renvoie True.
+		 - Sinon, on renvoie False.
 	 - (retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. Voir plus loin : "Suppression des cachets en bas de l'aire de jeu").
+	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#suppression-des-demi-cachets-en-bas-de-laire-de-jeu).
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
@@ -952,7 +952,7 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 			 - application de la gravité Rift, s'il y a des choses dans `GameAspirin.gravityMovementsRift`.
 			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
 		 - Sinon :
-			 - Exécution de `removeHalfAsproBottom`. (voir chapitre suivant)
+			 - Exécution de `removeHalfAsproBottom`.
 	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal.
 	 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
 	 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
@@ -969,14 +969,14 @@ Cette action est réalisée par les fonctions suivantes :
 Cette suppression a été mise en place pour deux raisons :
 
  - Augmenter un peu la difficulté, sinon on s'ennuie.
- - Donner au joueur la possibilité de vider complètement une colonne de l'aire de jeu, même si elle comporte un demi-cachet qui ne peut pas être fusionné avec un autre.
+ - Donner au joueur la possibilité de vider complètement une colonne de l'aire de jeu, même si elle comporte un demi-cachet ne pouvant pas être fusionné avec un autre.
 
-Mais du coup, dès qu'un demi-cachet est supprimé de cette manière, on ne peut plus gagner la partie. Car il y a juste assez de cachets créés au départ pour pouvoir gagner, et aucun autre n'est généré durant le jeu. C'est ballot mais c'est comme ça. J'avais prévu une génération durant le jeu, et ensuite je suis passé à autre chose.
+Mais du coup, si un demi-cachet est supprimé de cette manière, on ne peut plus gagner la partie. Car il y a juste assez de cachets au départ. C'est ballot mais c'est comme ça. J'avais prévu une génération de cachets supplémentaires durant le jeu, mais ensuite je suis passé à autre chose. (boire).
 
 Pour bien montrer au joueur ce qui se passe dans l'aire de jeu, la suppression est faite en deux temps :
 
  - Transformation des demi-cachets du bas en chips vides. (Le joueur a le temps de voir les cases vides).
- - Application d'une gravité pour faire descendre d'une case les chips situées du dessus.
+ - Application d'une gravité pour faire descendre les chips du dessus.
 
 Les actions suivantes sont effectuées :
 
@@ -1021,11 +1021,11 @@ Les actions suivantes sont effectuées :
  	- Exécution de la fonction `ArenaAspirin.mergeAsproHalf`
 	 	- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfLeft`, et que la chip à droite est une `ChipAsproHalfRight`, alors on effectue les actions suivantes :
 		 	- Zap de la tile de droite, afin de remplacer la `ChipAsproHalfRight` par une `ChipNothing`
-		 	- Remplacement de la chip sur laquelle le joueur a cliqué par une `ChipAsproFull`
+		 	- Remplacement de la chip que le joueur a cliqué par une `ChipAsproFull`
 		 	- `mergeAsproHalf` renvoie True
 		- Sinon, on fait pareil, mais de l'autre côté : Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfRight`, et que la chip à gauche est une `ChipAsproHalfLeft`, alors on effectue les actions suivantes :
 		 	- Zap de la tile de gauche, afin de remplacer la `ChipAsproHalfLeft` par une `ChipNothing`
-		 	- Remplacement de la chip sur laquelle le joueur a cliqué par une `ChipAsproFull`
+		 	- Remplacement de la chip gue le joueur a cliqué par une `ChipAsproFull`
 		 	- `mergeAsproHalf` renvoie True
 		- Sinon, il ne s'est rien passé d'intéressant. `mergeAsproHalf` renvoie False.
 	- Si `mergeAsproHalf` n'a rien fait, exécution de la fonction `ArenaAspirin.takeAsproFull`.
@@ -1035,7 +1035,7 @@ Les actions suivantes sont effectuées :
 			- `takeAsproFull` renvoie True.
 		- Sinon, il ne s'est rien passé d'intéressant. `takeAsproFull` renvoie False.
 	- Si `mergeAsproHalf` ou `takeAsproFull` a fait quelque chose, `stimuliInteractiveTouch` renvoie True pour le signaler au code extérieur. Sinon, elle renvoie False.
- - Si `stimuliInteractiveTouch` a renvoyé True, la Game Loop le prend en compte : vérification si l'aire de jeu est "instable", exécution de gravité, lock des stimulis, ... Comme d'habitude.
+ - Si `stimuliInteractiveTouch` a renvoyé True, la Game Loop le prend en compte : vérification si l'aire de jeu est instable, exécution de gravité, lock des stimulis, ... Comme d'habitude.
  - Ensuite, la Game Loop appelle la fonction overridée `GameAspirin.gameStimuliInteractiveTouch`
 	 - Exécution de `ArenaAspirin.getAndResetTakenAsproFull`
 		 - La fonction vérifie la valeur de `hasTakenAsproFull`.
@@ -1044,9 +1044,9 @@ Les actions suivantes sont effectuées :
 	 - Si `getAndResetTakenAsproFull` a renvoyé True, on effectue les actions suivantes :
 		 - Augmentation de la variable membre `nbAspirinTaken`.
 		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer).
-		 - Sinon, affichage de texte dans la console indiquant que le joueur a pris un aspirine. Affichage du nombre d'aspirine pris, et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, mais pour ça : "voir plus loin").
+		 - Sinon, affichage d'un autre texte : nombre d'aspirine pris, et nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, à ce sujet : [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gameaspiringamestimuliinteractivetouch)).
 
-La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True, pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
+La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
 
 Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il a été pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
 
