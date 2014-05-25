@@ -461,21 +461,19 @@ Cette fonction a également un autre rôle : définir la variable `GameXXX.gravi
 
 Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a appelée doit effectuer les deux actions suivantes :
 
- - Locker les stimulis (voir chapitre d'avant).
+ - Locker les stimulis.
  - Définir `gravityCounter` à `DELAY_GRAVITY`, ce qui permettra d'appliquer la gravité/regénération ultérieurement. (la gravité n'est pas appliquée tout de suite lors de la première vérification).
-
-Sauf que dans les modes de jeu spécifiques (touillettes, aspro), `gravityCounter` est défini durant un appel à `GameXXX.needStabilization`, qui a été overridée. Ce n'est pas très homogène tout ça. Y'a qu'à dire que c'est pas grave.
 
 #### Application des gravités successives ####
 
 Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Celle-c effectue les actions suivantes :
 
- - Application de la gravité une fois, en utilisant `GameXXX.gravityMovements` qui a été définie précédemment.
-	 - Exécution de `GameXXX.applyGravity`
-		 - Exécution de `ArenaXXX.applyGravity`. Déplacement effectif des chips dans l'aire de jeu, pour les faire tomber d'une case.
-	     - Exécution de `ArenaXXX.regenerateAllChipsAfterOneGravity`. Création de nouvelle chips, en haut de l'aire de jeu, dans les emplacements laissés vides.
-     - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
-     - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.
+ - Exécution de `GameXXX.applyGravity`
+	 - Exécution de `ArenaXXX.applyGravity`, en lui passant en paramètre `GameXXX.gravityMovements`, qui a été défini précédemment.
+		 - Application de la gravité. Déplacement effectif des chips dans l'aire de jeu, pour les faire tomber d'une case.
+     - Exécution de `ArenaXXX.regenerateAllChipsAfterOneGravity`. Création de nouvelle chips, en haut de l'aire de jeu, dans les emplacements laissés vides.
+ - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
+ - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.
 
 #### Fin de gravité ####
 
@@ -495,7 +493,7 @@ Eh bien non. Car il y a également le cas où le joueur a zappé des chips uniqu
 
 Cette situation se règle avec l'enchaînement d'actions suivants :
 
- - Il y a eu un zap ou un interactive touch.
+ - Il y a eu un zap ou un Interactive Touch.
  - Exécution de `GameXXX.needStabilization`.
 	 - Détermination de `GameXXX.gravityMovements`. On s'aperçoit qu'il n'y a aucun mouvement à effectuer.
 	 - Appel de la fonction `ArenaXXX.hasChipToRegenerate`. La fonction répond qu'il y a des chips à regénérer.
@@ -550,7 +548,7 @@ Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, 
         0: [    # pour la colonne de gauche. X = 0
 
             (2,     # coord (X=0, Y=2) :
-                    # emplacement vide juste en dessous des deux chip "0"
+                    # emplacement vide juste en dessous des deux chip "0".
 
              -1     # coord (X=0, Y=-1) :
                     # Dernier élément du segment, non inclu. 
@@ -559,16 +557,16 @@ Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, 
         ],
         1: [    # pour la colonne suivante. X = 1
 
-            (2,     # Pareil. Les deux chips "0" du haut vont tomber
+            (2,     # Pareil. Les deux chips "0" du haut vont tomber.
              -1),
 
             (6,     # Et en plus, la chip "2" va tomber,
-             4),    # à cause du vide (coord X=1, Y=6)
+             4),    # à cause du vide en (X=1, Y=6)
                     # Le dernier élément n'est pas inclus (coord Y = 4)
         ]
     }
 
-Lorsque la gravité est vers le bas, le premier élément de chaque segment gravitant est toujours strictement supérieur au second élément. Lorsque la gravité est vers le haut, c'est le contraire.
+Lorsque la gravité est vers le bas, le premier élément du tuple de chaque segment gravitant est toujours strictement supérieur au second élément. Lorsque la gravité est vers le haut, c'est le contraire.
 
 Lorsque la gravité est vers la droite : premier élément > second élément.
 Lorsque la gravité est vers la gauche : second élément > premier élément.
@@ -581,13 +579,13 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
  
  - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors des appels successifs à `addSegmentMove`.
 
- - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et en supprimer. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gestion-de-la-gravit%C3%A9).
+ - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et/ou en supprimer d'autres. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gestion-de-la-gravit%C3%A9).
 
  - `isInGravity` : indique, pour une position donnée, si elle se trouve dans un segment gravitant ou pas. (Renvoie True/False).
 
- - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), si certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles le sont (`IN_GRAVITY_NO`).
+ - `isListInGravity` : indique, pour une liste de position donnée, si elles sont toutes dans un segment gravitant (`IN_GRAVITY_YES`), si certaines d'entre elles le sont (`IN_GRAVITY_PARTLY`), ou si aucune d'entre elles ne le sont (`IN_GRAVITY_NO`).
 
- - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires qui n'ont plus aucun segments gravitants. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.
+ - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires n'ayant plus aucun segment gravitant. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.
 
 #### Détermination des mouvements de gravité ####
 
@@ -600,7 +598,8 @@ Pour chaque colonne, on parcourt toutes les chips, en allant du bas vers le haut
  - On passe les premières chips non vides. Elles ne tomberont pas. `currentState = SKIP_NOT_FALLING_TILE`
  - Dès qu'on rencontre une chip vide, on change d'état. `currentState = ADVANCE_NOTHING_TILE`. Et on continue d'avancer tant qu'on est dans les chips vides.
  - Si on rencontre une chip qui ne peut pas tomber (ça existe pas dans le jeu, mais ça pourrait). On oublie ce qu'on a fait, et on revient à `currentState = SKIP_NOT_FALLING_TILE`.
- - Si on rencontre une chip non vide, qui peut tomber, on retient la coordonnée de l'emplacement précédent (emplacement vide qui permet de démarrer la gravité). Et `currentState = ADVANCE_CONSEQUENT_TILE`. On avance de cette manière tant qu'on rencontre des chips non vides acceptant de tomber.
+ - Si on rencontre une chip non vide, qui peut tomber, on retient la coordonnée de l'emplacement précédent (emplacement vide qui permet de démarrer la gravité). Et `currentState = ADVANCE_CONSEQUENT_TILE`.
+ - On continue d'avancer tant qu'on rencontre des chips non vides acceptant de tomber.
  - Lorsqu'on rencontre autre chose, ou qu'on arrive tout en haut de l'aire de jeu, on a trouvé un segment gravitant. On l'enregistre dans un `GravityMovements`, avec :
  	- coord primaire = X de la colonne courante.
  	- coord secondaire de début du segment = Y de l'emplacement vide précédemment retenu.
@@ -613,11 +612,11 @@ Pour la gravité du mode aspro (gravity rift) : [voir plus loin](https://github.
 
 Cette classe est définie dans le fichier `crawler.py`. Elle permet de parcourir les positions d'une aire de jeu dans le sens qu'on veut, et de passer directement à la ligne/colonne suivante.
 
-Un `ArenaCrawler` se contente de renvoyer des coordonnées (sous forme de classes `pygame.Rect`), correspondant à des positions successives dans une aire de jeu. Il connaît la taille de l'aire de jeu, mais pas l'aire de jeu en elle-même. Il n'analyse pas les tiles ou les chips. C'est au code extérieur de faire ça.
+Un `ArenaCrawler` se contente de renvoyer des coordonnées (sous forme de classes `pygame.Rect`), correspondant à des positions successives. Il connaît la taille de l'aire de jeu, mais pas l'aire de jeu en elle-même, ni son contenu. Il n'analyse pas les tiles ou les chips. C'est au code extérieur de faire ça.
 
-On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée primaire est X, les "gros" changements de coordonnées seront sur le X. C'est à dire que le crawler se déplacera le long des colonnes. Il parcourt tous les Y d'une colonne, puis modifie son X et passe à la colonne suivante, et ainsi de suite.
+On utilise la notion de coordonnée primaire/secondaire. Lorsque la coordonnée primaire est X, les "gros" changements de coordonnées seront sur le X. C'est à dire que le crawler se déplacera le long des colonnes. Il parcourra tous les Y d'une colonne, puis modifiera son X et passera à la colonne suivante, et ainsi de suite.
 
-Plus précisément, on ne spécifie pas de coordonnée primaire/secondaire, mais des directions primaire/secondaire.
+Plus précisément, on ne spécifie pas des **coordonnées** primaire/secondaire, mais des **directions** primaire/secondaire.
 
 Si la direction primaire est LEFT ou RIGHT, la coordonnée primaire est X. Si la direction primaire est UP ou DOWN, la coordonnée primaire est Y. Pareil pour le secondaire.
 
@@ -644,11 +643,11 @@ Exemple d'ordre de parcours de l'aire de jeu, pour une taille de X=3, Y=5.
 
     etc.
 
-Pour utiliser un `ArenaCrawler`, il faut commencer par l'instancier, le configurer et le démarrer :
+Pour utiliser un `ArenaCrawler`, il faut l'instancier, le configurer et le démarrer :
 
- - Instanciation, en spécifiant la taille de l'aire de jeu.
- - Exécution de `ArenaCrawler.config`, en spécifiant la direction primaire et la secondaire.
- - Exécution de `ArenaCrawler.start()`
+ - Instanciation : `__init__`, en spécifiant la taille de l'aire de jeu.
+ - Configuration : `ArenaCrawler.config()`, en spécifiant la direction primaire et la secondaire.
+ - Démarration : `ArenaCrawler.start()`
 
 Le crawler est alors initialisé à sa première position.
 
@@ -682,33 +681,33 @@ Exemple :
 Durant le crawling, on peut accéder à diverses variables, renseignant la position actuelle, ce qu'il vient de se passer, etc . Ces variables sont pertinentes dès l'appel à `start`, avant même d'avoir exécuté un premier `crawl` ou un premier `jumpOnPrimCoord`. Il s'agit des variables suivantes :
 
  - `posCur` : objet `pygame.Rect`. Position courante.
- - `posPrev` : objet `pygame.Rect`. Position précédente (si on a exécuté un `jumpOnPrimCoord`, `posPrev` se trouve forcément sur la ligne/colonne précédente.
+ - `posPrev` : objet `pygame.Rect`. Position précédente (si on a exécuté un `jumpOnPrimCoord`, `posPrev` se trouve sur la ligne/colonne précédente.
  - `coP` : entier. coordonnée primaire courante.
  - `coS` : entier. coordonnée secondaire courante.
  - `crawledOnPrimCoord` : booléen. Indique si on vient de changer de coordonnée primaire.
- - Les fonctions `crawl` et `jumpOnPrimCoord` renvoient un booléen. Si celui-ci est True, on est sur une position valide. Si il est False, la position courante est invalide, car on est arrivé au bout de l'aire de jeu. Dans ce cas, on ne devrait pas consulter les variables ci-dessus, car elles contiennent des informations non utilisables.
+ - Les fonctions `crawl` et `jumpOnPrimCoord` renvoient un booléen. Si celui-ci est True, on est sur une position valide. Si il est False, la position courante est invalide, car on est arrivé au bout de l'aire de jeu. Dans ce cas, on ne devrait pas consulter les variables ci-dessus, elles contiennent des informations non utilisables.
 
 Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés sont inutilisables. (En fait, le crawler devrait s'arrêter, ou carrément balancer une exception).
 
 #### Configuration de gravité par les crawlers ####
 
-La détermination de la gravité, son application, et la regénération des chips après gravité sont tous gérés avec des `ArenaCrawler`.
+La détermination de la gravité, son application, et la regénération des chips après gravité sont toutes gérés avec des `ArenaCrawler`.
 
 Selon le sens dans lequel on parcourt l'aire de jeu pour effectuer ces tâches, on peut appliquer la gravité dans la direction qu'on veut.
 
 La configuration des crawlers en fonction de la direction de gravité souhaitée est effectuée dans `GameXXX.initCommonStuff`, (à la fin de la fonction). On se sert de `DICT_GRAVITY_CONFIG`, défini dans `gambasic.py`.
 
-Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode aspro, mais sa gravité vers la gauche est gérée différemment). Tout ça pour dire que la super-généricité de code que j'ai mis en place, avec les crawlers et la gravité, n'est pas utilisée. Mais ça pourrait. J'avais testé, ça marchait. (Disons que ça a marché à un certain moment de la vie du programme).
+Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode aspro, mais sa gravité vers la gauche est gérée différemment). Tout ça pour dire que la super-généricité de code que j'ai mise en place n'est pas utilisée. Mais ça pourrait. J'avais testé d'autres direction de gravité, ça marchait. (Disons que ça a marché à un certain moment de la vie du programme).
 
 Pour une explication détaillée de "comment ça marche dans des directions autres que vers le bas" : voir code. Si j'explique avec du texte, ça va être super long et compliqué. C'est presque plus simple de regarder le code.
 
-"Algorithme : voir code". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis !
+"_Algorithme : voir code_". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis !
 
 ### Interactive Touch ###
 
 Les "Interactive Touches" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
 
-Les Interactive Touches sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce que ça fait. Il y en a un exemple dans le mode aspro. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#interactive-touch-sur-les-aspirines).
+Les Interactive Touches sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce qu'ils font. Il y en a un exemple dans le mode de jeu aspro. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#interactive-touch-sur-les-aspirines).
 
 Le fonctionnement général est le suivant :
 
@@ -723,8 +722,8 @@ Le fonctionnement général est le suivant :
 		 - Comme il s'est passé quelque chose dans l'aire de jeu, les tiles sélectionnées par le joueur ne correspondent peut-être plus à rien. Donc on efface la sélection.
 		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification de gravité ou de regénération, lock des stimulis, définition de `gravityCounter`, etc.
 		 - Gestion du tutoriel, s'il y en a un. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
-	 - Si besoin, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité, comme pour le zap.
-	 - pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler qu'on a fait quelque chose ou pas. Là, on s'en tape.
+	 - Comme pour un zap, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité.
+	 - Pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler si on a fait quelque chose. Là, on s'en tape.
 	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
 
 ## Spécificités des modes de jeu spécifique (ha ha) ##
