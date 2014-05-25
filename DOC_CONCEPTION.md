@@ -734,16 +734,16 @@ Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étend
 
 Ils sont gérés par les bouts de codes suivants :
 
- - `bigobj.py` : définition de la classe `BigObject`, (un gros objet générique). Et définition de classes héritées de `BigObject`, dotées d'une forme spécifique.
+ - `bigobj.py` : définition de la classe générique `BigObject`. Et définition de classes héritées de `BigObject`, dotées d'une forme spécifique dans l'aire de jeu.
  - `arebigob.py` : définition de la classe `ArenaBigObject`, héritée de `ArenaBasic`. Permet la gestion des gros objets.
- - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Elle sert à faire du remplissage dans la `matrixTile` de l'aire de jeu, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus.
+ - `coins.py` : définition de la classe `ChipBigObject`, héritée de `Chip`. Il s'agit d'une Chip faisant partie d'un gros objet. Elle sert à faire du remplissage dans `matrixTile`, mais rien de plus. Toute la gestion des gros objets se passe dans les deux fichiers mentionnés ci-dessus.
  - Rien dans `GameBasic` ni dans aucune classe héritée de `GameBasic`. La gestion des gros objets n'a pas d'influence à ce niveau du code. (Ce qui est presque étonnant vu comme tout est plus ou moins spaghettifié).
 
 La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle forme, tant qu'ils rentrent dans l'arène : avec des trous dedans, en plusieurs morceaux séparés, etc.
 
-J'avais testé tous ces cas, à une époque. Et ça marchait. À priori, ça devrait toujours marcher maintenant.
+J'avais testé tous ces cas, à une époque, et ça marchait. À priori, ça devrait toujours marcher maintenant.
 
-Le seul cas concret d'utilisation des gros objets est le mode Touillette. (Voir plus loin).
+Le seul cas concret de gros objets est le mode Touillette. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#le-mode-touillette).
 
 #### La classe BigObject ####
 
@@ -772,7 +772,8 @@ Cette action est réalisée par la fonction `ArenaBigObject.addBigObject`. Elle 
 
 La fonction effectue les actions suivantes :
 
- - Instanciation du `BigObject`, et ajout dans la variable membre `listBigObj`, une liste créée dans `ArenaBasic`. (Ça devrait pas, elle ne devrait exister que dans `ArenaBigObject`, mais on n'est plus à ça près).
+ - Instanciation du `BigObject`.
+ - Ajout de l'objet `BigObject` (haha) dans la liste `ArenaBigObject.listBigObj`. Cette liste a été créée par la classe mère `ArenaBasic`. (Ça devrait pas, elle ne devrait exister que dans `ArenaBigObject`, mais on n'est plus à ça près).
  - Création des `ChipBigObject` dans l'aire de jeu, sur toutes les tiles occupées par le gros objet. On écrase les chips qui étaient là avant, tel le gros bourrin.
 
 ##### Dessin #####
@@ -813,7 +814,7 @@ La fonction `applyGravity` effectue les actions suivantes :
 
 Ce mode est implémenté par la classe `GameTouillette`, (fichier `touyettg.py`), ainsi que par la classe `ArenaTouillette`, (fichier `touyetta.py`). Il comporte les particularités suivantes :
 
- - Présence de touillettes : gros objet ayant la forme d'une ligne horizontale de 5 tiles. (Voir chapitre précédent).
+ - Présence de touillettes : gros objet ayant pour forme une ligne horizontale de 5 tiles.
  - Une première touillette est créée dans l'aire de jeu, à un emplacement prédéfini.
  - D'autres touillettes peuvent être créées durant l'étape de regénération des chips.
  - Lorsqu'une touillette arrive en bas de l'aire de jeu, elle disparaît automatiquement.
@@ -823,7 +824,7 @@ Ce mode est implémenté par la classe `GameTouillette`, (fichier `touyettg.py`)
 
 La première touillette est créé à l'initialisation (`GameTouillette.__init__`), avec la fonction `ArenaBigObject.addBigObject`.
 
-L'ajout des touillettes est réalisé par les fonctions suivantes :
+L'ajout des autres touillettes est réalisé par les fonctions suivantes :
 
  - `regenerateAllChipsAfterOneGravity` (overridée).
  - `regenerateTouillette`.
@@ -831,7 +832,7 @@ L'ajout des touillettes est réalisé par les fonctions suivantes :
 Les étapes suivantes sont effectuées :
 
  - Appel de `regenerateAllChipsAfterOneGravity` par le code extérieur, après l'application d'une gravité.
- - Parcours de la ligne du haut de l'aire de jeu, pour détecter la liste des positions potentielles pouvant accueillir une touillette. Il s'agit des tiles vides, suivi de 4 tiles à droite vide aussi (oh surprise, ça fait pil poil la largeur d'une touillette). Les positions potentielles peuvent se chevaucher. Par exemple, une ligne de 6 tiles vide générera 2 positions potentielles.
+ - Parcours de la ligne du haut de l'aire de jeu, pour détecter la liste des positions potentielles pouvant accueillir une touillette. Il s'agit de tiles vides, dont les 4 tiles à droite sont vides aussi. (Oh surprise, ça fait pil poil la largeur d'une touillette). Les positions potentielles peuvent se chevaucher. Par exemple, une ligne de 6 tiles vide générera 2 positions potentielles.
  - Exécution de `regenerateTouillette`, en donnant la liste des positions potentielles en paramètre.
 	 - Calcul de probabilité, en fonction du nombre de touillettes déjà présentes dans l'aire de jeu, et du nombre de positions potentielles, pour déterminer si on doit créer une touillette ou pas.
 	 - Si oui, choix d'une position potentielle au hasard, et ajout de la touillette dans l'aire de jeu. (`addBigObject`).
@@ -859,8 +860,8 @@ Les étapes suivantes sont effectuées :
  - Application d'une gravité normale (`GameBasic.applyGravity`)
  - Il faut ensuite déterminer si l'aire de jeu est "instable". Elle peut l'être dans l'une des 3 conditions suivantes :
 	 - Instabilité normale d'un mode de jeu basique.
-	 - On vient de supprimer une touillette. Donc il y a des trous en bas. Donc il faudra ré-appliquer une gravité au prochain coup.
-	 - Il y a une touillette en bas de l'aire de jeu. On ne l'a pas supprimée, car elle vient tout juste de tomber. Il faudra l'enlever au prochain coup. (Cette vérification est effectuée par la fonction `hasTouilletteInBottom`)
+	 - On vient de supprimer une touillette.
+	 - Il y a une touillette en bas de l'aire de jeu. On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup. 
  - Comme dans un mode normal : re-détermination de `gravityCounter`, ou délockage des stimulis, selon que l'aire de jeu soit instable ou pas.
 
 #### Affichage du nombre de touillettes disparues ####
@@ -873,10 +874,10 @@ Les étapes suivantes sont effectuées :
 
  - Appel de `periodicAction`, à chaque cycle du jeu.
  - Si `mustDisplayRemoving` vaut True, on effectue toutes les actions suivantes :
-	 - On remet `mustDisplayRemoving` à False, pour ne pas effectuer cette action plusieurs fois de suite. (Ça me fait penser que si plusieurs touillettes sont supprimées par plusieurs zap différents, dans le même cycle, eh bien un seul affichage sera effectuée. Mais ce genre de cas bien débile n'arrive jamais. Ne serait-ce que parce qu'on ne peut pas faire 2 zap dans un même cycle).
-	 - Affichage, dans la console, du nombre de touillettes supprimés / nombre total à supprimer.
-	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte dans la console, indiquant que le joueur a gagné.
-	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie. Et moi j'ai pas à me faire suer à gérer un événement de quittage du programme.
+	 - On remet `mustDisplayRemoving` à False, pour ne pas effectuer cette action plusieurs fois de suite. (Ça me fait penser que si plusieurs touillettes sont supprimées par plusieurs zap différents, dans le même cycle de jeu, eh bien un seul affichage sera effectuée. Mais ce genre de cas bien débile n'arrive jamais. Ne serait-ce que parce qu'on ne peut pas faire 2 zap dans un même cycle).
+	 - Affichage dans la console, du nombre de touillettes supprimées et du nombre total à supprimer.
+	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte indiquant que le joueur a gagné.
+	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie. Et comme ça j'ai pas à me faire suer à gérer un événement de quittage du programme.
 
 ### Le mode Aspro ###
 
