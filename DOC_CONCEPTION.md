@@ -695,6 +695,8 @@ La détermination de la gravité, son application, et la regénération des chip
 
 Selon le sens dans lequel on parcourt l'aire de jeu pour effectuer ces tâches, on peut appliquer la gravité dans la direction qu'on veut.
 
+Par exemple, pour appliquer une gravité, il faut un crawler dont le sens secondaire est inverse au sens de la gravité. (Le sens primaire peut être n'importe lequel, on s'en fout).
+
 La configuration des crawlers en fonction de la direction de gravité souhaitée est effectuée dans `GameXXX.initCommonStuff`, (à la fin de la fonction). On se sert de `DICT_GRAVITY_CONFIG`, défini dans `gambasic.py`.
 
 Tous les modes de jeu actuels utilisent une gravité vers le bas (sauf le mode aspro, mais sa gravité vers la gauche est gérée différemment). Tout ça pour dire que la super-généricité de code que j'ai mise en place n'est pas utilisée. Mais ça pourrait. J'avais testé d'autres direction de gravité, ça marchait. (Disons que ça a marché à un certain moment de la vie du programme).
@@ -795,10 +797,10 @@ La fonction `determineGravity` effectue les actions suivantes :
  - On obtient donc un objet `gravityMovements`, décrivant toutes les positions à déplacer dans le cadre de la gravité.
  - Pour qu'un gros objet tombe, il faut que toutes les tiles qu'il occupe soient soumises à la gravité. Sinon, le gros objet ne tombe pas, et toutes les tiles qui reposent sur lui ne tomberont pas non plus. Le non-tombage d'un gros objet peut entraîner le non-tombage d'autres gros objets qui reposent sur lui, et ainsi de suite. Pour implémenter cela, on utilise l'algorithme suivant :
  - Placement de tous les gros objets de l'aire de jeu dans `listBigObjInGravity`.
- - Pour chaque gros objet de cette liste :
+ - Pour chaque élément de cette liste :
 	 - On vérifie si les tiles occupée par le gros objet sont soumise à la gravité.
-	 - S'il n'y en a aucune, on enlève le gros objet de `listBigObjInGravity`.
-	 - Si elles y sont toutes, on laisse le gros objet dans `listBigObjInGravity`. On ne fait rien de plus.
+	 - S'il n'y en a aucune, on l'enlève de `listBigObjInGravity`.
+	 - Si elles y sont toutes, on le laisse dans `listBigObjInGravity`. On ne fait rien de plus.
 	 - S'il y en a certaines, mais pas toutes, on effectue les actions suivantes :
 		 - On enlève le gros objet de `listBigObjInGravity`.
 		 - On annule la gravité pour toutes les tiles occupées par le gros objet. (fonction `gravityMovements.cancelGravity`). C'est à dire que les tiles du gros objet, et toutes les tiles au-dessus d'elles, ne sont plus soumises à la gravité.
@@ -861,12 +863,12 @@ Les étapes suivantes sont effectuées :
  - Il faut ensuite déterminer si l'aire de jeu est "instable". Elle peut l'être dans l'une des 3 conditions suivantes :
 	 - Instabilité normale d'un mode de jeu basique.
 	 - On vient de supprimer une touillette.
-	 - Il y a une touillette en bas de l'aire de jeu. On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup. 
+	 - Il y a une touillette en bas de l'aire de jeu (la fonction `hasTouilletteInBottom` renvoie True). On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup. 
  - Comme dans un mode normal : re-détermination de `gravityCounter`, ou délockage des stimulis, selon que l'aire de jeu soit instable ou pas.
 
 #### Affichage du nombre de touillettes disparues ####
 
-Cette action est réalisée par la fonction `GameTouillette.periodicAction`. C'est vraiment bizarre et salement bourrin d'avoir mis ce code ici, mais je ne savais pas où le mettre ailleurs. C'est du code qui doit être exécuté à la fin d'une suite de gravité, mais qui n'a rien à voir avec la gravité elle-même. Car on pourrait imaginer d'autres processus qui éliminent des touillettes dans l'aire de jeu, et qui provoquerait également cette action d'affichage.
+Cette action est réalisée par la fonction `GameTouillette.periodicAction`. C'est vraiment bizarre et salement bourrin d'avoir mis ce code ici, mais je ne savais pas où le mettre ailleurs. C'est du code qui doit être exécuté à la fin d'une gravité, mais qui n'a rien à voir avec la gravité elle-même. Car on pourrait imaginer d'autres processus éliminant des touillettes dans l'aire de jeu, et qui provoquerait également cette action d'affichage.
 
 Bref voilà, c'est dans `periodicAction`, et puis c'est tout.
 
@@ -885,7 +887,7 @@ Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ain
 
  - La gravité est vers le bas, comme d'habitude, mais les chips ne se regénèrent pas en haut.
  - Une seconde gravité est appliquée, après celle vers le bas. Il s'agit du "Gravity Rift" : lorsqu'il y a une colonne complètement vide, tous ce qui est à droite est déplacé d'une case vers la gauche. La colonne tout à droite devient donc vide, c'est là qu'on regénère les chips.
- - L'aire de jeu comporte des demi-cachets d'aspirine, placés initialement à des endroits définis en dur.
+ - L'aire de jeu comporte des demi-cachets d'aspirine, placés au début du jeu, à des endroits définis en dur.
  - Lorsque deux demi-cachets gauche et droite sont l'un à côté de l'autre, le joueur peut cliquer sur l'un d'eux, pour les fusionner en un cachet entier.
  - Le joueur peut également cliquer sur un cachet entier pour le prendre.
  - Le but est de prendre 3 cachets d'aspirine.
@@ -912,21 +914,19 @@ Le second temps de la gravité est un "Rift", vers la gauche. Contrairement au p
 
 Le second temps de la gravité provoque des regénérations. Pour cela, on utilise le crawler `GameAspirin.crawlerRegenRift`.
 
-Pour déterminer les mouvements de Rift, on utilise la fonction `ArenaBasic.determineGravityFullSegment`, avec en paramètre le crawler `GameAspirin.gravityMovementsRift`. Ce crawler parcourt l'aire de jeu colonne par colonne, en allant de la gauche vers la droite. (Chaque colonne est parcourue de haut en bas, mais on s'en fout).
+Pour déterminer les mouvements de Rift, on utilise la fonction `ArenaBasic.determineGravityFullSegment`, avec en paramètre le crawler `GameAspirin.gravityMovementsRift`. Ce crawler parcourt l'aire de jeu colonne par colonne, en allant de la gauche vers la droite.
 
 La fonction `ArenaBasic.determineGravityFullSegment` effectue les actions suivantes :
 
  - Parcours de l'aire de jeu avec le crawler, jusqu'à trouver une colonne entièrement vide. Lorsque ça arrive, on retient sa coordonnée X, et on passe tout de suite à l'étape suivante. Pas la peine de parcourir le reste de l'aire de jeu. S'il y a d'autres segments vides, ils seront détectés lors de gravité suivantes.
  - Ajout de plusieurs mouvements de gravité, dans l'objet `GravityMovements` à retourner. Alors là c'est fait de manière un peu bizarre, avec un fort risque de se mélanger les crayons entre les différentes coordonnées.
 	 - Les coordonnées primaires des mouvements de gravité sont : Y = (de 0 à tout en bas de l'aire de jeu).
-	 - La coordonnée secondaire de chaque début de mouvement de gravité est X = (position de la colonne vide)
+	 - La coordonnée secondaire de chaque début de mouvement de gravité est X = (position de la colonne vide).
 	 - La coordonnée secondaire de chaque fin de mouvement de gravité est X = (tout à droite de l'aire de jeu).
  - Donc pour ajouter ces mouvements, on utilise toujours `GameAspirin.gravityMovementsRift`, mais on le refait partir du début, et on ne lui fait parcourir qu'une colonne. À chaque itération, la coordonnée primaire du mouvement de gravité est égale à la coordonnée secondaire du crawler.
  - Je vous laisse réfléchir à tout ça. Si c'était à refaire, j'essayerais de trouver une manière plus simple d'exprimer tous ces mouvements et ces parcours, tout en essayant de rester le plus générique possible.
 
 Pour appliquer les mouvements de Rift, on utilise donc `GameAspirin.gravityMovementsRift`, dûment rempli par l'étape ci-dessus. On utilise aussi le crawler "qui va bien" pour appliquer une gravité vers la gauche. C'est à dire `GameAspirin.crawlerGravRiftApply`.
-
-Pour appliquer une gravité, il faut un crawler dont le sens secondaire est inverse au sens de la gravité. (Le sens primaire peut être n'importe lequel, on s'en fout).
 
 Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effectuées :
 
@@ -938,8 +938,8 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
 		 - Sinon, détermination de gravité Rift.
 		 - L'objet `gravityMovementsRift` contient éventuellement des mouvements à appliquer. Si c'est le cas, on renvoie True.
 		 - Sinon, on renvoie False.
-	 - (retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#suppression-des-demi-cachets-en-bas-de-laire-de-jeu).
+	 - (Retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
+	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#suppression-des-demi-cachets-en-bas-de-laire-de-jeu)).
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
@@ -953,7 +953,7 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 			 - Regénération des chips de la colonne tout à droite, en appelant `GameAspirin.arena.regenerateAllChipsAfterOneGravity`, avec le crawler de regénération spécialement prévu pour : `crawlerRegenRift`.
 		 - Sinon :
 			 - Exécution de `removeHalfAsproBottom`.
-	 - (retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal.
+	 - (Retour à `handleGravity`). Exécution des mêmes actions que dans le mode de jeu normal.
 	 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
 	 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
