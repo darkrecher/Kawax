@@ -1083,6 +1083,7 @@ Si c'était à refaire, j'essayerais de le gérer avec des événements qui s'é
 Je me permet également d'ajouter que je n'ai jamais su si on doit dire "tutoriels" ou "tutoriaux". Ce sera donc "tutoriels". Ne venez pas m'embêteriels.
 
 Les tutoriels sont gérés par les fichiers de code suivants :
+
  - `tutorial.py`
  - `blinker.py`
  - `gamemode/gambtuto.py` (tutoriel du mode de jeu Basique)
@@ -1097,21 +1098,21 @@ L'info principale d'une étape est le type de condition pour passer à l'étape 
 
  - `STEP_COND_NEVER` : condition impossible. On ne peut pas passer à l'étape suivante. (En général, on met cette valeur pour la dernière étape).
  - `STEP_COND_STIM` : on passe à l'étape suivante sur le stimuli spécifique "next tutorial step". C'est à dire lorsque le joueur appuie sur la touche "F" pour afficher le texte suivant.
- - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tiles spécifique. Lorsqu'on utilise cette condition, il faut définir la variable membre `listPosCond`. Elle doit contenir une liste de `pygame.Rect`, correspondant aux positions à zapper. Le joueur doit zapper exactement cette liste, ni plus ni moins. Mais il n'y a pas de distinction entre les sélections "chemin principal" et "sélection additionnelle".
+ - `STEP_COND_SELECT_TILES` : on passe à l'étape suivante si le joueur parvient à faire un zap sur une sélection de tiles spécifique. Lorsqu'on utilise cette condition, il faut définir la variable membre `listPosCond`. Elle doit contenir une liste de `pygame.Rect`, correspondant aux positions à zapper. Le joueur doit zapper exactement cette liste, ni plus ni moins. Mais il n'y a pas de distinction entre les deux modes de sélections de tiles.
  - `STEP_COND_INTERACTIVE_TOUCH_SUCCESSED` : on passe à l'étape suivante si le joueur effectue un Interactive Touch qui a une influence sur l'aire de jeu. Cet Interactive Touch peut être fait sur n'importe quelle chip. (D'ailleurs c'est pas top, j'aurais du ajouter une contrainte éventuelle sur la position).
 
 En plus de `conditionType`, un `TutorialStep` contient également les variables membres suivantes :
 
  - `soundId` : None, ou objet `pygame.mixer.Sound`. Le son à jouer lorsque l'étape est atteinte.
- - `listTextDescrip` : liste de string. Texte à écrire dans la console lorsque l'étape est atteinte. Rappelons que la console est un peu pourrie, et qu'elle est artificiellement limitée à 10 caractères par ligne. `listTextDescrip` est donc une liste, et non pas une grande string unique. Ça permet d'indiquer manuellement où sont les sauts de ligne.
- - `listPosBlink` : None, ou liste de `pygame.Rect`. Liste de positions dans l'aire de jeu à faire blinker. Les tiles apparaissent entourées de bleus clignotant pendant quelques secondes.
+ - `listTextDescrip` : liste de string. Texte à écrire dans la console lorsque l'étape est atteinte. Rappelons que la console est un peu pourrie, et qu'elle est artificiellement limitée à 10 caractères par ligne. `listTextDescrip` est donc une liste, et non pas une grande string unique. Ça permet d'indiquer explicitement où sont les sauts de ligne.
+ - `listPosBlink` : None, ou liste de `pygame.Rect`. Liste de positions dans l'aire de jeu à faire blinker. Les tiles qui blinkent sont dessinées avec un cadre bleu clignotant.
  - `tellObjective` : booléen. Indique s'il faut afficher l'objectif courant (nombre de brouzoufs et de sucres) à cette étape de tutoriel.
 
 #### La classe TutorialScheduler ####
 
-Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit pas sur des objets externes par elle-même. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
+Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit sur aucun objets externes par elle-même. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
 
-Cette classe ne sait que renvoyer les informations du `TutorialStep` courant, et recevoir des stimuli externes, afin d'avancer d'une étape, ou pas.
+Cette classe ne sait que renvoyer les informations du `TutorialStep` courant, et recevoir des stimulis externes, afin d'avancer d'une étape, ou pas.
 
 Pour instancier un `TutorialScheduler`, il faut lui passer une `listTutStepsDescrip`. Chaque élément de cette liste est un tuple, contenant les informations nécessaires à la création d'un `TutorialStep`. Chaque tuple doit contenir, dans cet ordre, les informations suivantes :
 
@@ -1122,7 +1123,7 @@ Pour instancier un `TutorialScheduler`, il faut lui passer une `listTutStepsDesc
  - Une liste, éventuellement vide, de coordonnées. Sera convertie en liste de `pygame.Rect` pour créer `listPosBlink`.
  - `tellObjective`
 
-À la création, le `TutorialScheduler` se place à sa première étape.
+À la création, le `TutorialScheduler` se place à la première étape.
 
 Les fonctions suivantes permettent de récupérer les informations de l'étape courante :
 
@@ -1131,17 +1132,15 @@ Les fonctions suivantes permettent de récupérer les informations de l'étape c
  - getCurrentBlink
  - getCurrentTellObjective
 
-D'autres fonctions permettent d'envoyer un stimuli au `TutorialScheduler`. Leur nom commence tous par `takeStim`, parce qu'elles sont nommées du point de vue de la classe, et non du point de vue du code extérieur. (C'est complètement con, je sais). Ces fonctions renvoient toutes un booléen, indiquant si le `TutorialScheduler` a avancé d'une étape ou pas. Il s'agit des fonctions suivantes :
+D'autres fonctions permettent d'envoyer un stimuli au `TutorialScheduler`. Leur nom commencent tous par `takeStim`, parce qu'elles sont nommées du point de vue de la classe, et non du point de vue du code extérieur. (C'est complètement con, je sais). Ces fonctions renvoient toutes un booléen, indiquant si le `TutorialScheduler` a avancé d'une étape ou pas. Il s'agit des fonctions suivantes :
 
  - `takeStimTutoNext` : Le joueur a appuyé sur la touche "F". Le `TutorialScheduler` avance d'une étape si l'étape courante a `conditionType == STEP_COND_STIM`.
- - `takeStimInteractiveTouch` : Le joueur a effectué un Interactive Touch avec un impact sur l'aire de jeu. Avance d'une étape si `conditionType == STEP_COND_INTERACTIVE_TOUCH_SUCCESSED`.
- - `takeStimTileSelected` : Le joueur a effectué un zap. On passe en paramètre les positions des tiles sélectionnées. Avance d'une étape Si `conditionType == STEP_COND_SELECT_TILES` et que `listPosCond` est égal à la sélection du joueur. Mais si `listPosCond` ne correspond pas, non seulement on n'avance pas, mais en plus le `TutorialScheduler` se met dans l'état `totallyFailed`.
+ - `takeStimInteractiveTouch` : Le joueur a effectué un Interactive Touch qui a eu un impact sur l'aire de jeu. On avance d'une étape si `conditionType == STEP_COND_INTERACTIVE_TOUCH_SUCCESSED`.
+ - `takeStimTileSelected` : Le joueur a effectué un zap. Les positions des tiles sélectionnées sont passées en paramètre. On avance d'une étape si `conditionType == STEP_COND_SELECT_TILES` et que `listPosCond` est égal à la sélection du joueur. Mais si `listPosCond` ne correspond pas, non seulement on n'avance pas, mais en plus le `TutorialScheduler` se met dans l'état `totallyFailed`.
 
-L'état `totallyFailed` ne permet plus du tout d'avancer dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, sauf qu'il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et donc totally fail.
+L'état `totallyFailed` bloque complètement l'avancement dans les étapes. Le code extérieur est censé appeler la fonction `getFailText` et l'afficher dans la console, et ne plus rien faire d'autre concernant le tutoriel. Cette état correspond à une situation dans laquelle on a demandé au joueur de zapper certaines tiles en particulier, sauf qu'il a réussi à faire un zap différent. Dans ce cas, l'aire de jeu risque de ne plus correspondre à ce qui était prévu pour le tutoriel. Par sécurité, on bloque les étapes, et donc totally fail.
 
-Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur si les stimulis du jeu (sélection des tiles et zap) devraient être momentanément bloqués, du fait de l'état actuel du `TutorialScheduler`.
-
-Les stimulis doivent être bloqués lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit sur le jeu.
+Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur à quel moment les stimulis du jeu doivent être momentanément bloqués, c'est à dire lorsqu'on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit d'autres sur le jeu : pas de sélection, pas de zap.
 
 #### La classe Blinker ####
 
@@ -1156,10 +1155,10 @@ Le fichier `blinker.py` définit la classe `Blinker`, ainsi que deux constantes 
 
 La classe `Blinker` s'utilise de la manière suivante :
 
- - Instanciation, en lui passant en paramètre l'aire de jeu dans laquelle se trouve les tiles qu'elle devra blinker.
+ - Instanciation, en lui passant en paramètre l'aire de jeu.
  - Exécution de `startBlink`, en passant en paramètre la liste des positions à faire blinker.
  - Pour que le blink soit effectué, il faut exécuter périodiquement, une fois par cycle de jeu, la fonction `advanceTimerAndHandle`. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la Game Loop. Après appel de cette fonction, il faut redessiner l'aire de jeu.
- - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. La variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où.
+ - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. Dans ce dernier cas, la variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où.
 
 #### Création d'un tutoriel à partir d'un mode de jeu ####
 
@@ -1171,27 +1170,28 @@ Les 3 tutoriels existants sont définis dans les 3 fichiers suivants :
 
 Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc pour amener le joueur à effectuer des étapes prédéfines (en particulier les zaps), il faut définir en dur, et en cohérence entre elles, les infos suivantes :
 
- - Les positions à zapper
- - Les chips de ces positions
+ - Les positions à zapper.
+ - Les chips de ces positions.
  - Les consignes de zap (quantités de brouzoufs et de sucre à atteindre).
 
 Nous allons maintenant voir les morceaux de code à implémenter pour créer un mode tutoriel. (C'est nul de dire "nous allons voir", mais je sais pas comment le dire autrement).
 
 ##### Étapes du tutoriel #####
 
-Définir la liste d'étape `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite dans le chapitre précédent. (voir avant).
+Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#la-classe-tutorialscheduler).
 
-Certaines étapes de `listTutStepsDescrip` définissent des zap à effectuer, sur des listes de positions définies en dur (`listPosCond`). La bienséance veut qu'on fasse blinker ces positions, pour les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut faire ce qu'on veut si on a envie d'embrouiller le joueur.  
+Certaines étapes définissent un zap à effectuer, sur une liste de positions en dur (`listPosCond`). La bienséance veut qu'on fasse blinker ces positions, pour les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut embrouiller le joueur si on a envie.  
 
-La dernière étape de `listTutStepsDescrip` doit avoir `conditionType == STEP_COND_NEVER`. Aucune contrainte réelle sur ce point. Mais je ne sais pas ce que ça fait si on ne la respecte pas, je n'ai pas testé.
+La dernière étape de `listTutStepsDescrip` doit avoir `conditionType == STEP_COND_NEVER`. Si ce n'est pas le cas, je ne sais pas ce qui se passe, je n'ai pas testé.
 
 ##### Aire de jeu #####
 
-Afin que le tutoriel soit réussissable, il faut que toutes les positions à zapper (définies dans les `listPosCond`) contiennent des chips prédéfinis. En tenant compte du fait que la gravité est appliquée entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas. 
+Afin que le tutoriel soit réussissable, toutes les positions à zapper (définies dans les `listPosCond`) doivent contenir des chips prédéfinies. Attention, il faut tenir compte du fait que la gravité s'applique entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas. 
 
-Bref, il est donc nécessaire de définir une liste de chips en dur (position dans l'aire de jeu, type et valeur en brouzoufs). Les chips non définies seront créées au hasard, comme d'habitude.
+Bref, il est donc nécessaire de définir une liste de chips en dur (position dans l'aire de jeu + type + valeur). Les chips non définies seront créées au hasard, comme d'habitude.
 
-En général, les chips en dur sont définies par une liste de tuple de tuple : `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
+En général, les chips en dur sont définies par une liste de tuple de tuple, intitulée `LIST_TILE_TO_HARDDEFINE`. Chaque élément de cette liste contient les infos suivantes :
+
  - Tuple de deux int : positions (X, Y) dans l'aire de jeu.
  - Tuple d'une string et d'un int :
 	 - "C" : pièce de monnaie. "S" : sucre.
@@ -1211,17 +1211,15 @@ Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` que l'
 La classe `GameXXXTuto` doit overrider les fonctions suivantes :
 
  - `__init__` :
-	 - Récupération des variables `LIST_TUT_STEP_DESCRIP`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT`, pour les stocker en interne.
+	 - Récupération des variables `LIST_TUT_STEP_DESCRIP`, `LIST_TILE_TO_HARDDEFINE` et `LIST_ZAP_CONSTRAINT` pour les stocker en interne.
 	 - Créaton d'un `tutorialScheduler`, en lui passant `LIST_TUT_STEP_DESCRIP`.
 	 - Exécution de l'`__init__` de base, en lui passant le `tutorialScheduler`.
 	 - Création d'un `Blinker`
-	 - Initialisation d'une variable qui comptera le nombre de zap effectués.
-
+	 - Initialisation d'une variable `nbZapMade`, qui comptera le nombre de zap effectués.
  - `populateArena` : 
-	 - Placement des chips en dur, selon les infos définies au départ dans `LIST_TILE_TO_HARDDEFINE`.
-
+	 - Placement des chips en dur, selon les infos définies dans `LIST_TILE_TO_HARDDEFINE`.
  - `respawnZapValidator` : 
-	 - Dans les versions sans tuto, cette fonction doit recréer, après chaque zap, un nouveau `zapValidatorBase` à partir de données choisies au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon les infos définies dans `LIST_ZAP_CONSTRAINT`. On utilise le compteur de zap. Lorsque toutes les consignes de zap définies en dur ont été passées, on peut faire ce qu'on veut. Pour ne pas s'embêter, on revient à des créations avec du hasard.
+	 - Dans les versions sans tuto, cette fonction doit recréer, après chaque zap, un nouveau `zapValidatorBase` à partir de données choisies au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon le contenu de `LIST_ZAP_CONSTRAINT`. On utilise `nbZapMade` pour savoir où on en est dans la liste. Lorsque toutes les consignes de zap en dur ont été passées, on revient à des créations au hasard.
 
 Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans la classe de base `GameTouillette`, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillette. Cependant, lorsqu'il y a un tutoriel, il ne faut pas polluer la console avec ce genre de message. (Il y a déjà suffisamment de blablabla). L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
 
