@@ -971,7 +971,7 @@ Cette suppression a été mise en place pour deux raisons :
  - Augmenter un peu la difficulté, sinon on s'ennuie.
  - Donner au joueur la possibilité de vider complètement une colonne de l'aire de jeu, même si elle comporte un demi-cachet ne pouvant pas être fusionné avec un autre.
 
-Mais du coup, si un demi-cachet est supprimé de cette manière, on ne peut plus gagner la partie. Car il y a juste assez de cachets au départ. C'est ballot mais c'est comme ça. J'avais prévu une génération de cachets supplémentaires durant le jeu, mais ensuite je suis passé à autre chose. (boire).
+Mais du coup, si un demi-cachet est supprimé de cette manière, on ne peut plus gagner la partie. Car il y a juste assez de cachets au départ. C'est ballot mais c'est comme ça. J'avais prévu une génération de cachets supplémentaires durant le jeu, mais ensuite je suis passé à autre chose (boire).
 
 Pour bien montrer au joueur ce qui se passe dans l'aire de jeu, la suppression est faite en deux temps :
 
@@ -1016,7 +1016,7 @@ Cette action est réalisée par les fonctions suivantes :
 
 Les actions suivantes sont effectuées :
 
- - Le joueur clique sur une chip de l'aire de jeu. Cette action est enregistré dans `GameBasic.stimuliStocker.posArenaToInteractTouch`.
+ - Le joueur clique sur une chip de l'aire de jeu. Cette action est enregistrée dans `GameBasic.stimuliStocker.posArenaToInteractTouch`.
  - La Game Loop appelle la fonction overridée `ArenaAspirin.stimuliInteractiveTouch`
  	- Exécution de la fonction `ArenaAspirin.mergeAsproHalf`
 	 	- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproHalfLeft`, et que la chip à droite est une `ChipAsproHalfRight`, alors on effectue les actions suivantes :
@@ -1030,7 +1030,7 @@ Les actions suivantes sont effectuées :
 		- Sinon, il ne s'est rien passé d'intéressant. `mergeAsproHalf` renvoie False.
 	- Si `mergeAsproHalf` n'a rien fait, exécution de la fonction `ArenaAspirin.takeAsproFull`.
 		- Si la chip sur laquelle le joueur a cliqué est une `ChipAsproFull` :
-			- Zap de la tile cliqué, afin de remplacer la `ChipAsproFull` par une `ChipNothing`
+			- Zap de la tile cliquée, afin de remplacer la `ChipAsproFull` par une `ChipNothing`.
 			- Définition de la variable membre `hasTakenAsproFull` à True. (Utilisée par le code extérieur).
 			- `takeAsproFull` renvoie True.
 		- Sinon, il ne s'est rien passé d'intéressant. `takeAsproFull` renvoie False.
@@ -1043,10 +1043,10 @@ Les actions suivantes sont effectuées :
 		 	 - Sinon, il ne s'est rien passé de spécial précédemment. `getAndResetTakenAsproFull` renvoie False.
 	 - Si `getAndResetTakenAsproFull` a renvoyé True, on effectue les actions suivantes :
 		 - Augmentation de la variable membre `nbAspirinTaken`.
-		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte dans la console, indiquant que le joueur a gagné. (On ne fait rien de plus, ce qui permet au joueur de continuer à jouer).
-		 - Sinon, affichage d'un autre texte : nombre d'aspirine pris, et nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, à ce sujet : [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gameaspiringamestimuliinteractivetouch)).
+		 - Si `nbAspirinTaken` n'a pas encore atteint 3 : affichage, dans la console, du nombre d'aspirine pris et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, à ce sujet : [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gameaspiringamestimuliinteractivetouch))
+		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte indiquant que le joueur a gagné. On ne fait rien de plus, ce qui permet de continuer à jouer.
 
-La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True pour le remettre à False tout de suite après, à un autre niveau du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu, les tiles, les chips, ...)
+La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True pour le remettre à False tout de suite après, à un autre endroit du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu).
 
 Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il a été pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
 
@@ -1054,13 +1054,13 @@ Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena 
 
 Cette action est réalisée par la fonction overridée `GameAspirin.populateArena`.
 
-Elle est appelée dans `GameBasic.__init__`, après instanciation de l'arena, et remplissage avec des chips au hasard.
+Elle est appelée dans `GameBasic.__init__`, après instanciation de l'arena, et remplissage par des chips au hasard.
 
 La fonction remplace certaines chips existantes par des demi-cachets droit et gauche. Les positions de remplacement sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
 
 #### Génération des demi-cachets (non implémenté) ####
 
-J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir fini, et je n'ai plus la motivation pour me replonger dedans.
+J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir finie, et je n'ai plus la motivation pour me replonger dedans.
 
 J'ai conservé le code correspondant, mais il n'est utilisé nul part. Je ne me souviens plus comment il fonctionne, si il fonctionne réellement comme je l'avais imaginé, et si il a été testé.
 
