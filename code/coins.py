@@ -118,6 +118,7 @@ class ChipCoin(Chip):
         Chip.__init__(self, chipType=CHIP_COIN, brouzouf=brouzouf)
 
         DICT_IMG_FILE_FROM_BROUZOUF = {
+            0 : "coin_00.png",
             1 : "coin_01.png",
             2 : "coin_02.png",
             5 : "coin_05.png",
