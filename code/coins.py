@@ -129,7 +129,6 @@ class ChipCoin(Chip):
         if img_file is not None:
             self.coinImage = loadImg(img_file, colorkey=None)
         else:
-            # TODO : à virer quand y'aura toutes les images.
             self.color = (240, 240, 240)
             self.coinImage = pygame.Surface((32, 32)).convert()
 
@@ -158,19 +157,8 @@ class ChipSugar(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_SUGAR, sugar=1)
-
-        #tout à l'arrache. Osef.
-        self.color = (240, 240, 240)
-        self.coinImage = pygame.Surface((32, 32)).convert()
-
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
-        param = (self.coinImage, self.color, pyRect(4, 3, 24, 24), 1)
-        pygame.draw.rect(*param)
-
-        textSugar = crappyFont.render(u"S", 0, self.color)
-        posPixelSugar = textSugar.get_rect(center=(16, 16))
-        self.coinImage.blit(textSugar, posPixelSugar)
-
+        # Et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        self.coinImage = loadImg("sugar.png", colorkey=None)
 
     def getImgToDraw(self):
         """
