@@ -26,39 +26,39 @@
       <stop
          id="stop3977"
          offset="0"
-         style="stop-color:#494982;stop-opacity:1;" />
+         style="stop-color:#508249;stop-opacity:1;" />
       <stop
-         style="stop-color:#7171b1;stop-opacity:1;"
+         style="stop-color:#79b171;stop-opacity:1;"
          offset="0.5405013"
          id="stop3979" />
       <stop
          id="stop3981"
          offset="1"
-         style="stop-color:#494982;stop-opacity:1;" />
+         style="stop-color:#508249;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        id="linearGradient3957">
       <stop
-         style="stop-color:#494982;stop-opacity:1;"
+         style="stop-color:#508249;stop-opacity:1;"
          offset="0"
          id="stop3959" />
       <stop
          id="stop3965"
          offset="0.39757586"
-         style="stop-color:#7171b1;stop-opacity:1;" />
+         style="stop-color:#79b171;stop-opacity:1;" />
       <stop
-         style="stop-color:#494982;stop-opacity:1;"
+         style="stop-color:#508249;stop-opacity:1;"
          offset="1"
          id="stop3961" />
     </linearGradient>
     <linearGradient
        id="linearGradient3925">
       <stop
-         style="stop-color:#8787bc;stop-opacity:1;"
+         style="stop-color:#8dbc87;stop-opacity:1;"
          offset="0"
          id="stop3927" />
       <stop
-         style="stop-color:#353560;stop-opacity:1;"
+         style="stop-color:#3a6035;stop-opacity:1;"
          offset="1"
          id="stop3929" />
     </linearGradient>
@@ -217,7 +217,7 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="263.27288"
+     inkscape:cx="476.40787"
      inkscape:cy="316.61148"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
