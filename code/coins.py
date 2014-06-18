@@ -179,18 +179,8 @@ class ChipClope(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_CLOPE, selectable=False)
-
-        #tout à l'arrache. Osef.
-        self.color = (240, 240, 240)
-        self.coinImage = pygame.Surface((32, 32)).convert()
-
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
-        param = (self.coinImage, self.color, pyRect(2, 5, 28, 20), 1)
-        pygame.draw.rect(*param)
-
-        textSugar = crappyFont.render(u"M", 0, self.color)
-        posPixelSugar = textSugar.get_rect(center=(16, 16))
-        self.coinImage.blit(textSugar, posPixelSugar)
+        # Et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        self.coinImage = loadImg("rock.png", colorkey=None)
 
 
     def getImgToDraw(self):
