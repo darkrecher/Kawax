@@ -265,18 +265,8 @@ class ChipAsproFull(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_FULL, selectable=False)
-
-        #tout à l'arrache. Osef.
-        self.color = (240, 240, 240)
-        self.coinImage = pygame.Surface((32, 32)).convert()
-
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
-        param = (self.coinImage, self.color, (16, 16), 12, 1)
-        pygame.draw.circle(*param)
-
-        param = (self.coinImage, self.color, (16, 5), (16, 27))
-        pygame.draw.line(*param)
-
+        # Et ça s'appelle toujours coinImage alors que ça devrait pô. osef
+        self.coinImage = loadImg("aspro_full.png", colorkey=None)
 
     def getImgToDraw(self):
         """
