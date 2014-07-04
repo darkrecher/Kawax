@@ -265,7 +265,6 @@ class ChipAsproFull(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_FULL, selectable=False)
-        # Et ça s'appelle toujours coinImage alors que ça devrait pô. osef
         self.coinImage = loadImg("aspro_full.png", colorkey=None)
 
     def getImgToDraw(self):
@@ -286,18 +285,7 @@ class ChipAsproHalfLeft(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_HALF_LEFT, selectable=False)
-
-        #tout à l'arrache. Osef.
-        self.color = (240, 240, 240)
-        self.coinImage = pygame.Surface((32, 32)).convert()
-
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
-        param = (self.coinImage, self.color, pyRect(4, 4, 24, 24), math.pi/2, 3*math.pi/2, 1)
-        pygame.draw.arc(*param)
-
-        param = (self.coinImage, self.color, (16, 5), (16, 27))
-        pygame.draw.line(*param)
-
+        self.coinImage = loadImg("aspro_hleft.png", colorkey=None)
 
     def getImgToDraw(self):
         """
@@ -316,18 +304,7 @@ class ChipAsproHalfRight(Chip):
         """
 
         Chip.__init__(self, chipType=CHIP_ASPRO_HALF_RIGHT, selectable=False)
-
-        #tout à l'arrache. Osef.
-        self.color = (240, 240, 240)
-        self.coinImage = pygame.Surface((32, 32)).convert()
-
-        #et ça s'appelle toujours coinImage alors que ça devrait pô. osef
-        param = (self.coinImage, self.color, pyRect(4, 4, 24, 24), 3*math.pi/2, 5*math.pi/2, 1)
-        pygame.draw.arc(*param)
-
-        param = (self.coinImage, self.color, (16, 5), (16, 27))
-        pygame.draw.line(*param)
-
+        self.coinImage = loadImg("aspro_hright.png", colorkey=None)
 
     def getImgToDraw(self):
         """
