@@ -29,6 +29,8 @@ TRIP : non c'est bon, ça va un peu mieux.
 """
 
 import random
+import sys
+import os
 import pygame
 import pygame.locals
 pygl = pygame.locals
@@ -55,7 +57,10 @@ LIST_INTRO_TEXT_FRENCH = (
     u"6 : mode aspirine - jeu",
     u"",
     u"E : english.   F : français",
+    u"Entrée : ouvrir le fichier lisezmoi.txt.",
+    u"",
     u"http://recher.wordpress.com",
+    u"Dons acceptés en Bitcoin, Litecoin, Dogecoin, Nxt.",
 )
 
 LIST_INTRO_TEXT_ENGLISH = (
@@ -68,7 +73,10 @@ LIST_INTRO_TEXT_ENGLISH = (
     u"6 : aspirin - game",
     u"",
     u"E : english.   F : français",
+    u"Return : open the readme.txt file.",
+    u"",
     u"http://recher.wordpress.com",
+    u"Donations accepted in Bitcoin, Litecoin, Dogecoin, Nxt.",
 )
 
 DICT_GAME_CLASS_FROM_KEY = {
@@ -101,13 +109,27 @@ def displayMainMenu(screen):
     for introText in listIntroText:
         imgText = fontConsole.render(introText, 0, (255, 255, 255))
         screen.blit(imgText, pyRect(xposIntroText, yposIntroText))
-        yposIntroText += 40
+        yposIntroText += 30
         if first:
             first = False
             xposIntroText += 40
-            yposIntroText += 30
+            yposIntroText += 20
     pygame.display.flip()
 
+def open_file_with_default_app(path_file):
+    """
+    Ouvre un fichier avec l'application par défaut.
+    En fonction de son extension : .txt, .jpg, ...
+    Fonctionne, à priori, sur tous les OS.
+    Bordel de merde, personne n'a pensé à faire une fonction toute faite
+    pour ça ? Battery included, mes fesses.
+    """
+    if sys.platform.startswith('linux') or sys.platform.startswith('posix'):
+        subprocess.call(["xdg-open", path_file])
+    if sys.platform.startswith('darwin'):
+        subprocess.call(('open', path_file))
+    else:
+        os.startfile(path_file)
 
 def askGameModeToUser(screen):
     displayMainMenu(screen)
@@ -120,16 +142,28 @@ def askGameModeToUser(screen):
                 raise SystemExit()
             elif event.type == pygl.KEYDOWN:
                 classGame = DICT_GAME_CLASS_FROM_KEY.get(event.key)
+
                 if event.key == pygl.K_e:
                     # enregistrement du language actuel dans une variable globale,
                     # à la bourrin. C'est dégueux, mais je sais pas comment faire mieux.
                     language.languageCurrent = language.LANGUAGE_ENGLISH
                     displayMainMenu(screen)
-                if event.key == pygl.K_f:
+
+                elif event.key == pygl.K_f:
                     # enregistrement du language actuel dans une variable globale,
                     # à la bourrin. C'est dégueux, mais je sais pas comment faire mieux.
                     language.languageCurrent = language.LANGUAGE_FRENCH
                     displayMainMenu(screen)
+
+                elif event.key == pygl.K_RETURN:
+                    dict_filename_from_lang = {
+                        language.LANGUAGE_FRENCH : "lisezmoi.txt",
+                        language.LANGUAGE_ENGLISH : "readme.txt",
+                    }
+                    filename_readme = dict_filename_from_lang[
+                        language.languageCurrent]
+                    open_file_with_default_app(filename_readme)
+
     screen.fill((0, 0, 0))
     return classGame
 
