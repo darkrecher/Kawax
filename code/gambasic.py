@@ -250,6 +250,28 @@ class GameBasic():
     def gameStimuliInteractiveTouch(self):
         """ à overrider """
         pass
+        # WIP TODO debug
+        if hasattr(self.arena, "listBigObj"):
+            for bigObject in self.arena.listBigObj:
+                securedPrint(u"bigobj : %s" % unicode(bigObject.posTopLeft))
+                securedPrint(u"       listPosArena : %s" % bigObject.listPosArena)
+        for line in self.arena.matrixTile:
+            for tile in line:
+                if tile.chip.getBrouzouf() == 10:
+                    print "10 ",
+                elif tile.chip.getBrouzouf() > 0:
+                    print " " + str(tile.chip.getBrouzouf()) + " ",
+                elif tile.chip.getSugar() > 0:
+                    print " S ",
+                elif tile.chip.getChipType() == 4:
+                    print " B ",
+                elif tile.chip.getChipType() == 1:
+                    print " 0 ",
+                else:
+                    print "?" + str(tile.chip.getChipType()) + " ",
+
+            print ""
+
 
 
     def showCurrentTutoStep(self):

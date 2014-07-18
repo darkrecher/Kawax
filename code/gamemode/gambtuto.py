@@ -240,7 +240,7 @@ LIST_TUT_STEP_DESCRIP = (
                 u"also some sugar.",
                 u"You must select the",
                 u"appropriate number of",
-                u"sugar lumps, besides.",
+                u"sugar lumps, besides",
                 u"the coins.",
             )
         },
