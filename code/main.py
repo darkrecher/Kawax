@@ -155,7 +155,7 @@ def askGameModeToUser(screen):
                     language.languageCurrent = language.LANGUAGE_FRENCH
                     displayMainMenu(screen)
 
-                elif event.key == pygl.K_RETURN:
+                elif event.key in (pygl.K_RETURN, pygl.K_KP_ENTER):
                     dict_filename_from_lang = {
                         language.LANGUAGE_FRENCH : "lisezmoi.txt",
                         language.LANGUAGE_ENGLISH : "readme.txt",
