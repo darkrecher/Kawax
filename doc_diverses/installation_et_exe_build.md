@@ -2,7 +2,9 @@
 
 ## Lancement du jeu à partir du code source (Windows) ##
 
-Le jeu peut fonctionner avec le python 2.5.4, ou une version supérieure. Cependant, la transformation en exécutable n'est peut-être pas réalisable avec une version supérieure, à cause d'un bug dans pygame2exe. (J'avais trouvé un message de forum qui en parlait, mais je n'ai plus le lien, désolé).
+Le jeu peut fonctionner avec python 2.5.4, ou une version 2.x supérieure (pas en python 3, car il n'est pas rétro-compatible). 
+
+Cependant, la transformation en exécutable n'est peut-être pas réalisable avec une version supérieure, à cause d'un bug dans pygame2exe. (J'avais trouvé un message de forum qui en parlait, mais je n'ai plus le lien, désolé).
 
 Dans la suite de cette documentation, on considérera donc uniquement la version python 2.5.4.
 
@@ -22,7 +24,9 @@ Choisir les options suivantes :
 
 Télécharger le fichier `pygame-1.9.1.win32-py2.5.msi` (installation de pygame pour python 2.5), à partir de http://www.pygame.org/download.shtml
 
-Exécuter ce fichier.
+Si vous utilisez une version plus récente de python, prenez garde à télécharger le pygame correspondant. Il y en a un pour les 2.6.x et un pour les 2.7.x. Ils sont récupérables au même endroit.
+
+Exécuter le fichier téléchargé.
 
 Choisir les options suivantes :
 

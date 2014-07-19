@@ -2,40 +2,29 @@ Un jeu vidéo. Pas tout à fait un match-3. Ce serait plutôt un "match sum(x)".
 
 # Kawax #
 
-(screenshot)
+![screenshot in-game kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/screenshot.png)
 
 Vous êtes un stagiaire-machine-à-café dans une quelconque grande entreprise. Votre chef vous a confié ses centimes de brouzoufs, vous devez les regrouper correctement pour faire les cafés. Et n'oubliez pas le sucre !
 
 # État actuel du machin #
 
-Ce jeu a été débuté en 2011. Je n'ai pas l'intention de le terminer. Les seules actions prévues sont les suivantes :
- - Ajouter des images un peu moins moches.
- - Éventuellement, ajouter du son.
- - Écrire un document de conception décrivant vite fait chaque fichier de code, et comment tout ce bazar s'articule, afin que je puisse reprendre le développement si jamais l'envie me revenait (hypothétiquement).
+Ce jeu a été débuté en 2011, pour être ensuite abandonné. Il a été repris en 2014 pour créer une version à peu près jouable, avec la documentation nécessaire pour (hypothétiquement) le reprendre de manière plus motivée. 
 
-# Installation #
+Pour l'instant, je n'ai pas l'intention de le terminer. 
 
-Installer le langage de programmation python, version 2.6 ou supérieure. (Pas de python 3, il n'est pas rétro-compatible avec les python 2.x). (http://www.python.org/download/)
+Les dernières actions que j'ai prévues :
+ - Créer des exécutables Mac et PC
+ - Finir les bouts de doc ici et là. 
 
-Installer la librairie pygame version 1.9.1, correspondant à la version de python que vous avez installé. (http://www.pygame.org/download.shtml)
+# Exécution à partir du code, conversion en exécutable #
 
-Télécharger ce repository sur votre disque et exécuter les commandes suivantes :
-
-`cd code`
-
-`C:\python27\python main.py`
-
-(remplacer C:\python27 par votre chemin d'installation de python).
+https://github.com/darkrecher/Kawax/blob/master/doc_diverses/installation_et_exe_build.md
 
 Sinon, vous pouvez aussi attendre un peu, je vais créer un exécutable stand-alone pour Windows et Mac OSX, et je mettrais ça sur indieDB.
 
-# Conversion en exécutable #
-
-Ça arrive. J'y travaille.
-
 # Doc de conception #
 
-J'y travaille aussi.
+https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
 
 # Crédits #
 
