@@ -1,4 +1,9 @@
 #################
+## dist directory. (contains executable made by pygame2exe)
+#################
+code/dist/
+
+#################
 ## Eclipse
 #################
 
