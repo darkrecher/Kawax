@@ -32,7 +32,6 @@ IMG_DIRECTORY_NAME = u"img"
 FONT_DIRECTORY_NAME = u"fontzy"
 SOUND_DIRECTORY_NAME = u"sound"
 
-crappyFont = pygame.font.Font(None, 30)
 # TODO : encoder dans l'encodage du File System.
 strPathFontConsole = os.sep.join((FONT_DIRECTORY_NAME, u"tempesta.ttf"))
 fontConsole = pygame.font.Font(strPathFontConsole, 12)

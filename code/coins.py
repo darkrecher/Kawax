@@ -15,7 +15,7 @@ Ou pas. Je sais pas encore.
 
 import pygame
 
-from common import crappyFont, pyRect, loadImg
+from common import pyRect, loadImg
 
 #Virer ça, et utiliser des isinstance ? Non. Parce que impossible à exporter.
 (CHIP_NOTHING,
@@ -129,16 +129,7 @@ class ChipCoin(Chip):
         if img_file is not None:
             self.coinImage = loadImg(img_file, colorkey=None)
         else:
-            self.color = (240, 240, 240)
-            self.coinImage = pygame.Surface((32, 32)).convert()
-
-            param = (self.coinImage, self.color, (16, 16), 15, 1)
-            pygame.draw.circle(*param)
-
-            textBrouzouf = crappyFont.render(str(brouzouf), 0, self.color)
-            posPixelBrouzouf = textBrouzouf.get_rect(center=(16, 16))
-            self.coinImage.blit(textBrouzouf, posPixelBrouzouf)
-
+            raise ValueError("Valeurs acceptées : 0, 1, 2, 5, 10")
 
     def getImgToDraw(self):
         """

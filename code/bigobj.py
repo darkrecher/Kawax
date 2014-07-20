@@ -15,8 +15,7 @@ Ou pas. Je sais pas encore.
 
 import pygame
 
-from common import (crappyFont, pyRect, pyRectTuple,
-                    loadImg, rectDeplFromDirDist)
+from common import pyRect, pyRectTuple, loadImg, rectDeplFromDirDist
 
 (BIG_OBJECT_GENERIC,
  BIG_OBJECT_MACHIN,
