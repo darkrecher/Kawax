@@ -31,6 +31,7 @@ TRIP : non c'est bon, ça va un peu mieux.
 import random
 import sys
 import os
+import subprocess
 import pygame
 import pygame.locals
 pygl = pygame.locals
@@ -79,20 +80,32 @@ LIST_INTRO_TEXT_ENGLISH = (
     u"Donations accepted in Bitcoin, Litecoin, Dogecoin, Nxt.",
 )
 
+# TRIP : no more trip here because this is distractive.
+
 DICT_GAME_CLASS_FROM_KEY = {
+    # Chiffres "classiques", situés au-dessus des lettres sur le clavier.
     pygl.K_1 : GameBasicTuto,
     pygl.K_2 : GameZapCounter,
     pygl.K_3 : GameTouyetteTuto,
     pygl.K_4 : GameTouillette,
     pygl.K_5 : GameAspirinTuto,
     pygl.K_6 : GameAspirin,
-    # TRIP : ha ha ha, you failed at teaching video game to your son. Blast !
+    # Chiffres du pavé numériques.
     pygl.K_KP1 : GameBasicTuto,
     pygl.K_KP2 : GameZapCounter,
     pygl.K_KP3 : GameTouyetteTuto,
     pygl.K_KP4 : GameTouillette,
     pygl.K_KP5 : GameAspirinTuto,
     pygl.K_KP6 : GameAspirin,
+    # Équivalent des chiffres classiques, obligé de les mettre à cause
+    # de ces cons de Mac, qui récupèrent des codes de touches dépendant
+    # de la configuration du clavier (azerty, qwerty, ...)
+    pygl.K_AMPERSAND : GameBasicTuto,
+    160 : GameZapCounter,
+    pygl.K_QUOTEDBL : GameTouyetteTuto,
+    pygl.K_QUOTE : GameTouillette,
+    pygl.K_LEFTPAREN : GameAspirinTuto,
+    161 : GameAspirin,
 }
 
 
