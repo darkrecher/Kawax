@@ -8,7 +8,7 @@ Repo : https://github.com/darkrecher/Kawax
 
 import random
 
-from common   import securedPrint, pyRect, ZAP_INTERACTIVE
+from common   import securedPrint, pyRect, pyRectTuple, ZAP_INTERACTIVE
 
 from gravmov  import (GravityMovements,
                       IN_GRAVITY_NOT, IN_GRAVITY_PARTLY, IN_GRAVITY_YES)
@@ -124,17 +124,35 @@ class ArenaTouillette(ArenaBigObject):
         listPosPotential = []
         nbContiguousChipNothing = 0
         T_WIDTH = 5
+        list_current_pos = []
+        list_is_nothing = []
+
+        # Remplissage initiale de list_current_pos et list_is_nothing.
+        for _ in range(T_WIDTH-1):
+            list_current_pos.append(pyRectTuple(crawlerRegen.posCur.topleft))
+            tile = self.getTile(crawlerRegen.posCur)
+            list_is_nothing.append( tile.chip.chipType == CHIP_NOTHING )
+            crawlerRegen.crawl()
 
         while crawlerRegen.coP == crawlerRegen.primStart:
+
+            # On prend. Donc il y a T_WIDTH elem dans les listes.
+            list_current_pos.append(pyRectTuple(crawlerRegen.posCur.topleft))
             tile = self.getTile(crawlerRegen.posCur)
-            if tile.chip.chipType == CHIP_NOTHING:
-                nbContiguousChipNothing += 1
-            else:
-                nbContiguousChipNothing = 0
-            crawlerRegen.crawl()
-            if nbContiguousChipNothing >= T_WIDTH:
-                newPosPotential = crawlerRegen.posCur.move((-T_WIDTH, 0))
+            list_is_nothing.append( tile.chip.chipType == CHIP_NOTHING )
+
+            # On teste.
+            if all(list_is_nothing):
+                newPosPotential = list_current_pos[0]
                 listPosPotential.append(newPosPotential)
+
+            # On dépile. Il y a T_WIDTH-1 elem dans les listes.
+            list_current_pos.pop(0)
+            list_is_nothing.pop(0)
+
+            # On avance. Si on est passé à la ligne suivante,
+            # pas la peine de continuer.
+            crawlerRegen.crawl()
 
         self.regenerateTouillette(listPosPotential)
 
