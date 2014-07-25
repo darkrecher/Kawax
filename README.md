@@ -22,6 +22,8 @@ https://github.com/darkrecher/Kawax/blob/master/doc_diverses/installation_et_exe
 
 Sinon, vous pouvez aussi attendre un peu, je vais créer un exécutable stand-alone pour Windows et Mac OSX, et je mettrais ça sur indieDB.
 
+Ce sera ici, quand ça y sera : http://www.indiedb.com/games/kawax
+
 # Doc de conception #
 
 https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
