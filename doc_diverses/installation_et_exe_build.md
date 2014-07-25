@@ -1,6 +1,8 @@
-# Exécution, transformation en exécutable #
+# Utilisation du code source #
 
-## Lancement du jeu à partir du code source (Windows) ##
+## Windows ##
+
+### Lancement du jeu à partir du code source ###
 
 Le jeu peut fonctionner avec python 2.5.4, ou une version 2.x supérieure (pas en python 3, car il n'est pas rétro-compatible). 
 
@@ -8,7 +10,7 @@ Cependant, la transformation en exécutable n'est peut-être pas réalisable ave
 
 Dans la suite de cette documentation, on considérera donc uniquement la version python 2.5.4.
 
-### Installation de python ###
+#### Installation de python ####
 
 Télécharger le fichier d'installation `python-2.5.4.msi`, à partir de https://www.python.org/download/releases/2.5.4/
 
@@ -20,7 +22,7 @@ Choisir les options suivantes :
  - Le répertoire que vous voulez. On considérera le choix par défaut : `C:\python25`
  - Installation complète (choisir toutes les features).
 
-### Installation de pygame ###
+#### Installation de pygame ####
 
 Télécharger le fichier `pygame-1.9.1.win32-py2.5.msi` (installation de pygame pour python 2.5), à partir de http://www.pygame.org/download.shtml
 
@@ -33,9 +35,9 @@ Choisir les options suivantes :
  - Install for all users.
  - Indiquer le répertoire ou vous avez installé python 2.5 : `C:\python25\`
 
-### Lancement du jeu ###
+#### Lancement du jeu ####
 
-Télécharger tout le contenu de ce repository. On considère qu'il se trouve à l'emplacement `C:\kawax\`. 
+Télécharger tout le contenu de ce repository. On considèrera qu'il est mis à l'emplacement `C:\kawax\`. 
 
 Ouvrir une console MS-DOS
 
@@ -48,9 +50,9 @@ Une fois que le mode de jeu est sélectionné, il n'est plus possible de revenir
 
 Amusez-vous bien !
 
-## Transformation en exécutable (Windows) ##
+### Transformation en exécutable  ###
 
-### Installation de py2exe ###
+#### Installation de py2exe ####
 
 Télécharger le fichier `py2exe-0.6.9.win32-py2.5.exe`, à partir de http://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/py2exe-0.6.9.win32-py2.5.exe/download?use_mirror=skylink&download=
 
@@ -58,7 +60,7 @@ Exécuter ce fichier.
 
 Indiquer le répertoire ou vous avez installé python 2.5 : `C:\python25\`
 
-### Création du .exe ###
+#### Création du .exe ####
 
 Ouvrir une console MS-DOS
 
@@ -95,7 +97,7 @@ D'autre part, on obtient le message d'avertissement suivant :
 
 Ça ne m'a jamais posé de problème. À priori, tous ces fichiers sont déjà présents sur la plupart des systèmes Windows. Pour distribuer le jeu, il suffit juste de distribuer le contenu du répertoire dist.
 
-### Lancement du jeu avec le .exe ###
+#### Lancement du jeu avec le .exe ####
 
 Le jeu se lance avec `C:\kawax\code\dist\main.exe`.
 
@@ -108,6 +110,144 @@ Le message d'erreur n'apparaît qu'une fois. Même si on recrée le .exe et qu'o
 
 Si vous avez l'anti-virus Avast, il va couiner un petit peu au premier lancement (validation d'un .exe non connu). Mais ça se passe sans aucun problème.
 
-Le contenu du répertoire `dist` n'est pas versionné dans ce repository.
+Le contenu du répertoire dist n'est pas versionné dans ce repository.
  
-TODO : Pour récupérer un exécutable déjà fait, allez sur indieDb (mais je l'ai pas encore mis) 
+#### Redistribution de l'exécutable ####
+
+Créer un fichier compressé (.zip ou autre), contenant tout lerépertoire `dist`. À savoir, les fichiers et répertoires suivants :
+
+    fontzy
+    img
+    sound
+    lisezmoi.txt
+    main.exe
+    MSVCR71.dll
+    readme.txt
+    w9xpopen.exe
+
+Pour installer le jeu sur un autre ordinateur, il suffit de copier le .zip, de le décompresser n'importe où sur le disque, et de double-cliquer sur main.exe.
+
+Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les termes de la licence (Art Libre ou CC-BY). En particulier : citer l'auteur. Un lien vers mon blog ou vers ce repository suffira.
+
+TODO : récupérer un exécutable déjà fait sur indieDb (mais je l'ai pas encore mis).
+
+## Mac OS X ##
+
+### Lancement du jeu à partir du code source ###
+
+À priori, pas de souci de version de python, ni pour jouer, ni pour transformer en exécutable. On peut utiliser n'importe quelle version 2.x à partir de la 2.5.
+
+#### Installation de python et pygame ####
+ 
+Je l'ai fait sur mon Mac, mais je ne me souviens plus des actions effectuées ! Si je n'ai rien noté de spécial, c'est qu'il ne devait rien y avoir de compliqué. On va dire ça comme ça.
+
+Mon header python est comme ça :
+
+    Python 2.6.4 (r264:75821M, Oct 27 2009, 19:48:32) 
+    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+
+Le contenu de mon répertoire lib : 
+
+`cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages`
+`ls`
+
+    README
+    altgraph-0.6.7-py2.6.egg
+    easy-install.pth
+    macholib-1.2.1-py2.6.egg
+    modulegraph-0.7.3-py2.6.egg
+    py2app-0.4.3-py2.6.egg
+    pygame
+    pygame-1.9.1release-py2.6.egg-info
+    setuptools-0.6c11-py2.6.egg
+    setuptools.pth
+
+La valeur de la variable python `pygame.version.ver` est : `'1.9.1release-svn2575'`
+
+Je ne sais pas trop dans quelle mesure ces renseignement sont utiles. Dans l'espoir que ça serve, je balance le tout.
+
+#### Lancement du jeu ####
+
+Télécharger tout le contenu de ce repository. On considèrera qu'il est mis à l'emplacement `~/Documents/recher/projets/kawax/`
+
+Ouvrir un terminal et exécuter les commandes suivantes :
+`cd ~/Documents/recher/projets/kawax/code`
+`python main.py`
+
+En supposant que l'exécutable python a été mis dans le path, normalement, ça se fait automatiquement à l'installation.
+
+Sinon, il faudrait faire quelque chose dans ce style (en prenant garde au numéro de version 2.6 / 2.7 / autre) :
+`/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python/python main.py`
+
+Le jeu devrait se lancer.
+
+### Transformation en exécutable  ###
+
+#### Installation de py2app et setuptools ####
+
+Comme pour l'installation de python et pygame : je ne sais plus comment j'ai fait ! Et si ça se trouve, il n'y a rien à faire, c'est déjà pré-installé.
+
+Se reporter au contenu de mon répertoire lib, et essayer d'avoir plus ou moins la même chose, en adaptant les divers numéros de versions.
+
+#### Création du .app ####
+
+Dupliquer le fichier `code/main.py` avec le nouveau nom `code/kawax.py`. (C'est le moyen le plus simple de créer une app avec le bon nom).
+
+Le fichier `code/kawax.py` n'est pas versionné dans ce repository, puisque c'est juste une copie.
+
+Ouvrir un terminal et exécuter les commandes suivantes :
+`cd ~/Documents/recher/projets/kawax/code`
+`python pygame2macapp.py py2app`
+
+Deux répertoires sont créés : 
+
+ - `code/build`. Répertoire temporaire qui peut être supprimé.
+ - `code/dist`. Contient l'application `kawax.app`. 
+
+Le contenu de ces 2 répertoires n'est pas versionné dans ce repository.
+
+TODO : Pour récupérer un exécutable déjà fait, allez sur indieDb (mais je l'ai pas encore mis)
+
+Il est possible d'avoir un .app avec l'icône de son choix. J'étais parvenu à le faire pour mon jeu précédent (Blarg). Je ne l'ai pas fait pour celui-là, car j'ai la flemme et c'est un jeu terminé fortement à l'arrache.
+
+Double-cliquer sur `code/dist/kawax.app`. Le jeu devrait se lancer sans problème.
+
+#### Création d'un disque .dmg contenant le .app ####
+
+Ouvrir un terminal et exécuter les commandes suivantes :
+`cd ~/Documents/recher/projets/kawax/code/dist`
+`hdiutil create -imagekey zlib-level=9 -srcfolder kawax.app kawax.dmg`
+
+Ça met un certain temps, mais il y a des petits points qui s'écrivent dans le terminal, pour montrer que c'est vivant.
+
+Le fichier `dist/kawax.dmg` est créé.
+
+#### Lancement du jeu à partir du disque .dmg ####
+
+Double-cliquer sur le .dmg pour monter le disque, comme on fait d'habitude sur les Mac.
+
+Dans le disque, double-cliquer sur le kawax.app.
+
+Pour les applications qui enregistrent des fichiers de sauvegarde, il faut préalablement copier le .app sur le disque dur (à l'endroit qu'on veut). Sinon, ça ne sauvegarde rien. Je l'avais constaté avec mon jeu précédent.
+
+Kawax n'enregistre aucune donnée, ni aucun fichier de sauvegarde. On peut donc le lancer directement depuis le .dmg, sans aucun problème. 
+
+#### Redistribution de l'application ####
+
+Copier simplement le .dmg sur un autre ordinateur. Puis exécuter le jeu comme expliqué dans le chapitre précédent.
+
+Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les termes de la licence (Art Libre ou CC-BY). En particulier : citer l'auteur. Un lien vers mon blog ou vers ce repository suffira.
+
+(Là je me répète un peu, mais j'y tiens)
+
+TODO : récupérer un exécutable déjà fait sur indieDb (mais je l'ai pas encore mis).
+
+## GNU/Linux, Ubuntu, Fedora, etc. ##
+
+Il est certainement possible de jouer à Kawax sur ces systèmes, puisque python et pygame sont compatibles dessus. Mais je n'ai pas ce genre de chose chez moi. (Désolé, je suis certainement un vilain). 
+
+Je vous laisse vous débrouiller tout seul, à coup de apt-get ou autres cabalisteries. Ça ne devrait pas être trop difficile, je suis sûr que vous êtes très fort. Bon courage !
+
+Si vous rencontrez des problèmes durant l'installation, l'exécution ou autre, n'hésitez pas à venir m'en faire part. Je les décrirais dans ce document pour en faire profiter tout le monde.
+ 
