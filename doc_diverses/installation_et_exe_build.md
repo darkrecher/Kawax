@@ -4,7 +4,7 @@
 
 ### Lancement du jeu à partir du code source ###
 
-Le jeu peut fonctionner avec python 2.5.4, ou une version 2.x supérieure (pas la version 3, car elle n'est pas rétro-compatible). 
+Le jeu peut fonctionner avec python 2.5.4, ou une version 2.x supérieure (pas la version 3, car elle n'est pas rétro-compatible).
 
 Cependant, la transformation en exécutable n'est peut-être pas réalisable avec une version supérieure à 2.5.4, à cause d'un bug dans pygame2exe. (J'avais trouvé un message de forum qui en parlait, mais je n'ai plus le lien, désolé).
 
@@ -24,7 +24,7 @@ Choisir les options suivantes :
 
 #### Installation de pygame ####
 
-Télécharger le fichier `pygame-1.9.1.win32-py2.5.msi`, à partir de http://www.pygame.org/download.shtml. 
+Télécharger le fichier `pygame-1.9.1.win32-py2.5.msi`, à partir de http://www.pygame.org/download.shtml.
 
 Si vous utilisez une version plus récente de python, prenez garde à télécharger le pygame correspondant. Il y en a un pour les 2.6.x et un pour les 2.7.x. Ils sont récupérables au même endroit.
 
@@ -37,7 +37,7 @@ Choisir les options suivantes :
 
 #### Lancement du jeu ####
 
-Télécharger tout le contenu de ce repository. On considèrera qu'il est mis à l'emplacement `C:\kawax\`. 
+Télécharger tout le contenu de ce repository. On considèrera qu'il est mis à l'emplacement `C:\kawax\`.
 
 Ouvrir une console MS-DOS
 
@@ -69,12 +69,12 @@ Exécuter les commandes suivantes
 
 Le fichier `pygame2exe.py` a été créé à partir du tutoriel : http://www.pygame.org/wiki/Pygame2exe?parent=CookBook
 
-À l'issue de l'exécution de ces commandes, un répertoire `C:\kawax\code\dist\` a été créé, contenant l'exécutable stand-alone du jeu. 
+À l'issue de l'exécution de ces commandes, un répertoire `C:\kawax\code\dist\` a été créé, contenant l'exécutable stand-alone du jeu.
 
 Parfois, on obtient le message d'erreur suivant :
 
-    WindowsError: [Error 32] 
-    Le processus ne peut pas accÚder au fichier car ce fichier est utilisÚ par un autre processus: 
+    WindowsError: [Error 32]
+    Le processus ne peut pas accÚder au fichier car ce fichier est utilisÚ par un autre processus:
     'build\\bdist.win32\\winexe\\collect-2.5\\encodings'
 
 Même avec ce message, la création de l'exécutable devrait avoir été faite.
@@ -110,7 +110,7 @@ Le message d'erreur n'apparaît qu'une fois.
 Si vous avez l'anti-virus Avast, celui-ci va couiner un petit peu au premier lancement (validation d'un .exe non connu). Mais ça se passe sans aucun problème.
 
 Le contenu du répertoire `dist` n'est pas versionné dans ce repository.
- 
+
 #### Redistribution de l'exécutable ####
 
 Créer un fichier compressé (.zip ou autre), contenant tout le répertoire `dist`. À savoir, les fichiers et répertoires suivants :
@@ -137,16 +137,16 @@ TODO : lien vers exécutable déjà fait sur indieDb (mais je l'ai pas encore mi
 À priori, pas de souci de version de python, ni pour jouer, ni pour transformer en exécutable. On peut utiliser n'importe laquelle, de la 2.5 à la 2.x.
 
 #### Installation de python et pygame ####
- 
+
 Je l'ai fait sur mon Mac, mais je ne me souviens plus des actions effectuées ! Si je n'ai rien noté de spécial, c'est qu'il ne devait rien y avoir de compliqué. (Je suppose).
 
 Mon header python est comme ça :
 
-    Python 2.6.4 (r264:75821M, Oct 27 2009, 19:48:32) 
+    Python 2.6.4 (r264:75821M, Oct 27 2009, 19:48:32)
     [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
 
-Mon répertoire lib contient les fichiers suivants : 
+Mon répertoire lib contient les fichiers suivants :
 
     cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
     ls
@@ -193,7 +193,7 @@ Se reporter au contenu de mon répertoire lib, et essayer d'avoir plus ou moins 
 
 #### Création du .app ####
 
-Dupliquer le fichier `code/main.py` avec le nouveau nom `code/kawax.py`. (C'est le moyen le plus simple de créer une app avec le bon nom).
+Dupliquer le fichier `code/main.py`, en le nommant `code/kawax.py`. (C'est le moyen le plus simple de créer une app avec le bon nom).
 
 Le fichier `code/kawax.py` n'est pas versionné dans ce repository, puisque c'est juste une copie.
 
@@ -202,10 +202,10 @@ Ouvrir un terminal et exécuter les commandes suivantes :
     cd ~/Documents/recher/kawax/code
     python pygame2macapp.py py2app
 
-Deux répertoires sont créés : 
+Deux répertoires sont créés :
 
  - `code/build`. Répertoire temporaire qui peut être supprimé.
- - `code/dist`. Contient l'application `kawax.app`. 
+ - `code/dist`. Contient l'application `kawax.app`.
 
 Le contenu de ces 2 répertoires n'est pas versionné dans ce repository.
 
@@ -232,7 +232,7 @@ Dans le disque, double-cliquer sur l'appli `kawax.app`.
 
 Pour les applications enregistrant des fichiers de sauvegarde, il faut préalablement copier le .app sur le disque dur (à l'endroit qu'on veut). Sinon, ça ne sauvegarde rien. Je l'avais constaté avec mon jeu précédent.
 
-Kawax n'enregistre aucune donnée, ni aucun fichier de sauvegarde. On peut donc le lancer directement depuis le .dmg, sans aucun problème. 
+Kawax n'enregistre aucune donnée, ni aucun fichier de sauvegarde. On peut donc le lancer directement depuis le .dmg, sans aucun problème.
 
 #### Redistribution de l'application ####
 
@@ -244,9 +244,8 @@ TODO : récupérer un exécutable déjà fait sur indieDb (mais je l'ai pas enco
 
 ## GNU/Linux, Ubuntu, Fedora, etc. ##
 
-Il est certainement possible de jouer à Kawax sur ces systèmes, puisque python et pygame sont compatibles dessus. Mais je n'ai pas ce genre de chose chez moi. Désolé, je devrait certainement être qualifié de vilain monsieur. 
+Il est certainement possible de jouer à Kawax sur ces systèmes, puisque python et pygame sont compatibles dessus. Mais je n'ai pas ce genre de chose chez moi. Désolé, je devrais certainement être qualifié de vilain monsieur.
 
 Je vous laisse vous débrouiller tout seul, à coup de apt-get ou autres cabalisteries. Ça ne devrait pas être trop difficile, je suis sûr que vous êtes très fort. Bon courage !
 
 Si vous rencontrez des problèmes durant l'installation, l'exécution ou autre, n'hésitez pas à m'en faire part. Je les décrirais dans ce document pour en faire profiter tout le monde.
- 

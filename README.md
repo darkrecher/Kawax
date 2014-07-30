@@ -8,13 +8,17 @@ Vous êtes un stagiaire-machine-à-café dans une quelconque grande entreprise. 
 
 # État actuel du machin #
 
-Ce jeu a été débuté en 2011, pour être ensuite abandonné. Il a été repris en 2014 pour créer une version à peu près jouable, avec la documentation nécessaire pour (hypothétiquement) le reprendre de manière plus motivée. 
-
-Pour l'instant, je n'ai pas l'intention de le terminer. 
+Le développement de ce jeu a débuté en 2011, puis a été abandonné. Il a ensuite été repris en 2014 pour créer une version à peu près jouable, et doté de la documentation nécessaire pour (hypothétiquement) le re-reprendre de manière plus motivée. 
 
 Les dernières actions que j'ai prévues :
- - Créer des exécutables Mac et PC
+
  - Finir les bouts de doc ici et là. 
+
+# Télécharger le jeu #
+
+Vous pouvez directement récupérer des exécutables pour Windows et MacOSX, sur la page IndieDb du jeu. Allez ici, puis cliquez sur l'option "downloads" dans le menu. 
+
+L'installation est assez simple : télécharger, décompresser le fichier, double-cliquer sur l'exécutable.
 
 # Exécution à partir du code, conversion en exécutable #
 
@@ -32,7 +36,7 @@ https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
 
 Créé par Réchèr.
 
-Le code et cette doc sont sous la double licence : Art Libre ou Creative Commons CC-BY (au choix).
+Le code et cette doc sont sous la double licence : Art Libre ou Creative Commons CC-BY (au choix). N'hésitez pas à me piquer les idées qui y sont pour en faire un jeu plus conséquent.
 
 Repository : https://github.com/darkrecher/Kawax
 
