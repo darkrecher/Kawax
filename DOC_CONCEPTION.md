@@ -1,5 +1,86 @@
+<a class="mk-toclify" id="document-de-conception-de-kawax"></a>
 # Document de conception de Kawax #
 
+<a class="mk-toclify" id="table-of-contents"></a>
+
+#Table des matières
+- [Document de conception de Kawax](#document-de-conception-de-kawax)
+    - [Avertissements](#avertissements)
+    - [Diagramme de classe](#diagramme-de-classe)
+    - [Déroulement des actions lors d'une partie type](#d-roulement-des-actions-lors-d-une-partie-type)
+        - [Initialisation générale, choix du mode de jeu](#initialisation-g-n-rale-choix-du-mode-de-jeu)
+        - [Initialisation des trucs dans GameXXX](#initialisation-des-trucs-dans-gamexxx)
+        - [Game Loop](#game-loop)
+    - [Description détaillée des aspects du jeu](#description-d-taill-e-des-aspects-du-jeu)
+        - [Initialisation des classes GameXXX et ArenaXXX](#initialisation-des-classes-gamexxx-et-arenaxxx)
+        - [Structure d'une Arena](#structure-d-une-arena)
+        - [Initialisation d'une Arena](#initialisation-d-une-arena)
+        - [Sélection des tiles](#s-lection-des-tiles)
+            - [Lorsque le joueur clique sur la fenêtre du jeu :](#lorsque-le-joueur-clique-sur-la-fen-tre-du-jeu)
+            - [Lorsque le joueur déplace la souris en maintenant le bouton appuyé :](#lorsque-le-joueur-d-place-la-souris-en-maintenant-le-bouton-appuy)
+            - [Lorsque le joueur relâche le bouton de la souris](#lorsque-le-joueur-rel-che-le-bouton-de-la-souris)
+            - [Description globale du rôle du stimuliStocker dans la sélection des tiles](#description-globale-du-r-le-du-stimulistocker-dans-la-s-lection-des-tiles)
+            - [Transmission des tiles qui ont été activées](#transmission-des-tiles-qui-ont-t-activ-es)
+            - [Traitement, par le selectorPlayerOne, d'une tile activée](#traitement-par-le-selectorplayerone-d-une-tile-activ-e)
+            - [Prise en compte de la première activation de tile, et détermination du mode de sélection](#prise-en-compte-de-la-premi-re-activation-de-tile-et-d-termination-du-mode-de-s-lection)
+            - [Prise en compte des activations de tile qui viennent après](#prise-en-compte-des-activations-de-tile-qui-viennent-apr-s)
+            - [Déselection en cascade](#d-selection-en-cascade)
+            - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s-lection-d-une-tile)
+        - ["Zap" d'un ensemble d'éléments](#zap-d-un-ensemble-d-l-ments)
+            - [La classe ZapValidator](#la-classe-zapvalidator)
+            - [Déroulement d'un zap](#d-roulement-d-un-zap)
+            - [Trucs qui auraient pu servir pour le zap, et en fait non](#trucs-qui-auraient-pu-servir-pour-le-zap-et-en-fait-non)
+        - [Stimuli lock/delock](#stimuli-lockdelock)
+        - [Gravité et regénération](#gravit-et-reg-n-ration)
+            - [Première vérification de l'instabilité](#premi-re-v-rification-de-l-instabilit)
+            - [Application des gravités successives](#application-des-gravit-s-successives)
+            - [Fin de gravité](#fin-de-gravit)
+            - [Regénération sans gravité](#reg-n-ration-sans-gravit)
+            - [Fonctionnement de gravityMovements](#fonctionnement-de-gravitymovements)
+            - [Détermination des mouvements de gravité](#d-termination-des-mouvements-de-gravit)
+            - [La classe ArenaCrawler](#la-classe-arenacrawler)
+            - [Configuration de gravité par les crawlers](#configuration-de-gravit-par-les-crawlers)
+        - [Interactive Touch](#interactive-touch)
+    - [Spécificités des modes de jeu spécifique (ha ha)](#sp-cificit-s-des-modes-de-jeu-sp-cifique-ha-ha)
+        - [Gestion des "gros objets"](#gestion-des-gros-objets)
+            - [La classe BigObject](#la-classe-bigobject)
+            - [La classe ArenaBigObject](#la-classe-arenabigobject)
+                - [Ajout d'un gros objet](#ajout-d-un-gros-objet)
+                - [Dessin](#dessin)
+                - [Gestion de la gravité](#gestion-de-la-gravit)
+        - [Le mode Touillette](#le-mode-touillette)
+            - [Ajout des touillettes](#ajout-des-touillettes)
+            - [Disparition des touillettes en bas de l'écran](#disparition-des-touillettes-en-bas-de-l-cran)
+            - [Affichage du nombre de touillettes disparues](#affichage-du-nombre-de-touillettes-disparues)
+        - [Le mode Aspro](#le-mode-aspro)
+            - [Gravity Rift](#gravity-rift)
+            - [Suppression des demi-cachets en bas de l'aire de jeu](#suppression-des-demi-cachets-en-bas-de-l-aire-de-jeu)
+            - [Interactive Touch sur les aspirines](#interactive-touch-sur-les-aspirines)
+            - [Création des demi-cachets au début du jeu](#cr-ation-des-demi-cachets-au-d-but-du-jeu)
+            - [Génération des demi-cachets (non implémenté)](#g-n-ration-des-demi-cachets-non-impl-ment)
+        - [Tutoriel](#tutoriel)
+            - [La classe TutorialStep](#la-classe-tutorialstep)
+            - [La classe TutorialScheduler](#la-classe-tutorialscheduler)
+            - [La classe Blinker](#la-classe-blinker)
+            - [Création d'un tutoriel à partir d'un mode de jeu](#cr-ation-d-un-tutoriel-partir-d-un-mode-de-jeu)
+                - [Étapes du tutoriel](#tapes-du-tutoriel)
+                - [Aire de jeu](#aire-de-jeu)
+                - [Liste des consignes de zap](#liste-des-consignes-de-zap)
+                - [Implémentation de tout ce bazar](#impl-mentation-de-tout-ce-bazar)
+            - [Intégration du tutoriel dans le reste du code](#int-gration-du-tutoriel-dans-le-reste-du-code)
+                - [Fonction GameBasic.showCurrentTutoStep](#fonction-gamebasicshowcurrenttutostep)
+                - [Réalisation d'un zap](#r-alisation-d-un-zap)
+                - [Appui sur la touche "F"](#appui-sur-la-touche-f)
+                - [Interactive touch](#interactive-touch)
+                - [handleGravity](#handlegravity)
+                - [Début du jeu](#d-but-du-jeu)
+                - [Reblink](#reblink)
+                - [ManualInGame](#manualingame)
+                - [GameAspirin.gameStimuliInteractiveTouch](#gameaspiringamestimuliinteractivetouch)
+- [Au revoir](#au-revoir)
+
+
+<a class="mk-toclify" id="avertissements"></a>
 ## Avertissements ##
 
 J'ai abandonné le développement de ce jeu. Le code n'est pas terminé, et contient beaucoup de parties non factorisée.
@@ -10,6 +91,7 @@ Une fois, au lycée, il y a eu un contrôle de Sciences Nat' (SVT pour les plus 
 
 Ceci est ma vengeance.
 
+<a class="mk-toclify" id="diagramme-de-classe"></a>
 ## Diagramme de classe ##
 
 ![diagramme classe kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/diagramme_pas_UML.png)
@@ -22,8 +104,10 @@ Les cadres bleus avec des lignes pointillés indiquent des zooms sur une partie 
 
 Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic` puis envoyée à `ArenaBasic`, qui fait des modifs dedans, la renvoie, et ainsi de suite.
 
+<a class="mk-toclify" id="d-roulement-des-actions-lors-d-une-partie-type"></a>
 ## Déroulement des actions lors d'une partie type ##
 
+<a class="mk-toclify" id="initialisation-g-n-rale-choix-du-mode-de-jeu"></a>
 ### Initialisation générale, choix du mode de jeu ###
 
  - Début du code de `main.py`
@@ -46,6 +130,7 @@ Les deux flèches en rond indiquent que la classe `GravityMovements` est créé 
 
  - Instanciation de la classe correspondant au mode choisi. Il s'agit, soit de la classe `GameBasic`, soit d'une classe héritée (leur nom commencent tous par "Game"). **Dans la suite de cette documentation, la classe `GameBasic` et les classes héritées seront désignées par le terme générique `GameXXX`.**
 
+<a class="mk-toclify" id="initialisation-des-trucs-dans-gamexxx"></a>
 ### Initialisation des trucs dans GameXXX ###
 
 fonction `GameXXX.__init__` :
@@ -94,6 +179,7 @@ Cette fonction commence par faire quelques bidouilleries d'init :
 
 Pour finir, la fonction `GameXXX.playOneGame()` entre dans la Game Loop, c'est à dire la boucle principale qui fait fonctionner le jeu.
 
+<a class="mk-toclify" id="game-loop"></a>
 ### Game Loop ###
 
 Le déroulement global de la Game Loop est le suivant :
@@ -118,8 +204,10 @@ Le déroulement global de la Game Loop est le suivant :
 
  - Rafraîchissement complet de l'écran. (Bourrin aussi).
 
+<a class="mk-toclify" id="description-d-taill-e-des-aspects-du-jeu"></a>
 ## Description détaillée des aspects du jeu ##
 
+<a class="mk-toclify" id="initialisation-des-classes-gamexxx-et-arenaxxx"></a>
 ### Initialisation des classes GameXXX et ArenaXXX ###
 
 L'initialisation est organisée de manière un peu bordelique. Les classes `GameXXX` possèdent toutes une fonction `__init__` et une fonction `initCommonStuff`.
@@ -142,6 +230,7 @@ Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer 
 
 Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
+<a class="mk-toclify" id="structure-d-une-arena"></a>
 ### Structure d'une Arena ###
 
 Les classes `ArenaXXX` possèdent une variable membre `matrixTile`. Il s'agit d'un tableau en 2D contenant des instances de `Tile` (une classe définie dans le fichier `tile.py`).
@@ -156,6 +245,7 @@ Les différents types de chip sont définis en héritant la classe `Chip`. Tout 
 
 Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la gravité), on déplace la chip, mais pas la tile. La tile ne change jamais, et on n'en crée pas de nouvelle durant une partie.
 
+<a class="mk-toclify" id="initialisation-d-une-arena"></a>
 ### Initialisation d'une Arena ###
 
 Les actions suivantes sont effectuées :
@@ -185,6 +275,7 @@ La regénération des chip après un zap, est également effectuée selon le mê
 
 Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération durant la partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
 
+<a class="mk-toclify" id="s-lection-des-tiles"></a>
 ### Sélection des tiles ###
 
 L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui feraient chacun leurs sélections respectives.
@@ -203,6 +294,7 @@ Tout le blabla de ce chapitre a pour but de décrire de quelle manière le conte
 
 À l'initialisation de `ArenaXXX`, on indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque `Tile` est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.
 
+<a class="mk-toclify" id="lorsque-le-joueur-clique-sur-la-fen-tre-du-jeu"></a>
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
 L'objet `GameXXX.stimuliStocker` le détecte (événement `pygame.locals.MOUSEBUTTONDOWN`).
@@ -221,6 +313,7 @@ D'autre part, le stimuliStocker retient les coordonnées de cette tile activée,
 
 Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
 
+<a class="mk-toclify" id="lorsque-le-joueur-d-place-la-souris-en-maintenant-le-bouton-appuy"></a>
 #### Lorsque le joueur déplace la souris en maintenant le bouton appuyé : ####
 
 Les actions effectuées suite à cette événement sont dans la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
@@ -249,6 +342,7 @@ Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu,
 
 Si le joueur maintient le curseur de souris appuyé, et revient vers l'aire de jeu mais par un autre endroit, alors `listPosArenaToActivate` contiendra une tile qui n'est pas forcément adjacente avec la dernière tile placée précédemment dans `listPosArenaToActivate`. Le code extérieur doit s'en débrouiller.
 
+<a class="mk-toclify" id="lorsque-le-joueur-rel-che-le-bouton-de-la-souris"></a>
 #### Lorsque le joueur relâche le bouton de la souris ####
 
 On réinitialise à None la variable `posArenaPrevious`.
@@ -257,6 +351,7 @@ On met à True la variable `mustStandBy`, qui sera utilisée par le code extéri
 
 Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False à chaque itération de game loop. Donc si le code extérieur veut réagir à cette variable, il doit le faire tout de suite.
 
+<a class="mk-toclify" id="description-globale-du-r-le-du-stimulistocker-dans-la-s-lection-des-tiles"></a>
 #### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
 
  - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les tiles dans cette liste ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
@@ -265,6 +360,7 @@ Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False �
 
 Le stimulistocker n'a aucune idée de ce qu'il faut faire avec les tiles activées (sélection en chemin principal, sélection additionnelle, déselection, ...). C'est le code extérieur qui s'en occupera.
 
+<a class="mk-toclify" id="transmission-des-tiles-qui-ont-t-activ-es"></a>
 #### Transmission des tiles qui ont été activées ####
 
 Cette action est effectuée dans la Game Loop. Les tiles activées sont transmises à l'objet `selectorPlayerOne` (instance de `Selector`, contenu dans l'objet `GameXXX`).
@@ -275,6 +371,7 @@ Les tiles activées sont transmises une par une, dans l'ordre de `listPosArenaTo
 
 C'est important qu'elles soient transmises une par une: Ça simplifie les choses, car ça oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement ou rapidement.
 
+<a class="mk-toclify" id="traitement-par-le-selectorplayerone-d-une-tile-activ-e"></a>
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
 le `Selector` possède une variable interne `selMode`, indiquant le mode de sélection en cours. Elle a 4 valeurs possibles :
@@ -290,6 +387,7 @@ Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, 
 
 Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY.
 
+<a class="mk-toclify" id="prise-en-compte-de-la-premi-re-activation-de-tile-et-d-termination-du-mode-de-s-lection"></a>
 #### Prise en compte de la première activation de tile, et détermination du mode de sélection ####
 
 Ces actions sont réalisées par la fonction `takeStimuliActivateTile`, dans le bloc commençant par `if self.selMode == SELMODE_STANDBY:`, ainsi que par la fonction `tryToActivatePath`.
@@ -308,6 +406,7 @@ La détermination du mode de sélection dépend des tiles déjà sélectionnées
 
  - Dans tous les autres cas. -> Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un début de path sur la tile activée. Le mode devient SELMODE_PATH.
 
+<a class="mk-toclify" id="prise-en-compte-des-activations-de-tile-qui-viennent-apr-s"></a>
 #### Prise en compte des activations de tile qui viennent après ####
 
 Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autres blocs `if`), et également par `tryToActivatePath`.
@@ -320,6 +419,7 @@ C'est comme lors de la première activation, mais en plus simple, car on a moins
 
  - en mode SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
 
+<a class="mk-toclify" id="d-selection-en-cascade"></a>
 #### Déselection en cascade ####
 
 L'ensemble de la sélection doit toujours être constitué d'un seul bloc.
@@ -328,6 +428,7 @@ Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles,
 
 Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment l'algo fonctionne en détail. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut.
 
+<a class="mk-toclify" id="modification-effective-de-la-s-lection-d-une-tile"></a>
 #### Modification effective de la sélection d'une tile ####
 
 Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. L'action est un peu alambiquée, et passe à travers plusieurs fonctions.
@@ -346,10 +447,12 @@ La modification de sélection est effectuée par l'imbrication d'exécution de f
  		- `Tile[position].selectionChange`.  En param : le numéro du joueur et le type de sélection.
  			- Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
 
+<a class="mk-toclify" id="zap-d-un-ensemble-d-l-ments"></a>
 ### "Zap" d'un ensemble d'éléments ###
 
 Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélectionné des tiles, pour tenter de les faire disparaître. Le zap ne fonctionne pas forcément, ça dépend de la contrainte actuelle, et des tiles sélectionnés.
 
+<a class="mk-toclify" id="la-classe-zapvalidator"></a>
 #### La classe ZapValidator ####
 
 Cette classe, et toutes celles qui en héritent, doivent contenir 3 fonctions :
@@ -368,6 +471,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 
 `ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
 
+<a class="mk-toclify" id="d-roulement-d-un-zap"></a>
 #### Déroulement d'un zap ####
 
 Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`. 
@@ -393,6 +497,7 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
  - Si le jeu a besoin de se "stabiliser" : déclenchement de la gravité et lock des stimulis. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
  - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription`. Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([Voir les tutoriels, donc](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
+<a class="mk-toclify" id="trucs-qui-auraient-pu-servir-pour-le-zap-et-en-fait-non"></a>
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
 
 Durant l'exécution du zap sur chaque chip, on transmet deux paramètres :
@@ -409,6 +514,7 @@ La fonction `Chip.zap()` renvoie toujours une instance de `ChipNothing`, mais el
 
 La fonction peut également renvoyer `None`, pour signaler de ne pas faire de remplacement. Ça peut servir dans le cas des chips à points de vie. Le zap modifie une valeur interne de la chip, mais ne remplace pas la chip elle-même.
 
+<a class="mk-toclify" id="stimuli-lockdelock"></a>
 ### Stimuli lock/delock ###
 
 Il s'agit d'un truc pas très bien géré, et qui a provoqué plein de bugs de partout. Je pense les avoir tout corrigé, mais rien n'est sûr.
@@ -430,6 +536,7 @@ Par contre, les clics "d'interactive touch" restent pris en compte, même lorsqu
 
 Les moments d'activation/suppression du lock sont détaillés dans d'autre partie de cette documentation. Voir partie ["Gravité"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration) et ["Tutoriel"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
+<a class="mk-toclify" id="gravit-et-reg-n-ration"></a>
 ### Gravité et regénération ###
 
 Ces actions sont gérées par les fonctions et variables suivantes :
@@ -447,6 +554,7 @@ Ces actions sont gérées par les fonctions et variables suivantes :
 
 Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gravité, ou lorsqu'il faut regénérer des chips, on dit qu'elle est dans un état "instable".
 
+<a class="mk-toclify" id="premi-re-v-rification-de-l-instabilit"></a>
 #### Première vérification de l'instabilité ####
 
 Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un Interactive Touch qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`).
@@ -464,6 +572,7 @@ Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a app
  - Locker les stimulis.
  - Définir `gravityCounter` à `DELAY_GRAVITY`, ce qui permettra d'appliquer la gravité/regénération ultérieurement. (la gravité n'est pas appliquée tout de suite lors de la première vérification).
 
+<a class="mk-toclify" id="application-des-gravit-s-successives"></a>
 #### Application des gravités successives ####
 
 Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Celle-c effectue les actions suivantes :
@@ -475,6 +584,7 @@ Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par
  - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
  - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.
 
+<a class="mk-toclify" id="fin-de-gravit"></a>
 #### Fin de gravité ####
 
 Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n'y a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée.
@@ -483,6 +593,7 @@ En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précéd
 
 D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne le contrôle pas, mais je tenais à le préciser).
 
+<a class="mk-toclify" id="reg-n-ration-sans-gravit"></a>
 #### Regénération sans gravité ####
 
 Lorsqu'en exécute une gravité une fois, on regénère tout de suite après les chips aux emplacements laissés vides, dans la ligne du haut. Cette action est effectuée par la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`.
@@ -505,6 +616,7 @@ Cette situation se règle avec l'enchaînement d'actions suivants :
 		 - `arena.regenerateAllChipsAfterOneGravity` est appelé. Les chips de la ligne du haut sont regénérées.
 		 - À nouveau, appel de `GameXXX.needStabilization`, qui devrait répondre False. On arrête les gravités et on délocke les stimulis.
 
+<a class="mk-toclify" id="fonctionnement-de-gravitymovements"></a>
 #### Fonctionnement de gravityMovements ####
 
 La classe `GravityMovements`, définie dans le fichier `gravmov.py`, a pour vocation d'être la plus générique possible. C'est à dire qu'elle gère des mouvements de gravité dans n'importe quelle direction (les chips pourraient tomber vers le haut, vers la gauche, ...).
@@ -587,6 +699,7 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
 
  - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires n'ayant plus aucun segment gravitant. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.
 
+<a class="mk-toclify" id="d-termination-des-mouvements-de-gravit"></a>
 #### Détermination des mouvements de gravité ####
 
 La détermination des chips subissant une gravité (donc, le remplissage d'un objet `GravityMovements`) est effectué par la fonction `arenaXXX.determineGravity()`
@@ -608,6 +721,7 @@ Pour chaque colonne, on parcourt toutes les chips, en allant du bas vers le haut
 
 Pour la gravité du mode aspro (gravity rift) : [voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravity-rift).
 
+<a class="mk-toclify" id="la-classe-arenacrawler"></a>
 #### La classe ArenaCrawler ####
 
 Cette classe est définie dans le fichier `crawler.py`. Elle permet de parcourir les positions d'une aire de jeu dans le sens qu'on veut, et de passer directement à la ligne/colonne suivante.
@@ -689,6 +803,7 @@ Durant le crawling, on peut accéder à diverses variables, renseignant la posit
 
 Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés sont inutilisables. (En fait, le crawler devrait s'arrêter, ou carrément balancer une exception).
 
+<a class="mk-toclify" id="configuration-de-gravit-par-les-crawlers"></a>
 #### Configuration de gravité par les crawlers ####
 
 La détermination de la gravité, son application, et la regénération des chips après gravité sont toutes gérés avec des `ArenaCrawler`.
@@ -705,6 +820,7 @@ Pour une explication détaillée de "comment ça marche dans des directions autr
 
 "_Algorithme : voir code_". J'adore quand ce genre de grossiereté est écrite dans de la documentation. Et je viens de le faire. Tant pis !
 
+<a class="mk-toclify" id="interactive-touch"></a>
 ### Interactive Touch ###
 
 Les "Interactive Touches" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
@@ -728,8 +844,10 @@ Le fonctionnement général est le suivant :
 	 - Pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler si on a fait quelque chose. Là, on s'en tape.
 	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
 
+<a class="mk-toclify" id="sp-cificit-s-des-modes-de-jeu-sp-cifique-ha-ha"></a>
 ## Spécificités des modes de jeu spécifique (ha ha) ##
 
+<a class="mk-toclify" id="gestion-des-gros-objets"></a>
 ### Gestion des "gros objets" ###
 
 Les "gros objets" sont des éléments présents dans l'aire de jeu, qui s'étendent sur plus d'une tile.
@@ -747,6 +865,7 @@ J'avais testé tous ces cas, à une époque, et ça marchait. À priori, ça dev
 
 Le seul cas concret de gros objets est le mode Touillette. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#le-mode-touillette).
 
+<a class="mk-toclify" id="la-classe-bigobject"></a>
 #### La classe BigObject ####
 
 Définit le comportement générique des gros objets. Contient les membres suivants :
@@ -761,10 +880,12 @@ La classe contient plusieurs méthodes, permettant de mettre à jour `listPosAre
 
 La classe est indépendante, elle ne possède pas de lien vers l'aire de jeu qui la contient. Aucune vérification de cohérence n'est faite. Par exemple, `posTopLeft` peut être placé trop bas ou trop à droite. Le gros objet peut alors occuper des tiles hors de l'aire de jeu. C'est au code extérieur de s'occuper de ces contrôles.
 
+<a class="mk-toclify" id="la-classe-arenabigobject"></a>
 #### La classe ArenaBigObject ####
 
 Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et quelques fonctions overridées.
 
+<a class="mk-toclify" id="ajout-d-un-gros-objet"></a>
 ##### Ajout d'un gros objet #####
 
 Cette action est réalisée par la fonction `ArenaBigObject.addBigObject`. Elle nécessite deux paramètres :
@@ -778,6 +899,7 @@ La fonction effectue les actions suivantes :
  - Ajout de l'objet `BigObject` (haha) dans la liste `ArenaBigObject.listBigObj`. Cette liste a été créée par la classe mère `ArenaBasic`. (Ça devrait pas, elle ne devrait exister que dans `ArenaBigObject`, mais on n'est plus à ça près).
  - Création des `ChipBigObject` dans l'aire de jeu, sur toutes les tiles occupées par le gros objet. On écrase les chips qui étaient là avant, tel le gros bourrin.
 
+<a class="mk-toclify" id="dessin"></a>
 ##### Dessin #####
 
 Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. Elle effectue les actions suivantes :
@@ -787,6 +909,7 @@ Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. El
  - Pour chaque `BigObject` de `self.listBigObj` :
 	 -  Récupération de l'image correspondant au gros objet, et dessin au bon endroit, dans l'aire de jeu.
 
+<a class="mk-toclify" id="gestion-de-la-gravit"></a>
 ##### Gestion de la gravité #####
 
 Cette action est réalisée par les fonction overridée `ArenaBigObject.determineGravity` et `ArenaBigObject.applyGravity`.
@@ -812,6 +935,7 @@ La fonction `applyGravity` effectue les actions suivantes :
  - Exécution de `ArenaBasic.applyGravity` : Application de la gravité sur les tiles qui y sont soumises.
  - Application de la gravité sur tous les gros objets restés dans `listBigObjInGravity` : on modifie `bigObject.posTopLeft`, ainsi que tous les éléments de `bigObject.listPosArena`.
 
+<a class="mk-toclify" id="le-mode-touillette"></a>
 ### Le mode Touillette ###
 
 Ce mode est implémenté par la classe `GameTouillette`, (fichier `touyettg.py`), ainsi que par la classe `ArenaTouillette`, (fichier `touyetta.py`). Il comporte les particularités suivantes :
@@ -822,6 +946,7 @@ Ce mode est implémenté par la classe `GameTouillette`, (fichier `touyettg.py`)
  - Lorsqu'une touillette arrive en bas de l'aire de jeu, elle disparaît automatiquement.
  - Il faut faire disparaître 2 touillettes pour gagner.
 
+<a class="mk-toclify" id="ajout-des-touillettes"></a>
 #### Ajout des touillettes ####
 
 La première touillette est créé à l'initialisation (`GameTouillette.__init__`), avec la fonction `ArenaBigObject.addBigObject`.
@@ -841,6 +966,7 @@ Les étapes suivantes sont effectuées :
  - (Retour à `regenerateAllChipsAfterOneGravity`)
  - Exécution de la fonction de base `ArenaBigObject.regenerateAllChipsAfterOneGravity`, afin de regénérer des chips sur les tiles qui sont restés vide.
 
+<a class="mk-toclify" id="disparition-des-touillettes-en-bas-de-l-cran"></a>
 #### Disparition des touillettes en bas de l'écran ####
 
 Cette action est réalisée par les fonctions suivantes :
@@ -866,6 +992,7 @@ Les étapes suivantes sont effectuées :
 	 - Il y a une touillette en bas de l'aire de jeu (la fonction `hasTouilletteInBottom` renvoie True). On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup. 
  - Comme dans un mode normal : re-détermination de `gravityCounter`, ou délockage des stimulis, selon que l'aire de jeu soit instable ou pas.
 
+<a class="mk-toclify" id="affichage-du-nombre-de-touillettes-disparues"></a>
 #### Affichage du nombre de touillettes disparues ####
 
 Cette action est réalisée par la fonction `GameTouillette.periodicAction`. C'est vraiment bizarre et salement bourrin d'avoir mis ce code ici, mais je ne savais pas où le mettre ailleurs. C'est du code qui doit être exécuté à la fin d'une gravité, mais qui n'a rien à voir avec la gravité elle-même. Car on pourrait imaginer d'autres processus éliminant des touillettes dans l'aire de jeu, et qui provoquerait également cette action d'affichage.
@@ -881,6 +1008,7 @@ Les étapes suivantes sont effectuées :
 	 - Si on a supprimé une quantité suffisante de touillettes : affichage du texte indiquant que le joueur a gagné.
 	 - On ne fait rien de plus même si le joueur a gagné. Ça lui permet de continuer à jouer si il a envie. Et comme ça j'ai pas à me faire suer à gérer un événement de quittage du programme.
 
+<a class="mk-toclify" id="le-mode-aspro"></a>
 ### Le mode Aspro ###
 
 Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ainsi que par la classe `ArenaAspirin`, (fichier `asproa.py`). Il comporte les particularités suivantes :
@@ -893,6 +1021,7 @@ Ce mode est implémenté par la classe `GameAspirin`, (fichier `asprog.py`), ain
  - Le but est de prendre 3 cachets d'aspirine.
  - Les demi-cachets d'aspirine qui atterrissent en bas de l'aire de jeu sont supprimés, et ne sont pas comptabilisés dans les cachets récupérés.
 
+<a class="mk-toclify" id="gravity-rift"></a>
 #### Gravity Rift ####
 
 Cette action est réalisée par les fonctions et les classes suivantes :
@@ -957,6 +1086,7 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 	 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
 	 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
+<a class="mk-toclify" id="suppression-des-demi-cachets-en-bas-de-l-aire-de-jeu"></a>
 #### Suppression des demi-cachets en bas de l'aire de jeu ####
 
 Cette action est réalisée par les fonctions suivantes :
@@ -1004,6 +1134,7 @@ Le but de tout ce bazar, c'est de bien décomposer les étapes, en les affichant
 
 Je n'ai pas testé le cas où il y a à la fois une gravité Rift et un demi-cachet à supprimer en bas. Normalement, ça plante pas, et toutes les étapes sont bien décomposées.
 
+<a class="mk-toclify" id="interactive-touch-sur-les-aspirines"></a>
 #### Interactive Touch sur les aspirines ####
 
 Cette action est réalisée par les fonctions suivantes :
@@ -1050,6 +1181,7 @@ La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAspr
 
 Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il a été pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
 
+<a class="mk-toclify" id="cr-ation-des-demi-cachets-au-d-but-du-jeu"></a>
 #### Création des demi-cachets au début du jeu ####
 
 Cette action est réalisée par la fonction overridée `GameAspirin.populateArena`.
@@ -1058,6 +1190,7 @@ Elle est appelée dans `GameBasic.__init__`, après instanciation de l'arena, et
 
 La fonction remplace certaines chips existantes par des demi-cachets droit et gauche. Les positions de remplacement sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
 
+<a class="mk-toclify" id="g-n-ration-des-demi-cachets-non-impl-ment"></a>
 #### Génération des demi-cachets (non implémenté) ####
 
 J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir finie, et je n'ai plus la motivation pour me replonger dedans.
@@ -1074,6 +1207,7 @@ Il s'agit des fonctions suivantes :
  - `ArenaAspirin._regenerateAsproHalf`
  - `ArenaAspirin._regenerateAspro`
 
+<a class="mk-toclify" id="tutoriel"></a>
 ### Tutoriel ###
 
 Je n'ais pas trop su comment l'implémenter. Le problème, c'est que le tutoriel doit agir à plein de moments différents (lorsque l'utilisateur veut passer au texte suivant, lorsqu'il fait un zap, un interactive touch, ...). Je n'ai pas trouvé de meilleure solution que d'injecter des petits bouts de code, à plein d'endroits différents de pleins de classes. Et comme ça suffisait pas, il a en plus fallu que j'hérite la classe `GameXXX` de chaque mode de jeu, pour faire le tutoriel correspondant. Ça a énormément spaghettifié le code. Pas mieux.
@@ -1090,6 +1224,7 @@ Les tutoriels sont gérés par les fichiers de code suivants :
  - `gamemode/touytuto.py` (tutoriel du mode Touillette)
  - `gamemode/asprtuto.py` (tutoriel du mode Aspro)
 
+<a class="mk-toclify" id="la-classe-tutorialstep"></a>
 #### La classe TutorialStep ####
 
 Elle est définie dans `tutorial.py`. C'est une classe uniquement destinée à stocker des données (comme une `struct`, en C++). Elle définit une seule étape d'un tutoriel.
@@ -1108,6 +1243,7 @@ En plus de `conditionType`, un `TutorialStep` contient également les variables 
  - `listPosBlink` : None, ou liste de `pygame.Rect`. Liste de positions dans l'aire de jeu à faire blinker. Les tiles qui blinkent sont dessinées avec un cadre bleu clignotant.
  - `tellObjective` : booléen. Indique s'il faut afficher l'objectif courant (nombre de brouzoufs et de sucres) à cette étape de tutoriel.
 
+<a class="mk-toclify" id="la-classe-tutorialscheduler"></a>
 #### La classe TutorialScheduler ####
 
 Elle est définie dans `tutorial.py`. Elle contient une liste de `TutorialStep`, dans laquelle elle avance au fur et à mesure. Elle n'agit sur aucun objets externes par elle-même. Elle n'a pas de référence vers un `GameXXX`, ni une `ArenaXXX`, ni même la console.
@@ -1142,6 +1278,7 @@ L'état `totallyFailed` bloque complètement l'avancement dans les étapes. Le c
 
 Il reste une dernière fonction : le fameux `mustLockGameStimuli`. Elle sert à indiquer au code extérieur à quel moment les stimulis du jeu doivent être momentanément bloqués. Cela corespond aux moments où on demande au joueur d'appuyer sur "F" pour avancer à la prochaine étape. Dans cette situation, on ne permet pas au joueur de faire quoi que ce soit d'autres sur le jeu : pas de sélection, pas de zap.
 
+<a class="mk-toclify" id="la-classe-blinker"></a>
 #### La classe Blinker ####
 
 La classe `Tile` possède une variable membre booléenne : `tutoHighLight`. Lorsque cette variable est à True, et qu'on appelle la fonction `Tile.draw`, un cadre turquoise épais est dessiné sur les bords. (D'ailleurs, la façon dont l'épaissisation de cadre est effectuée est particulièrement horrible. Je vous laisse regarder le code).
@@ -1160,6 +1297,7 @@ La classe `Blinker` s'utilise de la manière suivante :
  - Pour que le blink soit effectué, il faut exécuter la fonction `advanceTimerAndHandle`, une fois par cycle de jeu. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la Game Loop. Après appel de cette fonction, il faut redessiner l'aire de jeu (appel de `arena.draw`).
  - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. Dans ce dernier cas, la variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où.
 
+<a class="mk-toclify" id="cr-ation-d-un-tutoriel-partir-d-un-mode-de-jeu"></a>
 #### Création d'un tutoriel à partir d'un mode de jeu ####
 
 Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc pour amener le joueur à effectuer des étapes prédéfines (en particulier les zaps), il faut définir en dur, et en cohérence entre elles, les infos suivantes :
@@ -1170,6 +1308,7 @@ Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc po
 
 Nous allons maintenant voir les morceaux de code à implémenter pour créer un mode de jeu avec tutoriel. (C'est nul de dire "nous allons voir", mais je sais pas comment le dire autrement).
 
+<a class="mk-toclify" id="tapes-du-tutoriel"></a>
 ##### Étapes du tutoriel #####
 
 Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#la-classe-tutorialscheduler).
@@ -1178,6 +1317,7 @@ Certaines étapes définissant un zap à effectuer, la bienséance veut qu'on fa
 
 La dernière étape de `listTutStepsDescrip` doit avoir `conditionType == STEP_COND_NEVER`. Si ce n'est pas le cas, je ne sais pas ce qui se passe, je n'ai pas testé.
 
+<a class="mk-toclify" id="aire-de-jeu"></a>
 ##### Aire de jeu #####
 
 Afin que le tutoriel soit réussissable, toutes les positions à zapper (définies dans les `listPosCond`) doivent contenir des chips prédéfinies. Attention, il faut tenir compte du fait que la gravité s'applique entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas. 
@@ -1191,6 +1331,7 @@ En général, les chips en dur sont définies par une liste de tuple de tuple, i
 	 - "C" : pièce de monnaie. "S" : sucre.
 	 - int : valeur de la pièce. (0 si c'est un sucre).
 
+<a class="mk-toclify" id="liste-des-consignes-de-zap"></a>
 ##### Liste des consignes de zap #####
 
 Chaque zap de tutoriel doit avoir une contrainte définie en dur, correspondant aux chips définies en dur aussi. (Ça fait beaucoup de dur). On utilise généralement une variable `LIST_ZAP_CONSTRAINT`. Chaque élément de cette liste est un tuple de deux éléments :
@@ -1198,6 +1339,7 @@ Chaque zap de tutoriel doit avoir une contrainte définie en dur, correspondant 
  - int. Total de de brouzoufs à sélectionner.
  - int. Nombre de sucre à sélectionner.
 
+<a class="mk-toclify" id="impl-mentation-de-tout-ce-bazar"></a>
 ##### Implémentation de tout ce bazar #####
 
 Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` que l'on veut tutorialiser. C'est ce qui est fait avec les 3 fichiers de code précédemment mentionnées.
@@ -1219,10 +1361,12 @@ Le tutoriel du mode Touillette override une fonction supplémentaire : `periodic
 
 (C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).
 
+<a class="mk-toclify" id="int-gration-du-tutoriel-dans-le-reste-du-code"></a>
 #### Intégration du tutoriel dans le reste du code ####
 
 Le `TutorialScheduler` est principalement utilisé par `GameBasic`, mais pas que.
 
+<a class="mk-toclify" id="fonction-gamebasicshowcurrenttutostep"></a>
 ##### Fonction GameBasic.showCurrentTutoStep #####
 
 Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape. Elle effectue toutes les actions relative à l'étape courante :
@@ -1232,6 +1376,7 @@ Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape. Elle 
  - Démarrage du blink, s'il y a des tiles à blinker.
  - Lock des stimulis, si nécessaire.
 
+<a class="mk-toclify" id="r-alisation-d-un-zap"></a>
 ##### Réalisation d'un zap #####
 
 Dans la Game Loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
@@ -1242,6 +1387,7 @@ Si le `TutorialScheduler` est tombé dans l'état `totallyFailed`, on affiche le
 
 Lorsqu'un zap est réussi, il faut afficher la description de la consigne du nouveau zap. Mais on ne le fait que si le `TutorialScheduler` l'autorise (le `tellObjective` de l'étape courante doit être à True).
 
+<a class="mk-toclify" id="appui-sur-la-touche-f"></a>
 ##### Appui sur la touche "F" #####
 
 Lorsque le joueur appuie sur "F", le `stimuliStocker` met à True sa variable `stimTutoNext`. Lorsque la Game Loop le détecte, elle exécute la fonction `GameBasic.execStimTutoNext`.
@@ -1252,28 +1398,33 @@ Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on
 
 Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape courante indique qu'il y en a à faire. Ça permet au joueur de revoir les blinks.
 
+<a class="mk-toclify" id="interactive-touch"></a>
 ##### Interactive touch #####
 
 Durant la Game Loop, lorsqu'un Interactive Touch est réussi, le stimuli correspondant est envoyé, via la fonction `tutorialScheduler.takeStimInteractiveTouch`. Si la fonction renvoie True, on a avancé d'une étape, donc on exécute `GameBasic.showCurrentTutoStep`. On ne réaffiche pas la description de consigne du zap. Elle n'est pas censée avoir changé suite à un Interactive Touch.
 
+<a class="mk-toclify" id="handlegravity"></a>
 ##### handleGravity #####
 
 Lorsque la fonction `GameBasic.handleGravity` s'aperçoit que le jeu est devenu stable, elle est censée délocker les stimulis. Mais avant, elle vérifie (via un appel à `mustLockGameStimuli`) que le `tutorialScheduler` ne souhaite pas conserver le lock.
 
 On retrouve ce même code dans `GameAspirin.handleGravity`. Une partie du code de `GameBasic` est vilainement copié-collé dans `GameAspirin`.
 
+<a class="mk-toclify" id="d-but-du-jeu"></a>
 ##### Début du jeu #####
 
 Au début du jeu (début de la fonction `playOneGame`), on affiche la première étape du tutoriel.
 
 Ensuite, on affiche la consigne de zap, à condition que le `TutorialScheduler` l'autorise.
 
+<a class="mk-toclify" id="reblink"></a>
 ##### Reblink #####
 
 Fonctionnalité très peu documentée parce qu'on s'en fout. (Le reclignotement des tiles est déjà géré quand le joueur rappuie sur "F").
 
 Quand le joueur appuie sur "G", le `stimuliStocker` active le stimuli `stimReblink`, la Game Loop récupère la liste de blinks courante auprès du `TutorialScheduler`, et elle redémarre le blink, en exécutant `blinker.startBlink`. 
 
+<a class="mk-toclify" id="manualingame"></a>
 ##### ManualInGame #####
 
 La classe `ManualInGame`, qui affiche les touches de fonction à l'écran, a besoin du `TutorialScheduler`. On la lui passe en paramètre dans la fonction `__init__`.
@@ -1285,12 +1436,14 @@ En réalité, le manuel n'appelle aucune fonction du `TutorialScheduler`. Il tes
 
 Ces textes ne sont donc affichés que si le mode de jeu est un mode à tutoriel.
 
+<a class="mk-toclify" id="gameaspiringamestimuliinteractivetouch"></a>
 ##### GameAspirin.gameStimuliInteractiveTouch #####
 
 Cette fonction est censée afficher du texte dans la console lorsqu'on parvient à récupérer un cachet d'aspirine. (nombre de cachet pris, sur nombre de cachet à prendre, ou bien une message de félicitations).
 
 On ne l'affiche que s'il n'y a pas de tutoriel. Car le tutoriel squatte beaucoup la console, donc il ne faut pas la polluer davantage avec d'autres textes qui vont se mélanger avec le blabla du tutoriel.
 
+<a class="mk-toclify" id="au-revoir"></a>
 # Au revoir #
 
 Et à bientôt !! Je vous aime !!
