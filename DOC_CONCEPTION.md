@@ -7,11 +7,11 @@
 - [Document de conception de Kawax](#document-de-conception-de-kawax)
     - [Avertissements](#avertissements)
     - [Diagramme de classe](#diagramme-de-classe)
-    - [Déroulement des actions lors d'une partie type](#d-roulement-des-actions-lors-d-une-partie-type)
-        - [Initialisation générale, choix du mode de jeu](#initialisation-g-n-rale-choix-du-mode-de-jeu)
+    - [Déroulement des actions lors d'une partie type](#d%C3%A9roulement-des-actions-lors-d-une-partie-type)
+        - [Initialisation générale, choix du mode de jeu](#initialisation-g%C3%A9n%C3%A9rale-choix-du-mode-de-jeu)
         - [Initialisation des trucs dans GameXXX](#initialisation-des-trucs-dans-gamexxx)
         - [Game Loop](#game-loop)
-    - [Description détaillée des aspects du jeu](#description-d-taill-e-des-aspects-du-jeu)
+    - [Description détaillée des aspects du jeu](#description-d%C3%A9taill%C3%A9e-des-aspects-du-jeu)
         - [Initialisation des classes GameXXX et ArenaXXX](#initialisation-des-classes-gamexxx-et-arenaxxx)
         - [Structure d'une Arena](#structure-d-une-arena)
         - [Initialisation d'une Arena](#initialisation-d-une-arena)
@@ -104,10 +104,10 @@ Les cadres bleus avec des lignes pointillés indiquent des zooms sur une partie 
 
 Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic` puis envoyée à `ArenaBasic`, qui fait des modifs dedans, la renvoie, et ainsi de suite.
 
-<a class="mk-toclify" id="d-roulement-des-actions-lors-d-une-partie-type"></a>
+<a class="mk-toclify" id="d%C3%A9roulement-des-actions-lors-d-une-partie-type"></a>
 ## Déroulement des actions lors d'une partie type ##
 
-<a class="mk-toclify" id="initialisation-g-n-rale-choix-du-mode-de-jeu"></a>
+<a class="mk-toclify" id="initialisation-g%C3%A9n%C3%A9rale-choix-du-mode-de-jeu"></a>
 ### Initialisation générale, choix du mode de jeu ###
 
  - Début du code de `main.py`
@@ -204,7 +204,7 @@ Le déroulement global de la Game Loop est le suivant :
 
  - Rafraîchissement complet de l'écran. (Bourrin aussi).
 
-<a class="mk-toclify" id="description-d-taill-e-des-aspects-du-jeu"></a>
+<a class="mk-toclify" id="description-d%C3%A9taill%C3%A9e-des-aspects-du-jeu"></a>
 ## Description détaillée des aspects du jeu ##
 
 <a class="mk-toclify" id="initialisation-des-classes-gamexxx-et-arenaxxx"></a>
@@ -267,7 +267,7 @@ Les probabilités de choix de chips sont définies par `listRandDistribution`, p
 
 La somme des coefs de tous les éléments de la liste peut faire n'importe quelle valeur, on s'en fout.
 
-Une information de génération de chip est un tuple de x éléments. Le premier est un identifiant qui détermine quelle classe il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...). Les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe la valeur de la pièce. 
+Une information de génération de chip est un tuple de x éléments. Le premier est un identifiant qui détermine quelle classe il faut instancier (`ChipCoin`, `ChipSugar`, `ChipClope`, ...). Les éventuels éléments suivants sont les paramètres à envoyer lors de l'instanciation de la classe. Par exemple, `ChipCoin` nécessite qu'on lui passe la valeur de la pièce.
 
 Le fait de mettre tout ce bazar dans les infos de génération permet de donner les coefs qu'on veut pour la probabilité d'apparition de la pièce de 1, celle de la pièce de 2, etc...
 
@@ -461,7 +461,7 @@ Cette classe, et toutes celles qui en héritent, doivent contenir 3 fonctions :
  - `getListStrLastTry` : Renvoie une liste de chaînes de caractères, décrivant la dernière tentative de zap du joueur, pourquoi ça a raté, etc.
  - `validateZap` : Prend en paramètre la sélection effectuée par le joueur (chemin principal + sélection additionnelle). Renvoie un booléen, indiquant si le zap a réussi ou pas.
 
-Un `ZapValidator` a accès à l'`ArenaXXX`, ce qui lui permet d'inspecter les tiles et les chips de l'aire de jeu. 
+Un `ZapValidator` a accès à l'`ArenaXXX`, ce qui lui permet d'inspecter les tiles et les chips de l'aire de jeu.
 
 Cette classe doit être utilisée comme un one-shot. Une fois que le joueur a réussi le zap, il faut recréer un nouveau `ZapValidator`.
 
@@ -474,7 +474,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 <a class="mk-toclify" id="d-roulement-d-un-zap"></a>
 #### Déroulement d'un zap ####
 
-Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`. 
+Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`.
 
 Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. Le `GameXXX` voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, [voir les tutoriels](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
@@ -663,7 +663,7 @@ Si on reprend l'exemple précédent, après analyse complète de l'aire de jeu, 
                     # emplacement vide juste en dessous des deux chip "0".
 
              -1     # coord (X=0, Y=-1) :
-                    # Dernier élément du segment, non inclu. 
+                    # Dernier élément du segment, non inclu.
                     # C'est une case hypothétique, au dessus de l'aire de jeu.
             ),
         ],
@@ -688,7 +688,7 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
  - `__init__`, en précisant le type de gravité.
 
  - `cancelAllMoves` : vidage du dictionnaire `dicMovement`.
- 
+
  - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors des appels successifs à `addSegmentMove`.
 
  - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et/ou en supprimer d'autres. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gestion-de-la-gravit%C3%A9).
@@ -989,7 +989,7 @@ Les étapes suivantes sont effectuées :
  - Il faut ensuite déterminer si l'aire de jeu est "instable". Elle peut l'être dans l'une des 3 conditions suivantes :
 	 - Instabilité normale d'un mode de jeu basique.
 	 - On vient de supprimer une touillette.
-	 - Il y a une touillette en bas de l'aire de jeu (la fonction `hasTouilletteInBottom` renvoie True). On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup. 
+	 - Il y a une touillette en bas de l'aire de jeu (la fonction `hasTouilletteInBottom` renvoie True). On ne l'a pas supprimée, car elle vient d'arriver suite à la gravité. Il faudra l'enlever au prochain coup.
  - Comme dans un mode normal : re-détermination de `gravityCounter`, ou délockage des stimulis, selon que l'aire de jeu soit instable ou pas.
 
 <a class="mk-toclify" id="affichage-du-nombre-de-touillettes-disparues"></a>
@@ -1313,14 +1313,14 @@ Nous allons maintenant voir les morceaux de code à implémenter pour créer un 
 
 Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#la-classe-tutorialscheduler).
 
-Certaines étapes définissant un zap à effectuer, la bienséance veut qu'on fasse blinker ces positions, afin de les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut embrouiller le joueur si on a envie.  
+Certaines étapes définissant un zap à effectuer, la bienséance veut qu'on fasse blinker ces positions, afin de les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut embrouiller le joueur si on a envie.
 
 La dernière étape de `listTutStepsDescrip` doit avoir `conditionType == STEP_COND_NEVER`. Si ce n'est pas le cas, je ne sais pas ce qui se passe, je n'ai pas testé.
 
 <a class="mk-toclify" id="aire-de-jeu"></a>
 ##### Aire de jeu #####
 
-Afin que le tutoriel soit réussissable, toutes les positions à zapper (définies dans les `listPosCond`) doivent contenir des chips prédéfinies. Attention, il faut tenir compte du fait que la gravité s'applique entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas. 
+Afin que le tutoriel soit réussissable, toutes les positions à zapper (définies dans les `listPosCond`) doivent contenir des chips prédéfinies. Attention, il faut tenir compte du fait que la gravité s'applique entre chaque zap. Donc des fois, on définit une chip en dur qui va ensuite tomber un peu plus bas pour arriver pil poil sur une position définie dans `listPosCond`. Enfin vous voyez ce que je veux dire, n'est-ce pas.
 
 Bref, il est donc nécessaire de définir une liste de chips en dur (position dans l'aire de jeu + type + valeur). Les autres chips seront créées au hasard, comme d'habitude.
 
@@ -1352,9 +1352,9 @@ La classe `GameXXXTuto` doit overrider les fonctions suivantes :
 	 - Exécution de l'`__init__` de base, en lui passant le `tutorialScheduler`.
 	 - Création d'un `Blinker`
 	 - Initialisation d'une variable `nbZapMade`, qui comptera le nombre de zap effectués.
- - `populateArena` : 
+ - `populateArena` :
 	 - Placement des chips en dur, selon les infos définies dans `LIST_TILE_TO_HARDDEFINE`.
- - `respawnZapValidator` : 
+ - `respawnZapValidator` :
 	 - Dans les versions sans tuto, cette fonction doit recréer, après chaque zap, un nouveau `zapValidatorBase` à partir de données choisies au hasard. Dans la version overridée, il faut créer des consignes de zap pas au hasard, selon le contenu de `LIST_ZAP_CONSTRAINT`. On utilise `nbZapMade` pour savoir où on en est dans la liste. Lorsque toutes les consignes de zap en dur ont été passées, on revient à des créations au hasard.
 
 Le tutoriel du mode Touillette override une fonction supplémentaire : `periodicAction`. Dans le mode sans tuto, la fonction `periodicAction` affiche un message lorsque le joueur récupère une touillette. Cependant, lorsqu'il y a un tutoriel, il ne faut pas polluer la console avec ce genre de message. (Il y a déjà suffisamment de blablabla). L'overridage de `periodicAction` supprime cet affichage de message. C'est à dire que `periodicAction` ne fait plus rien.
@@ -1422,7 +1422,7 @@ Ensuite, on affiche la consigne de zap, à condition que le `TutorialScheduler` 
 
 Fonctionnalité très peu documentée parce qu'on s'en fout. (Le reclignotement des tiles est déjà géré quand le joueur rappuie sur "F").
 
-Quand le joueur appuie sur "G", le `stimuliStocker` active le stimuli `stimReblink`, la Game Loop récupère la liste de blinks courante auprès du `TutorialScheduler`, et elle redémarre le blink, en exécutant `blinker.startBlink`. 
+Quand le joueur appuie sur "G", le `stimuliStocker` active le stimuli `stimReblink`, la Game Loop récupère la liste de blinks courante auprès du `TutorialScheduler`, et elle redémarre le blink, en exécutant `blinker.startBlink`.
 
 <a class="mk-toclify" id="manualingame"></a>
 ##### ManualInGame #####
