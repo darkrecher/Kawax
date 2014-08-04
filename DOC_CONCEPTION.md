@@ -135,7 +135,7 @@ Les deux flèches en rond indiquent que la classe `GravityMovements` est créé 
 
 fonction `GameXXX.__init__` :
 
-On va considérer que le mode de jeu actuel est sans tutoriel.  [Voir par ici pour les détails concernant les tutoriaux](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
+On va considérer que le mode de jeu actuel est sans tutoriel.  [Voir par ici pour les détails concernant les tutoriaux](#tutoriel).
 
 Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par la fonction interne `initCommonStuff`
 
@@ -153,7 +153,7 @@ Les actions d'init sont réalisés par la fonction `__init__` elle-même, et par
 
  - Création d'un `pygame.time.Clock` : objet de la librairie pygame, permet de contrôler le nombre de FPS.
 
- - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
+ - Configuration de la gravité (dans quelle direction les pièces du jeu tombent) et de la regénération (comment les pièces du jeu se regénèrent). On utilise pour cela des objets "crawler". [Voir plus loin](#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
 
  - Instanciation d'une classe `ArenaBasic`, ou d'une classe héritée. Gère tout le bazar associé à l'aire de jeu : "game logic", affichage, déplacement des éléments lors de la gravité, ... **Dans la suite de cette documentation, les classes `ArenaBasic` et toutes les classes héritées seront désignées par le terme générique `ArenaXXX`.**
 
@@ -198,7 +198,7 @@ Le déroulement global de la Game Loop est le suivant :
 
  - Exécution de `periodicAction`. Cette fonction ne fait rien dans le mode `GameBasic`, mais les autres modes de jeu peuvent y rajouter des choses.
 
- - Mises à jour du clignotement des tiles, si nécessaire. Cela n'arrive que durant les tutoriels. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
+ - Mises à jour du clignotement des tiles, si nécessaire. Cela n'arrive que durant les tutoriels. [Voir plus loin](#tutoriel).
 
  - Redessin complet de l'aire de jeu, même si rien n'a changé. Oui c'est bourrin, oui j'avais prévu de faire un peu plus subtil, non je ne l'ai pas fait.
 
@@ -476,7 +476,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 
 Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`.
 
-Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. Le `GameXXX` voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, [voir les tutoriels](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
+Lorsque le joueur appuie sur la touche "S", le `stimuliStocker` met à True la variable `stimuliTryZap`. Le `GameXXX` voit cette variable changer, et exécute la fonction interne `tryToZap`. (Auparavant, il y a un check à la con sur le lock, [voir les tutoriels](#tutoriel)).
 
 La fonction `tryToZap` récupère la sélection de tile et l'envoie au `ZapValidatorBase`. Si celui-ci répond que le zap n'est pas valide, on affiche dans la console la description du zap échoué.
 
@@ -494,8 +494,8 @@ Si le zap est valide, la fonction `tryToZap` exécute les actions suivantes :
 				 	- Dans les faits, toutes les chip renvoient `ChipNothing`, c'est à dire un emplacement vide.
 			 - L'`arena` remplace la chip de la tile par le résultat du zap. C'est cette action qui réalise effectivement la suppression des pièces et des sucres.
  - (retour à `tryToZap`). Déselection de toutes les tiles précédemment sélectionnées. Fonction `selectorPlayerOne.cancelAllSelection()`.
- - Si le jeu a besoin de se "stabiliser" : déclenchement de la gravité et lock des stimulis. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
- - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription`. Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([Voir les tutoriels, donc](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
+ - Si le jeu a besoin de se "stabiliser" : déclenchement de la gravité et lock des stimulis. [Voir plus loin](#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration).
+ - Affichage, dans la console, de la contrainte du prochain zap, en appelant la fonction `ZapValidatorBase.getListStrDescription`. Cet affichage n'est pas forcément effectué dans le cas des tutoriels. ([Voir les tutoriels, donc](#tutoriel)).
 
 <a class="mk-toclify" id="trucs-qui-auraient-pu-servir-pour-le-zap-et-en-fait-non"></a>
 #### Trucs qui auraient pu servir pour le zap, et en fait non ####
@@ -534,7 +534,7 @@ Lorsque le lock est mis en place, les clics du joueur ne sont plus pris en compt
 
 Par contre, les clics "d'interactive touch" restent pris en compte, même lorsque le lock est activé. Ce n'est peut-être pas tout à fait logique. Euh... Hem... Passons.
 
-Les moments d'activation/suppression du lock sont détaillés dans d'autre partie de cette documentation. Voir partie ["Gravité"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration) et ["Tutoriel"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
+Les moments d'activation/suppression du lock sont détaillés dans d'autre partie de cette documentation. Voir partie ["Gravité"](#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration) et ["Tutoriel"](#tutoriel)).
 
 <a class="mk-toclify" id="gravit%C3%A9-et-reg%C3%A9n%C3%A9ration"></a>
 ### Gravité et regénération ###
@@ -563,7 +563,7 @@ Les Interactive Touches peuvent modifier l'aire de jeu, c'est pour ça qu'on fai
 
 La vérification d'instabilité est effectuée par la fonction `GameXXX.needStabilization`. Si elle renvoie True, l'état est instable. Sinon, il est stable.
 
-Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, décrivant les mouvements de chips à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements`. [Voir plus loin pour une explication détaillée de son fonctionnement interne](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#fonctionnement-de-gravitymovements).
+Cette fonction a également un autre rôle : définir la variable `GameXXX.gravityMovements`, décrivant les mouvements de chips à effectuer lors de la prochaine gravité. Cette variable est une instance de `GravityMovements`. [Voir plus loin pour une explication détaillée de son fonctionnement interne](#fonctionnement-de-gravitymovements).
 
 `GameXXX.gravityMovements` peut être None, ou définie avec une liste de mouvements vide. Dans les deux cas il n'y a pas de gravité à appliquer.
 
@@ -589,7 +589,7 @@ Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par
 
 Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n'y a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée.
 
-En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. ["Voir plus loin"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel), car tout ce bazar est déjà assez compliqué et entrelacé comme ça.
+En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précédemment lockés. Enfin... Sauf si le `tutorialScheduler` veut conserver le lock. ["Voir plus loin"](#tutoriel), car tout ce bazar est déjà assez compliqué et entrelacé comme ça.
 
 D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne le contrôle pas, mais je tenais à le préciser).
 
@@ -691,7 +691,7 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
 
  - `addSegmentMove` : ajout d'un segment gravitant. Attention, la fonction ne fusionne pas les segments existants avec le nouveau. On peut donc se retrouver dans une situation de ce type : { 0 : [ (3, -1), (2, 1) ] }. Ce serait tout à fait incohérent et ce n'est jamais censé arriver. Donc il faut faire attention à ce qu'on envoie lors des appels successifs à `addSegmentMove`.
 
- - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et/ou en supprimer d'autres. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gestion-de-la-gravit%C3%A9).
+ - `cancelGravity` : annulation de la gravité pour une position spécifique. Cette fonction peut raccourcir un segment et/ou en supprimer d'autres. Elle n'est utilisée que dans les arènes contenant des gros objets. [Voir explication de `ArenaBigObject`](#gestion-de-la-gravit%C3%A9).
 
  - `isInGravity` : indique, pour une position donnée, si elle se trouve dans un segment gravitant ou pas. (Renvoie True/False).
 
@@ -719,7 +719,7 @@ Pour chaque colonne, on parcourt toutes les chips, en allant du bas vers le haut
  	- coord secondaire de fin du segment = Y actuel.
  - On revient à `currentState = SKIP_NOT_FALLING_TILE` ou `currentState = ADVANCE_NOTHING_TILE` selon qu'on est sur une chip vide ou une chip qui n'accepte pas la gravité.
 
-Pour la gravité du mode aspro (gravity rift) : [voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravity-rift).
+Pour la gravité du mode aspro (gravity rift) : [voir plus loin](#gravity-rift).
 
 <a class="mk-toclify" id="la-classe-arenacrawler"></a>
 #### La classe ArenaCrawler ####
@@ -825,7 +825,7 @@ Pour une explication détaillée de "comment ça marche dans des directions autr
 
 Les "Interactive Touches" ont pour but d'exécuter des actions spécifiques dans l'arène, lorsque le joueur clique sur l'une des chips. Ça peut permettre un tas de choses, en fonction d'un tas d'autres choses : téléportation de chips, augmentation de la valeur d'une pièce, bombes, ...
 
-Les Interactive Touches sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce qu'ils font. Il y en a un exemple dans le mode de jeu aspro. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#interactive-touch-sur-les-aspirines).
+Les Interactive Touches sont totalement indépendants des zap. Le fonctionnement est implémenté dans `GameBasic` et `ArenaBasic`. Il faut overrider quelques fonctions pour définir ce qu'ils font. Il y en a un exemple dans le mode de jeu aspro. [Voir plus loin](#interactive-touch-sur-les-aspirines).
 
 Le fonctionnement général est le suivant :
 
@@ -839,7 +839,7 @@ Le fonctionnement général est le suivant :
 	 - (Retour à la Game Loop). Si on a récupéré True, exécution des actions suivantes :
 		 - Comme il s'est passé quelque chose dans l'aire de jeu, les tiles sélectionnées par le joueur ne correspondent peut-être plus à rien. Donc on efface la sélection.
 		 - L'aire de jeu est peut-être dans un état "instable". On doit donc agir comme si il y avait eu un zap : vérification de gravité ou de regénération, lock des stimulis, définition de `gravityCounter`, etc.
-		 - Gestion du tutoriel, s'il y en a un. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel).
+		 - Gestion du tutoriel, s'il y en a un. [Voir plus loin](#tutoriel).
 	 - Comme pour un zap, plusieurs gravités pourront s'effectuer à la suite. Le délockage des stimulis sera effectué à la fin de la dernière gravité.
 	 - Pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler si on a fait quelque chose. Là, on s'en tape.
 	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
@@ -863,7 +863,7 @@ La façon dont c'est géré permet d'avoir des gros objets de n'importe quelle f
 
 J'avais testé tous ces cas, à une époque, et ça marchait. À priori, ça devrait toujours marcher maintenant.
 
-Le seul cas concret de gros objets est le mode Touillette. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#le-mode-touillette).
+Le seul cas concret de gros objets est le mode Touillette. [Voir plus loin](#le-mode-touillette).
 
 <a class="mk-toclify" id="la-classe-bigobject"></a>
 #### La classe BigObject ####
@@ -1068,7 +1068,7 @@ Or donc, pour récapituler l'ensemble du bazar, les actions suivantes sont effec
 		 - L'objet `gravityMovementsRift` contient éventuellement des mouvements à appliquer. Si c'est le cas, on renvoie True.
 		 - Sinon, on renvoie False.
 	 - (Retour à `needStabilization`). Renvoi de True si `_determineAnyGravity` a renvoyé True.
-	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#suppression-des-demi-cachets-en-bas-de-laire-de-jeu)).
+	 - Sinon, recherche de demi-cachets d'aspirine en bas de l'aire de jeu. (Mais ça n'a aucun rapport avec les gravités. [Voir plus loin](#suppression-des-demi-cachets-en-bas-de-laire-de-jeu)).
 	 - Si il y en a, on renvoie True.
 	 - Sinon, tout va bien, l'aire de jeu est stable. On renvoie False
 
@@ -1174,7 +1174,7 @@ Les actions suivantes sont effectuées :
 		 	 - Sinon, il ne s'est rien passé de spécial précédemment. `getAndResetTakenAsproFull` renvoie False.
 	 - Si `getAndResetTakenAsproFull` a renvoyé True, on effectue les actions suivantes :
 		 - Augmentation de la variable membre `nbAspirinTaken`.
-		 - Si `nbAspirinTaken` n'a pas encore atteint 3 : affichage, dans la console, du nombre d'aspirine pris et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, à ce sujet : [Voir plus loin](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gameaspiringamestimuliinteractivetouch))
+		 - Si `nbAspirinTaken` n'a pas encore atteint 3 : affichage, dans la console, du nombre d'aspirine pris et du nombre total à prendre. (Sauf si y'a un `tutorialScheduler`, à ce sujet : [Voir plus loin](#gameaspiringamestimuliinteractivetouch))
 		 - Si `nbAspirinTaken` a atteint 3 : affichage d'un texte indiquant que le joueur a gagné. On ne fait rien de plus, ce qui permet de continuer à jouer.
 
 La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAsproFull` qui est bizarre. On le met à True pour le remettre à False tout de suite après, à un autre endroit du code. C'est parce que je ne voulais pas mettre la gestion "combien d'aspirine pris" et "est-ce qu'on a gagné ou pas" dans l'arena. Je voulais que ça soit dans le game, parce qu'à mon avis, c'est là que c'est censé être. (L'arena n'a pas à se soucier de ces détails, qui concerne le fonctionnement du jeu en lui-même, et pas l'état de l'aire de jeu).
@@ -1311,7 +1311,7 @@ Nous allons maintenant voir les morceaux de code à implémenter pour créer un 
 <a class="mk-toclify" id="%C3%89tapes-du-tutoriel"></a>
 ##### Étapes du tutoriel #####
 
-Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#la-classe-tutorialscheduler).
+Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](#la-classe-tutorialscheduler).
 
 Certaines étapes définissant un zap à effectuer, la bienséance veut qu'on fasse blinker ces positions, afin de les montrer au joueur. Il est donc intéressant de toujours avoir `listPosCond == listPosBlink`. Cependant, aucune contrainte n'est imposée à ce sujet. On peut embrouiller le joueur si on a envie.
 
