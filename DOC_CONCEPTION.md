@@ -25,29 +25,29 @@
             - [Prise en compte de la première activation de tile, et détermination du mode de sélection](#prise-en-compte-de-la-premi%C3%A8re-activation-de-tile-et-d%C3%A9termination-du-mode-de-s%C3%A9lection)
             - [Prise en compte des activations de tile qui viennent après](#prise-en-compte-des-activations-de-tile-qui-viennent-apr%C3%A8s)
             - [Déselection en cascade](#d%C3%A9selection-en-cascade)
-            - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s%C3%A9lection-d-une-tile)
+            - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s%C3%A9lection-dune-tile)
         - ["Zap" d'un ensemble d'éléments](#zap-dun-ensemble-d%C3%A9l%C3%A9ments)
             - [La classe ZapValidator](#la-classe-zapvalidator)
-            - [Déroulement d'un zap](#d%C3%A9roulement-d-un-zap)
+            - [Déroulement d'un zap](#d%C3%A9roulement-dun-zap)
             - [Trucs qui auraient pu servir pour le zap, et en fait non](#trucs-qui-auraient-pu-servir-pour-le-zap-et-en-fait-non)
         - [Stimuli lock/delock](#stimuli-lockdelock)
         - [Gravité et regénération](#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration)
-            - [Première vérification de l'instabilité](#premi-re-v-rification-de-l-instabilit)
-            - [Application des gravités successives](#application-des-gravit-s-successives)
-            - [Fin de gravité](#fin-de-gravit)
-            - [Regénération sans gravité](#reg-n-ration-sans-gravit)
+            - [Première vérification de l'instabilité](#premi%C3%A8re-v%C3%A9rification-de-linstabilit%C3%A9)
+            - [Application des gravités successives](#application-des-gravit%C3%A9s-successives)
+            - [Fin de gravité](#fin-de-gravit%C3%A9)
+            - [Regénération sans gravité](#reg%C3%A9n%C3%A9ration-sans-gravit%C3%A9)
             - [Fonctionnement de gravityMovements](#fonctionnement-de-gravitymovements)
-            - [Détermination des mouvements de gravité](#d-termination-des-mouvements-de-gravit)
+            - [Détermination des mouvements de gravité](#d%C3%A9termination-des-mouvements-de-gravit%C3%A9)
             - [La classe ArenaCrawler](#la-classe-arenacrawler)
-            - [Configuration de gravité par les crawlers](#configuration-de-gravit-par-les-crawlers)
+            - [Configuration de gravité par les crawlers](#configuration-de-gravit%C3%A9-par-les-crawlers)
         - [Interactive Touch](#interactive-touch)
-    - [Spécificités des modes de jeu spécifique (ha ha)](#sp-cificit-s-des-modes-de-jeu-sp-cifique-ha-ha)
+    - [Spécificités des modes de jeu spécifique (ha ha)](#sp%C3%A9cificit%C3%A9s-des-modes-de-jeu-sp%C3%A9cifique-ha-ha)
         - [Gestion des "gros objets"](#gestion-des-gros-objets)
             - [La classe BigObject](#la-classe-bigobject)
             - [La classe ArenaBigObject](#la-classe-arenabigobject)
                 - [Ajout d'un gros objet](#ajout-d-un-gros-objet)
                 - [Dessin](#dessin)
-                - [Gestion de la gravité](#gestion-de-la-gravit)
+                - [Gestion de la gravité](#gestion-de-la-gravit%C3%A9)
         - [Le mode Touillette](#le-mode-touillette)
             - [Ajout des touillettes](#ajout-des-touillettes)
             - [Disparition des touillettes en bas de l'écran](#disparition-des-touillettes-en-bas-de-l-cran)
@@ -69,7 +69,7 @@
                 - [Implémentation de tout ce bazar](#impl-mentation-de-tout-ce-bazar)
             - [Intégration du tutoriel dans le reste du code](#int-gration-du-tutoriel-dans-le-reste-du-code)
                 - [Fonction GameBasic.showCurrentTutoStep](#fonction-gamebasicshowcurrenttutostep)
-                - [Réalisation d'un zap](#r-alisation-d-un-zap)
+                - [Réalisation d'un zap](#r-alisation-dun-zap)
                 - [Appui sur la touche "F"](#appui-sur-la-touche-f)
                 - [Interactive touch](#interactive-touch)
                 - [handleGravity](#handlegravity)
@@ -428,7 +428,7 @@ Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles,
 
 Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment l'algo fonctionne en détail. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut.
 
-<a class="mk-toclify" id="modification-effective-de-la-s%C3%A9lection-d-une-tile"></a>
+<a class="mk-toclify" id="modification-effective-de-la-s%C3%A9lection-dune-tile"></a>
 #### Modification effective de la sélection d'une tile ####
 
 Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. L'action est un peu alambiquée, et passe à travers plusieurs fonctions.
@@ -471,7 +471,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 
 `ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
 
-<a class="mk-toclify" id="d%C3%A9roulement-d-un-zap"></a>
+<a class="mk-toclify" id="d%C3%A9roulement-dun-zap"></a>
 #### Déroulement d'un zap ####
 
 Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`.
@@ -554,7 +554,7 @@ Ces actions sont gérées par les fonctions et variables suivantes :
 
 Lorsque l'aire de jeu nécessite qu'on lui applique une ou plusieurs fois la  gravité, ou lorsqu'il faut regénérer des chips, on dit qu'elle est dans un état "instable".
 
-<a class="mk-toclify" id="premi-re-v-rification-de-l-instabilit"></a>
+<a class="mk-toclify" id="premi%C3%A8re-v%C3%A9rification-de-linstabilit%C3%A9"></a>
 #### Première vérification de l'instabilité ####
 
 Cette vérification est effectuée après un zap (dans la fonction `GameXXX.tryToZap()`, et également après un Interactive Touch qui a fonctionné (dans la fonction `GameXXX.playOneGame`, juste après l'appel à `stimuliInteractiveTouch`).
@@ -572,7 +572,7 @@ Lorsque `GameXXX.needStabilization` renvoie True, le code extérieur qui l'a app
  - Locker les stimulis.
  - Définir `gravityCounter` à `DELAY_GRAVITY`, ce qui permettra d'appliquer la gravité/regénération ultérieurement. (la gravité n'est pas appliquée tout de suite lors de la première vérification).
 
-<a class="mk-toclify" id="application-des-gravit-s-successives"></a>
+<a class="mk-toclify" id="application-des-gravit%C3%A9s-successives"></a>
 #### Application des gravités successives ####
 
 Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par `GameXXX.gravityCounter`. À chaque cycle de jeu, la fonction `GameXXX.playOneGame` décrémente cette variable de 1. lorsqu'elle atteint 0, la fonction `GameXXX.handleGravity` est appelée. Celle-c effectue les actions suivantes :
@@ -584,7 +584,7 @@ Le fait de devoir continuer ou pas d'appliquer les gravités est déterminé par
  - Exécution de `GameXXX.needStabilization`. Si la fonction renvoie True, on redéfinit `gravityCounter` à `DELAY_GRAVITY`, pour réappliquer une prochaine gravité dans quelques cycles.
  - L'appel à `needStabilization` a remis à jour `GameXXX.gravityMovements`, avec de nouvelles valeurs correspondant aux mouvements de la prochaine gravité à appliquer.
 
-<a class="mk-toclify" id="fin-de-gravit"></a>
+<a class="mk-toclify" id="fin-de-gravit%C3%A9"></a>
 #### Fin de gravité ####
 
 Si `GameXXX.needStabilization` renvoie False, on laisse `GameXXX.gravityCounter` à 0. Les prochains cycles de jeu déduiront, de cette variable à 0, qu'il n'y a plus de gravité à gérer. `GameXXX.handleGravity` ne sera plus appelée.
@@ -593,7 +593,7 @@ En fin de gravité, il faut délocker les stimulis, puisqu'on les avait précéd
 
 D'autre part, lorsque `needStabilization` renvoie False, elle est censée avoir défini `GameXXX.gravityMovements` à None, ou n'avoir mis aucun mouvement dedans. (On s'en fout, on ne le contrôle pas, mais je tenais à le préciser).
 
-<a class="mk-toclify" id="reg-n-ration-sans-gravit"></a>
+<a class="mk-toclify" id="reg%C3%A9n%C3%A9ration-sans-gravit%C3%A9"></a>
 #### Regénération sans gravité ####
 
 Lorsqu'en exécute une gravité une fois, on regénère tout de suite après les chips aux emplacements laissés vides, dans la ligne du haut. Cette action est effectuée par la fonction `ArenaXXX.regenerateAllChipsAfterOneGravity`.
@@ -699,7 +699,7 @@ Pour gérer tout ça, la classe `GravityMovements` dispose des fonctions suivant
 
  - `removeEmptyListSegment` : fonction à appeler après avoir exécuté un ou plusieurs `cancelGravity`. Permet de supprimer les coordonnées primaires n'ayant plus aucun segment gravitant. Par exemple, si `dicMovement` vaut { 0 : [ (1, -1) ], 3 : [] }. Après exécution de `removeEmptyListSegment`, on aura : { 0 : [ (1, -1) ] }.
 
-<a class="mk-toclify" id="d-termination-des-mouvements-de-gravit"></a>
+<a class="mk-toclify" id="d%C3%A9termination-des-mouvements-de-gravit%C3%A9"></a>
 #### Détermination des mouvements de gravité ####
 
 La détermination des chips subissant une gravité (donc, le remplissage d'un objet `GravityMovements`) est effectué par la fonction `arenaXXX.determineGravity()`
@@ -803,7 +803,7 @@ Durant le crawling, on peut accéder à diverses variables, renseignant la posit
 
 Il est possible de rappeler `crawl` et `jumpOnPrimCoord` après que l'une d'elles ait renvoyé False. Mais les résultats récupérés sont inutilisables. (En fait, le crawler devrait s'arrêter, ou carrément balancer une exception).
 
-<a class="mk-toclify" id="configuration-de-gravit-par-les-crawlers"></a>
+<a class="mk-toclify" id="configuration-de-gravit%C3%A9-par-les-crawlers"></a>
 #### Configuration de gravité par les crawlers ####
 
 La détermination de la gravité, son application, et la regénération des chips après gravité sont toutes gérés avec des `ArenaCrawler`.
@@ -844,7 +844,7 @@ Le fonctionnement général est le suivant :
 	 - Pour finir, exécution de `GameXXX.gameStimuliInteractiveTouch`. Comme pour `ArenaXXX.stimuliInteractiveTouch`, cette fonction peut faire un peu ce qu'on veut, mais au niveau du `Game`, et pas de `Arena`. Par contre, pas la peine de renvoyer un booléen pour signaler si on a fait quelque chose. Là, on s'en tape.
 	 - Concrètement, `GameBasic.gameStimuliInteractiveTouch` ne fait rien. Faut l'overrider.
 
-<a class="mk-toclify" id="sp-cificit-s-des-modes-de-jeu-sp-cifique-ha-ha"></a>
+<a class="mk-toclify" id="sp%C3%A9cificit%C3%A9s-des-modes-de-jeu-sp%C3%A9cifique-ha-ha"></a>
 ## Spécificités des modes de jeu spécifique (ha ha) ##
 
 <a class="mk-toclify" id="gestion-des-gros-objets"></a>
@@ -909,7 +909,7 @@ Cette action est réalisée par la fonction overridée `ArenaBigObject.draw`. El
  - Pour chaque `BigObject` de `self.listBigObj` :
 	 -  Récupération de l'image correspondant au gros objet, et dessin au bon endroit, dans l'aire de jeu.
 
-<a class="mk-toclify" id="gestion-de-la-gravit"></a>
+<a class="mk-toclify" id="gestion-de-la-gravit%C3%A9"></a>
 ##### Gestion de la gravité #####
 
 Cette action est réalisée par les fonction overridée `ArenaBigObject.determineGravity` et `ArenaBigObject.applyGravity`.
@@ -1376,7 +1376,7 @@ Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape. Elle 
  - Démarrage du blink, s'il y a des tiles à blinker.
  - Lock des stimulis, si nécessaire.
 
-<a class="mk-toclify" id="r-alisation-d-un-zap"></a>
+<a class="mk-toclify" id="r-alisation-dun-zap"></a>
 ##### Réalisation d'un zap #####
 
 Dans la Game Loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
