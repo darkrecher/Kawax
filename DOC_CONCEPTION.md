@@ -13,17 +13,17 @@
         - [Game Loop](#game-loop)
     - [Description détaillée des aspects du jeu](#description-d%C3%A9taill%C3%A9e-des-aspects-du-jeu)
         - [Initialisation des classes GameXXX et ArenaXXX](#initialisation-des-classes-gamexxx-et-arenaxxx)
-        - [Structure d'une Arena](#structure-d-une-arena)
-        - [Initialisation d'une Arena](#initialisation-d-une-arena)
-        - [Sélection des tiles](#s-lection-des-tiles)
-            - [Lorsque le joueur clique sur la fenêtre du jeu :](#lorsque-le-joueur-clique-sur-la-fen-tre-du-jeu)
-            - [Lorsque le joueur déplace la souris en maintenant le bouton appuyé :](#lorsque-le-joueur-d-place-la-souris-en-maintenant-le-bouton-appuy)
-            - [Lorsque le joueur relâche le bouton de la souris](#lorsque-le-joueur-rel-che-le-bouton-de-la-souris)
-            - [Description globale du rôle du stimuliStocker dans la sélection des tiles](#description-globale-du-r-le-du-stimulistocker-dans-la-s-lection-des-tiles)
-            - [Transmission des tiles qui ont été activées](#transmission-des-tiles-qui-ont-t-activ-es)
-            - [Traitement, par le selectorPlayerOne, d'une tile activée](#traitement-par-le-selectorplayerone-d-une-tile-activ-e)
-            - [Prise en compte de la première activation de tile, et détermination du mode de sélection](#prise-en-compte-de-la-premi-re-activation-de-tile-et-d-termination-du-mode-de-s-lection)
-            - [Prise en compte des activations de tile qui viennent après](#prise-en-compte-des-activations-de-tile-qui-viennent-apr-s)
+        - [Structure d'une Arena](#structure-dune-arena)
+        - [Initialisation d'une Arena](#initialisation-dune-arena)
+        - [Sélection des tiles](#s%C3%A9lection-des-tiles)
+            - [Lorsque le joueur clique sur la fenêtre du jeu :](#lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu)
+            - [Lorsque le joueur déplace la souris en maintenant le bouton appuyé :](#lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9)
+            - [Lorsque le joueur relâche le bouton de la souris](#lorsque-le-joueur-rel%C3%A2che-le-bouton-de-la-souris)
+            - [Description globale du rôle du stimuliStocker dans la sélection des tiles](#description-globale-du-r-le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles)
+            - [Transmission des tiles qui ont été activées](#transmission-des-tiles-qui-ont-%C3%A9t%C3%A9-activ%C3%A9es)
+            - [Traitement, par le selectorPlayerOne, d'une tile activée](#traitement-par-le-selectorplayerone-dune-tile-activ%C3%A9e)
+            - [Prise en compte de la première activation de tile, et détermination du mode de sélection](#prise-en-compte-de-la-premi%C3%A8re-activation-de-tile-et-d%C3%A9termination-du-mode-de-s%C3%A9lection)
+            - [Prise en compte des activations de tile qui viennent après](#prise-en-compte-des-activations-de-tile-qui-viennent-apr%C3%A8s)
             - [Déselection en cascade](#d-selection-en-cascade)
             - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s-lection-d-une-tile)
         - ["Zap" d'un ensemble d'éléments](#zap-d-un-ensemble-d-l-ments)
@@ -230,7 +230,7 @@ Sauf qu'à un moment, je sais pas ce que j'ai foutu, j'ai dû oublié, ou fumer 
 
 Bref, c'est le bazar, et je ne saurais pas justifier pourquoi. Désolé !
 
-<a class="mk-toclify" id="structure-d-une-arena"></a>
+<a class="mk-toclify" id="structure-dune-arena"></a>
 ### Structure d'une Arena ###
 
 Les classes `ArenaXXX` possèdent une variable membre `matrixTile`. Il s'agit d'un tableau en 2D contenant des instances de `Tile` (une classe définie dans le fichier `tile.py`).
@@ -245,7 +245,7 @@ Les différents types de chip sont définis en héritant la classe `Chip`. Tout 
 
 Lorsqu'on déplace un objet dans l'aire de jeu (par exemple, pour appliquer la gravité), on déplace la chip, mais pas la tile. La tile ne change jamais, et on n'en crée pas de nouvelle durant une partie.
 
-<a class="mk-toclify" id="initialisation-d-une-arena"></a>
+<a class="mk-toclify" id="initialisation-dune-arena"></a>
 ### Initialisation d'une Arena ###
 
 Les actions suivantes sont effectuées :
@@ -275,7 +275,7 @@ La regénération des chip après un zap, est également effectuée selon le mê
 
 Donc potentiellement, on peut avoir des probabilités différentes pour la génération initiale des chips, et pour la génération durant la partie. Même si concrètement, j'ai mis les mêmes proba, parce que euh... voilà... c'est plus simple comme ça. Et puis c'est compliqué à équilibrer tout ce bazar.
 
-<a class="mk-toclify" id="s-lection-des-tiles"></a>
+<a class="mk-toclify" id="s%C3%A9lection-des-tiles"></a>
 ### Sélection des tiles ###
 
 L'information "quelle tile est sélectionnée, et de quelle manière", est stockée un peu bizarrement. C'est parce que je voulais prévoir la possibilité d'avoir plusieurs joueurs sur la même aire de jeu, qui feraient chacun leurs sélections respectives.
@@ -294,7 +294,7 @@ Tout le blabla de ce chapitre a pour but de décrire de quelle manière le conte
 
 À l'initialisation de `ArenaXXX`, on indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque `Tile` est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.
 
-<a class="mk-toclify" id="lorsque-le-joueur-clique-sur-la-fen-tre-du-jeu"></a>
+<a class="mk-toclify" id="lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu"></a>
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
 L'objet `GameXXX.stimuliStocker` le détecte (événement `pygame.locals.MOUSEBUTTONDOWN`).
@@ -313,7 +313,7 @@ D'autre part, le stimuliStocker retient les coordonnées de cette tile activée,
 
 Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
 
-<a class="mk-toclify" id="lorsque-le-joueur-d-place-la-souris-en-maintenant-le-bouton-appuy"></a>
+<a class="mk-toclify" id="lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9"></a>
 #### Lorsque le joueur déplace la souris en maintenant le bouton appuyé : ####
 
 Les actions effectuées suite à cette événement sont dans la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
@@ -342,7 +342,7 @@ Si le joueur bouge très vite la souris, et que le curseur quitte l'aire de jeu,
 
 Si le joueur maintient le curseur de souris appuyé, et revient vers l'aire de jeu mais par un autre endroit, alors `listPosArenaToActivate` contiendra une tile qui n'est pas forcément adjacente avec la dernière tile placée précédemment dans `listPosArenaToActivate`. Le code extérieur doit s'en débrouiller.
 
-<a class="mk-toclify" id="lorsque-le-joueur-rel-che-le-bouton-de-la-souris"></a>
+<a class="mk-toclify" id="lorsque-le-joueur-rel%C3%A2che-le-bouton-de-la-souris"></a>
 #### Lorsque le joueur relâche le bouton de la souris ####
 
 On réinitialise à None la variable `posArenaPrevious`.
@@ -351,7 +351,7 @@ On met à True la variable `mustStandBy`, qui sera utilisée par le code extéri
 
 Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False à chaque itération de game loop. Donc si le code extérieur veut réagir à cette variable, il doit le faire tout de suite.
 
-<a class="mk-toclify" id="description-globale-du-r-le-du-stimulistocker-dans-la-s-lection-des-tiles"></a>
+<a class="mk-toclify" id="description-globale-du-r-le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles"></a>
 #### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
 
  - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les tiles dans cette liste ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
@@ -360,7 +360,7 @@ Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False �
 
 Le stimulistocker n'a aucune idée de ce qu'il faut faire avec les tiles activées (sélection en chemin principal, sélection additionnelle, déselection, ...). C'est le code extérieur qui s'en occupera.
 
-<a class="mk-toclify" id="transmission-des-tiles-qui-ont-t-activ-es"></a>
+<a class="mk-toclify" id="transmission-des-tiles-qui-ont-%C3%A9t%C3%A9-activ%C3%A9es"></a>
 #### Transmission des tiles qui ont été activées ####
 
 Cette action est effectuée dans la Game Loop. Les tiles activées sont transmises à l'objet `selectorPlayerOne` (instance de `Selector`, contenu dans l'objet `GameXXX`).
@@ -371,7 +371,7 @@ Les tiles activées sont transmises une par une, dans l'ordre de `listPosArenaTo
 
 C'est important qu'elles soient transmises une par une: Ça simplifie les choses, car ça oblige à avoir le même comportement, que le joueur ait bougé son curseur doucement ou rapidement.
 
-<a class="mk-toclify" id="traitement-par-le-selectorplayerone-d-une-tile-activ-e"></a>
+<a class="mk-toclify" id="traitement-par-le-selectorplayerone-dune-tile-activ%C3%A9e"></a>
 #### Traitement, par le selectorPlayerOne, d'une tile activée ####
 
 le `Selector` possède une variable interne `selMode`, indiquant le mode de sélection en cours. Elle a 4 valeurs possibles :
@@ -387,7 +387,7 @@ Au départ, le mode est SELMODE\_STANDBY. Dès la première activation de tile, 
 
 Lorsque le joueur relâche le bouton de la souris, on reçoit le stimuli "Stand by" (fonction `Selector.takeStimuliStandBy`) et on revient en SELMODE\_STANDBY.
 
-<a class="mk-toclify" id="prise-en-compte-de-la-premi-re-activation-de-tile-et-d-termination-du-mode-de-s-lection"></a>
+<a class="mk-toclify" id="prise-en-compte-de-la-premi%C3%A8re-activation-de-tile-et-d%C3%A9termination-du-mode-de-s%C3%A9lection"></a>
 #### Prise en compte de la première activation de tile, et détermination du mode de sélection ####
 
 Ces actions sont réalisées par la fonction `takeStimuliActivateTile`, dans le bloc commençant par `if self.selMode == SELMODE_STANDBY:`, ainsi que par la fonction `tryToActivatePath`.
@@ -406,7 +406,7 @@ La détermination du mode de sélection dépend des tiles déjà sélectionnées
 
  - Dans tous les autres cas. -> Déselection de toutes les tiles (chemin principal et sélection additionnelle). Création d'un début de path sur la tile activée. Le mode devient SELMODE_PATH.
 
-<a class="mk-toclify" id="prise-en-compte-des-activations-de-tile-qui-viennent-apr-s"></a>
+<a class="mk-toclify" id="prise-en-compte-des-activations-de-tile-qui-viennent-apr%C3%A8s"></a>
 #### Prise en compte des activations de tile qui viennent après ####
 
 Cette action est réalisée par la fonction `takeStimuliActivateTile` (les autres blocs `if`), et également par `tryToActivatePath`.
