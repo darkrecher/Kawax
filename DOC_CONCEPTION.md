@@ -16,22 +16,22 @@
         - [Structure d'une Arena](#structure-dune-arena)
         - [Initialisation d'une Arena](#initialisation-dune-arena)
         - [Sélection des tiles](#s%C3%A9lection-des-tiles)
-            - [Lorsque le joueur clique sur la fenêtre du jeu :](#lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu)
-            - [Lorsque le joueur déplace la souris en maintenant le bouton appuyé :](#lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9)
+            - [Lorsque le joueur clique sur la fenêtre du jeu :](#lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu-)
+            - [Lorsque le joueur déplace la souris en maintenant le bouton appuyé :](#lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9-)
             - [Lorsque le joueur relâche le bouton de la souris](#lorsque-le-joueur-rel%C3%A2che-le-bouton-de-la-souris)
-            - [Description globale du rôle du stimuliStocker dans la sélection des tiles](#description-globale-du-r-le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles)
+            - [Description globale du rôle du stimuliStocker dans la sélection des tiles](#description-globale-du-r%C3%B4le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles)
             - [Transmission des tiles qui ont été activées](#transmission-des-tiles-qui-ont-%C3%A9t%C3%A9-activ%C3%A9es)
             - [Traitement, par le selectorPlayerOne, d'une tile activée](#traitement-par-le-selectorplayerone-dune-tile-activ%C3%A9e)
             - [Prise en compte de la première activation de tile, et détermination du mode de sélection](#prise-en-compte-de-la-premi%C3%A8re-activation-de-tile-et-d%C3%A9termination-du-mode-de-s%C3%A9lection)
             - [Prise en compte des activations de tile qui viennent après](#prise-en-compte-des-activations-de-tile-qui-viennent-apr%C3%A8s)
-            - [Déselection en cascade](#d-selection-en-cascade)
-            - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s-lection-d-une-tile)
-        - ["Zap" d'un ensemble d'éléments](#zap-d-un-ensemble-d-l-ments)
+            - [Déselection en cascade](#d%C3%A9selection-en-cascade)
+            - [Modification effective de la sélection d'une tile](#modification-effective-de-la-s%C3%A9lection-d-une-tile)
+        - ["Zap" d'un ensemble d'éléments](#zap-dun-ensemble-d%C3%A9l%C3%A9ments)
             - [La classe ZapValidator](#la-classe-zapvalidator)
-            - [Déroulement d'un zap](#d-roulement-d-un-zap)
+            - [Déroulement d'un zap](#d%C3%A9roulement-d-un-zap)
             - [Trucs qui auraient pu servir pour le zap, et en fait non](#trucs-qui-auraient-pu-servir-pour-le-zap-et-en-fait-non)
         - [Stimuli lock/delock](#stimuli-lockdelock)
-        - [Gravité et regénération](#gravit-et-reg-n-ration)
+        - [Gravité et regénération](#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration)
             - [Première vérification de l'instabilité](#premi-re-v-rification-de-l-instabilit)
             - [Application des gravités successives](#application-des-gravit-s-successives)
             - [Fin de gravité](#fin-de-gravit)
@@ -294,7 +294,7 @@ Tout le blabla de ce chapitre a pour but de décrire de quelle manière le conte
 
 À l'initialisation de `ArenaXXX`, on indique le nombre de joueur (c'est toujours 1). `matrixTile` est créé. chaque `Tile` est donc initialisée avec son `dicPlayerSel` de un seul élément, valant SELTYPE_NONE.
 
-<a class="mk-toclify" id="lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu"></a>
+<a class="mk-toclify" id="lorsque-le-joueur-clique-sur-la-fen%C3%AAtre-du-jeu-"></a>
 #### Lorsque le joueur clique sur la fenêtre du jeu : ####
 
 L'objet `GameXXX.stimuliStocker` le détecte (événement `pygame.locals.MOUSEBUTTONDOWN`).
@@ -313,7 +313,7 @@ D'autre part, le stimuliStocker retient les coordonnées de cette tile activée,
 
 Si le joueur clique plusieur fois de suite sur la même tile, le stimuliStocker mettra plusieurs fois de suite la même coordonnée dans `listPosArenaToActivate`. Le code extérieur doit savoir s'en débrouiller.
 
-<a class="mk-toclify" id="lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9"></a>
+<a class="mk-toclify" id="lorsque-le-joueur-d%C3%A9place-la-souris-en-maintenant-le-bouton-appuy%C3%A9-"></a>
 #### Lorsque le joueur déplace la souris en maintenant le bouton appuyé : ####
 
 Les actions effectuées suite à cette événement sont dans la fonction `activateTileWithMouse`. C'est la même fonction qui gère les clics et les mouvements.
@@ -351,7 +351,7 @@ On met à True la variable `mustStandBy`, qui sera utilisée par le code extéri
 
 Comme pour `listPosArenaToActivate`, `mustStandBy` est réinitialisé à False à chaque itération de game loop. Donc si le code extérieur veut réagir à cette variable, il doit le faire tout de suite.
 
-<a class="mk-toclify" id="description-globale-du-r-le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles"></a>
+<a class="mk-toclify" id="description-globale-du-r%C3%B4le-du-stimulistocker-dans-la-s%C3%A9lection-des-tiles"></a>
 #### Description globale du rôle du stimuliStocker dans la sélection des tiles ####
 
  - Renvoyer `listPosArenaToActivate` : une liste de coordonnées, contenant 0, 1 ou plusieurs éléments, correspondant aux tiles que le joueur veut activer. Les tiles dans cette liste ne sont pas forcément adjacentes, et peuvent parfois re-indiquer la même chose (par exemple lorsque le joueur déplace son curseur à gauche, puis à droite).
@@ -419,7 +419,7 @@ C'est comme lors de la première activation, mais en plus simple, car on a moins
 
  - en mode SELMODE\_SUPPL\_REMOVE :  Si la tile activée est dans la sélection additionnelle, on la déselectionne. Si elle est sélectionnée par le chemin principal, ou non sélectionnée, on ne fait rien.
 
-<a class="mk-toclify" id="d-selection-en-cascade"></a>
+<a class="mk-toclify" id="d%C3%A9selection-en-cascade"></a>
 #### Déselection en cascade ####
 
 L'ensemble de la sélection doit toujours être constitué d'un seul bloc.
@@ -428,7 +428,7 @@ Lorsqu'une ou plusieurs tiles sont déselectionnées (quelle que soit les tiles,
 
 Cette action est réalisée par la fonction `Selector.unselectTileSupplAlone`. Je ne sais plus comment l'algo fonctionne en détail. Il y a quelques commentaires pour aider. Je laisse le lecteur explorer ça comme il le veut.
 
-<a class="mk-toclify" id="modification-effective-de-la-s-lection-d-une-tile"></a>
+<a class="mk-toclify" id="modification-effective-de-la-s%C3%A9lection-d-une-tile"></a>
 #### Modification effective de la sélection d'une tile ####
 
 Maintenant qu'on sait sur quelles tiles agir, et quel sélection/déselection appliquer dessus, il faut le faire. L'action est un peu alambiquée, et passe à travers plusieurs fonctions.
@@ -447,7 +447,7 @@ La modification de sélection est effectuée par l'imbrication d'exécution de f
  		- `Tile[position].selectionChange`.  En param : le numéro du joueur et le type de sélection.
  			- Modification de `Tile.dicPlayerSel`. index : numéro du joueur. valeur : type de sélection.
 
-<a class="mk-toclify" id="zap-d-un-ensemble-d-l-ments"></a>
+<a class="mk-toclify" id="zap-dun-ensemble-d%C3%A9l%C3%A9ments"></a>
 ### "Zap" d'un ensemble d'éléments ###
 
 Le "zap" représente l'action effectuée par le joueur, après qu'il ait sélectionné des tiles, pour tenter de les faire disparaître. Le zap ne fonctionne pas forcément, ça dépend de la contrainte actuelle, et des tiles sélectionnés.
@@ -471,7 +471,7 @@ Le `ZapValidatorBase` s'initialise avec une valeur de brouzouf et une valeur de 
 
 `ZapValidatorBase.getListStrDescription()` indique le nombre de brouzouf et de sucre à sélectionner. `ZapValidatorBase.getListStrLastTry()` indique le nombre de brouzouf et de sucre que le joueur a dernièrement sélectionné.
 
-<a class="mk-toclify" id="d-roulement-d-un-zap"></a>
+<a class="mk-toclify" id="d%C3%A9roulement-d-un-zap"></a>
 #### Déroulement d'un zap ####
 
 Lors de l'initialisation, le `GameXXX` a créé une instance héritant de `ZapValidatorBase`.
@@ -536,7 +536,7 @@ Par contre, les clics "d'interactive touch" restent pris en compte, même lorsqu
 
 Les moments d'activation/suppression du lock sont détaillés dans d'autre partie de cette documentation. Voir partie ["Gravité"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#gravit%C3%A9-et-reg%C3%A9n%C3%A9ration) et ["Tutoriel"](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#tutoriel)).
 
-<a class="mk-toclify" id="gravit-et-reg-n-ration"></a>
+<a class="mk-toclify" id="gravit%C3%A9-et-reg%C3%A9n%C3%A9ration"></a>
 ### Gravité et regénération ###
 
 Ces actions sont gérées par les fonctions et variables suivantes :
