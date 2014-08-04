@@ -45,35 +45,35 @@
         - [Gestion des "gros objets"](#gestion-des-gros-objets)
             - [La classe BigObject](#la-classe-bigobject)
             - [La classe ArenaBigObject](#la-classe-arenabigobject)
-                - [Ajout d'un gros objet](#ajout-d-un-gros-objet)
+                - [Ajout d'un gros objet](#ajout-dun-gros-objet)
                 - [Dessin](#dessin)
                 - [Gestion de la gravité](#gestion-de-la-gravit%C3%A9)
         - [Le mode Touillette](#le-mode-touillette)
             - [Ajout des touillettes](#ajout-des-touillettes)
-            - [Disparition des touillettes en bas de l'écran](#disparition-des-touillettes-en-bas-de-l-cran)
+            - [Disparition des touillettes en bas de l'écran](#disparition-des-touillettes-en-bas-de-l%C3%A9cran)
             - [Affichage du nombre de touillettes disparues](#affichage-du-nombre-de-touillettes-disparues)
         - [Le mode Aspro](#le-mode-aspro)
             - [Gravity Rift](#gravity-rift)
-            - [Suppression des demi-cachets en bas de l'aire de jeu](#suppression-des-demi-cachets-en-bas-de-l-aire-de-jeu)
+            - [Suppression des demi-cachets en bas de l'aire de jeu](#suppression-des-demi-cachets-en-bas-de-laire-de-jeu)
             - [Interactive Touch sur les aspirines](#interactive-touch-sur-les-aspirines)
-            - [Création des demi-cachets au début du jeu](#cr-ation-des-demi-cachets-au-d-but-du-jeu)
-            - [Génération des demi-cachets (non implémenté)](#g-n-ration-des-demi-cachets-non-impl-ment)
+            - [Création des demi-cachets au début du jeu](#cr%C3%A9ation-des-demi-cachets-au-d%C3%A9but-du-jeu)
+            - [Génération des demi-cachets (non implémenté)](#g%C3%A9n%C3%A9ration-des-demi-cachets-non-impl%C3%A9ment%C3%A9)
         - [Tutoriel](#tutoriel)
             - [La classe TutorialStep](#la-classe-tutorialstep)
             - [La classe TutorialScheduler](#la-classe-tutorialscheduler)
             - [La classe Blinker](#la-classe-blinker)
-            - [Création d'un tutoriel à partir d'un mode de jeu](#cr-ation-d-un-tutoriel-partir-d-un-mode-de-jeu)
-                - [Étapes du tutoriel](#tapes-du-tutoriel)
+            - [Création d'un tutoriel à partir d'un mode de jeu](#cr%C3%A9ation-dun-tutoriel-%C3%A0-partir-dun-mode-de-jeu)
+                - [Étapes du tutoriel](#%C3%89tapes-du-tutoriel)
                 - [Aire de jeu](#aire-de-jeu)
                 - [Liste des consignes de zap](#liste-des-consignes-de-zap)
-                - [Implémentation de tout ce bazar](#impl-mentation-de-tout-ce-bazar)
-            - [Intégration du tutoriel dans le reste du code](#int-gration-du-tutoriel-dans-le-reste-du-code)
+                - [Implémentation de tout ce bazar](#impl%C3%A9mentation-de-tout-ce-bazar)
+            - [Intégration du tutoriel dans le reste du code](#int%C3%A9gration-du-tutoriel-dans-le-reste-du-code)
                 - [Fonction GameBasic.showCurrentTutoStep](#fonction-gamebasicshowcurrenttutostep)
-                - [Réalisation d'un zap](#r-alisation-dun-zap)
+                - [Réalisation d'un zap](#r%C3%A9alisation-dun-zap)
                 - [Appui sur la touche "F"](#appui-sur-la-touche-f)
                 - [Interactive touch](#interactive-touch)
                 - [handleGravity](#handlegravity)
-                - [Début du jeu](#d-but-du-jeu)
+                - [Début du jeu](#d%C3%A9but-du-jeu)
                 - [Reblink](#reblink)
                 - [ManualInGame](#manualingame)
                 - [GameAspirin.gameStimuliInteractiveTouch](#gameaspiringamestimuliinteractivetouch)
@@ -885,7 +885,7 @@ La classe est indépendante, elle ne possède pas de lien vers l'aire de jeu qui
 
 Fonctionne comme la classe ArenaBasic, mais possède une fonction en plus, et quelques fonctions overridées.
 
-<a class="mk-toclify" id="ajout-d-un-gros-objet"></a>
+<a class="mk-toclify" id="ajout-dun-gros-objet"></a>
 ##### Ajout d'un gros objet #####
 
 Cette action est réalisée par la fonction `ArenaBigObject.addBigObject`. Elle nécessite deux paramètres :
@@ -966,7 +966,7 @@ Les étapes suivantes sont effectuées :
  - (Retour à `regenerateAllChipsAfterOneGravity`)
  - Exécution de la fonction de base `ArenaBigObject.regenerateAllChipsAfterOneGravity`, afin de regénérer des chips sur les tiles qui sont restés vide.
 
-<a class="mk-toclify" id="disparition-des-touillettes-en-bas-de-l-cran"></a>
+<a class="mk-toclify" id="disparition-des-touillettes-en-bas-de-l%C3%A9cran"></a>
 #### Disparition des touillettes en bas de l'écran ####
 
 Cette action est réalisée par les fonctions suivantes :
@@ -1086,7 +1086,7 @@ Et durant la Game Loop, les actions suivantes sont effectuées :
 	 - Appel de `needStabilization`. Si la fonction renvoie True, il faudra refaire une autre gravité plus tard.
 	 - Suppression du lock des stimulis, sauf si c'est le tutoriel qui les a lockés.
 
-<a class="mk-toclify" id="suppression-des-demi-cachets-en-bas-de-l-aire-de-jeu"></a>
+<a class="mk-toclify" id="suppression-des-demi-cachets-en-bas-de-laire-de-jeu"></a>
 #### Suppression des demi-cachets en bas de l'aire de jeu ####
 
 Cette action est réalisée par les fonctions suivantes :
@@ -1181,7 +1181,7 @@ La gestion est donc presque simple. Il y a juste cette histoire de `hasTakenAspr
 
 Et donc il faut voir ce `hasTakenAsproFull` comme un message envoyé de l'arena au game, pour prévenir qu'il s'est passé un truc. Le message doit être acquitté dès qu'il a été pris en compte. C'est pourquoi on le remet à False très peu de temps après l'avoir mis à True. C'est de la gestion d'événements. Et je m'aperçois que j'aurais dû beaucoup plus coder en pensant "événement" que "orienté objet". C'est pas grave, on fera mieux la prochaine fois !!
 
-<a class="mk-toclify" id="cr-ation-des-demi-cachets-au-d-but-du-jeu"></a>
+<a class="mk-toclify" id="cr%C3%A9ation-des-demi-cachets-au-d%C3%A9but-du-jeu"></a>
 #### Création des demi-cachets au début du jeu ####
 
 Cette action est réalisée par la fonction overridée `GameAspirin.populateArena`.
@@ -1190,7 +1190,7 @@ Elle est appelée dans `GameBasic.__init__`, après instanciation de l'arena, et
 
 La fonction remplace certaines chips existantes par des demi-cachets droit et gauche. Les positions de remplacement sont en dur. Elles sont définies par les constantes `LIST_COORD_ASPRO_HALF_LEFT` et `LIST_COORD_ASPRO_HALF_RIGHT`, dans le fichier `asprog.py`.
 
-<a class="mk-toclify" id="g-n-ration-des-demi-cachets-non-impl-ment"></a>
+<a class="mk-toclify" id="g%C3%A9n%C3%A9ration-des-demi-cachets-non-impl%C3%A9ment%C3%A9"></a>
 #### Génération des demi-cachets (non implémenté) ####
 
 J'avais commencé de coder cette fonctionnalité, mais je ne suis pas sûr de l'avoir finie, et je n'ai plus la motivation pour me replonger dedans.
@@ -1297,7 +1297,7 @@ La classe `Blinker` s'utilise de la manière suivante :
  - Pour que le blink soit effectué, il faut exécuter la fonction `advanceTimerAndHandle`, une fois par cycle de jeu. C'est cette fonction qui met à jour les variables `tutoHighLight`. Elle est appelée par la classe `GameBasic`, dans la Game Loop. Après appel de cette fonction, il faut redessiner l'aire de jeu (appel de `arena.draw`).
  - Ensuite, on peut soit ne rien faire, et laisser le blink s'arrête tout seul, soit appeler `stopBlink` pour l'arrêter immédiatement, soit rappeler `startBlink`, avec une nouvelle liste de positions. Dans ce dernier cas, la variable `tutoHighLight` des anciennes positions est remise à False, pour être sûr de ne pas se retrouver avec des restes d'anciens blinks, qui laisseraient des cadres turquoise n'importe où.
 
-<a class="mk-toclify" id="cr-ation-d-un-tutoriel-partir-d-un-mode-de-jeu"></a>
+<a class="mk-toclify" id="cr%C3%A9ation-dun-tutoriel-%C3%A0-partir-dun-mode-de-jeu"></a>
 #### Création d'un tutoriel à partir d'un mode de jeu ####
 
 Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc pour amener le joueur à effectuer des étapes prédéfines (en particulier les zaps), il faut définir en dur, et en cohérence entre elles, les infos suivantes :
@@ -1308,7 +1308,7 @@ Avec ou sans tutoriel, un mode de jeu doit respecter les mêmes règles. Donc po
 
 Nous allons maintenant voir les morceaux de code à implémenter pour créer un mode de jeu avec tutoriel. (C'est nul de dire "nous allons voir", mais je sais pas comment le dire autrement).
 
-<a class="mk-toclify" id="tapes-du-tutoriel"></a>
+<a class="mk-toclify" id="%C3%89tapes-du-tutoriel"></a>
 ##### Étapes du tutoriel #####
 
 Il faut définir `listTutStepsDescrip`. Il s'agit d'une liste de tuple, telle que décrite précédemment. [Voir plus avant](https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md#la-classe-tutorialscheduler).
@@ -1339,7 +1339,7 @@ Chaque zap de tutoriel doit avoir une contrainte définie en dur, correspondant 
  - int. Total de de brouzoufs à sélectionner.
  - int. Nombre de sucre à sélectionner.
 
-<a class="mk-toclify" id="impl-mentation-de-tout-ce-bazar"></a>
+<a class="mk-toclify" id="impl%C3%A9mentation-de-tout-ce-bazar"></a>
 ##### Implémentation de tout ce bazar #####
 
 Il faut créer une classe `GameXXXTuto`, héritée à partir du `GameXXX` que l'on veut tutorialiser. C'est ce qui est fait avec les 3 fichiers de code précédemment mentionnées.
@@ -1361,7 +1361,7 @@ Le tutoriel du mode Touillette override une fonction supplémentaire : `periodic
 
 (C'est déjà bizarre d'avoir mis ce bout de code dans `periodicAction`, mais là, c'est encore plus bizarre de l'enlever de cette manière. J'ai vraiment eu du mal à coder tout ça bien comme il faut. J'en suis sincèrement désolé).
 
-<a class="mk-toclify" id="int-gration-du-tutoriel-dans-le-reste-du-code"></a>
+<a class="mk-toclify" id="int%C3%A9gration-du-tutoriel-dans-le-reste-du-code"></a>
 #### Intégration du tutoriel dans le reste du code ####
 
 Le `TutorialScheduler` est principalement utilisé par `GameBasic`, mais pas que.
@@ -1376,7 +1376,7 @@ Cette fonction doit être appelée lorsqu'on vient d'avancer d'une étape. Elle 
  - Démarrage du blink, s'il y a des tiles à blinker.
  - Lock des stimulis, si nécessaire.
 
-<a class="mk-toclify" id="r-alisation-dun-zap"></a>
+<a class="mk-toclify" id="r%C3%A9alisation-dun-zap"></a>
 ##### Réalisation d'un zap #####
 
 Dans la Game Loop, on vérifie que le `TutorialScheduler` n'a pas locké les stimulis, avant d'exécuter la fonction `GameBasic.tryToZap`.
@@ -1410,7 +1410,7 @@ Lorsque la fonction `GameBasic.handleGravity` s'aperçoit que le jeu est devenu 
 
 On retrouve ce même code dans `GameAspirin.handleGravity`. Une partie du code de `GameBasic` est vilainement copié-collé dans `GameAspirin`.
 
-<a class="mk-toclify" id="d-but-du-jeu"></a>
+<a class="mk-toclify" id="d%C3%A9but-du-jeu"></a>
 ##### Début du jeu #####
 
 Au début du jeu (début de la fonction `playOneGame`), on affiche la première étape du tutoriel.
