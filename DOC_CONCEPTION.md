@@ -7,7 +7,7 @@
 - [Document de conception de Kawax](#document-de-conception-de-kawax)
     - [Avertissements](#avertissements)
     - [Diagramme de classe](#diagramme-de-classe)
-    - [Déroulement des actions lors d'une partie type](#d%C3%A9roulement-des-actions-lors-d-une-partie-type)
+    - [Déroulement des actions lors d'une partie type](#d%C3%A9roulement-des-actions-lors-dune-partie-type)
         - [Initialisation générale, choix du mode de jeu](#initialisation-g%C3%A9n%C3%A9rale-choix-du-mode-de-jeu)
         - [Initialisation des trucs dans GameXXX](#initialisation-des-trucs-dans-gamexxx)
         - [Game Loop](#game-loop)
@@ -104,7 +104,7 @@ Les cadres bleus avec des lignes pointillés indiquent des zooms sur une partie 
 
 Les deux flèches en rond indiquent que la classe `GravityMovements` est créé dans `GameBasic` puis envoyée à `ArenaBasic`, qui fait des modifs dedans, la renvoie, et ainsi de suite.
 
-<a class="mk-toclify" id="d%C3%A9roulement-des-actions-lors-d-une-partie-type"></a>
+<a class="mk-toclify" id="d%C3%A9roulement-des-actions-lors-dune-partie-type"></a>
 ## Déroulement des actions lors d'une partie type ##
 
 <a class="mk-toclify" id="initialisation-g%C3%A9n%C3%A9rale-choix-du-mode-de-jeu"></a>
