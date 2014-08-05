@@ -128,7 +128,7 @@ Pour installer le jeu sur un autre ordinateur, il suffit de copier le .zip, de l
 
 Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les termes de la licence (Art Libre ou CC-BY). En particulier : citer l'auteur. Un lien vers mon blog ou vers ce repository suffira.
 
-L'exécutable PC correspondant à la 0.1 du code est directement disponible ici : http://www.indiedb.com/games/kawax/downloads/kawax-v01-for-pc
+L'exécutable PC correspondant à la version 0.1 du code est directement disponible ici : http://www.indiedb.com/games/kawax/downloads/kawax-v01-for-pc
 
 ## Mac OS X ##
 
@@ -240,7 +240,7 @@ Copier simplement le .dmg sur un autre Mac. Puis exécuter le jeu comme expliqu�
 
 Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les termes de la licence (Art Libre ou CC-BY). En particulier : citer l'auteur. Un lien vers mon blog ou vers ce repository suffira. (Là je me répète un peu, mais j'y tiens)
 
-L'exécutable Mac correspondant à la 0.1 du code est directement disponible ici : http://www.indiedb.com/games/kawax/downloads/kawax-v01-for-mac
+L'exécutable Mac correspondant à la version 0.1 du code est directement disponible ici : http://www.indiedb.com/games/kawax/downloads/kawax-v01-for-mac
 
 ### Plantage éventuel à l'exécution ###
 
