@@ -242,6 +242,29 @@ Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les te
 
 TODO : récupérer un exécutable déjà fait sur indieDb (mais je l'ai pas encore mis).
 
+### Plantage éventuel à l'exécution ###
+
+Si vous avez un peu joué avec le code source, vous risquez d'avoir l'erreur suivante au lancement de kawax.app. 
+
+    Fatal Python error: (pygame parachute) Bus Error
+    Abort trap
+
+Aucune fenêtre n'apparaît. Ce message est émis sur la sortie standard ou erreur. (Bref, dans la console).
+
+Ça arrive avec les exécutables Mac, mais peut-être aussi sur d'autres systèmes.
+
+Pour régler le problème, vérifiez que vous n'avez pas ajouté une instruction de ce genre dans le code :
+
+    my_default_font = pygame.font.Font(None, 20)
+    
+Lorsqu'on instancie une police de caractère sans spécifier de fichier de police, le python parvient toujours à se débrouiller. Il s'en est gardé une sous le coude, il demande une police au système, il écrit les lettres lui-même avec son sang, ... Donc, quand on lance le jeu avec le code source, tout va bien.
+
+Mais dans un exécutable, ça pète. Car la police par défaut n'est pas embarquée dedans. Le message d'erreur est vraiment cabbalistique, mais il faut faire avec.
+
+Pour éviter ce genre de désagrément, indiquez toujours un fichier de police quand vous en instanciez une. N'importe quelle fichier, même un truc moche. Si vous ne savez pas où il y en a, prenez celui du repository : code/fontzy/tempesta.ttf
+
+J'ai eu l'explication de ce bug grâce à ce post sur stackoverflow : http://stackoverflow.com/questions/3470377/my-py2app-app-will-not-open-whats-the-problem
+
 ## GNU/Linux, Ubuntu, Fedora, etc. ##
 
 Il est certainement possible de jouer à Kawax sur ces systèmes, puisque python et pygame sont compatibles dessus. Mais je n'ai pas ce genre de chose chez moi. Désolé, je devrais certainement être qualifié de vilain monsieur.
