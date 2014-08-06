@@ -1,29 +1,16 @@
 Kawax version 0.1
-
-    La page du jeu sur indieDB : TRODO_INSERT_PAGE_HERE_YOU_DUMB
-    Liens vers d'autres jeux sur mon blog : http://recher.wordpress.com/jeux
-    Mon twitter : http://twitter.com/_Recher_
-
-    Ce superbe jeu, son code source, ses images, et son euh... contenu sonore est disponible,
-    au choix, sous la licence Art Libre ou la licence CC-BY-SA
-
-    Copyright 2010 RÈchËr
-    Copyleft : cette oeuvre est libre, vous pouvez la redistribuer et/ou la modifier selon les
-    termes de la Licence Art Libre. Vous trouverez un exemplaire de cette Licence sur le site
-    Copyleft Attitude http://www.artlibre.org ainsi que sur d'autres sites.
-
-    Creative Commons - PaternitÈ - Partage des Conditions Initiales ‡ l'Identique 2.0 France
-    http://creativecommons.org/licenses/by-sa/2.0/fr/deed.fr
+Cr√©√© par R√©ch√®r
+Repo : https://github.com/darkrecher/Kawax
 
 
-la police de caractËre tempesta.ttf vient du site :
+la police de caract√®re utilis√©e par Kawax a √©t√© r√©cup√©r√©e aupr√®s d'un gentil japonais qui r√©alise de mignons ic√¥nes. Son site est ici :
 
-       http://p.yusukekamiyamane.com
+http://p.yusukekamiyamane.com
 
-un gentil Japonais qui fait de mignons icÙnes et des polices.
+Le fichier contenant les polices est directement t√©l√©chargeable ici :
+http://p.yusukekamiyamane.com/fonts/downloads/tempesta-seven-fonts-1.2.zip
 
-Pour Ítre plus prÈcis, j'ai pris celle l‡ :
-http://p.yusukekamiyamane.com/fonts/downloads/tempesta-seven-fonts-1.2.zip/pf_tempesta_seven.ttf
+Kawax utilise la police pf_tempesta_seven.ttf
 
-On peut aussi la trouver ici:
+On peut √©galement la trouver ici:
 http://www.dafont.com/pf-tempesta-seven.font
