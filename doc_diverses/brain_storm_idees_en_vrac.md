@@ -1,32 +1,67 @@
-**********
-description
-**********
+# Kawax. Idées en vrac #
 
-pile de touches de café, à gauche : 
-au départ, on en voit 3. On peut choisir parmi les 2 premiers.
-Après : On en voit 6. On peut choisir parmi les 4 premiers.
-Nan, c'est un peu trop.
+## Principe principal (ha ha) ##
 
-Faut faire la somme exacte, of course. En choisissant des pièces adjacentes. (Mais on fait la forme qu'on veut, et pas forcément un chemin traçable en une fois).
+match sum(x)
 
-objets possibles :
+Il y a une pile de touches de café, à gauche de l'écran. Ça représente les différents choix, comme sur une machine à café. Chaque touche correspond à un type de café, et à un prix spécifique, en brouzoufs.
 
-pièces de 1, 2, 5, 10, 20, 50
+Le joueur clique sur une touche, puis sélectionne un nombre de pièces dans l'aire de jeu, correspondant au prix. Le café est alors fait. Les pièces disparaissent, la touche aussi, et une autre touche arrive, avec un autre type de café.  
 
-pièces bizarres : 3, 7, ...
+Au départ, on voit 3 touches. On peut choisir parmi les 2 premières. La troisième permet de prévoir ce qu'on aura ensuite.
 
-bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce
+En évoluant dans le jeu, on voit 6 touches, on peut choisir parmi les 4 premières.
 
-pièce avec du chewing-gum dessus : sélectionnable, mais non pris en compte dans le calcul. Le chewing-gum s'en va quand on active une sélection et qu'elle est dedans. (ou alors, quand elle est dans la sélection et que y'a au moins X pièces sélectionnées autour. Ca peut dépendre de la quantité de chewing-gum.
-(Bizarre. Faut qu'elle soit sélectionnable ou qu'elle le soit pas, cette putain de pièce ? On verra. Je dirais que non)
- 
+(C'est un peu trop, faudra équilibrer ce bazar).
+
+Il faut obtenir la somme exacte de brouzouf, en choisissant des pièces adjacentes. On fait la forme de sélection qu'on veut, et pas forcément un chemin traçable en une fois.
+
+## Objets du jeu ##
+
+### Pièces ###
+
+Pièces de 1, 2, 5, 10, 20, 50
+
+Pièces bizarres : 3, 7, ...
+
+Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce
+
+### Sucre ###
+
+Pour faire un café, il faut sélectionner une certaine somme de brouzoufs, plus X sucres. (Soit exactement X, soit au moins X. Je sais pas encore)
+
+Sucrettes à l'aspartame. Équivalent à 2/3/4 sucres sur une même case. Le nombre de sucrettes indique la valeur. 
+
+Le sucre-joker. (Un bonbon ? Du sucre liquide ? Du caramel). Ça donne pil poil le bon nombre de sucre requis. 
+
+Super-pouvoir : fusionner 5 sucres adjacent en un sucre-joker. (Même principe que pour la fusion de monnaie, voir plus loin).
+
+Du sucre qu'on peut stocker et utiliser pour plus tard.
+
+### Chewing-gum ###
+
+Il a plusieurs points de vie. On peut le sélectionner. Il perd un point de vie pour chaque zap effectué sur une tile adjacente, ainsi que sur sa propre tile. (Donc il peut perdre plusieurs points de vie d'un coup).
+
+Il n'est pas soumis à la gravité. Ça fiche le bordel, car il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case. 
+
+Pièce avec du chewing-gum dessus ? Pièce sale ?
+
+### Mégot de clope / coucougnous ###
+
 miette de pain / mégot de clope. insélectionnable. Disparaît quand on active une sélection adjacente. (Avec X pièces sélectionnées autour. Ca dépend de la tronche du mégot)
 
-sucre. Y'a des fois, faut faire une certaine somme avec une sélection de pièces et avoir X sucres dans la sélection. (Soit exactement X, soit au moins X. Je sais pas encore)
 
-gros objets qui prennent plusieurs cases. Faut les faire tomber petit à petit. (Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps).
+Le mégot de clope. Insélectionnable. A 8 points de vie maximum. Il faut les faire tomber à 0 en une seule fois. (Avec des cases adjacentes. Ce qui signifie que 2 megots à 8 points de vie côte à côte ne peuvent pas être détruit par des moyens conventionnels. Woups, faudra faire gaffe à ça.
+Ou alrs on fait 1 3 5 8 pour simplifier. Sinon ça fait trop d'images différentes. On s'y paume.
+
+Du coup, il faut un objet/pouvoir : le fume-mégot. Qui fait baisser le rang de point de vie un megot.
+
+### Gros objets ###
+
+Prennent plusieurs cases. Faut les faire tomber petit à petit. (Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps).
 Quand ça arrive en bas, on récupère ce gros objet : gros sucre, touillettes (horizontal ou vertical), billet de 5 brouzoufs, sachet de thé, stylo, etc...
 
+chocolat, lait gnôle.
 
 **********
 Trucs qui font gagner des points de style : 
@@ -174,15 +209,6 @@ Et après faut faire tomber l'une des deux moitiés.
 **********
 Faut trouver des trucs dans lesquels dépenser ces XP. Là on n'a rin.
 
-Et pis des objets qui font des effets aussi.
-
-le chewing-gum. (C'est pas une pièce qu'a du chewing gum dessus. C'est un chewing-gum tout seul). Il a plusieurs points de vie. On peut le sélectionner. Faire péter une tile adjacente lui fait perdre un point de vie. Quand il perd un ou plusieurs points de vie, il tombe d'une case. Mais sinon il tombe pas. Et ça fiche le bordel, car ça laisse des cases vides. (Dans les jeux où y'a de la gravité).
-
-Le mégot de clope. Insélectionnable. A 8 points de vie maximum. Il faut les faire tomber à 0 en une seule fois. (Avec des cases adjacentes. Ce qui signifie que 2 megots à 8 points de vie côte à côte ne peuvent pas être détruit par des moyens conventionnels. Woups, faudra faire gaffe à ça.
-Ou alrs on fait 1 3 5 8 pour simplifier. Sinon ça fait trop d'images différentes. On s'y paume.
-
-Du coup, il faut un objet/pouvoir : le fume-mégot. Qui fait baisser le rang de point de vie un megot.
-
 Et un objet pouvoir qui fait tomber d'une case tous les chewing-gum (sans qu'ils perdent de points de vie, ou alors si).
 
 glaçon : pouvoir qui gèle un chewung-gum. Il faut toujours le détruire comme avant, mais il tombe dès que possible.
@@ -214,12 +240,6 @@ Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (ge
 Des carrés plus grand, ça donne quoi ?
 
 Et si on arrive à enfermer une zone ? Y'a un zap par rapport à ça. Mais peut on en faire un bonus  quelconque ?
-
-et l'aspartame ? Ca donne pil poil le bon nombre de sucre. Et c'est tout ? Mouais. Ou alors c'est du sucre qu'on peut stocker et utiliser pour plus tard. 
-
-On peut fusionner 5 sucres en un aspartame. (Même principe que la fusion de monnaie).
-
-TODO : Ou alors du sucre de force supérieure à 1 sur une seule case.
 
 Un objet qui se déplace dans une direction précise. Et qu'il faudrait emmener quelque part. (Et il fait quoi ?) Il trace un chemin qui fait quelque chose ?
 une mini-voiture-jouet ? (genre cadeau bonus à la con). 
