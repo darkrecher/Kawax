@@ -4,89 +4,86 @@
 
 match sum(x)
 
-Il y a une pile de touches de café, à gauche de l'écran. Ça représente les différents choix, comme sur une machine à café. Chaque touche correspond à un type de café, et à un prix spécifique, en brouzoufs.
+L'aire de jeu est constitué d'un quadrillage de case. Chaque case comporte un objet (une pièce de monnaie, un sucre, ...).
 
-Le joueur clique sur une touche, puis sélectionne des pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide : le café se fait, les pièces disparaissent (elles sont "zappées"), la touche aussi, et une autre touche arrive, avec un autre type de café.  
+Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, et à un prix spécifique, en brouzoufs. (Le brouzouf est la monnaie nationale).
 
-Au départ, on voit 3 touches. On peut choisir parmi les 2 premières. La troisième permet de prévoir ce qu'on aura ensuite.
+Le joueur clique sur un bouton, puis sélectionne un groupe de pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide, le café se fait, les pièces disparaissent (elles sont "zappées"), le bouton aussi, et un autre bouton apparaît d'un autre type de café.  
 
-En évoluant dans le jeu, on voit 6 touches, on peut choisir parmi les 4 premières.
+Au départ, on voit 3 boutons. On peut choisir parmi les 2 premiers. Le troisième permet de prévoir ce qu'on aura ensuite.
 
-Faut au moins 2 possibilités de café pour faire quelque chose de jouable. On prépare le terrain pour l'une des possibilités, en utilisant l'autre possibilité. Ou vice-versa.
-Et les possibilités suivantes sont visibles. Ca c'est cool aussi.
+Le choix entre 2 boutons permet d'avoir quelque chose de jouable. Par exemple, si l'un des boutons est un type de café difficile, on utilise l'autre plusieurs fois, pour préparer l'aire de jeu et finalement réussir à faire le difficile.
 
-(C'est un peu trop, faudra équilibrer ce bazar).
+(Après tests : un seul bouton, ça marche assez bien quand même. Ce bazar est à équilibrer).
 
-Il faut obtenir la somme exacte de brouzouf, en choisissant des pièces adjacentes. On fait la forme de sélection qu'on veut, et pas forcément un chemin traçable en une fois.
+Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est constitué d'un groupe de case connexe. On sélectionne d'abord un chemin de case, traçable en une fois. Ensuite on sélectionne des cases additionnelles, sans contrainte de chemin, il faut juste qu'une case additionnelle soit adjacente à une case déjà sélectionnée.
 
 ## Boissons possibles ##
 
-(faudra augmenter les prix, dans l'ensemble. J'ai un peu essayé, c'est super facile, là.
+À équilibrer, évidemment.
  
-gobelet d'eau : 2
-café : 12
-café au lait : 15
-potage au potiron : 13
-cacao : 20
-cacao avec du lait : 23
-jus d'orange dégueu en poudre : 7
-ricard : 51
-sang de chèvre vierge : 666 (faut le débloquer avec une quête)
-boisson au gingembre aphrodisiaque : 69
+ - gobelet d'eau : 2 brouzoufs
+ - café : 12
+ - café au lait : 15
+ - potage au potiron : 13
+ - cacao : 20
+ - cacao avec du lait : 23
+ - jus d'orange dégueu en poudre : 7
+ - ricard : 51
+ - sang de chèvre vierge : 666 (à débloquer avec une quête)
+ - boisson au gingembre aphrodisiaque : 69
 
 ## Objets du jeu ##
 
 ### Pièces ###
 
-Pièces de 1, 2, 5, 10, 20, 50
+Pièces de 1, 2, 5, 10, 20, 50 brouzoufs.
 
 Pièces bizarres : 3, 7, ...
 
-Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce
+Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce.
 
 ### Sucre ###
 
 Pour faire un café, il faut sélectionner une certaine somme de brouzoufs, plus X sucres. (Soit exactement X, soit au moins X. Je sais pas encore)
 
-Sucrettes à l'aspartame. Équivalent à 2/3/4 sucres sur une même case. Le nombre de sucrettes indique la valeur. 
+Sucrettes à l'aspartame : équivalent à 2,3 ou 4 sucres sur une même case, le nombre de sucrettes indique la valeur. 
 
-Le sucre-joker. (Un bonbon ? Du sucre liquide ? Du caramel). Ça donne pil poil le bon nombre de sucre requis. 
+Sucre-joker : donne pil poil le bon nombre de sucre requis. (Un bonbon ? Du sucre liquide ? Du caramel ?).
 
-Super-pouvoir : fusionner 5 sucres adjacent en un sucre-joker. (Même principe que pour la fusion de monnaie, voir plus loin).
+Super-pouvoir : sélectionner 5 sucres adjacents pour les fusionner en un sucre-joker.
 
-Du sucre qu'on peut stocker et utiliser pour plus tard.
+Super-pouvoir : sucrier ou boîte à sucre. Permet de stocker du sucre récupéré lors d'une sélection, afin de l'utiliser plus tard.
 
 ### Chewing-gum ###
 
-Il a plusieurs points de vie. On peut le sélectionner. Il perd un point de vie pour chaque zap effectué sur une tile adjacente, ainsi que sur sa propre tile. (Donc il peut perdre plusieurs points de vie d'un coup).
+Sélectionnable. Il a plusieurs points de vie, et en perd un pour chaque zap effectué sur une case adjacente, ainsi que sur sa propre case. (Donc il peut perdre jusqu'à 9 points de vie d'un coup).
 
-Il n'est pas soumis à la gravité. Ça fiche le bordel, car il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case. 
+Il n'est pas soumis à la gravité. Du coup, il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case. 
+
+Pour éviter que ce soit trop facile, on peut interdire de faire une sélection qui passe par deux chewing-gum adjacent. Mais ça n'empêche pas de faire un détour en sélectionnant des cases à côté, pour ensuite revenir sur le chewing-gum adjacent.
 
 Pièce avec du chewing-gum dessus ? Pièce sale ?
 
-Objet/pouvoir : faire tomber d'une case tous les chewing-gum (sans qu'ils perdent de points de vie, ou alors si).
+Super-pouvoir : faire tomber d'une case tous les chewing-gum. Éventuellement, ils peuvent en plus perdre un ou plusieurs points de vie.
 
-Objet/pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Ça en fait un seul, ayant la somme des points de vie de tous les chewing-gum fusionnés. Et ça laisse des cases vides là où y'avait les chewing-gum. Le joueur peut choisir où va le chewing-gum fusionné. 
+Super-pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Il n'y en a plus qu'un, ayant la somme des points de vie de tous les chewing-gum fusionnés. Les cases occupées par les anciens chewing-gums deviennent vide. Le joueur choisit, parmi les cases de chewing-gum à fusionner, celle dans laquelle ira le gros chewing-gum final. 
 
-Glaçon : objet/pouvoir qui gèle un chewing-gum. Il faut toujours le détruire comme avant, mais il tombe dès que possible.
-
-Éventuellement : on ne peut pas faire un chemin de sélection qui passe par deux chewing-gum de suite. Sinon trop facile.
+Super-pouvoir : utiliser un glaçon pour gèler un chewing-gum. Il faut toujours le détruire comme avant, mais il devient soumis à la gravité comme un objet normal.
 
 ### Mégot de clope / coucougnou ###
 
-miette de pain / mégot de clope. insélectionnable. Disparaît quand on active une sélection adjacente. (Avec X pièces sélectionnées autour. Ca dépend de la tronche du mégot)
+Insélectionnable. Ou pas. (À décider).
 
-Sélectionnable ou pas (à décider).
+Il possède 8/9 points de vie maximum. Il les perd de la même manière que les chewing-gums, par un zap sur des cases adjacentes. Mais il faut enlever tous les points de vie en une seule fois, sinon, ça n'a aucun effet. 
 
-Possède 8/9 points de vie maximum. On les enlève de la même manière que les chewing-gum (zap de tile adjacente). Mais il faut les enlever tous d'un coup. Sinon, ça n'a aucun effet. 
+Ce qui signifie que si le mégot est insélectionnable, et qu'il y en a deux côte à côte avec 8 points de vie chacun, on ne peut pas les détruire. Woups, faudra faire gaffe à ça.
 
-Ce qui signifie que si l'objet est insélectionnable, et qu'il y en a deux côte à côte avec à 8 points de vie, on ne peut pas les détruire par des moyens conventionnels. Woups, faudra faire gaffe à ça.
+Pour simplifier, on peut juste faire 4 mégot différents, avec 1/3/5/8 points de vie. Sinon ça fait trop d'images différentes, on s'y paume.
 
-Pour simplifier, on peut juste faire 4 objets, avec 1/3/5/8 points de vie. Sinon ça fait trop d'images différentes. On s'y paume.
+Super-pouvoir : le fume-mégot. Fait baisser les points de vie d'un mégot.
 
-Objet/pouvoir : le fume-mégot. Fait baisser les points de vie un mégot.
-
-chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une grosses sélection d'un coup. Puis détruire le chewing-gum.
+Un chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une grosses sélection d'un coup, puis détruire le chewing-gum.
 
 ### Gros objets ###
 
@@ -182,6 +179,8 @@ Et si on arrive à enfermer une zone ? Y'a un zap par rapport à ça. Mais peut 
 
 Pouvoir : cassage de pièce. On choisit une pièce à casser. Faut faire une sélection adjacente à cette pièce, avec au moins X cases vides. La pièce se casse dans les X cases vides.
 Le pouvoir détermine la pièce de destination de cassage. (en pièce de 2, de 1, ...)
+
+En évoluant dans le jeu, on voit 6 boutons de types de café, on peut choisir parmi les 4 premiers. (Mais ça risque de rendre le jeu trop facile. À équilibrer).
 
 ## Achievements ##
 
