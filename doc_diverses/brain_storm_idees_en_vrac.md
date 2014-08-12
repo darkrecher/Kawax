@@ -46,20 +46,37 @@ Il n'est pas soumis à la gravité. Ça fiche le bordel, car il laisse des cases
 
 Pièce avec du chewing-gum dessus ? Pièce sale ?
 
+Objet/pouvoir : faire tomber d'une case tous les chewing-gum (sans qu'ils perdent de points de vie, ou alors si).
+
+Objet/pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Ça en fait un seul, ayant la somme des points de vie de tous les chewing-gum fusionnés. Et ça laisse des cases vides là où y'avait les chewing-gum. Le joueur peut choisir où va le chewing-gum fusionné. 
+
+Glaçon : objet/pouvoir qui gèle un chewing-gum. Il faut toujours le détruire comme avant, mais il tombe dès que possible.
+
+Éventuellement : on ne peut pas faire un chemin de sélection qui passe par deux chewing-gum de suite. Sinon trop facile.
+
 ### Mégot de clope / coucougnous ###
 
 miette de pain / mégot de clope. insélectionnable. Disparaît quand on active une sélection adjacente. (Avec X pièces sélectionnées autour. Ca dépend de la tronche du mégot)
 
 
-Le mégot de clope. Insélectionnable. A 8 points de vie maximum. Il faut les faire tomber à 0 en une seule fois. (Avec des cases adjacentes. Ce qui signifie que 2 megots à 8 points de vie côte à côte ne peuvent pas être détruit par des moyens conventionnels. Woups, faudra faire gaffe à ça.
-Ou alrs on fait 1 3 5 8 pour simplifier. Sinon ça fait trop d'images différentes. On s'y paume.
+Sélectionnable ou pas (à décider).
 
-Du coup, il faut un objet/pouvoir : le fume-mégot. Qui fait baisser le rang de point de vie un megot.
+Possède 8/9 points de vie maximum. On les enlève de la même manière que les chewing-gum (zap de tile adjacente). Mais il faut les enlever tous d'un coup. Sinon, ça n'a aucun effet. 
+
+Ce qui signifie que si l'objet est insélectionnable, et qu'il y en a deux côte à côte avec à 8 points de vie, on ne peut pas les détruire par des moyens conventionnels. Woups, faudra faire gaffe à ça.
+
+Pour simplifier, on peut juste faire 4 objets, avec 1/3/5/8 points de vie. Sinon ça fait trop d'images différentes. On s'y paume.
+
+Objet/pouvoir : le fume-mégot. Fait baisser les points de vie un mégot.
+
+chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une grosses sélection d'un coup. Puis détruire le chewing-gum.
 
 ### Gros objets ###
 
 Prennent plusieurs cases. Faut les faire tomber petit à petit. (Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps).
 Quand ça arrive en bas, on récupère ce gros objet : gros sucre, touillettes (horizontal ou vertical), billet de 5 brouzoufs, sachet de thé, stylo, etc...
+
+Deux chewing-gum côte à côte se collent entre eux, et ça fait un gros objet de 2 cases ? C'est pas pareil que la fusion de chewing-gum. 
 
 chocolat, lait gnôle.
 
@@ -209,15 +226,6 @@ Et après faut faire tomber l'une des deux moitiés.
 **********
 Faut trouver des trucs dans lesquels dépenser ces XP. Là on n'a rin.
 
-Et un objet pouvoir qui fait tomber d'une case tous les chewing-gum (sans qu'ils perdent de points de vie, ou alors si).
-
-glaçon : pouvoir qui gèle un chewung-gum. Il faut toujours le détruire comme avant, mais il tombe dès que possible.
-
-Les chewing-gum se collent entre eux ?  Ouais mais comment on gère le tombage case par case ? On le gère pas. Y'a deux types de chewing gum. Ceux qui se collent entre eux, et ceux qui se collent pas.
-
-On peut pas sélectionner un chewing-gum à partir d'un autre chewing-gum. Sinon trop facile.
-
-chewing-gum collé aux clopes ? Faut d'abord détruire la clope, avec une grosses sélection d'un coup. Puis détruire le chewing-gum.
 
 pouvoir : zapper une ligne de X tiles  (que sucre piece jetons). Ca peut aider pour faire tomber des gros objets.
 
