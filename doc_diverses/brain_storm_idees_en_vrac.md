@@ -6,7 +6,7 @@ match sum(x)
 
 L'aire de jeu est constitué d'un quadrillage de case. Chaque case comporte un objet (une pièce de monnaie, un sucre, ...).
 
-Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, et à un prix spécifique, en brouzoufs. (Le brouzouf est la monnaie nationale).
+Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, et à un prix spécifique, en centimes de brouzoufs. (Le brouzouf est la monnaie nationale).
 
 Le joueur clique sur un bouton, puis sélectionne un groupe de pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide, le café se fait, les pièces disparaissent (elles sont "zappées"), le bouton aussi, et un autre bouton apparaît d'un autre type de café.  
 
@@ -22,7 +22,7 @@ Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est con
 
 À équilibrer, évidemment.
  
- - gobelet d'eau : 2 brouzoufs
+ - gobelet d'eau : 2 centimes de brouzoufs
  - café : 12
  - café au lait : 15
  - potage au potiron : 13
@@ -37,7 +37,7 @@ Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est con
 
 ### Pièces ###
 
-Pièces de 1, 2, 5, 10, 20, 50 brouzoufs.
+Pièces de 1, 2, 5, 10, 20, 50 centimes de brouzoufs.
 
 Pièces bizarres : 3, 7, ...
 
@@ -190,40 +190,64 @@ Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (ge
 
 ## Achievements ##
 
-Avoir X jeton de caddie dans une sélection
-Faire une sélection avec que des pièces de même valeur. (X pièces de valeur Y) (Et zézétte épouse X).
-gagner X points de style en une activation
-cumuler XXX points de style en une partie (utiliser des valeurs fun, genre 1337. Et non pas des 1000, 2000, ...)
-avoir une sélection avec XXX pièces
-Tous les achievements à la con de longévité (utiliser 200 touillettes, 200 tasses, 2000 cafés, ...) (faut pas en faire de trop avec ça, car c'est pouillave) (plutôt des quêtes)
-faire des sélections de forme spécifique (ligne, carré, colonne, ...)
+ - Avoir X jeton de caddie dans un zap.
 
-casser 2 ou plus mégots de résistance 8 en un seul coup.
+ - Faire un zap avec que des pièces de même valeur. (X pièces de valeur Y) (Et zézétte épouse X).
 
-pour chaque type de café : achievement avec que des pièces de 1, de 2 (+ une de 1), de 5, etc.
+ - gagner X points de style en un seul zap.
 
-faire des achievement et des quêtes donne plein d'XP.
-jouer une partie en donne un petit peu.
-On débloque les trucs (je sais pas exactement quoi), avec des XP. 
-Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties pour se débloquer.
+ - cumuler XXX points de style en une partie. Il faudra utiliser des valeurs fun, genre 1337, et non pas 1000, 2000, ...
 
-Quand on fera d'autres jeux : les XP d'un jeu apportent un peu d'XP dans les autres jeux. Histoire d'aider un peu.
+ - Zapper XXX cases en une seule fois.
+
+ - Tous les achievements à la con de longévité : utiliser 200 touillettes, 200 tasses, 2000 cafés, ... Faut pas en faire de trop, car c'est pouillave. Il vaut mieux mettre des quêtes que des achievements de longévité.
+
+ - Faire des zaps de forme spécifique : ligne, carré, colonne, ...
+
+ - Casser X mégots de résistance Y en un seul coup.
+
+ - Pour chaque type de café : en faire un avec le moins de pièce possibles.
+
+Faire des achievement et des quêtes donne plein de style/XP.
+
+Jouer une partie en donne un petit peu.
+
+On débloque les pouvoir avec ces points.
+ 
+Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties.
+
+Quand on fera d'autres jeux : les XP d'un jeu apportent un peu d'XP dans les autres jeux. La validation se fait avec des codes secrets genre clé md5 ou autre. Même si on pourra jamais vraiment faire complètement secret parce que de toutes façons je distribue toujours tout le code source.
 
 ## Fusion de pièces ##
 
-faire de la monnaie. (on sélectionne 5 pièces de 1, on reclique sur une des pièces sélectionnées. Ca fait une pièce de 5 à l'endroit choisi. Et là y'a des combos possibles. Soit plusieurs fois de suite du faisage de monnaie. soit carrément plusieurs fois de suite en réutilisant à chaque fois la nouvelle pièce créée : 1 2 5 10 20 50 100. Ça peut être rigolo.
-Pas de regénération de l'arena tant qu'on fait de la monnaie. (Mais y'a de la gravité). Ca évite les combos infinis.
-Beaucoup de points de combos si on fait plusieurs fois de suite le même, et avec les mêmes pièces. Genre : plusieurs fois de suite 10 pièces de 2 pour faire des pîèces de 20. (2+2+1 pour faire 5, ça marche, mais ça rapporte vraiment pas beaucoup comme points de combos)
+Disponible uniquement dans certains modes de jeu, et/ou après avoir débloqué le pouvoir.
 
-Et si on sélectionne 3 pièces de chaque, on peut créer une pièce joker. Why not ? not.
+On sélectionne 5 pièces de 1, puis on reclique sur une des pièces sélectionnées. Ça fait une pièce de 5 à l'endroit choisi.
 
-## Variables permettant de définir la difficulté ##
+On peut faire des combos : 
+
+ - fusionner 2 pièces de 1 en une pièce de 2
+ - s'en servir avec 4 autres pièces de 2 pour faire une pièce de 10
+ - se servir de la pièce de 10, avec une autre, pour faire une pièce de 20
+ - ...
+
+On peut monter jusqu'à des valeurs très hautes. Par exemple : la pièce de 100 centimes, soit un brouzouf entier !
+
+Il y a évidemment des achievements sur le plus grand nombre de combos réalisés.
+
+Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
+
+Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut créer une pièce joker. 
+
+## Dosages de la difficulté ##
 
  - plus de chewing gum et de clopes
  - moins de jeton de caddie
  - plus de grosses pièces
  - plus de café à des prix bizarres
  - plus de pièces pourries (3, 7, ...)
+
+À équilibrer selon les modes de jeu, les pouvoirs, etc. Bref, c'est du boulot.
 
 ## quête / modes de jeu ##
 
