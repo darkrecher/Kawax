@@ -43,6 +43,8 @@ Pièces bizarres : 3, 7, ...
 
 Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce.
 
+La pièce-joker. Quand on fait une sélection, prend automatiquement la valeur de brouzoufs qui va bien, parmi 1, 2, 5, 10, 20, 50. 
+
 ### Sucre ###
 
 Pour faire un café, il faut sélectionner une certaine somme de brouzoufs, plus X sucres. (Soit exactement X, soit au moins X. Je sais pas encore)
@@ -89,9 +91,13 @@ Un chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une 
 
 Ils prennent plusieurs cases. Faut les faire tomber petit à petit. Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps.
 
-Quand le gros objet arrive en bas, on le récupère.
+Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gravité ou autre). 
 
-Exemples :
+ - Le faire tomber tout en bas.
+
+ - zapper des cases autour, de façon à l'englober. 
+
+Idées en vrac de gros objets :
 
  - gros sucre
  - touillettes (horizontale ou verticale) (tordable : voir plus loin).
@@ -102,7 +108,7 @@ Exemples :
  - tasse
  - gobelet
 
-Deux chewing-gum côte à côte se collent entre eux, et ça fait un gros objet de 2 cases ? C'est pas pareil que la fusion de chewing-gum. La fusion aide le joueur. Le collage en gros objet le pénalise.
+Deux chewing-gum côte à côte se collent entre eux, et ça fait un gros objet de 2 cases. C'est pas pareil que la fusion de chewing-gum. La fusion aide le joueur. Le collage le pénalise.
 
 Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur chaque case. Il faut le détruire petit à petit, case par case.
 
@@ -118,74 +124,74 @@ Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur
 
 ## Actions pour gagner des points de style ou des XP ##
 
- - activer une sélection : dépend de la difficulté du café fait.
+ - Activer une sélection : dépend de la difficulté du café fait.
 
- - sélection avec le nombre minimal de pièce : <nombre de pièce * 2> points de style. Ca veut dire qu'il faut un algo qui détermine le nombre de pièce minimal selon une somme et une liste de pièce possible. (haha. L'algo simple ne fonctionne pas. 16 avec (10, 8, 4, 2). 16 = 10 + 4 + 2. 16 = 8 + 8.
+ - Sélection avec le nombre minimal de pièce : <nombre de pièce * 2> points de style. Ca veut dire qu'il faut un algo qui détermine le nombre de pièce minimal selon une somme et une liste de pièce possible. (L'algo simple ne fonctionne pas. 16 avec (10, 8, 4, 2). 16 = 10 + 4 + 2. 16 = 8 + 8.
 
- - pas de pièce de 1 : <nb de pièce> points de style.
+ - Pas de pièce de 1 : <nb de pièce> points de style.
 
- - pas de pièce de 2 : <nb de pièce> points de style. Cumulable avec le précédent.
+ - Pas de pièce de 2 : <nb de pièce> points de style. Cumulable avec le précédent.
 
- - toutes les pièces pareilles : <nb de pièce> points de style. 
+ - Toutes les pièces pareilles : <nb de pièce> points de style. 
 
  - Sélection en un seul chemin, sans sélection additionnelle. Bonus supp si le chemin est tracé correctement en une fois. 
 
 ### Illumination de cases ###
 
-Lorsqu'on active une sélection, ça augmente de 1 la luminosité des cases sur laquelle se trouvait les objets sélectionnés.
-Si on active une sélection comportant des cases illuminés, on gagne des points de style. Mettons : (somme totale des luminosités / 10)
-(Du coup, on mul tous les points de style par 10, pour pas être emmerdés).
-Si on active une sélection avec exactement les mêmes cases qu'avant, on augmente de 5 la luminosité (et on attribue les points qui vont avec)
-Si on active une sélection avec que des cases illuminées, on augmente de 2 la luminosité (et on attribue les points qui vont avec)
-Lorsqu'une case illuminée n'est pas sélectionné lors d'une activation de sélection, sa luminosité baisse de 2 (ou autre valeur, ou elle retombe à 0)
+Lorsqu'on fait un zap, ça augmente de 1 la luminosité des cases sur laquelle y'a eu du zap.
+
+Si on rezappe des cases illuminées, on gagne des points de style. Mettons : (somme totale des luminosités / 100)
+
+Si on rezappe exactement les mêmes cases qu'avant, on augmente de 5 la luminosité, et on attribue les points qui vont avec.
+
+Si on rezappe que des cases déjà illuminées, on augmente de 2 la luminosité, et on attribue les points qui vont avec.
+
+À chaque zap, les cases illuminées qui ne sont pas rezappées subissent une perte de luminosité. de 2, ou d'une autre valeur, ou alors ça retombe directement à 0.
 
 C'est bordelique ce truc, et je suis pas sur que ça ait un intérêt quelconque. Et en tout cas y'a aucune justification à ça.
+
 On oublie pour l'instant.
 
 ## Pouvoirs spéciaux ##
 
-Ces actions peuvent coûter des points de style. Et elles sont pas forcément toute dispo dès le début. Faut les débloquer (je sais pas trop comment).
+Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément tous disponibles dès le début. Il faut les débloquer (je sais pas trop comment).
 
- - utiliser une tasse au lieu d'un gobelet : -1 sur le coût du café
- - ajouter une touillettte : +1 sur le coût du café. (Achievement stupide : tasse + touillette)
- - reshuffle
- - changer une pièce en jeton de caddie
- - échanger deux objets
- - enlever un doublon de la pile de touches de café
- - enlever un pas doublon de la pile de touches de café
- - destruction d'un pavé de 9 cases, d'une croix, ...
+ - Utiliser une tasse au lieu d'un gobelet : -1 sur le coût du café.
 
-Je sais pas si on mettra des XP en fait. Je sais pas à quoi je peux les employer. (ou alors : être d'un niveau spécifique pour faire une quête ou une autre)
+ - Ajouter une touillettte : +1 sur le coût du café. (Achievement stupide : utiliser une tasse et une touillette).
 
-pouvoir : zapper une ligne de X tiles  (que sucre piece jetons). Ca peut aider pour faire tomber des gros objets.
+ - Shuffle de l'aire de jeu.
 
-Changer une pièce en pièce-joker. Et en jeton de caddie. Et en sucre ?
+ - Changer une pièce en jeton de caddie, en pièce-joker, ...
 
-doubler le zap, et le score d'une sélection
+ - Échanger deux objets.
 
-diminuer la proba d'apparition des pièces pourries (3, 7, .....)
+ - Enlever un doublon de la pile de boutons de café.
 
-une bombe, tout simplement. Avec un rayon d'action d'autant plus important qu'on sélectionne des trucs adjacents autour.
+ - Enlever un pas-doublon de la pile de touches de café.
 
-pouvoir de bombe, qui fait péter sur le dernier point du path. A la 4elements.
+ - Bombe : destruction d'un pavé de 9 cases, d'une croix, d'une ligne, ... Ça peut détruire n'importe quelle type d'objet, ou que les objets conventionnels (sucres, pièces).
 
-des objets qui font chier ou qui sont cools et qui ont un effet d'autant plus grand qu'on fait une grande sélection.
+ - Bombe qui explose sur la dernière case du chemin de sélection, à la 4elements.
 
-Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (genre une bombe). Et quand on fait vraiment pil poil le carré, sans rien sélectionner autour, ça le fait aussi. Mais mieux.
+ - Doubler la force de zap, le score et l'illumination de case d'une sélection.
 
-Des carrés plus grand, ça donne quoi ?
+ - Diminuer la probabilité d'apparition des pièces et objets pourris.
 
-Et si on arrive à enfermer une zone ? Y'a un zap par rapport à ça. Mais peut on en faire un bonus  quelconque ?
+ - Zapper l'intérieur d'une zone.Par exemple : on zappe un carré de 3*3 sans la case du milieu. Le pouvoir fait zapper la case du milieu en plus. 
 
-Pouvoir : cassage de pièce. On choisit une pièce à casser. Faut faire une sélection adjacente à cette pièce, avec au moins X cases vides. La pièce se casse dans les X cases vides.
-Le pouvoir détermine la pièce de destination de cassage. (en pièce de 2, de 1, ...)
+ - Cassage de pièce. On sélectionne une pièce ainsi que X cases vides connexes. La pièce se transforme en X+1 pièces de valeurs inférieures. Par exemple, une pièce de 5 se transforme en 5 pièces de 1. Une pièce de 10 en 5 pièces de 2, ...
 
-En évoluant dans le jeu, on voit 6 boutons de types de café, on peut choisir parmi les 4 premiers. (Mais ça risque de rendre le jeu trop facile. À équilibrer).
+ - Pouvoir passif : avoir plus de boutons de café (pour avoir plus de choix et/ou plus de prévisions des prochains cafés à faire). Par exemple, on pourrait aller jusqu'à 6 boutons visible, et on peut choisir parmi les 4 premiers. (À équilibrer).
+
+Des objets spéciaux qui déclenchent un pouvoir lorsqu'on les zappe. La force du pouvoir est d'autant plus grande qu'on a zappé un grand nombre de case.
+
+Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (genre une bombe). Et quand on fait vraiment pil poil le carré, sans rien sélectionner autour, ça le fait aussi, mais en mieux. Et avec des carrés plus grand, ça le fait aussi, mais en mieux-mieux.
 
 ## Achievements ##
 
 Avoir X jeton de caddie dans une sélection
-Faire une sélection avec que des pièces de même valeur. (X pièces, valeur Y) (Et zézétte épouse X).
+Faire une sélection avec que des pièces de même valeur. (X pièces de valeur Y) (Et zézétte épouse X).
 gagner X points de style en une activation
 cumuler XXX points de style en une partie (utiliser des valeurs fun, genre 1337. Et non pas des 1000, 2000, ...)
 avoir une sélection avec XXX pièces
