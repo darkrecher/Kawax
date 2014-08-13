@@ -97,6 +97,10 @@ Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gr
 
  - zapper des cases autour, de façon à l'englober. 
 
+TODO : des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
+Une petite clé ?
+Soit un entourage le plus proche possible. Soit avec d'autres cases dedans.
+
 Idées en vrac de gros objets :
 
  - gros sucre
@@ -182,6 +186,11 @@ Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément 
 
  - Cassage de pièce. On sélectionne une pièce ainsi que X cases vides connexes. La pièce se transforme en X+1 pièces de valeurs inférieures. Par exemple, une pièce de 5 se transforme en 5 pièces de 1. Une pièce de 10 en 5 pièces de 2, ...
 
+pour casser une pièce de 1 euro, faut faire une sélection de X cases avec elle dedans. La pièce de 1 euro se casse en X pièce plus petite, et rempli les cases vides.
+On peut casser plusieurs pièces, avec des sélection de n*X cases. (Et ça fait des achievement, ça).
+Bof, c'est peut être naze. Je sais pas.
+TODO : nan, faut faire une sélection à côté pour générer des cases vides à côté.
+
  - Pouvoir passif : avoir plus de boutons de café (pour avoir plus de choix et/ou plus de prévisions des prochains cafés à faire). Par exemple, on pourrait aller jusqu'à 6 boutons visible, et on peut choisir parmi les 4 premiers. (À équilibrer).
 
 Des objets spéciaux qui déclenchent un pouvoir lorsqu'on les zappe. La force du pouvoir est d'autant plus grande qu'on a zappé un grand nombre de case.
@@ -208,13 +217,7 @@ Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (ge
 
  - Pour chaque type de café : en faire un avec le moins de pièce possibles.
 
-Faire des achievement et des quêtes donne plein de style/XP.
-
-Jouer une partie en donne un petit peu.
-
-On débloque les pouvoir avec ces points.
- 
-Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties.
+Faire des achievement et des quêtes donne plein de style/XP, et jouer une partie en donne un petit peu. On débloque les pouvoirs et on avance dans le jeu grâce à ces points. Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties.
 
 Quand on fera d'autres jeux : les XP d'un jeu apportent un peu d'XP dans les autres jeux. La validation se fait avec des codes secrets genre clé md5 ou autre. Même si on pourra jamais vraiment faire complètement secret parce que de toutes façons je distribue toujours tout le code source.
 
@@ -241,7 +244,7 @@ Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut crée
 
 ## Dosages de la difficulté ##
 
- - plus de chewing gum et de clopes
+ - plus (+) de chewing gum et de clopes
  - moins de jeton de caddie
  - plus de grosses pièces
  - plus de café à des prix bizarres
@@ -249,79 +252,15 @@ Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut crée
 
 À équilibrer selon les modes de jeu, les pouvoirs, etc. Bref, c'est du boulot.
 
-## quête / modes de jeu ##
+## Quêtes / modes de jeu ##
 
-pas d'apparition de nouvelles pièces. Et faut toutes les détruire.
+Pour chaque quête, on va essayer de trouver : la quête de base (facile), la quête hard (super dur), la quête chiante (facile, mais long)
 
-Faire un carré de 10 * 7 sucre, pour créer un gros morceaux de sucre, puis le faire tomber en bas pour le récupérer.
+### Exploration ###
 
-faire un carré de 5 * 2 mégots pour recréer une clope, et la faire tomber en bas.
-
-faire tomber d'autres objets.
-
-avec des combos : on fait plusieurs sélections dans l'aire de jeu. On les active toutes d'un coup. Et faut en faire le plus possible.
-
-aire de jeu gigantesque. Les pièces ne tombent pas. Faut délivrer des cases (à la 4 elements), et on se balade un peu où on veut comme ça. 
-
-arriver à une somme juste pil poil, avec des activations successives, et acheter une cochonnerie avec.
-
-faire le plus de sélection possibles (coût de 1, 2, 3, ...), avec la même aire de jeu, mais faut toujours que les sélection incluent une pièce parmi un groupe de pièce. (quête de la pièce qu'on récupère à chaque coup car elle est au bout d'une ficelle) faut faire tous les cafés possible de cette manière. Dans l'ordre qu'on veut. Les cases se regénèrent ou pas. Ca dépend (le joueur choisit, ou c'est le jeu qui regénère tout le temps, ou jamais)
-
-rassembler des lignes / des sélections de 5 pièces de 1 pour faire une pièce de 5. Puis 4 pièce de 5 pour faire une pièce de 20. Puis 5 pièces de 20 pour faire un brouzouf entier. (Et après on en fait je sais pas quoi)
-Ou alors : sélection de X (n'importe comment) pour faire la pièce de valeur X.
-
-faire une sélection de 100 brouzouf (n'importe comment) et ça donne un brouzouf.
-
-faire une ligne / un rectangle de X brouzoufs pour créer un énorme billet !
-
-énigme. aire de jeu définie. boissons à faire définie. On se débrouille.
-
-Régime : Y'a des sucres dans l'aire de jeu, mais faut en utiliser le moins possible.
-
-faire une gros tas de piece de 1 pour faire un café avec que des pièces de 1.
-
-faire un gros tas de sucre pour faire des cafés avec le plus de sucre possible.
-
-gros tas de mégots.
-
-faire un café avec des pièces spécifiques. (10+10+5+5+5+1 ...)
-
-mode cendrier : aire de jeu très haute, on commence en haut. y'a des megots de clope partout, on doit creuser vers le bas.
-ça avance vers le bas soit après x secondes, soit x coups, soit on a un nbre de coups limités mais on choisit soi-même quand descendre.
-
-interdit de déselectionner, et on ne voit pas le total des brouzoufs. Donc faut faire du calcul mental.
-
-
-sudoku : 9 elements différents dans un carré de 3*3
-
-connecter 2 (ou plus) endroits différents avec une sélection. Ouais ça c'est cool.
-
-sucre mania : on a le droit de faire plus de sucre que prévu. Et y'a de plus en plus de sucre qui apparaissent (mais pas trop en fait). Et faut faire des cafés avec de plus en plus de sucre. Si on en fait plus que prévu, ça ralentit un peu l'augmentation de quantité de sucre requise.
-
-casser un sucre en deux. On doit pas toucher aux moitiés du sucre. Mais on doit taper au milieu. 
-Et après faut faire tomber l'une des deux moitiés.
-(Je ne sais plus ce que je voulais dire exactement avec cette idée)
+aire de jeu gigantesque. Les pièces ne tombent pas. Faut délivrer des cases (à la 4 elements), et on se balade un peu où on veut comme ça.
 
 la mousse qui grandit. (Ca représente de la mousse de café) Bizarre. On étend l'écoulement du café, mais on stoppe la mousse. Faudra justifier ça scénaristiquement. youpi. La mousse c'est du lait devenu fou. Un truc comme ça.
-
-Un objet qui se déplace dans une direction précise. Et qu'il faudrait emmener quelque part. (Et il fait quoi ?) Il trace un chemin qui fait quelque chose ?
-une mini-voiture-jouet ? (genre cadeau bonus à la con). 
-Et deux objets qui se cognent à un point de rencontre ? Certes...
-C'est des billes qui se déplacent. C'est le plus drôle. Expression corporate : "refiler les billes."
-
-des glaçons, qu'il faut se dépêcher d'emmener en bas sinon ils fondent.
-
-Eventuellement, une grosse tasse qu'on doit faire tomber en détruisant les tiles d'en bas-à côté. Ca la renverse et ça fait des trucs cools.
-
-aire de jeu avec des tailles bizarres : 40 * 2. 4 * 4 et on fait que des tout petits cafés. (bof)
-
-les chewing-gum faut les zapper en path. Si on les zap que en suppl, ça compte pas.
-
-pouvoir : regénérerles cases vides avec des trucs pas trop poucraves. (pouvoir améliorable)
-
-
-
-jeu à 2 ? Sur écran splitté, ou le même écran, ou la même aire de jeu gigantesque (conquête)
 
 sur l'aire de jeu gigantesque, y'a des sucres et des clopes. On peut pas les casser au début. Quand on a fait la quête de créer des sucres, et celles de créer des clope. On peut.
 (Bizarres, car une quête de création permet une quête de destruction).
@@ -334,29 +273,121 @@ Mais ça dit rien concernant les XP.
 
 (TODO : expliquer la moquette avec le café qui fuit)
 
-des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
-Une petite clé ?
-Soit un entourage le plus proche possible. Soit avec d'autres cases dedans.
-
-pour casser une pièce de 1 euro, faut faire une sélection de X cases avec elle dedans. La pièce de 1 euro se casse en X pièce plus petite, et rempli les cases vides.
-On peut casser plusieurs pièces, avec des sélection de n*X cases. (Et ça fait des achievement, ça).
-Bof, c'est peut être naze. Je sais pas.
-
-Du coup, pour faire des grandes sélections, faut des boissons chers. Et ça, on les débloque avec des XP ou des quêtes. Ha ha !!! (Genre 666)
+Du coup, pour faire des grandes sélections, faut des boissons chers. Et ça, on les débloque avec des XP ou des quêtes. Ha ha !!! (Genre le café à 666 centimes de brouzoufs)
 
 Dans la grande aire de jeu, les zones de début sont faciles, et ne génère que des 0, 1, 2, 5, ... Plus on s'éloigne, plus on a des risques de voir générer des trucs de daube.
 Et peut être que y'aurait des quêtes pour reculer ces zones ? (Ca enlève de l'intérêt au jeu, mais ajoute un sentiment de "nettoyage")
 On mettra une map globale, avec les zones et tout.
 Mais faut que ce soit visible. (La couleur du café, ou je sais pas quoi)
 
+### Mode radin ###
+
+pas d'apparition de nouvelles pièces. Et faut toutes les détruire.
+
+### Création/Récupération d'objets ###
+
+Faire un carré de 10 * 7 sucre, pour créer un gros morceaux de sucre, puis le faire tomber en bas pour le récupérer.
+
+faire un carré de 5 * 2 mégots pour recréer une clope, et la faire tomber en bas.
+
+faire une ligne / un rectangle de X*Y brouzoufs pour créer un énorme billet !
+
+Eventuellement, une grosse tasse qu'on doit faire tomber en détruisant les tiles d'en bas-à côté. Ca la renverse et ça fait des trucs cools.
+
+### Multi-sélection ###
+
+avec des combos : on fait plusieurs sélections dans l'aire de jeu. On les active toutes d'un coup. Et faut en faire le plus possible.
+
+### Faire l'appoint (à point) ###
+
+arriver à une somme juste pil poil, avec des activations successives, et acheter une cochonnerie avec.
+
+### Ficelle ###
+
+faire le plus de sélection possibles (coût de 1, 2, 3, ...), avec la même aire de jeu, mais faut toujours que les sélection incluent une pièce parmi un groupe de pièce. (quête de la pièce qu'on récupère à chaque coup car elle est au bout d'une ficelle) faut faire tous les cafés possible de cette manière. Dans l'ordre qu'on veut. Les cases se regénèrent ou pas. Ca dépend (le joueur choisit, ou c'est le jeu qui regénère tout le temps, ou jamais)
+
+### Fusion ###
+
+rassembler des lignes / des sélections de 5 pièces de 1 pour faire une pièce de 5. Puis 4 pièce de 5 pour faire une pièce de 20. Puis 5 pièces de 20 pour faire un brouzouf entier. (Et après on en fait je sais pas quoi)
+Ou alors : sélection de X (n'importe comment) pour faire la pièce de valeur X.
+
+faire une sélection de 100 brouzouf (n'importe comment) et ça donne un brouzouf.
+
+### énigme ###
+
+Aire de jeu définie. boissons à faire définie. On se débrouille.
+
+### Régime ###
+
+Y'a des sucres dans l'aire de jeu, mais faut en utiliser le moins possible.
+
+faire un gros tas de sucre pour faire des cafés avec le plus de sucre possible.
+
+### diabétique ###
+
+on a le droit de faire plus de sucre que prévu. Et y'a de plus en plus de sucre qui apparaissent (mais pas trop en fait). Et faut faire des cafés avec de plus en plus de sucre. Si on en fait plus que prévu, ça ralentit un peu l'augmentation de quantité de sucre requise.
+
+
+### Pièces de collections ###
+
+faire un café avec des pièces spécifiques. (10+10+5+5+5+1 ...)
+
+### Gros fumeur ###
+
+gros tas de mégots.
+
+mode cendrier : aire de jeu très haute, on commence en haut. y'a des megots de clope partout, on doit creuser vers le bas.
+ça avance vers le bas soit après x secondes, soit x coups, soit on a un nbre de coups limités mais on choisit soi-même quand descendre.
+
+### Einstein ###
+
+interdit de déselectionner, et on ne voit pas le total des brouzoufs. Donc faut faire du calcul mental.
+
+### sudoku ###
+
+9 elements différents dans un carré de 3*3
+
+### Connexion ###
+
+connecter 2 (ou plus) endroits différents avec une sélection. Ouais ça c'est cool.
+
+### Casseur de sucre ### 
+
+casser un sucre en deux. On doit pas toucher aux moitiés du sucre. Mais on doit taper au milieu. 
+Et après faut faire tomber l'une des deux moitiés.
+(Je ne sais plus ce que je voulais dire exactement avec cette idée)
+
+### Vroum vroum ###
+
+Un objet qui se déplace dans une direction précise. Et qu'il faudrait emmener quelque part. (Et il fait quoi ?) Il trace un chemin qui fait quelque chose ?
+une mini-voiture-jouet ? (genre cadeau bonus à la con). 
+Et deux objets qui se cognent à un point de rencontre ? Certes...
+C'est des billes qui se déplacent. C'est le plus drôle. Expression corporate : "refiler les billes."
+
+### Glaçons ###
+
+des glaçons, qu'il faut se dépêcher d'emmener en bas sinon ils fondent.
+
+Donne le pouvoir de glaçon pour geler les chewing-gums.
+
+### Coincé ###
+
+aire de jeu avec des tailles bizarres : 40 * 2. 4 * 4 et on fait que des tout petits cafés. (bof)
+
+### Le chemin ###
+
+Que des chemin de sélection. Pas de sélection additionnelle.
+
+### Sociable ###
+
+jeu à 2 ? Sur écran splitté, ou le même écran, ou la même aire de jeu gigantesque (conquête)
+
+### Tutorial ###
+
 Il me faudra peut être un mode tutorial.
 Avec une aire toute faite. Des explications successives. Y'a une action prédéfinie à faire. Si le joueur fait le con, ça part en latte, mais c'est de sa faute.
 
 ## Quêtes un peu plus précises ##
-
-bon, enchaînement des quêtes, et des trucs que je vais coder.
-
-Pour chaque quête, on va essayer de trouver : la quête de base (facile), la quête hard (super dur), la quête chiante (facile, mais long)
 
 faut que je détermine exactement ce qu'il y a comme café possible à chaque fois. Et comment on peut les choisir.
 
