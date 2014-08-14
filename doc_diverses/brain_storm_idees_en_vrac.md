@@ -97,14 +97,14 @@ Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gr
 
  - zapper des cases autour, de façon à l'englober. 
 
-TODO : des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
+TODO : des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
 Une petite clé ?
 Soit un entourage le plus proche possible. Soit avec d'autres cases dedans.
 
 Idées en vrac de gros objets :
 
  - gros sucre
- - touillettes (horizontale ou verticale) (tordable : voir plus loin).
+ - touillettes (horizontale ou verticale) (tordable : voir plus loin).
  - billet de 5 brouzoufs
  - sachet de thé
  - stylo
@@ -189,7 +189,7 @@ Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément 
 pour casser une pièce de 1 euro, faut faire une sélection de X cases avec elle dedans. La pièce de 1 euro se casse en X pièce plus petite, et rempli les cases vides.
 On peut casser plusieurs pièces, avec des sélection de n*X cases. (Et ça fait des achievement, ça).
 Bof, c'est peut être naze. Je sais pas.
-TODO : nan, faut faire une sélection à côté pour générer des cases vides à côté.
+TODO : nan, faut faire une sélection à côté pour générer des cases vides à côté.
 
  - Pouvoir passif : avoir plus de boutons de café (pour avoir plus de choix et/ou plus de prévisions des prochains cafés à faire). Par exemple, on pourrait aller jusqu'à 6 boutons visible, et on peut choisir parmi les 4 premiers. (À équilibrer).
 
@@ -238,7 +238,7 @@ On peut monter jusqu'à des valeurs très hautes. Par exemple : la pièce de 100
 
 Il y a évidemment des achievements sur le plus grand nombre de combos réalisés.
 
-Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
+Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
 
 Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut créer une pièce joker. 
 
@@ -271,7 +271,7 @@ C'est du café, qui se répand dans la grande aire de jeu. (genre le liquide, à
 La grande aire de jeu représente un open space de l'entreprise. Elle donne accès à des bureaux avec des quêtes dedans. Qui donne des pouvoirs pour débloquer des endroits bloqués dans la grande aire de jeu. Ouaip. C'est cool.
 Mais ça dit rien concernant les XP.
 
-(TODO : expliquer la moquette avec le café qui fuit)
+(TODO : expliquer la moquette avec le café qui fuit)
 
 Du coup, pour faire des grandes sélections, faut des boissons chers. Et ça, on les débloque avec des XP ou des quêtes. Ha ha !!! (Genre le café à 666 centimes de brouzoufs)
 
@@ -280,9 +280,7 @@ Et peut être que y'aurait des quêtes pour reculer ces zones ? (Ca enlève de l
 On mettra une map globale, avec les zones et tout.
 Mais faut que ce soit visible. (La couleur du café, ou je sais pas quoi)
 
-### Mode radin ###
-
-pas d'apparition de nouvelles pièces. Et faut toutes les détruire.
+* la machine à café devient folle, et elle renverse son café partout. on commence la meta-quête, où il faut étendre l'écoulage du café vers d'autres endroits.
 
 ### Création/Récupération d'objets ###
 
@@ -290,9 +288,41 @@ Faire un carré de 10 * 7 sucre, pour créer un gros morceaux de sucre, puis le 
 
 faire un carré de 5 * 2 mégots pour recréer une clope, et la faire tomber en bas.
 
+quête de refabrication des mégots. (pour un clochard). D'autant plus dur qu'il faut rassembler les mégots sans les détruire.
+
 faire une ligne / un rectangle de X*Y brouzoufs pour créer un énorme billet !
 
 Eventuellement, une grosse tasse qu'on doit faire tomber en détruisant les tiles d'en bas-à côté. Ca la renverse et ça fait des trucs cools.
+
+quête des tasses. (pareil, mais c'est une tasse). Hard : la tasse est géante. Du coup, quand elle est presque en bas, c'est super dur. (ou alors, on fait des tasses de plus en plus géantes. Et y'en a plusieurs, de plus en plus rapprochées. Et c'est le mode infini)
+
+quête des touillettes. (gros objet de touillette qu'il faut faire tomber) Ca va ressembler aux tasses. Sauf que les touillettes ne tombent pas forcément ? Elle peuvent aller sur les côtés.
+Ou alors faut les faire tourner. Faut les tordre sans les casser. Petit à petit. Donc faut sélectionner des zones, mais pas toutes d'un coup, sinon elles se cassent.
+
+bon, ça donne le pouvoir des tasses et des touillettes.
+
+### Mal aux cheveux ###
+
+Y'a des demi-cachets d'aspirine. Faut les fusionner. Quand on pète une colonne entière, ça rapproche. Ca fait pas tomber des trucs gravité machin.
+Pouvoir de transformer une aspirine en jeton-0. Mais limité.
+Quand on en fait plusieurs d'un coup ou qu'on fait une réaction en chaîne, ça fait du score.
+Quand on pète plusieurs colonnes d'un coup ça fait aussi une réaction en chaîne.
+Les aspirines se fusionnent que quand ils sont vraiment bien placés. Adjacence horizontale, la moitié gauche à gauche, la droite à droite.
+On clique sur l'une des moitiés, ça crée l'aspirine sur cette case.
+Et après faudrait soit recliquer dessus, soit le faire tomber tout en bas. on dit cliquage. On va pas prendre la tête avec un truc facile.
+
+### Mode radin ###
+
+pas d'apparition de nouvelles pièces. Et faut toutes les détruire.
+
+### Rapide ###
+
+quête où il faut faire plein de cafés en étant rapide. Temps limité total et/ou temps limité entre chaque café.
+
+### Gros fumeur ###
+
+quête du cendrier. faut creuser creuser creuser. (le mode chiant, c'est le mode infini. On a un score sur la profondeur à laquelle qu'on est allé) (et le mode hard c'est pareil, sauf que la difficulté augmente plus vite)
+On choppe le pouvoir de diminution de résistance d'un mégot.
 
 ### Multi-sélection ###
 
@@ -326,7 +356,6 @@ faire un gros tas de sucre pour faire des cafés avec le plus de sucre possible.
 ### diabétique ###
 
 on a le droit de faire plus de sucre que prévu. Et y'a de plus en plus de sucre qui apparaissent (mais pas trop en fait). Et faut faire des cafés avec de plus en plus de sucre. Si on en fait plus que prévu, ça ralentit un peu l'augmentation de quantité de sucre requise.
-
 
 ### Pièces de collections ###
 
@@ -382,49 +411,11 @@ Que des chemin de sélection. Pas de sélection additionnelle.
 
 jeu à 2 ? Sur écran splitté, ou le même écran, ou la même aire de jeu gigantesque (conquête)
 
+### Glou-glou ###
+
+on est plongés dans du café. Les touillettes remontent, mais les pièces tombent. Faut séparer les deux. (Comment exactement ?) Ca c'est une idée marrante. Pas de gravité sur les pièces, mais une regénération. Il faut détruire les pièces juste au-dessus de la touillette, et toutes d'un coup, pour la faire monter d'un cran.
+
 ### Tutorial ###
 
 Il me faudra peut être un mode tutorial.
 Avec une aire toute faite. Des explications successives. Y'a une action prédéfinie à faire. Si le joueur fait le con, ça part en latte, mais c'est de sa faute.
-
-## Quêtes un peu plus précises ##
-
-faut que je détermine exactement ce qu'il y a comme café possible à chaque fois. Et comment on peut les choisir.
-
-petite aire de jeu. Les cafés un par un. Pas de sucre. Il faut en faire 20. N'importe lesquels. pas de suppl
- - hard : l'aire de jeu est encore un peu plus petite. Et y'a des pièces à la con. Très peu de pièces de 1.
- - chiant : faut faire 100 cafés.
-
-(quête avec du sucre, et/ou des jetons de caddie. Bref, un truc simple)
-
-quête où il faut faire plein de cafés en étant rapide.
-
-* la machine à café devient folle, et elle renverse son café partout. on commence la meta-quête, où il faut étendre l'écoulage du café vers d'autres endroits.
-
-quête de destruction des mégots. (facile). On choppe le pouvoir de diminution de résistance d'un mégot.
-
-quête du cendrier. faut creuser creuser creuser. (le mode chiant, c'est le mode infini. On a un score sur la profondeur à laquelle qu'on est allé) (et le mode hard c'est pareil, sauf que la difficulté augmente plus vite)
-
-quête de refabrication des mégots. (pour un clochard). D'autant plus dur qu'il faut rassembler les mégots sans les détruire.
-
-quête des tasses. (pareil, mais c'est une tasse). Hard : la tasse est géante. Du coup, quand elle est presque en bas, c'est super dur. (ou alors, on fait des tasses de plus en plus géantes. Et y'en a plusieurs, de plus en plus rapprochées. Et c'est le mode infini)
-
-quête des touillettes. (gros objet de touillette qu'il faut faire tomber) Ca va ressembler aux tasses. Sauf que les touillettes ne tombent pas forcément ? Elle peuvent aller sur les côtés.
-Ou alors faut les faire tourner. Faut les tordre sans les casser. Petit à petit. Donc faut sélectionner des zones, mais pas toutes d'un coup, sinon elles se cassent.
-
-on est plongés dans du café. Les touillettes remontent, mais les pièces tombent. Faut séparer les deux. (Comment exactement ?) Ca c'est une idée marrante. Pas de gravité sur les pièces, mais une regénération. Il faut détruire les pièces juste au-dessus de la touillette, et toutes d'un coup, pour la faire monter d'un cran.
-
-bon, ça donne le pouvoir des tasses et des touillettes.
-
-
-
-Y'a des demi-cachets d'aspirine. Faut les fusionner. Quand on pète une colonne entière, ça rapproche. Ca fait pas tomber des trucs gravité machin.
-Pouvoir de transformer une aspirine en jeton-0. Mais limité.
-Quand on en fait plusieurs d'un coup ou qu'on fait une réaction en chaîne, ça fait du score.
-Quand on pète plusieurs colonnes d'un coup ça fait aussi une réaction en chaîne.
-Les aspirines se fusionnent que quand ils sont vraiment bien placés. Adjacence horizontale, la moitié gauche à gauche, la droite à droite.
-On clique sur l'une des moitiés, ça crée l'aspirine sur cette case.
-Et après faudrait soit recliquer dessus, soit le faire tomber tout en bas. on dit cliquage. On va pas prendre la tête avec un truc facile.
-
-
-
