@@ -260,68 +260,63 @@ Pour chaque quête, il faut essayer d'en faire 3 versions :
  - hard (super dur)
  - chiante (facile, mais long)
 
-### Mode exploration ###
+### Exploration ###
 
-C'est le mode principal. Il est disponible après que le joueur ait effectué quelques tutoriels, ainsi qu'une première quête simple, où il faut juste faire des cafés.
+C'est le mode principal. Il est disponible après que le joueur ait effectué quelques tutoriels, et des quêtes simples, où il faut juste faire des cafés.
 
-Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. La direction ne veut pas la remplacer, car elle ne voit pas le problème. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau de la direction.
+Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. Les "instances décisionnelles" de l'entreprise ne veulent pas la remplacer, car elles ce problème ne les dérange pas, elles utilisent leur propre machine à café haut de gamme. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau des instances décisionnelles.
 
-aire de jeu gigantesque. Les pièces ne tombent pas. Faut délivrer des cases (à la 4 elements), et on se balade un peu où on veut comme ça.
+L'aire de jeu est gigantesque, elle représente les locaux de l'entreprise. Il n'y a pas de gravité, les objets se regénèrent directement sur les cases zappées. On commence dans une petite zone où se trouve la machine à café. 
 
-la mousse qui grandit. (Ca représente de la mousse de café) Bizarre. On étend l'écoulement du café, mais on stoppe la mousse. Faudra justifier ça scénaristiquement. youpi. La mousse c'est du lait devenu fou. Un truc comme ça.
+Chaque case possède une "densité de moquette", (en plus de son objet). Lorsqu'on zappe une case, sa densité de moquette diminue de 1. Lorsqu'elle atteint 0, le café peut s'écouler dedans. Ça fonctionne comme dans le jeu 4 Elements.
 
-sur l'aire de jeu gigantesque, y'a des sucres et des clopes. On peut pas les casser au début. Quand on a fait la quête de créer des sucres, et celles de créer des clope. On peut.
-(Bizarres, car une quête de création permet une quête de destruction).
-Ou sinon, on fait 2 quêtes pour chaque. création -> destruction -> on a la capacité. Bof.
+On peut se promener dans l'aire de jeu gigantesque à condition qu'une case avec du café écoulé reste toujours visible à l'écran. Il faut donc progresser petit à petit, en détruisant la moquette. Mais on progresse où on veut comme on veut.
 
-C'est du café, qui se répand dans la grande aire de jeu. (genre le liquide, à la 4 elements)
+En se déplaçant ainsi, on arrive à des bureaux d'autres collègues, qui donnent des quêtes annexes, des pouvoirs, des XP, ...
 
-La grande aire de jeu représente un open space de l'entreprise. Elle donne accès à des bureaux avec des quêtes dedans. Qui donne des pouvoirs pour débloquer des endroits bloqués dans la grande aire de jeu. Ouaip. C'est cool.
-Mais ça dit rien concernant les XP.
+Certaines zones ne sont pas accessibles dès le début, car entourée par des objets qu'on ne peut pas détruire. Il faut obtenir le pouvoir correspondant.
 
-(TODO : expliquer la moquette avec le café qui fuit)
+Par exemple, au début, on ne peut pas prendre de sucre, ni détruire de clopes. Et on débute dans une zone restreinte entourée de sucres/clopes. Il faut obtenir le pouvoir correspondant pour pouvoir aller plus loin.
 
-Du coup, pour faire des grandes sélections, faut des boissons chers. Et ça, on les débloque avec des XP ou des quêtes. Ha ha !!! (Genre le café à 666 centimes de brouzoufs)
+Il pourrait également y avoir des gros objets. Le seul moyen de les récupérer est de les entourer avec un zap. Mais au début, on n'a pas de café qui coûte suffisamment cher pour pouvoir sélectionner suffisamment de pièces. Il faut débloquer ces cafés avec une quête. (Par exemple, le fameux "sang de chèvre vierge" à 666 centimes de brouzoufs).
+  
+Dans cette aire de jeu gigantesque, les carrés ayant encore de la moquette peuvent générer des objets chiants, ça dépend de la zone dans laquelle on se trouve. Mais une fois qu'on a enlevé la moquette, la case ne génère que des objets classiques : jetons de caddie, pièces de valeur normales, sucres.
 
-Dans la grande aire de jeu, les zones de début sont faciles, et ne génère que des 0, 1, 2, 5, ... Plus on s'éloigne, plus on a des risques de voir générer des trucs de daube.
-Et peut être que y'aurait des quêtes pour reculer ces zones ? (Ca enlève de l'intérêt au jeu, mais ajoute un sentiment de "nettoyage")
-On mettra une map globale, avec les zones et tout.
-Mais faut que ce soit visible. (La couleur du café, ou je sais pas quoi)
+Ça rend ce mode de jeu un peu facile, mais ça ajoute un sentiment de "nettoyage". Les quêtes et les autres modes de jeu sont là pour donner de la difficulté et des objets bizarres à l'infini. (With some hardcore depts, comme on dit chez les concepteurs de jeu).
 
-* la machine à café devient folle, et elle renverse son café partout. on commence la meta-quête, où il faut étendre l'écoulage du café vers d'autres endroits.
+On doit pouvoir voir une vue d'ensemble de la zone déjà explorée. Ça permet de revenir plus rapidement à un endroit connu, d'avoir une carte, et de renforcer le sentiment de nettoyage.
 
-### Création/Récupération d'objets ###
+### Création/récupération d'objets ###
 
-Faire un carré de 10 * 7 sucre, pour créer un gros morceaux de sucre, puis le faire tomber en bas pour le récupérer.
+Diverses quêtes en vrac, liées à des gros objets.
 
-faire un carré de 5 * 2 mégots pour recréer une clope, et la faire tomber en bas.
+ - Faire un carré de 10 * 7 sucre, pour créer un morceau de sucre géant, puis le faire tomber en bas pour le récupérer.
 
-quête de refabrication des mégots. (pour un clochard). D'autant plus dur qu'il faut rassembler les mégots sans les détruire.
+ - Quête de refabrication de cigarette, pour les clochards. Il faut faire un carré de 5 * 2 mégots. Ça crée une clope, et il faut la récupérer. (La faire tomber en bas ou l'entourer d'un zap). Ça peut être difficile car il faut rassembler les mégots sans les détruire. Donc sans trop faire de zap à côté.
 
-faire une ligne / un rectangle de X*Y brouzoufs pour créer un énorme billet !
+ - Faire une ligne ou un rectangle de X*Y brouzoufs pour créer un billet.
 
-Eventuellement, une grosse tasse qu'on doit faire tomber en détruisant les tiles d'en bas-à côté. Ca la renverse et ça fait des trucs cools.
+ - Une tasse (gros objet), qu'on doit renverser en zappant des cases pas tout à fait en dessous, mais un peu à côté. Des tasses de plus en plus grandes pour que ce soit de plus en plus dur. Permet d'obtenir le pouvoir de la tasse (-1 au prix du café).
 
-quête des tasses. (pareil, mais c'est une tasse). Hard : la tasse est géante. Du coup, quand elle est presque en bas, c'est super dur. (ou alors, on fait des tasses de plus en plus géantes. Et y'en a plusieurs, de plus en plus rapprochées. Et c'est le mode infini)
-
-quête des touillettes. (gros objet de touillette qu'il faut faire tomber) Ca va ressembler aux tasses. Sauf que les touillettes ne tombent pas forcément ? Elle peuvent aller sur les côtés.
-Ou alors faut les faire tourner. Faut les tordre sans les casser. Petit à petit. Donc faut sélectionner des zones, mais pas toutes d'un coup, sinon elles se cassent.
-
-bon, ça donne le pouvoir des tasses et des touillettes.
+ - Une touillette qu'il faut tordre. Chaque fois qu'on zappe des cases à côté d'elle, elle se tord un peu. Il faut le faire petit à petit. Si on zappe une trop grande zone, la touillette se tord trop vite, se casse, et c'est perdu. Permet d'obtenir le pouvoir de la touillette (+1 au prix du café).
 
 ### Mal aux cheveux ###
 
-Y'a des demi-cachets d'aspirine. Faut les fusionner. Quand on pète une colonne entière, ça rapproche. Ca fait pas tomber des trucs gravité machin.
-Pouvoir de transformer une aspirine en jeton-0. Mais limité.
-Quand on en fait plusieurs d'un coup ou qu'on fait une réaction en chaîne, ça fait du score.
-Quand on pète plusieurs colonnes d'un coup ça fait aussi une réaction en chaîne.
-Les aspirines se fusionnent que quand ils sont vraiment bien placés. Adjacence horizontale, la moitié gauche à gauche, la droite à droite.
-On clique sur l'une des moitiés, ça crée l'aspirine sur cette case.
-Et après faudrait soit recliquer dessus, soit le faire tomber tout en bas. on dit cliquage. On va pas prendre la tête avec un truc facile.
+Il faut récupérer des cachets d'aspirine, en fusionnant des demi-cachets.
 
-### Mode radin ###
+Correspond au mode aspro dans le jeu que j'ai fait.
 
-pas d'apparition de nouvelles pièces. Et faut toutes les détruire.
+Si on prépare plusieurs aspirines, pour ensuite tous les fusionner et récupérer à la suite, ça fait du score (XP, style, ...).
+
+On obtient également du score en vidant complètement plusieurs colonnes en une seule fois. 
+
+### Radin ###
+
+Pas de regénération de pièces dans l'aire de jeu. Il faut toutes les zapper et obtenir une aire totalement vide à la fin. 
+
+Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café qui correspondent pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc. 
+
+**WIP**
 
 ### Rapide ###
 
@@ -427,3 +422,11 @@ on est plongés dans du café. Les touillettes remontent, mais les pièces tombe
 
 Il me faudra peut être un mode tutorial.
 Avec une aire toute faite. Des explications successives. Y'a une action prédéfinie à faire. Si le joueur fait le con, ça part en latte, mais c'est de sa faute.
+
+## Univers du jeu ##
+
+mails, post-it.
+
+"chacun doit nettoyer son propre caca".
+
+Éléments de langage : instances décisionnelles, ressources occasionnelles, zone sociale (salle de pause), noms de salle et de bureau à la con comme dans les vraies boîtes. 
