@@ -8,7 +8,7 @@ L'aire de jeu est constitué d'un quadrillage de case. Chaque case comporte un o
 
 Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, et à un prix spécifique, en centimes de brouzoufs. (Le brouzouf est la monnaie nationale).
 
-Le joueur clique sur un bouton, puis sélectionne un groupe de pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide, le café se fait, les pièces disparaissent (elles sont "zappées"), le bouton aussi, et un autre bouton apparaît d'un autre type de café.  
+Le joueur clique sur un bouton, puis sélectionne un groupe de pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide, le café se fait, les pièces disparaissent (elles sont "zappées"), le bouton aussi, et un autre bouton apparaît d'un autre type de café.
 
 Au départ, on voit 3 boutons. On peut choisir parmi les 2 premiers. Le troisième permet de prévoir ce qu'on aura ensuite.
 
@@ -21,7 +21,7 @@ Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est con
 ## Boissons possibles ##
 
 À équilibrer, évidemment.
- 
+
  - gobelet d'eau : 2 centimes de brouzoufs
  - café : 12
  - café au lait : 15
@@ -43,13 +43,13 @@ Pièces bizarres : 3, 7, ...
 
 Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce.
 
-La pièce-joker. Quand on fait une sélection, prend automatiquement la valeur de brouzoufs qui va bien, parmi 1, 2, 5, 10, 20, 50. 
+La pièce-joker. Quand on fait une sélection, prend automatiquement la valeur de brouzoufs qui va bien, parmi 1, 2, 5, 10, 20, 50.
 
 ### Sucre ###
 
 Pour faire un café, il faut sélectionner une certaine somme de brouzoufs, plus X sucres. (Soit exactement X, soit au moins X. Je sais pas encore)
 
-Sucrettes à l'aspartame : équivalent à 2,3 ou 4 sucres sur une même case, le nombre de sucrettes indique la valeur. 
+Sucrettes à l'aspartame : équivalent à 2,3 ou 4 sucres sur une même case, le nombre de sucrettes indique la valeur.
 
 Sucre-joker : donne pil poil le bon nombre de sucre requis. (Un bonbon ? Du sucre liquide ? Du caramel ?).
 
@@ -61,7 +61,7 @@ Super-pouvoir : sucrier ou boîte à sucre. Permet de stocker du sucre récupér
 
 Sélectionnable. Il a plusieurs points de vie, et en perd un pour chaque zap effectué sur une case adjacente, ainsi que sur sa propre case. (Donc il peut perdre jusqu'à 9 points de vie d'un coup).
 
-Il n'est pas soumis à la gravité. Du coup, il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case. 
+Il n'est pas soumis à la gravité. Du coup, il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case.
 
 Pour éviter que ce soit trop facile, on peut interdire de faire une sélection qui passe par deux chewing-gum adjacent. Mais ça n'empêche pas de faire un détour en sélectionnant des cases à côté, pour ensuite revenir sur le chewing-gum adjacent.
 
@@ -69,7 +69,7 @@ Pièce avec du chewing-gum dessus ? Pièce sale ?
 
 Super-pouvoir : faire tomber d'une case tous les chewing-gum. Éventuellement, ils peuvent en plus perdre un ou plusieurs points de vie.
 
-Super-pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Il n'y en a plus qu'un, ayant la somme des points de vie de tous les chewing-gum fusionnés. Les cases occupées par les anciens chewing-gums deviennent vide. Le joueur choisit, parmi les cases de chewing-gum à fusionner, celle dans laquelle ira le gros chewing-gum final. 
+Super-pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Il n'y en a plus qu'un, ayant la somme des points de vie de tous les chewing-gum fusionnés. Les cases occupées par les anciens chewing-gums deviennent vide. Le joueur choisit, parmi les cases de chewing-gum à fusionner, celle dans laquelle ira le gros chewing-gum final.
 
 Super-pouvoir : utiliser un glaçon pour gèler un chewing-gum. Il faut toujours le détruire comme avant, mais il devient soumis à la gravité comme un objet normal.
 
@@ -77,7 +77,7 @@ Super-pouvoir : utiliser un glaçon pour gèler un chewing-gum. Il faut toujours
 
 Insélectionnable. Ou pas. (À décider).
 
-Il possède 8/9 points de vie maximum. Il les perd de la même manière que les chewing-gums, par un zap sur des cases adjacentes. Mais il faut enlever tous les points de vie en une seule fois, sinon, ça n'a aucun effet. 
+Il possède 8/9 points de vie maximum. Il les perd de la même manière que les chewing-gums, par un zap sur des cases adjacentes. Mais il faut enlever tous les points de vie en une seule fois, sinon, ça n'a aucun effet.
 
 Ce qui signifie que si le mégot est insélectionnable, et qu'il y en a deux côte à côte avec 8 points de vie chacun, on ne peut pas les détruire. Woups, faudra faire gaffe à ça.
 
@@ -91,11 +91,11 @@ Un chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une 
 
 Ils prennent plusieurs cases. Faut les faire tomber petit à petit. Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps.
 
-Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gravité ou autre). 
+Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gravité ou autre).
 
  - Le faire tomber tout en bas.
 
- - zapper des cases autour, de façon à l'englober. 
+ - zapper des cases autour, de façon à l'englober.
 
 TODO : des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
 Une petite clé ?
@@ -119,7 +119,7 @@ Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur
 ### Autres idées d'objets en vrac ###
 
  - chocolat
- - lait 
+ - lait
  - gnôle (la gnôle dans le café, c'est indispensable)
  - niveau de café qui monte (l'aire de jeu est immergée en partie)
  - du sel, pour ceux qui prennent un café salé
@@ -136,9 +136,9 @@ Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur
 
  - Pas de pièce de 2 : <nb de pièce> points de style. Cumulable avec le précédent.
 
- - Toutes les pièces pareilles : <nb de pièce> points de style. 
+ - Toutes les pièces pareilles : <nb de pièce> points de style.
 
- - Sélection en un seul chemin, sans sélection additionnelle. Bonus supp si le chemin est tracé correctement en une fois. 
+ - Sélection en un seul chemin, sans sélection additionnelle. Bonus supp si le chemin est tracé correctement en une fois.
 
 ### Illumination de cases ###
 
@@ -182,7 +182,7 @@ Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément 
 
  - Diminuer la probabilité d'apparition des pièces et objets pourris.
 
- - Zapper l'intérieur d'une zone.Par exemple : on zappe un carré de 3*3 sans la case du milieu. Le pouvoir fait zapper la case du milieu en plus. 
+ - Zapper l'intérieur d'une zone.Par exemple : on zappe un carré de 3*3 sans la case du milieu. Le pouvoir fait zapper la case du milieu en plus.
 
  - Cassage de pièce. On sélectionne une pièce ainsi que X cases vides connexes. La pièce se transforme en X+1 pièces de valeurs inférieures. Par exemple, une pièce de 5 se transforme en 5 pièces de 1. Une pièce de 10 en 5 pièces de 2, ...
 
@@ -227,7 +227,7 @@ Disponible uniquement dans certains modes de jeu, et/ou après avoir débloqué 
 
 On sélectionne 5 pièces de 1, puis on reclique sur une des pièces sélectionnées. Ça fait une pièce de 5 à l'endroit choisi.
 
-On peut faire des combos : 
+On peut faire des combos :
 
  - fusionner 2 pièces de 1 en une pièce de 2
  - s'en servir avec 4 autres pièces de 2 pour faire une pièce de 10
@@ -240,7 +240,7 @@ Il y a évidemment des achievements sur le plus grand nombre de combos réalisé
 
 Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
 
-Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut créer une pièce joker. 
+Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut créer une pièce joker.
 
 ## Dosages de la difficulté ##
 
@@ -254,9 +254,17 @@ Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut crée
 
 ## Quêtes / modes de jeu ##
 
-Pour chaque quête, on va essayer de trouver : la quête de base (facile), la quête hard (super dur), la quête chiante (facile, mais long)
+Pour chaque quête, il faut essayer d'en faire 3 versions :
 
-### Exploration ###
+ - de base (facile)
+ - hard (super dur)
+ - chiante (facile, mais long)
+
+### Mode exploration ###
+
+C'est le mode principal. Il est disponible après que le joueur ait effectué quelques tutoriels, ainsi qu'une première quête simple, où il faut juste faire des cafés.
+
+Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. La direction ne veut pas la remplacer, car elle ne voit pas le problème. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau de la direction.
 
 aire de jeu gigantesque. Les pièces ne tombent pas. Faut délivrer des cases (à la 4 elements), et on se balade un peu où on veut comme ça.
 
@@ -380,16 +388,16 @@ interdit de déselectionner, et on ne voit pas le total des brouzoufs. Donc faut
 
 connecter 2 (ou plus) endroits différents avec une sélection. Ouais ça c'est cool.
 
-### Casseur de sucre ### 
+### Casseur de sucre ###
 
-casser un sucre en deux. On doit pas toucher aux moitiés du sucre. Mais on doit taper au milieu. 
+casser un sucre en deux. On doit pas toucher aux moitiés du sucre. Mais on doit taper au milieu.
 Et après faut faire tomber l'une des deux moitiés.
 (Je ne sais plus ce que je voulais dire exactement avec cette idée)
 
 ### Vroum vroum ###
 
 Un objet qui se déplace dans une direction précise. Et qu'il faudrait emmener quelque part. (Et il fait quoi ?) Il trace un chemin qui fait quelque chose ?
-une mini-voiture-jouet ? (genre cadeau bonus à la con). 
+une mini-voiture-jouet ? (genre cadeau bonus à la con).
 Et deux objets qui se cognent à un point de rencontre ? Certes...
 C'est des billes qui se déplacent. C'est le plus drôle. Expression corporate : "refiler les billes."
 
