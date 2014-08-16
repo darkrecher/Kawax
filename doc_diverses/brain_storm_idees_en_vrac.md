@@ -316,68 +316,79 @@ Pas de regénération de pièces dans l'aire de jeu. Il faut toutes les zapper e
 
 Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café qui correspondent pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc. 
 
-**WIP**
-
 ### Rapide ###
 
-quête où il faut faire plein de cafés en étant rapide. Temps limité total et/ou temps limité entre chaque café.
+Avec un temps total limité et/ou un temps limité pour chaque café.
 
 ### Gros fumeur ###
 
-quête du cendrier. faut creuser creuser creuser. (le mode chiant, c'est le mode infini. On a un score sur la profondeur à laquelle qu'on est allé) (et le mode hard c'est pareil, sauf que la difficulté augmente plus vite)
-On choppe le pouvoir de diminution de résistance d'un mégot.
+L'aire de jeu représente un cendrier contenant une pile de mégot géante. On commence tout au dessus. Il faut détruire les mégots de clopes. On creuse de plus en plus profond dans la pile au fur et à mesure qu'on détruit les mégots. (Mais il y a toujours des pièces et des sucres qui arrivent par au-dessus, pour pouvoir jouer).
+
+Ça descend automatiquement, soit après X secondes, soit X zaps. Ou alors, on choisit quand ça descend, mais on a un nombre de zaps limités, et il faut aller le plus profondément possible.
+
+Version chiante de la quête : on creuse à l'infini. Les mégots sont de plus en plus résistants.  
+
+Permet d'obtenir le pouvoir de destruction des un mégots.
 
 ### Multi-sélection ###
 
-avec des combos : on fait plusieurs sélections dans l'aire de jeu. On les active toutes d'un coup. Et faut en faire le plus possible.
+On fait plusieurs sélections dans l'aire de jeu, sans que ça déclenche le zap. (Chaque sélection est associé à un type de café, comme d'habitude). On ne peut pas sélectionner deux fois une même case. Il faut en sélectionner le plus possible.
+
+Ensuite on valide, et ça fait tous les zaps en un seul coup.  
 
 ### Faire l'appoint (à point) ###
 
-arriver à une somme juste pil poil, avec des activations successives, et acheter une cochonnerie avec.
+Chaque fois qu'on fait un café, on additionne son prix à une valeur globale. Il faut atteindre pil poil une valeur spécifique.
+
+(Chiant et sans aucun intérêt, parce que trop dépendant du hasard. Faudra trouver autre chose).
+
+Scénario : Avec la valeur cumulée, on achète un gros truc. Par exemple un sachet de bonbon ou un Snickers. (Au fait, pourquoi ça s'appelle Snickers cette merde ?).    
+
+### Combo de fusion ###
+
+Fusionner des pièces de 1 pour faire une pièce de 5. Puis utiliser cette pièce pour faire une autre fusion (deux pièces de 5 en une pièce de 10). etc.  
+
+### Énigme ###
+
+Aire de jeu avec des objets préd0éfinis. Pas de regénération. Liste des cafés prédéfinie également. Il faut réussir à faire toute la liste.
 
 ### Ficelle ###
 
-faire le plus de sélection possibles (coût de 1, 2, 3, ...), avec la même aire de jeu, mais faut toujours que les sélection incluent une pièce parmi un groupe de pièce. (quête de la pièce qu'on récupère à chaque coup car elle est au bout d'une ficelle) faut faire tous les cafés possible de cette manière. Dans l'ordre qu'on veut. Les cases se regénèrent ou pas. Ca dépend (le joueur choisit, ou c'est le jeu qui regénère tout le temps, ou jamais)
+Scénario : on met dans la machine à café des pièces accrochées à des ficelles, de façon à les récupérer ensuite. Pour avoir du café sans payer. Haha lol.
 
-### Fusion ###
+L'aire de jeu est initialisée aléatoirement, comme d'habitude. Les objets ne disparaissent pas quand on les zappe. (Pas de regénération, donc).
 
-rassembler des lignes / des sélections de 5 pièces de 1 pour faire une pièce de 5. Puis 4 pièce de 5 pour faire une pièce de 20. Puis 5 pièces de 20 pour faire un brouzouf entier. (Et après on en fait je sais pas quoi)
-Ou alors : sélection de X (n'importe comment) pour faire la pièce de valeur X.
+Il faut faire un café à 10 centimes de brouzoufs, puis un autre à 11, 12, etc.
 
-faire une sélection de 100 brouzouf (n'importe comment) et ça donne un brouzouf.
-
-### énigme ###
-
-Aire de jeu définie. boissons à faire définie. On se débrouille.
+Éventuellement, pour augmenter la difficulté : chaque zap doit obligatoirement inclure la pièce située au milieu de l'aire de jeu. (Je sais pas comment on peut justifier ça scénaristiquement, mais on s'en fout).
 
 ### Régime ###
 
-Y'a des sucres dans l'aire de jeu, mais faut en utiliser le moins possible.
+Au départ, L'aire de jeu comporte des sucres. Mais aucun nouveau sucre n'est généré.
 
-faire un gros tas de sucre pour faire des cafés avec le plus de sucre possible.
+Il faut faire le plus de café possible. 
 
-### diabétique ###
+(Une fois de plus : bof. C'est trop dépendant du hasard).
 
-on a le droit de faire plus de sucre que prévu. Et y'a de plus en plus de sucre qui apparaissent (mais pas trop en fait). Et faut faire des cafés avec de plus en plus de sucre. Si on en fait plus que prévu, ça ralentit un peu l'augmentation de quantité de sucre requise.
+### Diabétique ###
+
+On a le droit de prendre plus de sucre que ce qui est demandé par le type de café. Quand on en prend plus, ça fait du score.
+
+Au début, la probabilité d'apparition des sucres est très haute, et elle diminue petit à petit.
 
 ### Pièces de collections ###
 
-faire un café avec des pièces spécifiques. (10+10+5+5+5+1 ...)
-
-### Gros fumeur ###
-
-gros tas de mégots.
-
-mode cendrier : aire de jeu très haute, on commence en haut. y'a des megots de clope partout, on doit creuser vers le bas.
-ça avance vers le bas soit après x secondes, soit x coups, soit on a un nbre de coups limités mais on choisit soi-même quand descendre.
+Certaines pièces de l'aire de jeu sont spéciales. SI on fait un café avec, ça fait du score. mais le score augmente de beaucoup si on utilise plusieurs de ces pièces. Donc il faut essayer de les regrouper dans un coin et des les utiliser toutes d'un coup.
 
 ### Einstein ###
 
-interdit de déselectionner, et on ne voit pas le total des brouzoufs. Donc faut faire du calcul mental.
+Interdit de déselectionner des objets. Si on tente un zap alors qu'on n'a pas choisi le bon nombre de brouzoufs et de sucre, on perd tout de suite.
 
-### sudoku ###
+Le but, c'est de forcer le joueur à faire du calcul mental.
 
-9 elements différents dans un carré de 3*3
+### Sudoku ###
+
+Regrouper 9 éléments différents dans un carré de 3*3, pour obtenir ... je sais pas quoi. Un truc cool.
 
 ### Connexion ###
 
