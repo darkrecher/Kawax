@@ -6,17 +6,17 @@ match sum(x)
 
 L'aire de jeu est constitué d'un quadrillage de case. Chaque case comporte un objet (une pièce de monnaie, un sucre, ...).
 
-Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, et à un prix spécifique, en centimes de brouzoufs. (Le brouzouf est la monnaie nationale).
+Il y a une pile de boutons de café, à gauche de l'écran. Ça représente les différents choix d'une machine à café. Chaque bouton correspond à un type de café, avec un prix spécifique, en centimes de brouzoufs (la monnaie nationale).
 
 Le joueur clique sur un bouton, puis sélectionne un groupe de pièces dans l'aire de jeu, correspondant au prix. Lorsque le joueur valide, le café se fait, les pièces disparaissent (elles sont "zappées"), le bouton aussi, et un autre bouton apparaît d'un autre type de café.
 
 Au départ, on voit 3 boutons. On peut choisir parmi les 2 premiers. Le troisième permet de prévoir ce qu'on aura ensuite.
 
-Le choix entre 2 boutons permet d'avoir quelque chose de jouable. Par exemple, si l'un des boutons est un type de café difficile, on utilise l'autre plusieurs fois, pour préparer l'aire de jeu et finalement réussir à faire le difficile.
+Le choix entre 2 boutons permet d'avoir quelque chose de jouable. Par exemple, si le premier boutons est un café difficile, on utilise le deuxième plusieurs fois, pour préparer l'aire de jeu et réussir à faire le premier.
 
-(Après tests : un seul bouton, ça marche assez bien quand même. Ce bazar est à équilibrer).
+(À équilibrer. Parce que dans la version actuelle du jeu, il n'y a qu'un bouton, on ne peut rien prévoir, et ça reste tout à fait jouable).
 
-Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est constitué d'un groupe de case connexe. On sélectionne d'abord un chemin de case, traçable en une fois. Ensuite on sélectionne des cases additionnelles, sans contrainte de chemin, il faut juste qu'une case additionnelle soit adjacente à une case déjà sélectionnée.
+Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est constituée d'un groupe de cases connexes. On sélectionne d'abord un chemin, traçable en une fois, puis les cases additionnelles, sans contrainte de chemin.
 
 ## Boissons possibles ##
 
@@ -37,25 +37,27 @@ Il faut sélectionner la somme exacte de brouzoufs requis. La sélection est con
 
 ### Pièces ###
 
-Pièces de 1, 2, 5, 10, 20, 50 centimes de brouzoufs.
+ - Pièces de 1, 2, 5, 10, 20, 50 centimes de brouzoufs.
 
-Pièces bizarres : 3, 7, ...
+ - Pièces bizarres : 3, 7, ...
 
-Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce.
+ - Bouton de culotte / jeton de caddie : Vaut 0. Sélectionnable comme une autre pièce.
 
-La pièce-joker. Quand on fait une sélection, prend automatiquement la valeur de brouzoufs qui va bien, parmi 1, 2, 5, 10, 20, 50.
+ - Pièce-joker. Quand on fait une sélection, elle prend automatiquement la valeur de brouzoufs qui va bien, parmi 1, 2, 5, 10, 20, 50.
 
 ### Sucre ###
 
-Pour faire un café, il faut sélectionner une certaine somme de brouzoufs, plus X sucres. (Soit exactement X, soit au moins X. Je sais pas encore)
+Un café nécessite une certaine somme de brouzoufs, plus X sucres. (Exactement X). Les sucres sont des objets dans l'aire de jeu, sélectionnables comme des pièces.
 
-Sucrettes à l'aspartame : équivalent à 2,3 ou 4 sucres sur une même case, le nombre de sucrettes indique la valeur.
+ - Sucre normal.
 
-Sucre-joker : donne pil poil le bon nombre de sucre requis. (Un bonbon ? Du sucre liquide ? Du caramel ?).
+ - Sucrettes à l'aspartame : équivalent à 2,3 ou 4 sucres sur une même case. Le nombre de sucrettes indique la valeur.
+
+ - Sucre-joker : donne pil poil le bon nombre de sucre requis. (Un bonbon ? Du sucre liquide ? Du caramel ?).
 
 Super-pouvoir : sélectionner 5 sucres adjacents pour les fusionner en un sucre-joker.
 
-Super-pouvoir : sucrier ou boîte à sucre. Permet de stocker du sucre récupéré lors d'une sélection, afin de l'utiliser plus tard.
+Super-pouvoir : sucrier / boîte à sucre. Permet de sélectionner plus de sucre que ce qui est requis pour un café, afin de le stocker et de l'utiliser plus tard.
 
 ### Chewing-gum ###
 
@@ -63,15 +65,15 @@ Sélectionnable. Il a plusieurs points de vie, et en perd un pour chaque zap eff
 
 Il n'est pas soumis à la gravité. Du coup, il laisse des cases vides en dessous de lui. Mais à chaque perte d'un ou plusieurs point de vie, il tombe d'une case.
 
-Pour éviter que ce soit trop facile, on peut interdire de faire une sélection qui passe par deux chewing-gum adjacent. Mais ça n'empêche pas de faire un détour en sélectionnant des cases à côté, pour ensuite revenir sur le chewing-gum adjacent.
+Pour éviter que ce soit trop facile, on peut interdire de faire une sélection passant par deux chewing-gums adjacent. Ça n'empêche pas de faire un détour en sélectionnant des cases à côté, pour ensuite revenir sur le deuxième.
 
 Pièce avec du chewing-gum dessus ? Pièce sale ?
 
-Super-pouvoir : faire tomber d'une case tous les chewing-gum. Éventuellement, ils peuvent en plus perdre un ou plusieurs points de vie.
+Super-pouvoir : faire tomber d'une case tous les chewing-gums. Éventuellement, ils peuvent en plus perdre un ou plusieurs points de vie.
 
-Super-pouvoir : fusionner deux (ou plus) chewing-gums adjacents. Il n'y en a plus qu'un, ayant la somme des points de vie de tous les chewing-gum fusionnés. Les cases occupées par les anciens chewing-gums deviennent vide. Le joueur choisit, parmi les cases de chewing-gum à fusionner, celle dans laquelle ira le gros chewing-gum final.
+Super-pouvoir : fusionner deux (ou plus) chewing-gums adjacents. On en obtient un seul ayant la somme des points de vie de tous les chewing-gums fusionnés. Le joueur choisit, parmi les cases à fusionner, celle dans laquelle ira le gros chewing-gum final. Les autres cases deviennent vide.
 
-Super-pouvoir : utiliser un glaçon pour gèler un chewing-gum. Il faut toujours le détruire comme avant, mais il devient soumis à la gravité comme un objet normal.
+Super-pouvoir : utiliser un glaçon pour geler un chewing-gum. Ça ne lui fait pas perdre de points de vie, mais il devient soumis à la gravité comme un objet normal.
 
 ### Mégot de clope / coucougnou ###
 
@@ -85,24 +87,24 @@ Pour simplifier, on peut juste faire 4 mégot différents, avec 1/3/5/8 points d
 
 Super-pouvoir : le fume-mégot. Fait baisser les points de vie d'un mégot.
 
-Un chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une grosses sélection d'un coup, puis détruire le chewing-gum.
+Un chewing-gum collé à un mégot ? Faut d'abord détruire le mégot, avec une grosse sélection d'un coup, puis détruire le chewing-gum. (Ou l'inverse ?).
 
 ### Gros objets ###
 
-Ils prennent plusieurs cases. Faut les faire tomber petit à petit. Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps.
+Ils prennent plusieurs cases. Un gros objet ne tombe que si toutes les cases sur lesquelles il repose sont vides en même temps.
 
 Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gravité ou autre).
 
- - Le faire tomber tout en bas.
+ - Le faire tomber en bas de l'aire de jeu.
 
- - Zapper des cases autour, de façon à l'englober. Selon l'objet ou le mode, il faut faire soit un englobage le plus proche possible, soit avec d'autres cases adjacentes au gros objet.
+ - Zapper des cases autour, de façon à l'englober. Selon l'objet ou le mode, il faut soit obligatoirement faire un englobage le plus proche possible, soit on a le droit d'y inclure d'autres cases.
 
 Ces deux modes de récupération peuvent aussi s'appliquer à des petits objets spécifiques (Une petite clé, un badge, ...)
 
 Idées en vrac de gros objets :
 
  - gros sucre
- - touillettes (horizontale ou verticale) (tordable : voir plus loin).
+ - touillettes horizontale ou verticale. (on peut les tordre : voir plus loin).
  - billet de 5 brouzoufs
  - sachet de thé
  - stylo
@@ -110,7 +112,7 @@ Idées en vrac de gros objets :
  - tasse
  - gobelet
 
-Deux chewing-gum côte à côte se collent entre eux, et ça fait un gros objet de 2 cases. C'est pas pareil que la fusion de chewing-gum. La fusion aide le joueur. Le collage le pénalise.
+Gros chewing-gum : deux chewing-gums simples adjacents se collent entre eux, et ça fait un gros objet de 2 cases. C'est pas pareil que la fusion de chewing-gum. La fusion aide le joueur. Le collage le pénalise.
 
 Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur chaque case. Il faut le détruire petit à petit, case par case.
 
@@ -126,31 +128,33 @@ Un énorme chewing-gum qui prend plein de cases, avec plein de points de vie sur
 
 ## Actions pour gagner des points de style ou des XP ##
 
- - Activer une sélection : dépend de la difficulté du café fait.
+Le but du jeu est d'accumuler des points. Je ne sais pas encore comment on les appellera : score, points de style, XP, ...
 
- - Sélection avec le nombre minimal de pièce : <nombre de pièce * 2> points de style. Ca veut dire qu'il faut un algo qui détermine le nombre de pièce minimal selon une somme et une liste de pièce possible. (L'algo simple ne fonctionne pas. 16 avec (10, 8, 4, 2). 16 = 10 + 4 + 2. 16 = 8 + 8.
+ - Faire un zap : ça rapporte un nombre de points dépendant de la difficulté du café fait.
 
- - Pas de pièce de 1 : <nb de pièce> points de style.
+ - Faire un zap avec le nombre minimal de pièce : ça rapporte < nombre de pièces * 2> points. Il faut un algo déterminant le nombre de pièce minimal selon une somme et une liste de valeurs de pièces. (L'algo simple ne fonctionne pas. 16 avec (10, 8, 4, 2). 16 = 10 + 4 + 2, alors que 16 = 8 + 8).
 
- - Pas de pièce de 2 : <nb de pièce> points de style. Cumulable avec le précédent.
+ - Zap sans pièce de 1 : < nb de pièces> points.
 
- - Toutes les pièces pareilles : <nb de pièce> points de style.
+ - Zap sans pièce de 2 : < nb de pièces> points. Cumulable avec le précédent.
 
- - Sélection en un seul chemin, sans sélection additionnelle. Bonus supp si le chemin est tracé correctement en une fois.
+ - Toutes les pièces pareilles : < nb de pièces> points.
+
+ - Zap fait en un seul chemin, sans sélection additionnelle. Bonus supp si le chemin est tracé correctement en une fois.
 
 ### Illumination de cases ###
 
-Lorsqu'on fait un zap, ça augmente de 1 la luminosité des cases sur laquelle y'a eu du zap.
+Lorsqu'on fait un zap, ça augmente de 1 la luminosité des cases sur lesquelles il a eu lieu.
 
-Si on rezappe des cases illuminées, on gagne des points de style. Mettons : (somme totale des luminosités / 100)
+Si on rezappe des cases illuminées, on gagne des points. Mettons : (somme totale des luminosités / 100)
 
-Si on rezappe exactement les mêmes cases qu'avant, on augmente de 5 la luminosité, et on attribue les points qui vont avec.
+Si on rezappe exactement les mêmes cases qu'avant, leur luminosité augmente de 5 d'un coup, et on attribue les points qui vont avec.
 
-Si on rezappe que des cases déjà illuminées, on augmente de 2 la luminosité, et on attribue les points qui vont avec.
+Si on ne rezappe que des cases déjà illuminées (mais pas toutes), leur luminosité augmente de 2, et on attribue les points qui vont avec.
 
-À chaque zap, les cases illuminées qui ne sont pas rezappées subissent une perte de luminosité. de 2, ou d'une autre valeur, ou alors ça retombe directement à 0.
+À chaque zap, les cases illuminées qui ne sont pas rezappées subissent une perte (totale ou partielle, à décider) de leur luminosité.
 
-C'est bordelique ce truc, et je suis pas sur que ça ait un intérêt quelconque. Et en tout cas y'a aucune justification à ça.
+C'est bordelique ce truc, je ne suis pas sûr que ça ait un intérêt quelconque, et je ne vois pas comment le justifier au niveau du scénario.
 
 On oublie pour l'instant.
 
