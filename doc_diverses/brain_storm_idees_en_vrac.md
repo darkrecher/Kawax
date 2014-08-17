@@ -95,11 +95,9 @@ Pour récupérer le gros objet, 2 façons possibles (selon le mode de jeu, la gr
 
  - Le faire tomber tout en bas.
 
- - zapper des cases autour, de façon à l'englober.
+ - Zapper des cases autour, de façon à l'englober. Selon l'objet ou le mode, il faut faire soit un englobage le plus proche possible, soit avec d'autres cases adjacentes au gros objet.
 
-TODO : des trucs (de 1 seule case, voir plus) qu'il faut entourer complètement d'une sélection pour les détruire, et qui ouvre d'autres trucs.
-Une petite clé ?
-Soit un entourage le plus proche possible. Soit avec d'autres cases dedans.
+Ces deux modes de récupération peuvent aussi s'appliquer à des petits objets spécifiques (Une petite clé, un badge, ...)
 
 Idées en vrac de gros objets :
 
@@ -186,10 +184,9 @@ Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément 
 
  - Cassage de pièce. On sélectionne une pièce ainsi que X cases vides connexes. La pièce se transforme en X+1 pièces de valeurs inférieures. Par exemple, une pièce de 5 se transforme en 5 pièces de 1. Une pièce de 10 en 5 pièces de 2, ...
 
-pour casser une pièce de 1 euro, faut faire une sélection de X cases avec elle dedans. La pièce de 1 euro se casse en X pièce plus petite, et rempli les cases vides.
-On peut casser plusieurs pièces, avec des sélection de n*X cases. (Et ça fait des achievement, ça).
-Bof, c'est peut être naze. Je sais pas.
-TODO : nan, faut faire une sélection à côté pour générer des cases vides à côté.
+ - Autre façon de casser les pièces. On sélectionne la pièce pour l'activer. Puis on fait un zap de X cases vides à côté. La pièce activé se casse automatiquement et les petites pièces vont dans les cases vides.
+
+ - Multi-cassage de pièces, avec des sélections de n pièces et n*X cases. Et ça peut être sujet à des achievements. Mais c'est un peu bourrin quand même.
 
  - Pouvoir passif : avoir plus de boutons de café (pour avoir plus de choix et/ou plus de prévisions des prochains cafés à faire). Par exemple, on pourrait aller jusqu'à 6 boutons visible, et on peut choisir parmi les 4 premiers. (À équilibrer).
 
@@ -392,52 +389,82 @@ Regrouper 9 éléments différents dans un carré de 3*3, pour obtenir ... je sa
 
 ### Connexion ###
 
-connecter 2 (ou plus) endroits différents avec une sélection. Ouais ça c'est cool.
+Il faut connecter deux (ou plus) cases spécifiques en faisant un zap. (La sélection de tile zappées doit tracer un chemin d'une case vers l'autre).
 
 ### Casseur de sucre ###
 
-casser un sucre en deux. On doit pas toucher aux moitiés du sucre. Mais on doit taper au milieu.
-Et après faut faire tomber l'une des deux moitiés.
-(Je ne sais plus ce que je voulais dire exactement avec cette idée)
+(Je ne sais plus vraiment ce que je voulais dire avec cette idée. J'ai dû la noter à l'arrache quand j'étais bourré. Tant pis. Dans le doute, je la garde). 
+
+Il faut casser un sucre en deux. On ne doit pas toucher aux moitiés du sucre, mais on doit taper au milieu.
+Ensuite, il faut faire tomber l'une des deux moitiés.
 
 ### Vroum vroum ###
 
-Un objet qui se déplace dans une direction précise. Et qu'il faudrait emmener quelque part. (Et il fait quoi ?) Il trace un chemin qui fait quelque chose ?
-une mini-voiture-jouet ? (genre cadeau bonus à la con).
-Et deux objets qui se cognent à un point de rencontre ? Certes...
-C'est des billes qui se déplacent. C'est le plus drôle. Expression corporate : "refiler les billes."
+L'aire de jeu comporte un objet qui se déplace dans une direction spécifique (une mini-voiture-jouet ? un cadeau bonux ? Des billes ?). Il faut emmener cette objet quelque part. Éventuellement, sur certaines actions, il change de direction.
+
+Il peut aussi y avoir plusieurs objets de ce type, et il faut les faire se rencontrer à un endroit spécifique.
+
+Scénario : utiliser des billes, pour faire péter les expressions corporates associées : "J'ai pas le billes. Je te refile les billes. etc.".
 
 ### Glaçons ###
 
-des glaçons, qu'il faut se dépêcher d'emmener en bas sinon ils fondent.
+L'aire de jeu comporte des glaçons, qui fondent petit à petit (avec le temps, ou à chaque zap). Il faut se dépêcher de les emmener en bas de l'écran avant qu'ils fondent complètement.
 
 Donne le pouvoir de glaçon pour geler les chewing-gums.
 
 ### Coincé ###
 
-aire de jeu avec des tailles bizarres : 40 * 2. 4 * 4 et on fait que des tout petits cafés. (bof)
+Aire de jeu avec des tailles bizarres : très grande et étroite, très petite et allongée, toute petite-petite, etc. Dans une petite aire, il faudra adapter les cafés disponibles, en mettant plus souvent ceux qui ont un petit prix.
 
 ### Le chemin ###
 
-Que des chemin de sélection. Pas de sélection additionnelle.
+On ne peut sélectionner des cases que avec le chemin principale. Pas de sélection additionnelle.
 
 ### Sociable ###
 
-jeu à 2 ? Sur écran splitté, ou le même écran, ou la même aire de jeu gigantesque (conquête)
+Jeu à plusieurs joueurs, sur un écran splitté, ou alors sur le même écran. On peut se mélanger les pinceaux dans les cases sélectionnées, et c'est ça qui est rigolo.
+
+Jeu à plusieurs sur une aire de jeu gigantesque (avec de la moquette). Les joueurs doivent conquérir le plus de cases possible. Une case est conquise par un joueur quand il enlève la dernière densité de moquette qu'il y a dessus. Lorsqu'une case est conquise, les autres joueurs ne peuvent plus la sélectionner pour faire des zaps dessus. Ça veut dire qu'il faut aller le plus vite possible, et essayer d'enfermer les autres joueurs dans des cases conquises. On peut imaginer que certains joueurs s'allient temporairement pour en enfermer d'autres.
 
 ### Glou-glou ###
 
-on est plongés dans du café. Les touillettes remontent, mais les pièces tombent. Faut séparer les deux. (Comment exactement ?) Ca c'est une idée marrante. Pas de gravité sur les pièces, mais une regénération. Il faut détruire les pièces juste au-dessus de la touillette, et toutes d'un coup, pour la faire monter d'un cran.
+L'aire de jeu est plongées dans du café. Certains objets remontent (touillettes, jetons de caddie), d'autres tombent (pièces). Il faut récupérer les touillettes. 
 
-### Tutorial ###
+Si il y a quelques cases vides au dessus d'une touillette, elle sont très vite remplies par des pièces qui tombent. Si on zappe en une seule fois toutes les cases immédiatement au dessus d'une touillette, elle peut monter d'un cran. C'est la difficulté de ce mode de jeu.
 
-Il me faudra peut être un mode tutorial.
-Avec une aire toute faite. Des explications successives. Y'a une action prédéfinie à faire. Si le joueur fait le con, ça part en latte, mais c'est de sa faute.
+### Tutoriel ###
+
+Des modes de jeu tutoriels pour les modes de jeux spécifiques. 
+
+Une aire de jeu prédéfinie, des actions prédéfinies à faire par le joueur, et des explications à chaque action. Si le joueur fait d'autres actions que celes prédéfinies, on l'interdit, ou on laisse faire mais après il se démerde.
 
 ## Univers du jeu ##
 
-mails, post-it.
+Ça se passe dans une entreprise, donc il faut plein de trucs corporate.
 
-"chacun doit nettoyer son propre caca".
+Éléments de langage : instances décisionnelles, ressources occasionnelles, zone sociale (salle de pause), noms de salle et de bureau à la con comme dans les vraies boîtes.
 
-Éléments de langage : instances décisionnelles, ressources occasionnelles, zone sociale (salle de pause), noms de salle et de bureau à la con comme dans les vraies boîtes. 
+Les quêtes à faire et les achievements sont signalés sous forme de mails et de post-it. Le héros du jeu a un ordinateur avec une messagerie de merde, genre Outlook. Les mails arrivent au fur et à mesure, mais il y en a plein qui ne servent à rien :
+
+ - La secrétaire qui signale que la photocopieuse est en panne, parce qu'elle a trouvé un slip dedans.
+ - Un mec qui a trouvé les toilettes dégueulasse, et qui rappelle que **chacun doit nettoyer son propre caca**.
+ - Voitures mal garées.
+ - Mail de remotivation des troupes envoyées par les "instances décisionnelles".
+ - Boulet qui a envoyé à tout le monde un message destiné à une seule personne. Puis qui renvoie un mail pour s'excuser.
+ - Mail persos de potes, de la maman, ...
+ - Spams.
+ - ...   
+
+Et certains mails sont vraiment intéressants : 
+
+ - descriptions de quêtes, 
+ - un récapitulatif des scores et des parties effectuées sur la journée ou la semaine, 
+ - explications sur le comportement d'objets ou de mode de jeu spécifiques, 
+ - demandes de café pour un personnage en particulier,
+ - mails de remerciements quand on a effectué une quête ou un achievement. 
+
+Le joueur peut se créer des répertoires pour les classer. Mais il est pas obligé.
+
+On retrouve dans les champs "destinataire" et "copie" des personnages du jeu qu'on peut rencontrer dans leurs bureaux. Ça peut permettre de créer du "lore", des interactions entre personnages, etc.
+
+C'est pareil avec les post-its. Ils arrivent en vrac, sont collés sur l'ordinateur du héros. Certains sont intéressants, d'autres non. On peut les ranger dans des petites boîtes, en jeter, ...
