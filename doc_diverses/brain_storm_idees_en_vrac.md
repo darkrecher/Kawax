@@ -160,7 +160,7 @@ On oublie pour l'instant.
 
 ## Pouvoirs spéciaux ##
 
-Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément tous disponibles dès le début. Il faut les débloquer (je sais pas trop comment).
+Ces pouvoirs coûtent des points à activer. Ils ne sont pas forcément tous disponibles dès le début. Il faut les débloquer (avec des quêtes ou en dépensant des points).
 
  - Utiliser une tasse au lieu d'un gobelet : -1 sur le coût du café.
 
@@ -174,23 +174,23 @@ Ces pouvoirs coûtent des points de style ou des XP. Ils ne sont pas forcément 
 
  - Enlever un doublon de la pile de boutons de café.
 
- - Enlever un pas-doublon de la pile de touches de café.
+ - Enlever un pas-doublon de la pile de boutons de café.
 
  - Bombe : destruction d'un pavé de 9 cases, d'une croix, d'une ligne, ... Ça peut détruire n'importe quelle type d'objet, ou que les objets conventionnels (sucres, pièces).
 
- - Bombe qui explose sur la dernière case du chemin de sélection, à la 4elements.
+ - Bombe qui explose sur la dernière case du chemin de sélection. Plus le chemin est long, plus l'explosion est grosse, comme dans le jeu 4 Elements.
 
- - Doubler la force de zap, le score et l'illumination de case d'une sélection.
+ - Doubler la force, le score et l'illumination de case lors d'un zap.
 
  - Diminuer la probabilité d'apparition des pièces et objets pourris.
 
- - Zapper l'intérieur d'une zone.Par exemple : on zappe un carré de 3*3 sans la case du milieu. Le pouvoir fait zapper la case du milieu en plus.
+ - Zapper l'intérieur d'une zone. Par exemple : on zappe un carré de 3*3 sans la case du milieu. Le pouvoir fait zapper la case du milieu en plus.
 
  - Cassage de pièce. On sélectionne une pièce ainsi que X cases vides connexes. La pièce se transforme en X+1 pièces de valeurs inférieures. Par exemple, une pièce de 5 se transforme en 5 pièces de 1. Une pièce de 10 en 5 pièces de 2, ...
 
- - Autre façon de casser les pièces. On sélectionne la pièce pour l'activer. Puis on fait un zap de X cases vides à côté. La pièce activé se casse automatiquement et les petites pièces vont dans les cases vides.
+ - Autre manière pour le cassage : on sélectionne la pièce pour l'activer, puis on fait un zap de X cases vides à côté. La pièce activée se casse automatiquement et les petites pièces vont dans les cases vides.
 
- - Multi-cassage de pièces, avec des sélections de n pièces et n*X cases. Et ça peut être sujet à des achievements. Mais c'est un peu bourrin quand même.
+ - Multi-cassage de pièces, avec des sélections de n pièces et n*X cases. Et ça peut être sujet à des achievements (le plus grand "n" possible). Mais c'est un peu bourrin quand même.
 
  - Pouvoir passif : avoir plus de boutons de café (pour avoir plus de choix et/ou plus de prévisions des prochains cafés à faire). Par exemple, on pourrait aller jusqu'à 6 boutons visible, et on peut choisir parmi les 4 premiers. (À équilibrer).
 
@@ -204,9 +204,9 @@ Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (ge
 
  - Faire un zap avec que des pièces de même valeur. (X pièces de valeur Y) (Et zézétte épouse X).
 
- - gagner X points de style en un seul zap.
+ - Gagner X points en un seul zap.
 
- - cumuler XXX points de style en une partie. Il faudra utiliser des valeurs fun, genre 1337, et non pas 1000, 2000, ...
+ - Cumuler XXX points en une partie. Il faudra utiliser des valeurs fun, genre 1337, et non pas 1000, 2000, ...
 
  - Zapper XXX cases en une seule fois.
 
@@ -218,7 +218,7 @@ Quand on fait un carré de 3*3, ça fait apparaître un objet cool au milieu (ge
 
  - Pour chaque type de café : en faire un avec le moins de pièce possibles.
 
-Faire des achievement et des quêtes donne plein de style/XP, et jouer une partie en donne un petit peu. On débloque les pouvoirs et on avance dans le jeu grâce à ces points. Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties.
+Faire des achievements et des quêtes donne plein de points, et jouer une partie en donne un petit peu. On débloque les pouvoirs et on avance dans le jeu grâce à ces points. Comme ça, le joueur est jamais bloqué, même si il est nul. Il aura juste à faire plein de parties.
 
 Quand on fera d'autres jeux : les XP d'un jeu apportent un peu d'XP dans les autres jeux. La validation se fait avec des codes secrets genre clé md5 ou autre. Même si on pourra jamais vraiment faire complètement secret parce que de toutes façons je distribue toujours tout le code source.
 
@@ -230,18 +230,20 @@ On sélectionne 5 pièces de 1, puis on reclique sur une des pièces sélectionn
 
 On peut faire des combos :
 
- - fusionner 2 pièces de 1 en une pièce de 2
- - s'en servir avec 4 autres pièces de 2 pour faire une pièce de 10
- - se servir de la pièce de 10, avec une autre, pour faire une pièce de 20
+ - fusionner 2 pièces de 1 en une pièce de 2,
+ - s'en servir avec 4 autres pièces de 2 pour faire une pièce de 10,
+ - se servir de la pièce de 10, avec une autre, pour faire une pièce de 20,
  - ...
 
 On peut monter jusqu'à des valeurs très hautes. Par exemple : la pièce de 100 centimes, soit un brouzouf entier !
 
 Il y a évidemment des achievements sur le plus grand nombre de combos réalisés.
 
-Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
+Éventuellement : pas de regénération d'objets dans l'aire de jeu tant qu'on fait des fusions de pièces. Ça permet de limiter le trop grand nombre de combos, et ça évite d'arriver à des valeurs gigantesques comme une pièce de 10 000 brouzoufs.
 
-Et si on fusionne X pièces ayant toutes des valeurs différentes, on peut créer une pièce joker.
+Et si on fusionne X pièces ayant toutes des valeurs différentes, ça crée une pièce joker.
+
+Donc précédemment, je parlais de cassage de pièce, et maintenant je parle de fusion de pièces. Les deux s'annulent. Tout ça pour bien préciser que ce document n'est rien de plus que des idées en vrac.
 
 ## Dosages de la difficulté ##
 
@@ -261,29 +263,29 @@ Pour chaque quête, il faut essayer d'en faire 3 versions :
  - hard (super dur)
  - chiante (facile, mais long)
 
+La version de base est obligatoire pour avancer dans le jeu, les autres non.
+
 ### Exploration ###
 
 C'est le mode principal. Il est disponible après que le joueur ait effectué quelques tutoriels, et des quêtes simples, où il faut juste faire des cafés.
 
-Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. Les "instances décisionnelles" de l'entreprise ne veulent pas la remplacer, car elles ce problème ne les dérange pas, elles utilisent leur propre machine à café haut de gamme. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau des instances décisionnelles.
+Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. Les "instances décisionnelles" de l'entreprise ne veulent pas la remplacer, car ce problème ne les dérange pas, elles utilisent leur propre machine à café haut de gamme. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau des instances décisionnelles.
 
 L'aire de jeu est gigantesque, elle représente les locaux de l'entreprise. Il n'y a pas de gravité, les objets se regénèrent directement sur les cases zappées. On commence dans une petite zone où se trouve la machine à café. 
 
-Chaque case possède une "densité de moquette", (en plus de son objet). Lorsqu'on zappe une case, sa densité de moquette diminue de 1. Lorsqu'elle atteint 0, le café peut s'écouler dedans. Ça fonctionne comme dans le jeu 4 Elements.
+Chaque case possède une "densité de moquette", (en plus de son objet). Lorsqu'on zappe une case, sa densité diminue de 1. Lorsqu'elle atteint 0, le café peut s'écouler dedans. Ça fonctionne comme dans 4 Elements.
 
-On peut se promener dans l'aire de jeu gigantesque à condition qu'une case avec du café écoulé reste toujours visible à l'écran. Il faut donc progresser petit à petit, en détruisant la moquette. Mais on progresse où on veut comme on veut.
+On peut se promener dans l'aire de jeu gigantesque à condition qu'une case avec du café écoulé reste toujours visible à l'écran. Il faut donc progresser petit à petit. Mais on progresse dans les directions qu'on veut.
 
 En se déplaçant ainsi, on arrive à des bureaux d'autres collègues, qui donnent des quêtes annexes, des pouvoirs, des XP, ...
 
 Certaines zones ne sont pas accessibles dès le début, car entourée par des objets qu'on ne peut pas détruire. Il faut obtenir le pouvoir correspondant.
 
-Par exemple, au début, on ne peut pas prendre de sucre, ni détruire de clopes. Et on débute dans une zone restreinte entourée de sucres/clopes. Il faut obtenir le pouvoir correspondant pour pouvoir aller plus loin.
+Par exemple, au début, on ne peut pas prendre de sucre, ni détruire de clopes. Or, on débute dans une zone restreinte entourée de sucres/clopes. Il faut obtenir les pouvoirs correspondants pour pouvoir aller plus loin.
 
-Il pourrait également y avoir des gros objets. Le seul moyen de les récupérer est de les entourer avec un zap. Mais au début, on n'a pas de café qui coûte suffisamment cher pour pouvoir sélectionner suffisamment de pièces. Il faut débloquer ces cafés avec une quête. (Par exemple, le fameux "sang de chèvre vierge" à 666 centimes de brouzoufs).
+Il pourrait également y avoir des gros objets. Le seul moyen de les récupérer serait de les entourer avec un zap (en faisant des sélections assez grande). Mais au début, on n'a pas de café assez cher pour pouvoir sélectionner suffisamment de pièces. Il faut débloquer ces cafés avec une quête. Par exemple, le fameux "sang de chèvre vierge" à 666 centimes de brouzoufs.
   
-Dans cette aire de jeu gigantesque, les carrés ayant encore de la moquette peuvent générer des objets chiants, ça dépend de la zone dans laquelle on se trouve. Mais une fois qu'on a enlevé la moquette, la case ne génère que des objets classiques : jetons de caddie, pièces de valeur normales, sucres.
-
-Ça rend ce mode de jeu un peu facile, mais ça ajoute un sentiment de "nettoyage". Les quêtes et les autres modes de jeu sont là pour donner de la difficulté et des objets bizarres à l'infini. (With some hardcore depts, comme on dit chez les concepteurs de jeu).
+Dans cette aire de jeu gigantesque, les carrés ayant encore de la moquette peuvent générer des objets chiants, ça dépend de la zone dans laquelle on se trouve. Mais une fois qu'on a enlevé la moquette, la case ne génère que des objets classiques : jetons de caddie, pièces de valeur normales, sucres. Ça rend le mode de jeu un peu facile, mais ça ajoute un sentiment de "nettoyage". Les quêtes et les autres modes sont là pour donner de la difficulté et des objets bizarres à l'infini. ("With some hardcore depts", comme on dit chez les concepteurs de jeu).
 
 On doit pouvoir voir une vue d'ensemble de la zone déjà explorée. Ça permet de revenir plus rapidement à un endroit connu, d'avoir une carte, et de renforcer le sentiment de nettoyage.
 
@@ -293,11 +295,11 @@ Diverses quêtes en vrac, liées à des gros objets.
 
  - Faire un carré de 10 * 7 sucre, pour créer un morceau de sucre géant, puis le faire tomber en bas pour le récupérer.
 
- - Quête de refabrication de cigarette, pour les clochards. Il faut faire un carré de 5 * 2 mégots. Ça crée une clope, et il faut la récupérer. (La faire tomber en bas ou l'entourer d'un zap). Ça peut être difficile car il faut rassembler les mégots sans les détruire. Donc sans trop faire de zap à côté.
+ - Quête de refabrication de cigarette, pour les clochards. Il faut faire un carré de 5 * 2 mégots. Ça crée une clope, et il faut la récupérer. Ça peut être difficile car il faut rassembler les mégots sans les détruire. Donc sans trop faire de zap à côté.
 
- - Faire une ligne ou un rectangle de X*Y brouzoufs pour créer un billet.
+ - Faire une ligne ou un rectangle de X*Y pièces de même valeur pour créer un billet.
 
- - Une tasse (gros objet), qu'on doit renverser en zappant des cases pas tout à fait en dessous, mais un peu à côté. Des tasses de plus en plus grandes pour que ce soit de plus en plus dur. Permet d'obtenir le pouvoir de la tasse (-1 au prix du café).
+ - Une tasse (gros objet), qu'on doit renverser en zappant les cases pas tout à fait en dessous, mais un peu à côté. Des tasses de plus en plus grandes pour que ce soit de plus en plus dur. Permet d'obtenir le pouvoir de la tasse (-1 au prix du café).
 
  - Une touillette qu'il faut tordre. Chaque fois qu'on zappe des cases à côté d'elle, elle se tord un peu. Il faut le faire petit à petit. Si on zappe une trop grande zone, la touillette se tord trop vite, se casse, et c'est perdu. Permet d'obtenir le pouvoir de la touillette (+1 au prix du café).
 
@@ -305,9 +307,9 @@ Diverses quêtes en vrac, liées à des gros objets.
 
 Il faut récupérer des cachets d'aspirine, en fusionnant des demi-cachets.
 
-Correspond au mode aspro dans le jeu que j'ai fait.
+Correspond au mode aspro du jeu que j'ai fait.
 
-Si on prépare plusieurs aspirines, pour ensuite tous les fusionner et récupérer à la suite, ça fait du score (XP, style, ...).
+Si on prépare plusieurs aspirines, pour ensuite tous les fusionner et les récupérer à la suite, ça fait des points.
 
 On obtient également du score en vidant complètement plusieurs colonnes en une seule fois. 
 
@@ -315,7 +317,7 @@ On obtient également du score en vidant complètement plusieurs colonnes en une
 
 Pas de regénération de pièces dans l'aire de jeu. Il faut toutes les zapper et obtenir une aire totalement vide à la fin. 
 
-Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café qui correspondent pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc. 
+Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café correspondant pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc. 
 
 ### Rapide ###
 
@@ -323,21 +325,21 @@ Avec un temps total limité et/ou un temps limité pour chaque café.
 
 ### Gros fumeur ###
 
-L'aire de jeu représente un cendrier contenant une pile de mégot géante. On commence tout au dessus. Il faut détruire les mégots de clopes. On creuse de plus en plus profond dans la pile au fur et à mesure qu'on détruit les mégots. (Mais il y a toujours des pièces et des sucres qui arrivent par au-dessus, pour pouvoir jouer).
+L'aire de jeu représente un cendrier contenant une pile géante de mégot. On commence tout au dessus. On creuse de plus en plus profond dans la pile au fur et à mesure qu'on détruit les mégots. (Mais il y a toujours des pièces et des sucres qui arrivent par au-dessus, pour pouvoir jouer).
 
-Ça descend automatiquement, soit après X secondes, soit X zaps. Ou alors, on choisit quand ça descend, mais on a un nombre de zaps limités, et il faut aller le plus profondément possible.
+L'écran descend automatiquement dans l'aire de jeu, soit après X secondes, soit X zaps. Ou alors, on choisit quand ça descend, mais on a un nombre de zaps limités, et il faut aller le plus profondément possible.
 
 Version chiante de la quête : on creuse à l'infini. Les mégots sont de plus en plus résistants.  
 
-Permet d'obtenir le pouvoir de destruction des un mégots.
+Permet d'obtenir le pouvoir de destruction des mégots.
 
 ### Multi-sélection ###
 
-On fait plusieurs sélections dans l'aire de jeu, sans que ça déclenche le zap. (Chaque sélection est associé à un type de café, comme d'habitude). On ne peut pas sélectionner deux fois une même case. Il faut en sélectionner le plus possible.
+On fait plusieurs sélections dans l'aire de jeu, sans que ça déclenche de zap. (Chaque sélection est associé à un type de café, comme d'habitude). On ne peut pas sélectionner deux fois une même case. Plus on fait de sélection, plus on a de score.
 
-Ensuite on valide, et ça fait tous les zaps en un seul coup.  
+Ensuite on valide, ça fait tous les zaps d'un seul coup, et on recommence.  
 
-### Faire l'appoint (à point) ###
+### Accumulation ###
 
 Chaque fois qu'on fait un café, on additionne son prix à une valeur globale. Il faut atteindre pil poil une valeur spécifique.
 
@@ -351,13 +353,13 @@ Fusionner des pièces de 1 pour faire une pièce de 5. Puis utiliser cette pièc
 
 ### Énigme ###
 
-Aire de jeu avec des objets préd0éfinis. Pas de regénération. Liste des cafés prédéfinie également. Il faut réussir à faire toute la liste.
+Aire de jeu avec des objets prédéfinis. Pas de regénération. Liste des cafés prédéfinie également. Il faut réussir à faire toute la liste.
 
 ### Ficelle ###
 
-Scénario : on met dans la machine à café des pièces accrochées à des ficelles, de façon à les récupérer ensuite. Pour avoir du café sans payer. Haha lol.
+Scénario : on met dans la machine à café des pièces accrochées à des ficelles. Ça permet de les récupérer ensuite, et de se faire des cafés sans payer. Haha lol.
 
-L'aire de jeu est initialisée aléatoirement, comme d'habitude. Les objets ne disparaissent pas quand on les zappe. (Pas de regénération, donc).
+L'aire de jeu est initialisée aléatoirement, comme d'habitude. Mais les objets ne disparaissent pas quand on les zappe, il n'y a donc pas de regénération.
 
 Il faut faire un café à 10 centimes de brouzoufs, puis un autre à 11, 12, etc.
 
@@ -377,9 +379,9 @@ On a le droit de prendre plus de sucre que ce qui est demandé par le type de ca
 
 Au début, la probabilité d'apparition des sucres est très haute, et elle diminue petit à petit.
 
-### Pièces de collections ###
+### Pièces de collection ###
 
-Certaines pièces de l'aire de jeu sont spéciales. SI on fait un café avec, ça fait du score. mais le score augmente de beaucoup si on utilise plusieurs de ces pièces. Donc il faut essayer de les regrouper dans un coin et des les utiliser toutes d'un coup.
+Certaines pièces de l'aire de jeu sont spéciales. SI on fait un café avec, ça fait du score. mais le score augmente de beaucoup si on utilise plusieurs de ces pièces. Il faut donc essayer de les regrouper dans un coin et des les utiliser toutes d'un coup.
 
 ### Einstein ###
 
@@ -393,7 +395,7 @@ Regrouper 9 éléments différents dans un carré de 3*3, pour obtenir ... je sa
 
 ### Connexion ###
 
-Il faut connecter deux (ou plus) cases spécifiques en faisant un zap. (La sélection de tile zappées doit tracer un chemin d'une case vers l'autre).
+Il faut connecter deux (ou plus) cases spécifiques en faisant un zap. La sélection de tile zappées doit tracer un chemin d'une case vers l'autre.
 
 ### Casseur de sucre ###
 
@@ -418,42 +420,42 @@ Donne le pouvoir de glaçon pour geler les chewing-gums.
 
 ### Coincé ###
 
-Aire de jeu avec des tailles bizarres : très grande et étroite, très petite et allongée, toute petite-petite, etc. Dans une petite aire, il faudra adapter les cafés disponibles, en mettant plus souvent ceux qui ont un petit prix.
+Aire de jeu avec des tailles bizarres : très grande et étroite, très petite et allongée, toute petite-petite, etc. Si l'aire est petite, il faudra adapter les cafés disponibles, en mettant plus souvent ceux qui ont un petit prix.
 
 ### Le chemin ###
 
-On ne peut sélectionner des cases que avec le chemin principale. Pas de sélection additionnelle.
+On ne peut sélectionner des cases qu'avec le chemin principal. Pas de sélection additionnelle.
 
 ### Sociable ###
 
 Jeu à plusieurs joueurs, sur un écran splitté, ou alors sur le même écran. On peut se mélanger les pinceaux dans les cases sélectionnées, et c'est ça qui est rigolo.
 
-Jeu à plusieurs sur une aire de jeu gigantesque (avec de la moquette). Les joueurs doivent conquérir le plus de cases possible. Une case est conquise par un joueur quand il enlève la dernière densité de moquette qu'il y a dessus. Lorsqu'une case est conquise, les autres joueurs ne peuvent plus la sélectionner pour faire des zaps dessus. Ça veut dire qu'il faut aller le plus vite possible, et essayer d'enfermer les autres joueurs dans des cases conquises. On peut imaginer que certains joueurs s'allient temporairement pour en enfermer d'autres.
+Jeu à plusieurs sur une aire de jeu gigantesque avec moquette. Les joueurs doivent conquérir le plus de cases possible. Une case est conquise quand on enlève sa dernière densité de moquette. Un joueur ne peut plus sélectionner les cases conquises par les autres joueurs. Ça veut dire qu'il faut aller le plus vite possible, et essayer d'enfermer les autres joueurs dans des cases conquises. On peut imaginer que certains joueurs s'allient temporairement pour en enfermer d'autres.
 
 ### Glou-glou ###
 
-L'aire de jeu est plongées dans du café. Certains objets remontent (touillettes, jetons de caddie), d'autres tombent (pièces). Il faut récupérer les touillettes. 
+L'aire de jeu est plongée dans du café. Certains objets remontent (touillettes, jetons de caddie), d'autres tombent (pièces). Il faut récupérer les touillettes. 
 
-Si il y a quelques cases vides au dessus d'une touillette, elle sont très vite remplies par des pièces qui tombent. Si on zappe en une seule fois toutes les cases immédiatement au dessus d'une touillette, elle peut monter d'un cran. C'est la difficulté de ce mode de jeu.
+S'il y a quelques cases vides au dessus d'une touillette, elle sont très vite remplies par des pièces qui tombent. Si on zappe en une seule fois toutes les cases immédiatement au dessus d'une touillette, elle peut monter d'un cran.
 
 ### Tutoriel ###
 
 Des modes de jeu tutoriels pour les modes de jeux spécifiques. 
 
-Une aire de jeu prédéfinie, des actions prédéfinies à faire par le joueur, et des explications à chaque action. Si le joueur fait d'autres actions que celes prédéfinies, on l'interdit, ou on laisse faire mais après il se démerde.
+Aire de jeu prédéfinie, actions prédéfinies à faire par le joueur, avec des explications à chaque action. Si le joueur fait d'autres actions que celles prédéfinies, on l'interdit, ou on le laisse faire mais après il se démerde.
 
 ## Univers du jeu ##
 
 Ça se passe dans une entreprise, donc il faut plein de trucs corporate.
 
-Éléments de langage : instances décisionnelles, ressources occasionnelles, zone sociale (salle de pause), noms de salle et de bureau à la con comme dans les vraies boîtes.
+Éléments de langage : instances décisionnelles, ressources occasionnelles, zone sociale (salle de pause), noms de salle et de bureau à la con comme dans les vraies boîtes, ...
 
 Les quêtes à faire et les achievements sont signalés sous forme de mails et de post-it. Le héros du jeu a un ordinateur avec une messagerie de merde, genre Outlook. Les mails arrivent au fur et à mesure, mais il y en a plein qui ne servent à rien :
 
- - La secrétaire qui signale que la photocopieuse est en panne, parce qu'elle a trouvé un slip dedans.
+ - La secrétaire qui signale que la photocopieuse est en panne, parce qu'il y avait un slip coincé dedans.
  - Un mec qui a trouvé les toilettes dégueulasse, et qui rappelle que **chacun doit nettoyer son propre caca**.
  - Voitures mal garées.
- - Mail de remotivation des troupes envoyées par les "instances décisionnelles".
+ - Mail de remotivation des troupes, envoyé par les "instances décisionnelles".
  - Boulet qui a envoyé à tout le monde un message destiné à une seule personne. Puis qui renvoie un mail pour s'excuser.
  - Mail persos de potes, de la maman, ...
  - Spams.
@@ -461,14 +463,14 @@ Les quêtes à faire et les achievements sont signalés sous forme de mails et d
 
 Et certains mails sont vraiment intéressants : 
 
- - descriptions de quêtes, 
- - un récapitulatif des scores et des parties effectuées sur la journée ou la semaine, 
- - explications sur le comportement d'objets ou de mode de jeu spécifiques, 
- - demandes de café pour un personnage en particulier,
- - mails de remerciements quand on a effectué une quête ou un achievement. 
+ - Descriptions de quêtes. 
+ - Récapitulatif des scores et des parties effectuées sur la journée ou la semaine. 
+ - Explications sur le comportement d'objets ou de mode de jeu spécifiques.
+ - Demandes de café pour un collègue.
+ - Mails de remerciements quand on a effectué une quête ou un achievement. 
 
-Le joueur peut se créer des répertoires pour les classer. Mais il est pas obligé.
+Le joueur peut se créer des répertoires pour classer tout ça. Mais il est pas obligé.
 
-On retrouve dans les champs "destinataire" et "copie" des personnages du jeu qu'on peut rencontrer dans leurs bureaux. Ça peut permettre de créer du "lore", des interactions entre personnages, etc.
+On retrouve dans les champs "destinataire" et "copie", des personnages du jeu qu'on peut rencontrer dans leurs bureaux. Ça peut permettre de créer du "lore", des interactions entre personnages, etc.
 
 C'est pareil avec les post-its. Ils arrivent en vrac, sont collés sur l'ordinateur du héros. Certains sont intéressants, d'autres non. On peut les ranger dans des petites boîtes, en jeter, ...
