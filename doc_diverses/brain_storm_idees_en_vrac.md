@@ -271,7 +271,7 @@ C'est le mode principal. Il est disponible après que le joueur ait effectué qu
 
 Scénario : la machine à café devient folle, elle en renverse partout. Ça s'étale sur le sol mais c'est absorbé par la moquette. Les "instances décisionnelles" de l'entreprise ne veulent pas la remplacer, car ce problème ne les dérange pas, elles utilisent leur propre machine à café haut de gamme. Il faut détruire la moquette petit à petit, pour propager l'écoulement de café jusqu'au bureau des instances décisionnelles.
 
-L'aire de jeu est gigantesque, elle représente les locaux de l'entreprise. Il n'y a pas de gravité, les objets se regénèrent directement sur les cases zappées. On commence dans une petite zone où se trouve la machine à café. 
+L'aire de jeu est gigantesque, elle représente les locaux de l'entreprise. Il n'y a pas de gravité, les objets se regénèrent directement sur les cases zappées. On commence dans une petite zone où se trouve la machine à café.
 
 Chaque case possède une "densité de moquette", (en plus de son objet). Lorsqu'on zappe une case, sa densité diminue de 1. Lorsqu'elle atteint 0, le café peut s'écouler dedans. Ça fonctionne comme dans 4 Elements.
 
@@ -284,7 +284,7 @@ Certaines zones ne sont pas accessibles dès le début, car entourée par des ob
 Par exemple, au début, on ne peut pas prendre de sucre, ni détruire de clopes. Or, on débute dans une zone restreinte entourée de sucres/clopes. Il faut obtenir les pouvoirs correspondants pour pouvoir aller plus loin.
 
 Il pourrait également y avoir des gros objets. Le seul moyen de les récupérer serait de les entourer avec un zap (en faisant des sélections assez grande). Mais au début, on n'a pas de café assez cher pour pouvoir sélectionner suffisamment de pièces. Il faut débloquer ces cafés avec une quête. Par exemple, le fameux "sang de chèvre vierge" à 666 centimes de brouzoufs.
-  
+
 Dans cette aire de jeu gigantesque, les carrés ayant encore de la moquette peuvent générer des objets chiants, ça dépend de la zone dans laquelle on se trouve. Mais une fois qu'on a enlevé la moquette, la case ne génère que des objets classiques : jetons de caddie, pièces de valeur normales, sucres. Ça rend le mode de jeu un peu facile, mais ça ajoute un sentiment de "nettoyage". Les quêtes et les autres modes sont là pour donner de la difficulté et des objets bizarres à l'infini. ("With some hardcore depts", comme on dit chez les concepteurs de jeu).
 
 On doit pouvoir voir une vue d'ensemble de la zone déjà explorée. Ça permet de revenir plus rapidement à un endroit connu, d'avoir une carte, et de renforcer le sentiment de nettoyage.
@@ -311,13 +311,13 @@ Correspond au mode aspro du jeu que j'ai fait.
 
 Si on prépare plusieurs aspirines, pour ensuite tous les fusionner et les récupérer à la suite, ça fait des points.
 
-On obtient également du score en vidant complètement plusieurs colonnes en une seule fois. 
+On obtient également du score en vidant complètement plusieurs colonnes en une seule fois.
 
 ### Radin ###
 
-Pas de regénération de pièces dans l'aire de jeu. Il faut toutes les zapper et obtenir une aire totalement vide à la fin. 
+Pas de regénération de pièces dans l'aire de jeu. Il faut toutes les zapper et obtenir une aire totalement vide à la fin.
 
-Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café correspondant pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc. 
+Ça risque d'être chiant, car très dépendant du hasard. Vers la fin, il faut avoir des prix de café correspondant pil poil à ce qu'il reste dans l'aire de jeu. Faudrait trouver une astuce pour déchiantiser le truc.
 
 ### Rapide ###
 
@@ -329,7 +329,7 @@ L'aire de jeu représente un cendrier contenant une pile géante de mégot. On c
 
 L'écran descend automatiquement dans l'aire de jeu, soit après X secondes, soit X zaps. Ou alors, on choisit quand ça descend, mais on a un nombre de zaps limités, et il faut aller le plus profondément possible.
 
-Version chiante de la quête : on creuse à l'infini. Les mégots sont de plus en plus résistants.  
+Version chiante de la quête : on creuse à l'infini. Les mégots sont de plus en plus résistants.
 
 Permet d'obtenir le pouvoir de destruction des mégots.
 
@@ -337,7 +337,7 @@ Permet d'obtenir le pouvoir de destruction des mégots.
 
 On fait plusieurs sélections dans l'aire de jeu, sans que ça déclenche de zap. (Chaque sélection est associé à un type de café, comme d'habitude). On ne peut pas sélectionner deux fois une même case. Plus on fait de sélection, plus on a de score.
 
-Ensuite on valide, ça fait tous les zaps d'un seul coup, et on recommence.  
+Ensuite on valide, ça fait tous les zaps d'un seul coup, et on recommence.
 
 ### Accumulation ###
 
@@ -345,11 +345,11 @@ Chaque fois qu'on fait un café, on additionne son prix à une valeur globale. I
 
 (Chiant et sans aucun intérêt, parce que trop dépendant du hasard. Faudra trouver autre chose).
 
-Scénario : Avec la valeur cumulée, on achète un gros truc. Par exemple un sachet de bonbon ou un Snickers. (Au fait, pourquoi ça s'appelle Snickers cette merde ?).    
+Scénario : Avec la valeur cumulée, on achète un gros truc. Par exemple un sachet de bonbon ou un Snickers. (Au fait, pourquoi ça s'appelle Snickers cette merde ?).
 
 ### Combo de fusion ###
 
-Fusionner des pièces de 1 pour faire une pièce de 5. Puis utiliser cette pièce pour faire une autre fusion (deux pièces de 5 en une pièce de 10). etc.  
+Fusionner des pièces de 1 pour faire une pièce de 5. Puis utiliser cette pièce pour faire une autre fusion (deux pièces de 5 en une pièce de 10). etc.
 
 ### Énigme ###
 
@@ -369,7 +369,7 @@ Il faut faire un café à 10 centimes de brouzoufs, puis un autre à 11, 12, etc
 
 Au départ, L'aire de jeu comporte des sucres. Mais aucun nouveau sucre n'est généré.
 
-Il faut faire le plus de café possible. 
+Il faut faire le plus de café possible.
 
 (Une fois de plus : bof. C'est trop dépendant du hasard).
 
@@ -399,7 +399,7 @@ Il faut connecter deux (ou plus) cases spécifiques en faisant un zap. La sélec
 
 ### Casseur de sucre ###
 
-(Je ne sais plus vraiment ce que je voulais dire avec cette idée. J'ai dû la noter à l'arrache quand j'étais bourré. Tant pis. Dans le doute, je la garde). 
+(Je ne sais plus vraiment ce que je voulais dire avec cette idée. J'ai dû la noter à l'arrache quand j'étais bourré. Tant pis. Dans le doute, je la garde).
 
 Il faut casser un sucre en deux. On ne doit pas toucher aux moitiés du sucre, mais on doit taper au milieu.
 Ensuite, il faut faire tomber l'une des deux moitiés.
@@ -434,13 +434,13 @@ Jeu à plusieurs sur une aire de jeu gigantesque avec moquette. Les joueurs doiv
 
 ### Glou-glou ###
 
-L'aire de jeu est plongée dans du café. Certains objets remontent (touillettes, jetons de caddie), d'autres tombent (pièces). Il faut récupérer les touillettes. 
+L'aire de jeu est plongée dans du café. Certains objets remontent (touillettes, jetons de caddie), d'autres tombent (pièces). Il faut récupérer les touillettes.
 
 S'il y a quelques cases vides au dessus d'une touillette, elle sont très vite remplies par des pièces qui tombent. Si on zappe en une seule fois toutes les cases immédiatement au dessus d'une touillette, elle peut monter d'un cran.
 
 ### Tutoriel ###
 
-Des modes de jeu tutoriels pour les modes de jeux spécifiques. 
+Des modes de jeu tutoriels pour les modes de jeux spécifiques.
 
 Aire de jeu prédéfinie, actions prédéfinies à faire par le joueur, avec des explications à chaque action. Si le joueur fait d'autres actions que celles prédéfinies, on l'interdit, ou on le laisse faire mais après il se démerde.
 
@@ -459,15 +459,15 @@ Les quêtes à faire et les achievements sont signalés sous forme de mails et d
  - Boulet qui a envoyé à tout le monde un message destiné à une seule personne. Puis qui renvoie un mail pour s'excuser.
  - Mail persos de potes, de la maman, ...
  - Spams.
- - ...   
+ - ...
 
-Et certains mails sont vraiment intéressants : 
+Et certains mails sont vraiment intéressants :
 
- - Descriptions de quêtes. 
- - Récapitulatif des scores et des parties effectuées sur la journée ou la semaine. 
+ - Descriptions de quêtes.
+ - Récapitulatif des scores et des parties effectuées sur la journée ou la semaine.
  - Explications sur le comportement d'objets ou de mode de jeu spécifiques.
  - Demandes de café pour un collègue.
- - Mails de remerciements quand on a effectué une quête ou un achievement. 
+ - Mails de remerciements quand on a effectué une quête ou un achievement.
 
 Le joueur peut se créer des répertoires pour classer tout ça. Mais il est pas obligé.
 
