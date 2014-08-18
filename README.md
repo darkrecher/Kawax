@@ -1,6 +1,6 @@
 # Kawax #
 
-Un jeu vidéo écrit en python et pygame. Ce n'est pas tout à fait un match-3, ce serait plutôt un "match sum(x)". 
+Un jeu vidéo écrit en python et pygame. Ce n'est pas tout à fait un match-3, ce serait plutôt un "match sum(x)".
 
 ![screenshot in-game kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/screenshot.png)
 
@@ -8,23 +8,27 @@ Vous êtes un stagiaire-machine-à-café dans une quelconque grande entreprise. 
 
 # Pour jouer #
 
-Vous pouvez directement récupérer un exécutable sous Windows ou MacOSX. Suivez ce lien : http://www.indiedb.com/games/kawax, puis cliquez sur l'option "downloads". 
+Vous pouvez directement récupérer un exécutable sous Windows ou MacOSX. Suivez ce lien : http://www.indiedb.com/games/kawax, puis cliquez sur l'option "downloads".
 
 L'installation est assez simple : télécharger, décompresser le fichier, double-cliquer sur l'exécutable.
 
 Lorsque le menu principal du jeu s'ouvre, appuyez sur la touche "1" pour démarrer le tutoriel.
 
-Il n'est pas possible de revenir au menu principal après qu'une partie soit commencée. Pour tester un autre mode de jeu ou un autre tutoriel, il faut arrêter et relancer le jeu. Veuillez nous excuser pour ce désagrément.  
+Il n'est pas possible de revenir au menu principal après qu'une partie soit commencée. Pour tester un autre mode de jeu ou un autre tutoriel, il faut arrêter et relancer le jeu. Veuillez nous excuser pour ce désagrément.
 
 # État actuel du machin #
 
-Le développement de ce jeu a débuté en 2011, puis a été abandonné. Il a ensuite été repris en 2014 pour créer une version à peu près jouable. Il comporte une documentation qui permettrait (hypothétiquement) de le re-reprendre de manière plus motivée. 
+Le développement de ce jeu a débuté en 2011, puis a été abandonné. Il a ensuite été repris en 2014 pour créer une version à peu près jouable. Il comporte une documentation qui permettrait (hypothétiquement) de le re-reprendre de manière plus motivée.
 
-# Exécution à partir du code source, conversion en exécutable #
+## Idées en vrac (mécanisme de jeu, scénario, ...) ##
+
+https://github.com/darkrecher/Kawax/blob/master/doc_diverses/brain_storm_idees_en_vrac.md
+
+## Exécution du jeu à partir du code source, conversion en exécutable ##
 
 https://github.com/darkrecher/Kawax/blob/master/doc_diverses/installation_et_exe_build.md
 
-# Doc de conception #
+## Doc de conception ##
 
 https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
 
