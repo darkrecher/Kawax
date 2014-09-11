@@ -1,5 +1,17 @@
 # Kawax. Idées en vrac #
 
+## Idées pour améliorer rapidement la version actuelle du jeu ##
+
+Des scores : nombres de cafés faits, nombre de touillettes récupérées, meilleur temps pour terminer chacun des niveaux.
+
+Mode normal et touillettes : il faut faire plus de cafés/touillettes pour gagner. Sinon on finit trop vite.
+
+Une fin (avec des voix). Plus ou moins prestigieuse selon le score et le temps. Ne pas hésiter à pourrir le joueur pour les fins pas top.
+
+Détecter les cas dans lesquels le joueur est bloqué, et lui indiquer avec une voix, différente selon le type de blocage. Là encore, ne pas hésitez à pourrir.
+
+Ex : t'as bouffé tout tes sucres et il te demande 2 sucres pour le prochain café.
+
 ## Principe principal (ha ha) ##
 
 match sum(x)
