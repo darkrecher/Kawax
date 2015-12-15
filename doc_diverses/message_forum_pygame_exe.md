@@ -186,6 +186,7 @@ as I heard this is the better way to do it.
 I've tried many different setup.py files, but each gives me a different error, whether it be missing DLL's, or font, or something else. If I could get any help with this, i would appreciate it.
 
 *Author : sinisterduke*
+
 *5 posts since Dec 2009*
 
 ## Réponse 01
