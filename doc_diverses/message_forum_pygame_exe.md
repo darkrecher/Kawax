@@ -12,11 +12,7 @@ Date de récupération :
 Sujet du topic :
 Need help with pygame to exe
 
-3 Contributors
-5 Replies
-7 Views
-1 Year Discussion Span
-4 Years Ago
+3 Contributors. 5 Replies. 7 Views. 1 Year Discussion Span. 4 Years Ago
 
 tag :
 python
@@ -174,12 +170,18 @@ So after all this time I think py2exe appears to be the best tool to use. I have
         	BuildExe().run()
         	raw_input("Press any key to continue") #Pause to let user see that things ends
 
+
 When I try this however, I get the error:
+
 NotImplementedError: font module not available
+
 (ImportError: MemoryLoadLibrary failed loading pygame\font.pyd)
 
+
 In my actual code, I'm loading font using:
+
 font = pygame.font.SysFont("freesansbold", 48)
+
 
 as I heard this is the better way to do it.
 
@@ -232,7 +234,9 @@ I've tried that site and everything it suggests already, but it hasn't worked.
 I realize this's and older thread and is being addressed a few other places, but since it is the result that came up when i googled the exact error message i received, please consider the following: To the best of my knowledge, pygame2exe only works with a slightly older version of python/pygame libraries. I've banged into the exact same brick walls as sinisterduke here, until i uninstalled python 2.6 and reloaded with the following, which are still available somewhere on the respective product's sites.
 
 python-2.5.4.msi
+
 pygame-1.9.1.win32-py2.5.msi
+
 py2exe-0.6.9.win32-py2.5.exe
 
 Good Luck!
