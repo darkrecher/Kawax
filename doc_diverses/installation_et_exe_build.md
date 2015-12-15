@@ -127,7 +127,7 @@ Créer un fichier compressé (.zip ou autre), contenant tout le répertoire `dis
     readme.txt
     w9xpopen.exe
 
-Pour installer le jeu sur un autre ordinateur, il suffit de copier le .zip, de le décompresser n'importe, et de double-cliquer sur main.exe.
+Pour installer le jeu sur un autre ordinateur, il suffit de copier le .zip, de le décompresser n'importe où, et de double-cliquer sur main.exe.
 
 Si vous redistribuez ce jeu, ou une version modifiée, merci de respecter les termes de la licence (Art Libre ou CC-BY). En particulier : citer l'auteur. Un lien vers mon blog ou vers ce repository suffira.
 
