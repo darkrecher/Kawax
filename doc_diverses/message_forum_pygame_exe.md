@@ -197,6 +197,7 @@ I went through my code and removed all instances of font. Now I get this:
 (ImportError: MemoryLoadLibrary failed loading pygame\mixer.pyd)
 
 *Author : sinisterduke*
+
 *5 Years Ago*
 
 ## Réponse 02
@@ -204,6 +205,7 @@ I went through my code and removed all instances of font. Now I get this:
 and I went through and removed every instance of using sounds/mixer, and now it works. The problem is, I kinda need text and sound. If anyone has any suggestions, I'd appreciate it. It's probably just something small or stupid
 
 *Author : sinisterduke*
+
 *5 Years Ago*
 
 ## Réponse 03
@@ -212,7 +214,8 @@ Pygame and py2exe don't get along well, you have to do a few things to get it wo
 
 A great idea is to make a list of the modules you need.
 
-*Author : ov3rcl0ck 25*
+*Author : ov3rcl0ck*
+
 *5 Years Ago*
 
 ## Réponse 04
@@ -220,6 +223,7 @@ A great idea is to make a list of the modules you need.
 I've tried that site and everything it suggests already, but it hasn't worked.
 
 *Author : sinisterduke*
+
 *5 Years Ago*
 
 ## Réponse 05
@@ -233,4 +237,5 @@ py2exe-0.6.9.win32-py2.5.exe
 Good Luck!
 
 *Author : tendragons*
+
 *4 Years Ago*
