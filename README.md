@@ -8,9 +8,9 @@ Vous êtes un stagiaire-machine-à-café dans une quelconque grande entreprise. 
 
 # Pour jouer #
 
-Vous pouvez directement récupérer un exécutable sous Windows ou MacOSX. Suivez ce lien : http://www.indiedb.com/games/kawax, puis cliquez sur l'option "downloads".
+Allez ici : http://www.indiedb.com/games/kawax/downloads . Cliquez sur le lien "Kawax v1.0 for Windows" ou "Kawax v1.0 for Mac", puis cliquez sur l'option "downloads". 
 
-L'installation est assez simple : télécharger, décompresser le fichier, double-cliquer sur l'exécutable.
+L'installation est assez simple : décompressez le fichier téléchargé, puis double-cliquez sur l'exécutable (.exe ou .app).
 
 Lorsque le menu principal du jeu s'ouvre, appuyez sur la touche "1" pour démarrer le tutoriel.
 
