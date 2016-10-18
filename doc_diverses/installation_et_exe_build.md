@@ -9,7 +9,7 @@ Le jeu peut fonctionner avec python 2.5.4, ou une version 2.x supérieure (pas l
 Cependant, la transformation en exécutable n'est peut-être pas réalisable avec une version supérieure à 2.5.4, à cause d'un bug dans pygame2exe. Pour plus de détails concernant ce bug :
 
  - https://www.daniweb.com/programming/software-development/threads/247249/need-help-with-pygame-to-exe#post1447072
- - [doc_diverses/message_forum_pygame_exe.md](doc_diverses/message_forum_pygame_exe.md)
+ - [message_forum_pygame_exe.md](message_forum_pygame_exe.md)
 
 Dans la partie "Windows" de cette documentation, on considérera donc uniquement la version python 2.5.4.
 
