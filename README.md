@@ -2,7 +2,7 @@
 
 Un jeu vidéo écrit en python et pygame. Ce n'est pas tout à fait un match-3, ce serait plutôt un "match sum(x)".
 
-![screenshot in-game kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/screenshot.png)
+![screenshot in-game kawax](doc_diverses/screenshot.png)
 
 Vous êtes un stagiaire-machine-à-café dans une quelconque grande entreprise. Votre chef vous a confié ses centimes de brouzoufs, vous devez les regrouper correctement pour faire les cafés. Et n'oubliez pas le sucre !
 
@@ -22,19 +22,19 @@ Le développement de ce jeu a débuté en 2011, puis a été abandonné. Il a en
 
 ## Idées en vrac (mécanisme de jeu, scénario, ...) ##
 
-https://github.com/darkrecher/Kawax/blob/master/doc_diverses/brain_storm_idees_en_vrac.md
+[doc_diverses/brain_storm_idees_en_vrac.md](doc_diverses/brain_storm_idees_en_vrac.md)
 
 ## Exécution du jeu à partir du code source, conversion en exécutable ##
 
-https://github.com/darkrecher/Kawax/blob/master/doc_diverses/installation_et_exe_build.md
+[doc_diverses/installation_et_exe_build.md](doc_diverses/installation_et_exe_build.md)
 
 ## Doc de conception ##
 
-https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
+[DOC_CONCEPTION.md](DOC_CONCEPTION.md)
 
 ## Doc "marketing"
 
-https://github.com/darkrecher/Kawax/blob/master/doc_diverses/doc_marketing.md
+[doc_diverses/doc_marketing.md](doc_diverses/doc_marketing.md)
 
 # Crédits #
 
