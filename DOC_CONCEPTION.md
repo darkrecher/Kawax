@@ -71,7 +71,7 @@
                 - [Fonction GameBasic.showCurrentTutoStep](#fonction-gamebasicshowcurrenttutostep)
                 - [Réalisation d'un zap](#r%C3%A9alisation-dun-zap)
                 - [Appui sur la touche "F"](#appui-sur-la-touche-f)
-                - [Interactive touch](#interactive-touch)
+                - [Interactive touch du tutoriel](#interactive-touch-du-tutoriel)
                 - [handleGravity](#handlegravity)
                 - [Début du jeu](#d%C3%A9but-du-jeu)
                 - [Reblink](#reblink)
@@ -1398,8 +1398,8 @@ Si la fonction renvoie True, c'est qu'on a avancé d'une étape. Dans ce cas, on
 
 Si la fonction renvoie False, on ne devrait rien avoir à faire. Mais comme on est gentil, on redémarre un blink de tile, si l'étape courante indique qu'il y en a à faire. Ça permet au joueur de revoir les blinks.
 
-<a class="mk-toclify" id="interactive-touch"></a>
-##### Interactive touch #####
+<a class="mk-toclify" id="interactive-touch-du-tutoriel"></a>
+##### Interactive touch du tutoriel #####
 
 Durant la Game Loop, lorsqu'un Interactive Touch est réussi, le stimuli correspondant est envoyé, via la fonction `tutorialScheduler.takeStimInteractiveTouch`. Si la fonction renvoie True, on a avancé d'une étape, donc on exécute `GameBasic.showCurrentTutoStep`. On ne réaffiche pas la description de consigne du zap. Elle n'est pas censée avoir changé suite à un Interactive Touch.
 
