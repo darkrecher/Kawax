@@ -32,6 +32,10 @@ https://github.com/darkrecher/Kawax/blob/master/doc_diverses/installation_et_exe
 
 https://github.com/darkrecher/Kawax/blob/master/DOC_CONCEPTION.md
 
+## Doc "marketing"
+
+https://github.com/darkrecher/Kawax/blob/master/doc_diverses/doc_marketing.md
+
 # Crédits #
 
 Créé par Réchèr.
