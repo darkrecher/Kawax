@@ -94,7 +94,7 @@ Ceci est ma vengeance.
 <a class="mk-toclify" id="diagramme-de-classe"></a>
 ## Diagramme de classe ##
 
-![diagramme classe kawax](https://raw.githubusercontent.com/darkrecher/Kawax/master/doc_diverses/diagramme_pas_UML.png)
+![diagramme classe kawax](doc_diverses/diagramme_pas_UML.png)
 
 Ce diagramme ne respecte pas la norme UML. La seule fois où j'ai eu à m'en servir, c'était à l'école, et ensuite j'ai tout oublié parce que j'étais bourré.
 
