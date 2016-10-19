@@ -42,7 +42,7 @@ Créé par Réchèr.
 
 Le code et cette doc sont sous une double licence : Art Libre ou Creative Commons CC-BY (au choix). N'hésitez pas à me piquer les idées de ce jeu pour en faire quelque chose de plus conséquent.
 
-Repository : https://github.com/darkrecher/Kawax
+Repository : https://github.com/darkrecher/Kawax et https://framagit.org/darkrecher/Kawax
 
 Mon blog : http://recher.wordpress.com
 
